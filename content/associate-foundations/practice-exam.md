@@ -396,8 +396,8 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 Claude keeps returning its answer as flowing paragraphs, but you need a table with three named columns to drop into a report. What is the most effective fix?
 
 - **A.** Ask the exact same question over again and simply hope that it comes back formatted as a table
-- **B.** Switch to a larger, more capable model and try once more
-- **C.** Tell Claude to "make it look a bit nicer" for the report
+- **B.** Switch to a larger, more capable model and simply try the identical request one more time
+- **C.** Tell Claude to "make it look a bit nicer and more polished" before you paste it into the report
 - **D.** Explicitly specify the output format: a table with the three exact column names you need
 
 <details><summary>Answer &amp; explanation</summary>
@@ -419,9 +419,9 @@ _Why a tempting wrong answer misses:_ "Make it look nicer" is subjective and uns
 You ask Claude to "write a follow-up message to the client," but its draft misses that the client is upset about a missed deadline. What would most improve the result?
 
 - **A.** Ask Claude to work a general, non-specific apology in somewhere near the opening of the message
-- **B.** Repeat the exact same request again, word for word
+- **B.** Repeat the exact same request again, word for word, and hope that the second draft lands better
 - **C.** Provide the context: the client's complaint, the missed deadline, and the outcome you want
-- **D.** Ask Claude to make the message shorter and more direct
+- **D.** Ask Claude to make the message noticeably shorter and more direct in its overall tone and phrasing
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -466,8 +466,8 @@ _Why a tempting wrong answer misses:_ Cramming more instructions into the same o
 An output is not quite right, so in one new attempt you rewrite the role, add three examples, change the format, and swap models all at once. It improves, but you have a problem. What is it?
 
 - **A.** Nothing at all is wrong here; changing everything at once is simply the fastest path to a fix
-- **B.** You should have changed even more variables at the same time
-- **C.** The model is now permanently biased by your earlier attempt
+- **B.** You should have changed even more of the variables all together within that same single attempt
+- **C.** The model is now permanently biased by every single thing you tried in your earlier attempt
 - **D.** You changed too many variables at once, so you cannot tell which change actually helped
 
 <details><summary>Answer &amp; explanation</summary>
@@ -677,8 +677,8 @@ _Why a tempting wrong answer misses:_ Adding examples to every prompt regardless
 Your first prompt gives a decent but too-technical answer for a general audience. What is the most efficient single adjustment to try next?
 
 - **A.** Completely rewrite the whole prompt from scratch, making many different changes all at once
-- **B.** Switch entry points from claude.ai chat over to the API
-- **C.** Ask the very same prompt three or four more times
+- **B.** Switch your entry point over from the claude.ai chat interface across to the developer API
+- **C.** Ask the very same prompt three or four more times and then keep whichever answer reads best
 - **D.** Add one instruction specifying the audience and reading level, then compare the result
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1049,8 +1049,8 @@ _Why a tempting wrong answer misses:_ A link merely loading proves the page exis
 Which output most clearly demands independent human verification before you act on it?
 
 - **A.** A short, lighthearted haiku that Claude drafted for a close friend's birthday card
-- **B.** A list of icebreaker questions for a casual team meeting
-- **C.** A suggested color palette for an internal slide deck
+- **B.** A list of lighthearted icebreaker questions for a casual internal team meeting
+- **C.** A suggested set of accent colors and a palette for an internal team slide deck
 - **D.** A tax-filing figure Claude calculated that you will submit to the authorities
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1445,9 +1445,9 @@ _Why a tempting wrong answer misses:_ Asking Claude to "memorize" a document onc
 A Project's knowledge base still contains last year's pricing, and Claude keeps quoting the old prices. What is the root-cause fix?
 
 - **A.** Simply tell all of the users to mentally adjust the outdated pricing for themselves every time
-- **B.** Add a note in each chat correcting the price after the fact
+- **B.** Add a short note in each individual chat that manually corrects the stale price after the fact
 - **C.** Update the knowledge source to the current pricing so every chat inherits the correct data
-- **D.** Switch to a larger, more capable model for those chats
+- **D.** Switch to a larger and more capable model whenever you happen to run those particular chats
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2115,8 +2115,8 @@ _Why a tempting wrong answer misses:_ Adding more instructions does not address 
 A genuinely complex, multi-step analysis produces shallow, error-prone results on a small, fast model. What is the most appropriate fix?
 
 - **A.** Ask the very same question several more times over on that exact same small and fast model
-- **B.** Shorten the prompt sharply so there is less to confuse the model
-- **C.** Lower the maximum output length setting for the responses
+- **B.** Shorten the prompt quite sharply so that there is far less content to confuse the model
+- **C.** Lower the maximum output length setting that is currently configured for the model responses
 - **D.** Move to a more capable model (and enable extended thinking) suited to hard reasoning
 
 <details><summary>Answer &amp; explanation</summary>
