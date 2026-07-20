@@ -1,0 +1,9 @@
+{
+  "name": "coach",
+  "displayName": "Coach",
+  "description": "Your Claude certification coach: pinpoint weak domains, grade your written answers against the rubric, and get a day-by-day plan to exam day. Unofficial study aid.",
+  "version": "2.0.0",
+  "author": { "name": "Patrick King", "url": "https://github.com/patrickking67" },
+  "homepage": "https://github.com/patrickking67/anthropic-university",
+  "keywords": ["claude", "certification", "coach", "grading", "plan"]
+}

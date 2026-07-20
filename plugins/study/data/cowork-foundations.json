@@ -1,0 +1,1121 @@
+{
+  "examId": "cowork-foundations",
+  "title": "Claude Cowork – Foundations",
+  "meta": {
+    "questionCount": 60,
+    "passScaled": 720,
+    "scaleMin": 100,
+    "scaleMax": 1000,
+    "timeMinutes": 75
+  },
+  "domains": [
+    {
+      "id": "cowork-foundations",
+      "name": "Cowork Foundations",
+      "weight": 0.2
+    },
+    {
+      "id": "setup-permissions",
+      "name": "Setup, Connectors & Permissions",
+      "weight": 0.2
+    },
+    {
+      "id": "task-patterns",
+      "name": "Task Patterns & Delegation",
+      "weight": 0.25
+    },
+    {
+      "id": "customization",
+      "name": "Customization: Instructions, Projects, Skills & Plugins",
+      "weight": 0.2
+    },
+    {
+      "id": "surfaces-safety",
+      "name": "Surfaces, Safety & Sharing",
+      "weight": 0.15
+    }
+  ],
+  "guide": "# Claude Cowork – Foundations — Study Guide\n\n> **Unofficial, community-authored study material.** Not affiliated with, endorsed by, or produced by Anthropic. It teaches the publicly documented concepts the exam covers; the questions and examples here are original, not real exam items.\n\nThis guide covers the five domains of the Cowork – Foundations track. **Cowork** is the desktop mode where Claude works *alongside you* — on your files, in your connected apps, in your browser, with your tools. The recurring skill this track tests is a mindset shift: **delegating, not just chatting.** In Chat you trade turns and the response *is* the deliverable. In Cowork you describe an *outcome*, and Claude plans the steps, executes them across whatever tools and files the job needs, and saves a **real deliverable** back to your folder — a `.docx`, `.xlsx`, `.pptx`, or `.pdf`, the whole arc handled end to end.\n\nCowork is built for **multi-step, longer-running work** that spans several tools and ends in an artifact. Throughout the exam, favor answers that reflect two habits: **point Claude at the right context** (the folder, the connectors, the specifics) and **stay in control** (read the plan, approve deliberately, steer mid-task). Claude prepares; you ship.\n\n## Cowork Foundations\n\nCowork is a **mode of Claude in the desktop app** (Mac and Windows), not a separate product. You pick it from the mode selector in the top-right. The core distinction is *the shape of the work*, not which features are switched on.\n\n**The delegating mental model.** You give Cowork an outcome (\"a one-page launch brief\"), and it plans, executes the steps, uses the tools and files it needs, and **saves a deliverable** back to your working folder. You stay in control the whole time: Claude **shows its plan before starting**, by default **asks before actions that matter** (sending, posting, sharing), **always asks before deleting**, and lets you **steer anytime**.\n\n**Chat vs. Cowork vs. Code** — three modes for three shapes of work:\n\n| Mode | One line | Best for | The deliverable is… |\n| --- | --- | --- | --- |\n| **Chat** | *Thinking with Claude* | Quick exchanges, brainstorming, drafting you'll refine, exploratory thinking | The conversation itself |\n| **Cowork** | *Delegating to Claude* | Multi-step work across files and tools that produces a saved artifact you set in motion and come back to | A saved file |\n| **Code** (Claude Code) | *Building software with Claude* | Repo/developer work — edits source, runs tests, makes git commits | Changed code in a codebase |\n\n**Key traps to internalize:**\n\n- **A connector being involved does NOT make something Cowork.** Chat can pull from connectors too. The signal for Cowork is a **deliverable that must be produced and saved somewhere.** \"Summarize what the team said in Slack\" is Chat if the answer is the summary on screen; it becomes Cowork when that summary must land as a saved brief in your folder.\n- **Chat memory vs. Cowork context.** In Chat the answer is the conversation, and memory builds itself. Cowork's value is the *artifact*, and you review that artifact, not the chat log.\n- **Rule of thumb:** Chat for thinking, Cowork for delegating, Code for software. Most knowledge workers live in **Chat + Cowork**.\n\n**Examples.**\n\n- *\"Help me think through how to position this launch to enterprise buyers.\"* → **Chat.** The answer is the conversation.\n- *\"From the files in my Q3-QBR folder and the #launch channel since June 1, build a one-page brief for the QBR, saved as a .docx.\"* → **Cowork.** Multi-step, spans files and a connector, ends in a saved deliverable.\n- *\"Add retry logic to the payments module and run the test suite.\"* → **Code.** Source edits and commits in a codebase.\n\n## Setup, Connectors & Permissions\n\n**Install.** Cowork runs inside the **Claude Desktop app** (`claude.com/download`); find it in the mode selector, top-right. It may require a paid plan or a recent version.\n\n**The folder is the single most important setup choice.** Click **\"Work in a project\"** and pick a folder. That folder is the **boundary for what Claude can read AND write** — it opens, edits, creates, and organizes files there, and saves outputs back to the same place. This is the key difference from Chat: in Chat, Claude can read what you upload but **can't save back to your computer**; in Cowork it can. **Pick the smallest folder that holds what the task needs** — a `~/Work/Q3-QBR` folder, not the `Documents`, `Downloads`, or `Desktop` catch-alls. You can add another folder later.\n\n**Connectors** reach into the apps where your work already lives — email and calendar, messaging, cloud storage, CRM and project tools. Set them up once in **Customize**, then **toggle them per task**, and reference them naturally in prompts (\"check what the team said in Slack about the launch\"). Examples: Gmail, Google Calendar, Slack, Google Drive, Microsoft 365 (Outlook, SharePoint, OneDrive, Teams), Box, Notion, Salesforce, HubSpot, Asana, Linear.\n\n**Cloud connectors vary in capability.** Many — including the default Google Drive and Microsoft 365 connectors — are **read-and-search only**; some can create or edit. Check each connector's description. The most reliable place for Claude to **build and iterate on a document** is still your **local working folder**.\n\n**Permission modes** (set per task):\n\n| Mode | What it does | When to use |\n| --- | --- | --- |\n| **Ask before acting** (default) | Claude **pauses for approval** before each action that touches the outside world — sending an email, posting a message, sharing a file | New tools, unfamiliar files, anything you want to watch closely |\n| **Act without asking** | Claude works **without pausing** for those approvals — faster but riskier | Only trusted files/sites while you're **actively supervising** |\n\n**The delete guarantee — the constant in both modes:** Claude **always asks before permanently deleting a file.** No exceptions, and that prompt **can't be skipped** — even in \"Act without asking.\" If an answer implies deletion could ever happen silently, it's wrong.\n\nYou also control the same levers as Chat: which **connectors/MCPs** Claude can reach and how often each asks, and **web access** (your org admin can turn web search off; you can limit which sites Claude in Chrome visits). Assess how much you trust a connector or site before extending access beyond the defaults.\n\n**Examples.**\n\n- Setting up a quarterly review: point Cowork at `~/Work/Q3-QBR` (the exact folder), not all of `Documents` — the smaller boundary means a mistake can't reach unrelated files.\n- First time using a new vendor portal connector → **Ask before acting**, so you can watch each step. A folder of your own drafts you're actively reviewing → **Act without asking** is reasonable.\n- Even in \"Act without asking,\" when Claude proposes removing last month's stale export, it **still prompts** before the delete — you approve or decline.\n\n## Task Patterns & Delegation\n\n**Three patterns signal a good Cowork task.** Most good fits show one or more:\n\n1. **Multi-step** — gather, compare, research, draft, and format, handed off as **one prompt** instead of five.\n2. **File-based** — the inputs are **real files in your folder** and the output is a **real artifact saved back.** Cowork works on files you already have, not just files it creates.\n3. **Multi-tool** — the work spans Gmail, Slack, Microsoft 365, calendar, or a CRM; Cowork plans across connectors and runs the whole sequence as **one delegation** instead of you stitching prompts together.\n\nThe through-line: work that used to mean juggling steps, files, and tools **in your own head** can be handed off as a single task.\n\n**The anatomy of a good prompt names three things:**\n\n- **The deliverable** — \"a one-page brief,\" \"a single slide for the QBR,\" \"a ranked list with notes.\" Specifics on format and length save a regenerate.\n- **The inputs** — which folder, which channels, which date range, which app. *Cowork is only as good as the context you point it at.*\n- **The nuance / specifics** — audience, purpose, and expert judgment Claude can't guess (\"lead with the recommendation,\" \"flag anything we can't verify,\" \"give base/best/worst case\").\n\nLeaving a row empty usually means **Cowork will ask you for it.** That's the point: more of the back-and-forth happens **upfront, before Claude starts**, rather than across five rounds of \"actually, can you also…\".\n\n**Clarifying questions.** Claude asks a couple before starting to close context gaps — which of two files to match, the scope, the audience, how to handle unverifiable claims. Usually you just click an option; if none fit, answer in your own words. **Skipping a question means Claude uses its best guess.**\n\n**Steer mid-task.** Watch the plan and progress. If Claude is on the wrong source, format, or tone, **interrupt** — queue a message. Cowork picks up **from where it was, reusing the analysis it already did.** Don't wait for it to finish and then regenerate (that's the Chat instinct); the cost of a redirect is low. You can also stop, refine the prompt, and restart.\n\n**Review the finished deliverable** — the deliverable is the **artifact, not the chat.** Three checks:\n\n- **Does it meet the actual objective?**\n- **Are the facts accurate?** Ask Claude which docs it pulled from, then verify them.\n- **Does anything sound made up?** An untraceable date, name, or quote is a flag.\n\nIf it's mostly right, **tell Claude what to change** rather than starting over — it edits faster than it regenerates.\n\n**Scheduled tasks (`/schedule`).** Set up a task once and have Claude run it on a cadence — **hourly, daily, weekdays, or manual.** Two ways to create one: start fresh with `/schedule`, or do the task once, confirm the output, then `/schedule` to make that *exact* process recurring. **Critical mechanic:** a scheduled task **only runs when your computer is on and Claude is running.** If the laptop is closed, asleep, or off at the scheduled time, Claude **picks it up when you're back and tells you it was delayed** — it does not run in the cloud. Good for a Friday review, a monthly metrics roll-up, or a morning briefing. **Prefer draft-for-review over send-on-your-behalf** until you trust the run.\n\n**Dispatch.** Start a Cowork task from the **Claude mobile app** while away from your computer; the work actually **runs on your desktop** (same files, connectors, and permissions), and you get a **push notification** when it's done. It only works when the **desktop is on, awake, and signed in with Cowork open.** Dispatch is in **research preview**, currently on **Pro and Max** plans; **Enterprise may not have it yet.**\n\n**Examples.**\n\n- A complete prompt: *\"Build a one-page brief [deliverable] from the files in Q3-QBR and the #launch channel since June 1 [inputs]; lead with the recommendation and flag anything we can't verify [nuance].\"* All three rows filled, so Claude starts instead of interviewing you.\n- Mid-task steer: Claude begins pulling from `#launch-mktg` when you meant `#launch-eng`. You queue *\"use #launch-eng\"* and it continues from there, keeping the work already done.\n- A scheduled Friday summary is set for 5 p.m., but your laptop is closed for the weekend. Claude runs it **Monday when you're back** and notes it was delayed.\n- On the train, you use **Dispatch** from your phone to kick off a competitor scan; your desktop at the office runs it and pushes you a notification when the deliverable is saved.\n\n## Customization: Instructions, Projects, Skills, Plugins\n\nCowork has **four building blocks.** They're independent, and they **compound** — the more Cowork knows (who you are, the stream of work, the process, the role's expertise), the more it can take off your plate. You won't set up all four on day one: **global instructions first**, **projects** as recurring work appears, **skills** when you keep re-explaining a workflow, **plugins** when a process is worth sharing.\n\n**1. Global instructions** — a **standing brief that applies to every Cowork session** (every chat, scheduled task, and Dispatch run). Set it once in **Settings → Cowork → Global instructions.** Put in: who you are and what you do; shorthand and acronyms (so Claude never asks what \"the QBR deck\" means); and how you like output delivered (format, length, tone). It doesn't need to be complete on day one — the **corrections you keep giving** (\"lead with the bottom line,\" \"no Oxford commas\") are the candidates. *Contrast with Chat:* Chat memory builds itself automatically; **Cowork's standing context is mostly what you set up.**\n\n**2. Projects** — a **scoped workspace** tied to one stream of work (a customer/account, a recurring deliverable, a launch). A project holds **three things you set plus one Claude builds:**\n\n- **Instructions** — like global instructions, but scoped to this project.\n- **Scheduled tasks** — recurring runs that belong to the project and execute with its context.\n- **Context** — one or more folders or links that every conversation in the project can access.\n- **Memory** (Claude builds this) — what Claude learns from conversations *inside* the project. **You don't write it; it builds over time.** This is the difference a project makes: each conversation adds to what Claude knows, so the next task opens already knowing the situation, last week's decisions, and what's still open.\n\n**Three ways to start a project:** from scratch; from an **existing folder** on your computer (it becomes the working directory); or from a **Chat project** (a **one-way import** — Cowork changes don't sync back to Chat). Create one via **Projects → New project** in the Cowork sidebar.\n\n**3. Skills** — a **reusable playbook** (a folder of files) that teaches Claude how to do a specific kind of work *your way*. Claude **auto-invokes** a skill when a task matches it — you don't name it, though you can be explicit. A skill can include four kinds of files:\n\n| File kind | What it is |\n| --- | --- |\n| **Instructions** (the `SKILL.md`) | The brief: what it does, when to use it, how to do it |\n| **Assets** | Raw materials for real output — logos, brand templates, slide masters, fonts |\n| **References** | What \"good\" looks like — example outputs, style guides, clause libraries |\n| **Scripts** | Small code for parts that should run the same way every time — e.g. a variance calc |\n\nA skill can be **just a `SKILL.md`**, or add any combination of the above. Build one fast with **skill-creator** (\"I want to build a skill for [process]. Walk me through what you need.\"). Installed skills live in **Customize**; update one in place by **telling Claude the correction.**\n\n**4. Plugins** — a **packaged set of skills built around a job**, plus the **connectors and subagents** they depend on. (A **subagent** is a purpose-built helper a skill spins up to handle one part of the work in its own context.) Two shapes:\n\n1. **End-to-end pipeline** — skills for each sequential step of one process (e.g. a monthly-close plugin: pull actuals → variance table → board memo).\n2. **A team's most-used skills bundled** — independent skills a team reaches for most (e.g. a finance plugin: variance analysis, financial modeling, investment-memo, quarterly reports).\n\nAnthropic publishes plugins for common roles (finance, legal, sales, marketing, support, PM). Find them in **Customize → Plugins**: install off the shelf, **customize** to your team's templates and definitions, or **build your own** with Cowork. **`/setup-cowork`** interviews you and suggests a plugin. Note: **marketplace plugins can't be edited by installers** — updates flow from the maintainer.\n\n**Examples.**\n\n- **Global instructions:** *\"I'm a PM at Acme; 'the QBR deck' is the quarterly business review; always lead with the bottom line; no Oxford commas.\"* Now every session inherits it.\n- **Project:** a *\"Northwind renewal\"* project whose context is the account folder; its **memory** carries last week's pricing decision into this week's prep, so you don't re-brief it.\n- **Skill:** a *board-memo* skill bundling a branded template (asset), a past exemplar memo (reference), and a variance-calc **script** — it auto-invokes when you ask for a board memo.\n- **Plugin:** installing Anthropic's finance plugin, then customizing its quarterly-report skill to your company's actual template before your team uses it.\n\n## Surfaces, Safety & Sharing\n\n**Claude in Chrome** — the **bridge for tools that don't have a connector** (internal dashboards, vendor portals, web apps behind a login). It's a **browser extension** where Claude reads and acts on pages directly, then hands results back to Cowork to build the deliverable — **one conversation, both surfaces.** **You must be signed in** — Claude can't log in for you; it works within your authenticated session. By default it **asks before sensitive actions**, and you can **narrow what it can act on** for sensitive sites. It may be unavailable on some enterprise plans.\n\n**Claude for Microsoft 365** — Claude lives **inside the document** as an add-in in Word, Excel, PowerPoint, and Outlook, operating on the file or space you have open. One conversation can carry context **across the apps** (Excel analysis → PowerPoint slide; Word memo → Outlook reply). **The rule:** reach for **Cowork** when work pulls from **many sources and ends in a deliverable**; reach for **M365** when you're **editing the Office files themselves** and carrying context app-to-app. Most real work uses **both.**\n\n**Working safely** — what you bring *on top of* the built-in guardrails:\n\n- **Set up so mistakes can't reach what matters:** use a **dedicated working folder** (not a catch-all); **back up anything irreplaceable** before you start; **test new workflows on copies** first (especially scheduled tasks).\n- **Write prompts that leave no room for the wrong action:** be specific about **destructive verbs** (\"remove from the draft but keep the file,\" not \"cut the section\"); **name the bounds** (\"only the 3 most recently updated files,\" \"don't message anyone — draft only\"); use scheduled tasks to **draft** until you trust them.\n- **In the moment:** **read the plan** once it's made; **watch for unexpected patterns** (files or sites you didn't mention, scope creep) — \"something feels off\" is a real signal, so stop the task; and **approve confirmation prompts deliberately** — most mistakes are clicking through a confirmation that wasn't the intended action.\n\n**When Cowork is NOT the right tool:**\n\n- **Regulated workflows that need an audit trail.** Cowork activity **isn't in audit logs, the Compliance API, or data exports.**\n- **Anything you wouldn't trust a smart, quick colleague to do unsupervised.** Claude prepares; you ship.\n- **Highly sensitive personal data** outside your IT-approved boundary.\n\n**Validating skills/plugins with evals** before you rely on or share them. An **eval** is a try-out — a realistic request in, look at the output, tell Claude what to fix. **skill-creator** generates **2+ realistic prompts** and, for each, a **with-skill vs. without-skill** output pair; you pick the one you'd actually send and give plain-English feedback; Claude revises; you re-run. It's a **loop, not a one-time gate.** The bar to ship isn't *perfect* evals — it's that the cases you care about **pass meaningfully better than the baseline** and you've **named what you don't yet handle.** Grade types: **code graders, model graders, human graders.**\n\n**Sharing across a team (Enterprise).** Bundle proven skills into a plugin and distribute it through your org's **private marketplace** (an admin manages it). The **four publish levels:**\n\n| Level | State | Use for |\n| --- | --- | --- |\n| **Available** | In the Directory; install if you want | Optional, discoverable tools |\n| **Installed by default** | Already on; users **can turn it off** | Recommended-but-not-mandatory |\n| **Required** | On and **stays on** | Compliance — can't be removed |\n| **Hidden** | In the marketplace but **not shown** | Staging or restricted rollout |\n\nIt's a **hand-off:** you bring the plugin to the **marketplace owner** (team lead, enablement, or IT). Admins create the marketplace in **Organization settings → Plugins** — they upload it or connect a **GitHub repo so updates sync.** Good habits: **one named owner** per shared plugin; **evals before every publish**; **name skills/plugins specifically** (\"sales-customer-renewal-prep,\" not \"meeting-prep\") to avoid collisions; and set a **review rhythm** (quarterly), retiring what nobody runs.\n\n**Examples.**\n\n- An internal metrics dashboard with **no connector** → **Claude in Chrome** reads it in your signed-in session and hands the numbers back to Cowork to build the slide.\n- You're editing a specific PowerPoint deck and pulling a chart from the open Excel file → **Claude for M365**, not Cowork. But if the deck must draw from Slack, Drive, *and* three local files, that's **Cowork.**\n- A regulated approval workflow that must show up in **audit logs** → **not Cowork.** Prepare with Cowork if you like, but the system of record needs the audited tool.\n- A compliance-disclaimer skill your legal team mandates → publish as **Required.** A beta plugin you're still testing → publish as **Hidden** while it's staged.\n\n## How to study this track\n\n- **Anchor on the mental model.** Nearly every question resolves faster once you ask, *\"Is the deliverable the conversation (Chat), a saved file (Cowork), or changed code (Code)?\"* Remember the trap: a connector alone never makes something Cowork — a **saved deliverable** does.\n- **Memorize the small set of hard mechanics.** These are the details questions hinge on: the **folder is the read-and-write boundary** (and the difference from Chat); the **two permission modes** plus the **always-ask-before-delete** guarantee that holds in both; **`/schedule` only runs when the computer is on and Claude is running**; **Dispatch** runs on the desktop and is **research-preview on Pro/Max.**\n- **Learn the four \"sets\" cold.** The **three task patterns** (multi-step, file-based, multi-tool), the **three-part prompt anatomy** (deliverable, inputs, nuance), the **four building blocks** (global instructions, projects, skills, plugins), and the **four publish levels** (Available, Installed by default, Required, Hidden).\n- **Practice the \"stay in control\" reflexes.** Read the plan, steer mid-task instead of waiting-and-regenerating, review the *artifact* not the chat, verify facts by asking which docs Claude used, and approve prompts deliberately.\n- **Know the boundaries.** Be ready to say **when Cowork is the wrong tool** (audit-trail/regulated work, anything needing unsupervised trust, sensitive data outside approved boundaries) and when to reach for a **neighboring surface** (Chrome for connector-less sites, M365 for editing Office files in place).\n- **Reason from principles, not memorized clicks.** When two answers look plausible, prefer the one that **points Claude at the smallest sufficient context** and **keeps a human in control** of consequential and destructive actions.\n",
+  "questions": [
+    {
+      "id": "cw-001",
+      "domain": "cowork-foundations",
+      "studyArea": "What Cowork Is",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "A colleague new to the Claude desktop app asks you to describe what Cowork actually is. Which description is most accurate?",
+      "options": {
+        "A": "A shared room where several people type into and jointly edit one and the same Claude chat thread live.",
+        "B": "A cloud-only product that runs Claude on remote servers with no reach into files kept on your computer.",
+        "C": "A mode of Claude in the desktop app where it works alongside you on your own files, connected apps, browser, and tools.",
+        "D": "A billing plan whose sole effect is unlocking a larger context window for otherwise ordinary chat sessions."
+      },
+      "answer": "C",
+      "explanationCorrect": "Cowork is a mode of Claude in the desktop app where Claude works alongside you across your files, connected apps, the browser, and your tools to carry out tasks.",
+      "explanationDistractor": "It is not shared chat-typing or a billing tier; the defining trait is Claude acting on your local files and connected tools, which the cloud-only option denies.",
+      "reference": null
+    },
+    {
+      "id": "cw-002",
+      "domain": "cowork-foundations",
+      "studyArea": "Delegating vs Chatting",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "What is the core mental-model shift Cowork asks of you compared with a normal chat?",
+      "options": {
+        "A": "You describe the outcome you want and let Claude plan the steps, do them, and save a real deliverable for you.",
+        "B": "You keep refining one prompt until a single reply comes back perfectly formatted and needs no editing whatsoever.",
+        "C": "You deliberately keep every task tiny so Claude only ever answers one quick question and never touches a file.",
+        "D": "You supply the finished document yourself and ask Claude to do nothing beyond proofreading its wording in place."
+      },
+      "answer": "A",
+      "explanationCorrect": "Cowork is about delegation: you state the outcome and Claude plans, executes, and produces a saved deliverable, rather than trading messages turn by turn.",
+      "explanationDistractor": "Refining one prompt for one perfect reply is still the chat mindset; Cowork's shift is handing off the whole multi-step job, not perfecting a single response.",
+      "reference": null
+    },
+    {
+      "id": "cw-003",
+      "domain": "cowork-foundations",
+      "studyArea": "Cowork's Sweet Spot",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "Which kind of work is Cowork specifically built for?",
+      "options": {
+        "A": "A single quick factual lookup whose answer is a sentence or two, where nothing at all has to be saved afterward.",
+        "B": "Open-ended brainstorming where the value lies in the dialogue itself rather than in any file it might produce.",
+        "C": "Editing source files inside a code repository, running its test suite, and committing the result to git.",
+        "D": "Multi-step, longer-running work that spans several tools and files and finishes in one saved artifact for you."
+      },
+      "answer": "D",
+      "explanationCorrect": "Cowork targets multi-step, longer-running jobs that cross several tools and files and finish in a real saved artifact, which is its sweet spot.",
+      "explanationDistractor": "A one-sentence lookup with nothing to save is a Chat job; Cowork earns its keep on the longer arc that produces a deliverable, not the quick exchange.",
+      "reference": null
+    },
+    {
+      "id": "cw-004",
+      "domain": "cowork-foundations",
+      "studyArea": "Staying in Control",
+      "scenario": "First Cowork Task",
+      "difficulty": "medium",
+      "stem": "Running your first Cowork task, you want to know how much oversight you keep. Which statement about staying in control is correct?",
+      "options": {
+        "A": "Claude runs the whole task silently and shows you what it did only once everything is finished and saved.",
+        "B": "Claude previews its plan, asks before actions that matter, and always asks before deleting.",
+        "C": "Once a task has started you are unable to interrupt or redirect it until Claude reaches the end of its plan.",
+        "D": "Claude may permanently delete files without asking any time doing so keeps your working folder tidy and neat."
+      },
+      "answer": "B",
+      "explanationCorrect": "You stay in control: Claude previews its plan, pauses before consequential actions like sending or sharing, always asks before deleting, and lets you steer anytime.",
+      "explanationDistractor": "Running silently to the end is the opposite of Cowork's design; you see the plan up front and can redirect the work at any point.",
+      "reference": null
+    },
+    {
+      "id": "cw-005",
+      "domain": "cowork-foundations",
+      "studyArea": "Choosing Chat",
+      "scenario": "Messaging Brainstorm",
+      "difficulty": "medium",
+      "stem": "Your task is exploratory: you want to brainstorm messaging angles and refine wording through back-and-forth, with no file to save. Which mode fits best, and why?",
+      "options": {
+        "A": "Chat, because the value is the conversation itself and the response is exactly the deliverable you want.",
+        "B": "Cowork, because any task that could touch a connector such as email or calendar belongs in the workspace.",
+        "C": "Claude Code, because it is by far the quickest surface for rapidly iterating on short passages of text.",
+        "D": "Cowork, because a brainstorming session always ends in a document that then has to be saved to a folder."
+      },
+      "answer": "A",
+      "explanationCorrect": "When the answer is the conversation, Chat is the right mode: quick exploratory dialogue where the response itself is the deliverable you are after.",
+      "explanationDistractor": "A connector being available does not make a task Cowork; Chat can use connectors too, and here there is no saved artifact to produce.",
+      "reference": null
+    },
+    {
+      "id": "cw-006",
+      "domain": "cowork-foundations",
+      "studyArea": "Choosing Cowork",
+      "scenario": "One-Page Summary",
+      "difficulty": "medium",
+      "stem": "You need to pull figures from three files in a folder, cross-check them against a Slack thread, and produce a one-page summary saved back to that folder. Which mode is the best fit?",
+      "options": {
+        "A": "Chat, because you can paste the three files in and copy out whatever summary Claude gives back.",
+        "B": "Chat, because Claude can read anything you upload, which is really all a task of this kind could require.",
+        "C": "Cowork, because it plans and runs the multi-step work across your files and tools and saves the deliverable.",
+        "D": "Claude Code, because summarizing a set of files is fundamentally a software job for a repository-based tool."
+      },
+      "answer": "C",
+      "explanationCorrect": "This is a delegation with a saved artifact that spans files and a connector, exactly what Cowork is for: it plans, executes, and delivers the file back to your folder.",
+      "explanationDistractor": "Chat can read uploads but cannot save the deliverable back to your folder, and stitching the steps yourself is the very work Cowork takes over.",
+      "reference": null
+    },
+    {
+      "id": "cw-007",
+      "domain": "cowork-foundations",
+      "studyArea": "Choosing Claude Code",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "Which task is the clear fit for Claude Code rather than Cowork?",
+      "options": {
+        "A": "Drafting a quarterly business-review slide from figures spread across several folder spreadsheets.",
+        "B": "Editing the source files in a codebase, running its test suite, and making the git commits.",
+        "C": "Summarizing a long email thread into a short brief that then gets saved into your working folder.",
+        "D": "Reconciling two vendor lists and saving one cleaned, de-duplicated copy back into the same folder."
+      },
+      "answer": "B",
+      "explanationCorrect": "Claude Code is for building software inside a codebase: editing source, running tests, and committing to version control, not producing documents.",
+      "explanationDistractor": "The other three each end in a saved document, and producing document deliverables across files and tools is Cowork's job, not Code's.",
+      "reference": null
+    },
+    {
+      "id": "cw-008",
+      "domain": "cowork-foundations",
+      "studyArea": "Connector Is Not the Signal",
+      "scenario": "Mode Selection Debate",
+      "difficulty": "hard",
+      "stem": "A teammate argues 'my task uses the Slack connector, so it must be a Cowork task.' Why is that reasoning flawed?",
+      "options": {
+        "A": "The Slack connector only ever works inside Chat, so any task that happens to use it can never run in Cowork.",
+        "B": "Connectors are simply irrelevant to picking a mode, because Chat, Cowork, and Code all behave identically.",
+        "C": "Using any connector at all automatically routes the whole task over to Claude Code, whatever you intended.",
+        "D": "Chat can use connectors too; the real signal for Cowork is a deliverable that must be produced and saved somewhere."
+      },
+      "answer": "D",
+      "explanationCorrect": "A connector's involvement is not the deciding factor: Chat uses connectors too. Cowork is signaled by needing a produced, saved deliverable, not by a connector.",
+      "explanationDistractor": "It is false that connectors only work in Chat; the flaw is treating a connector as proof of Cowork when the real test is a saved deliverable.",
+      "reference": null
+    },
+    {
+      "id": "cw-009",
+      "domain": "cowork-foundations",
+      "studyArea": "Rule of Thumb",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "Which one-line rule of thumb best captures when to use each mode?",
+      "options": {
+        "A": "Chat is for anything urgent, Cowork is for the low-priority items, and Code is for when you have time.",
+        "B": "Chat is for the short tasks, Cowork is for the long tasks, and Code is for whatever falls in between.",
+        "C": "Chat is for the words, Cowork is for the pictures, and Code is for handling the numbers you have.",
+        "D": "Chat is for thinking things through, Cowork is for delegating, and Code is for building software."
+      },
+      "answer": "D",
+      "explanationCorrect": "The rule of thumb is Chat for thinking, Cowork for delegating, and Code for building software; most knowledge workers live in Chat plus Cowork.",
+      "explanationDistractor": "Urgency, length, or media type do not decide the mode; the split is by the shape of work, which is what the thinking/delegating/building line captures.",
+      "reference": null
+    },
+    {
+      "id": "cw-010",
+      "domain": "cowork-foundations",
+      "studyArea": "Deliverable vs Response",
+      "scenario": "Where Output Lands",
+      "difficulty": "medium",
+      "stem": "Which statement correctly describes where a Cowork task's output ends up, versus a Chat reply?",
+      "options": {
+        "A": "In Chat the reply appears in the thread; you copy anything you want to keep out into a file yourself.",
+        "B": "In Cowork Claude saves the finished deliverable as a file back into your working folder.",
+        "C": "In Chat the deliverable is a document Claude writes directly to your computer without your involvement.",
+        "D": "In Cowork the output stays in the conversation only and is never written to any folder on your disk."
+      },
+      "answer": "B",
+      "explanationCorrect": "In Cowork the deliverable is a real file saved back to your working folder; the artifact, not the chat text, is the thing you come back to.",
+      "explanationDistractor": "Claude does not silently write files in Chat, and Cowork output is not conversation-only; both of those invert how the two modes actually behave.",
+      "reference": null
+    },
+    {
+      "id": "cw-011",
+      "domain": "cowork-foundations",
+      "studyArea": "Saving Real Deliverables",
+      "scenario": "End-to-End Report",
+      "difficulty": "medium",
+      "stem": "You delegate a report to Cowork end to end. What does 'a real deliverable' concretely mean here?",
+      "options": {
+        "A": "Claude works through the steps and writes a real file, such as a .docx, .xlsx, .pptx, or .pdf, back to your folder.",
+        "B": "Claude returns the result as chat text that you then have to paste into a document and save on your own.",
+        "C": "Claude emails the finished file to you as an attachment instead of saving it anywhere on your computer.",
+        "D": "Claude keeps the deliverable on Anthropic's servers and gives you a link rather than a local file to open."
+      },
+      "answer": "A",
+      "explanationCorrect": "Cowork produces a real artifact, a .docx, .xlsx, .pptx, or .pdf, saved back into your folder; the whole arc ends in a file you can open.",
+      "explanationDistractor": "Returning chat text you must paste and save yourself is the Chat pattern; the point of Cowork is that it writes the finished file for you.",
+      "reference": null
+    },
+    {
+      "id": "cw-012",
+      "domain": "cowork-foundations",
+      "studyArea": "Whole-Arc Delegation",
+      "scenario": "Weekly Competitive Digest",
+      "difficulty": "hard",
+      "stem": "You want a weekly competitive digest that gathers updates from several sources and lands as a saved brief. What is the strongest reason to run this in Cowork rather than Chat?",
+      "options": {
+        "A": "Because Chat cannot use the web or any connector at all, so gathering competitive information is impossible there.",
+        "B": "Because Chat has a smaller context window that could not hold a week of competitive updates at one time.",
+        "C": "Because the job spans several sources and ends in a saved digest, so Claude can plan, execute, and deliver it.",
+        "D": "Because Cowork responses are always longer and more detailed than the responses you get back from Chat."
+      },
+      "answer": "C",
+      "explanationCorrect": "The signal for Cowork is a multi-source job that ends in a produced, saved deliverable, so Claude can plan the whole arc, run it, and hand back the brief.",
+      "explanationDistractor": "Chat can use connectors and the web too, so 'Chat cannot gather information' is simply false; the deciding factor is the saved deliverable.",
+      "reference": null
+    },
+    {
+      "id": "cw-013",
+      "domain": "setup-permissions",
+      "studyArea": "Finding Cowork",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "Where do you switch into Cowork in the Claude desktop app?",
+      "options": {
+        "A": "By installing a separate app from a store that runs on its own, apart from Claude desktop.",
+        "B": "From the mode selector at the top-right corner of the Claude desktop app.",
+        "C": "By typing a special slash command into any ordinary Claude chat in a web browser tab.",
+        "D": "By turning on a hidden developer flag buried in your operating system settings panel."
+      },
+      "answer": "B",
+      "explanationCorrect": "Cowork runs inside the Claude desktop app, and you switch to it from the mode selector in the top-right; it may require a paid plan or a recent version.",
+      "explanationDistractor": "It is not a separate download or a browser slash command; Cowork is a mode within the existing desktop app, reached from the mode selector.",
+      "reference": null
+    },
+    {
+      "id": "cw-014",
+      "domain": "setup-permissions",
+      "studyArea": "Folder as Boundary",
+      "scenario": "Project Folder Setup",
+      "difficulty": "medium",
+      "stem": "Setting up a Cowork project, you click 'Work in a project' and choose a folder. What does that folder choice actually control?",
+      "options": {
+        "A": "The folder mainly sets a default location where any files you happen to download will be stored.",
+        "B": "The folder only limits what Claude can read; it can still write new files anywhere else on your disk.",
+        "C": "The folder just gives the project a display name and has no effect on what Claude may open or change.",
+        "D": "The folder is the boundary for what Claude can read and write; it opens, edits, creates, and saves files there."
+      },
+      "answer": "D",
+      "explanationCorrect": "The folder is the single most important setup choice: it is the boundary for what Claude can read and write, where it opens, edits, creates, and saves files.",
+      "explanationDistractor": "It is more than a download location or a label, and it bounds writing as well as reading, so 'reads only' understates what the folder governs.",
+      "reference": null
+    },
+    {
+      "id": "cw-015",
+      "domain": "setup-permissions",
+      "studyArea": "Save-Back vs Chat",
+      "scenario": "Why Not Just Chat",
+      "difficulty": "medium",
+      "stem": "A user asks how the working folder makes Cowork different from just uploading files in Chat. What is the key difference?",
+      "options": {
+        "A": "In Chat Claude can read what you upload but cannot save back to your computer; in Cowork it can save there.",
+        "B": "In Chat and in Cowork alike Claude can freely write files to your computer, so there is no real difference.",
+        "C": "In Cowork Claude can only read your files, exactly as in Chat, and never writes anything back to disk.",
+        "D": "In Chat Claude can save files to your disk, while in Cowork it is limited to reading them but not writing."
+      },
+      "answer": "A",
+      "explanationCorrect": "The key difference is write access: in Chat Claude reads uploads but cannot save back to your computer, while in Cowork the folder lets it save outputs there.",
+      "explanationDistractor": "Chat cannot write to your disk, so the options that grant Chat write access or deny Cowork write access reverse the actual capability.",
+      "reference": null
+    },
+    {
+      "id": "cw-016",
+      "domain": "setup-permissions",
+      "studyArea": "Scoping the Folder",
+      "scenario": "Choosing a Folder",
+      "difficulty": "medium",
+      "stem": "You are picking which folder to point Cowork at for a specific task. What is the recommended approach?",
+      "options": {
+        "A": "Point Claude at your entire Documents folder so that it always has every file you own within easy reach.",
+        "B": "Point Claude at your Desktop and Downloads together so nothing you might ever need is left out of scope.",
+        "C": "Pick the smallest folder that holds what the task needs; you can always add another folder later on.",
+        "D": "Point Claude at your whole home directory so no future task is ever blocked for a missing file."
+      },
+      "answer": "C",
+      "explanationCorrect": "Pick the smallest folder that holds what the task needs, not a catch-all like Documents or Downloads; you can always add another folder later if required.",
+      "explanationDistractor": "Pointing Cowork at broad catch-all folders widens the read/write boundary unnecessarily; the guidance is to scope down, then expand only if needed.",
+      "reference": null
+    },
+    {
+      "id": "cw-017",
+      "domain": "setup-permissions",
+      "studyArea": "Adding Folders Later",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "You scoped a project to a small folder but later realize the task also needs a second folder. Can you add one?",
+      "options": {
+        "A": "No; a project is permanently limited to the single folder you chose when you first created it.",
+        "B": "Only if you first delete the project entirely and then recreate it from scratch around a different folder.",
+        "C": "Yes; you can start with the smallest folder the task needs and add another folder later if you need it.",
+        "D": "Only an administrator can attach a second folder to a project after it has already been created."
+      },
+      "answer": "C",
+      "explanationCorrect": "Scoping small is safe precisely because it is not permanent: you can start with the smallest folder the task needs and add another folder later.",
+      "explanationDistractor": "There is no need to recreate the project or call an admin; adding a folder later is a supported, ordinary step.",
+      "reference": null
+    },
+    {
+      "id": "cw-018",
+      "domain": "setup-permissions",
+      "studyArea": "Setting Up Connectors",
+      "scenario": "Connect Once, Toggle Per Task",
+      "difficulty": "medium",
+      "stem": "How do connectors to apps like Gmail, Slack, or Google Drive fit into the Cowork workflow?",
+      "options": {
+        "A": "You set a connector up once in Customize, toggle it per task, and just refer to it naturally in prompts.",
+        "B": "You must reconnect and re-authorize each connector every single time before you can use it in a task.",
+        "C": "Connectors are configured only by your administrator and cannot be toggled on or off for a given task.",
+        "D": "Each connector has to be named with an exact code in every prompt or Claude will not be able to find it."
+      },
+      "answer": "A",
+      "explanationCorrect": "You set connectors up once in Customize, then toggle them per task and reference them naturally in prompts, such as asking what the team said in Slack.",
+      "explanationDistractor": "Connectors do not require re-authorizing every time or exact code names; setup is once, with per-task toggling and natural-language reference.",
+      "reference": null
+    },
+    {
+      "id": "cw-019",
+      "domain": "setup-permissions",
+      "studyArea": "Connector Examples",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "Which list contains examples of the kinds of connectors Cowork can use to reach the apps where your work lives?",
+      "options": {
+        "A": "A local command-line shell, a C language compiler, and a container runtime installed on your machine.",
+        "B": "A photo-editing suite, a video encoder, and a music-production package running natively on the desktop.",
+        "C": "A disk defragmenter, an antivirus scanner, and a system firewall the operating system itself manages.",
+        "D": "Gmail, Google Calendar, Slack, Drive, Microsoft 365, Notion, Salesforce, and similar work apps."
+      },
+      "answer": "D",
+      "explanationCorrect": "Connectors reach into work apps like email and calendar, messaging, cloud storage, and CRM or project tools: Gmail, Calendar, Slack, Drive, M365, Notion, Salesforce, and the like.",
+      "explanationDistractor": "Local developer tools, media software, and OS utilities are not connectors; connectors bridge to the SaaS apps where your work actually lives.",
+      "reference": null
+    },
+    {
+      "id": "cw-020",
+      "domain": "setup-permissions",
+      "studyArea": "Cloud Connector Limits",
+      "scenario": "Where To Build the Doc",
+      "difficulty": "hard",
+      "stem": "You plan to have Claude build and iterate on a document. A teammate says 'just have it write straight into Google Drive.' What is the accurate caveat?",
+      "options": {
+        "A": "Any connector you switch on can create and edit files in that cloud app just as freely as in your own local folder.",
+        "B": "Cloud connectors vary; many are read-and-search only, so your local folder is the most reliable build spot.",
+        "C": "Cloud connectors can never actually read or search your data at all; they exist only to push notifications to the app.",
+        "D": "Whether a given connector can write is fixed and identical across every app, so it never needs checking app by app."
+      },
+      "answer": "B",
+      "explanationCorrect": "Cloud connectors vary in capability; many, including default Google Drive and M365, are read-and-search only, so the local working folder is the most reliable place to build and iterate.",
+      "explanationDistractor": "Write capability is not uniform across connectors, and cloud connectors do read and search; assuming every connector can freely write is exactly the trap to avoid.",
+      "reference": null
+    },
+    {
+      "id": "cw-021",
+      "domain": "setup-permissions",
+      "studyArea": "Ask Before Acting",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "In Cowork's default permission mode, how does Claude handle actions that touch the outside world, like sending an email or posting a message?",
+      "options": {
+        "A": "In the default mode Claude pauses for your approval before every action that reaches the outside world.",
+        "B": "In the default mode Claude carries out each external action first and only informs you about it afterwards.",
+        "C": "In the default mode Claude blocks all outside actions entirely and can never send or post at all.",
+        "D": "In the default mode Claude approves its own outside actions automatically to keep things moving."
+      },
+      "answer": "A",
+      "explanationCorrect": "The default 'ask before acting' mode pauses for your approval before each action that touches the outside world, such as sending, posting, or sharing.",
+      "explanationDistractor": "Acting first and telling you later describes 'act without asking,' not the default; and the default pauses for approval rather than blocking outright.",
+      "reference": null
+    },
+    {
+      "id": "cw-022",
+      "domain": "setup-permissions",
+      "studyArea": "Act Without Asking",
+      "scenario": "Speeding Up a Trusted Run",
+      "difficulty": "medium",
+      "stem": "You switch a task to 'act without asking' to move faster. What does that change, and when is it appropriate?",
+      "options": {
+        "A": "It removes Claude's ability to touch any external tool, so the run becomes completely read-only throughout.",
+        "B": "It hands full unsupervised control to Claude, so you should switch it on and then walk away from the task.",
+        "C": "Claude stops pausing for approvals, so reserve it for trusted files and sites while you actively supervise.",
+        "D": "It also switches off the delete confirmation so Claude can remove files without asking first."
+      },
+      "answer": "C",
+      "explanationCorrect": "'Act without asking' stops the approval pauses, which is faster but riskier, so it is only for trusted files and sites while you are actively supervising.",
+      "explanationDistractor": "It does not make the run read-only, and it is not a cue to walk away; the mode assumes you stay present and watching.",
+      "reference": null
+    },
+    {
+      "id": "cw-023",
+      "domain": "setup-permissions",
+      "studyArea": "Delete Always Confirmed",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "Can Claude ever permanently delete a file without asking you first?",
+      "options": {
+        "A": "Only when you are in the default ask-before-acting mode; the faster mode deletes without confirming.",
+        "B": "Never; Claude always asks you before permanently deleting a file, in either permission mode.",
+        "C": "Only for files that happen to sit outside the working folder you originally chose for the project.",
+        "D": "Only if your administrator has turned on an extra organization-wide setting that requires it of Claude."
+      },
+      "answer": "B",
+      "explanationCorrect": "Deleting is the constant across both modes: Claude always asks before permanently deleting a file, and that confirmation cannot be skipped.",
+      "explanationDistractor": "The delete confirmation is not tied to a mode or a folder location or an admin setting; it holds unconditionally in every case.",
+      "reference": null
+    },
+    {
+      "id": "cw-024",
+      "domain": "setup-permissions",
+      "studyArea": "Controlling Access",
+      "scenario": "Web and Connector Access",
+      "difficulty": "hard",
+      "stem": "Beyond the per-task permission mode, which controls over Claude's reach do you and your admin actually have?",
+      "options": {
+        "A": "Only your organization's administrator can change any of these settings; an individual user controls none.",
+        "B": "Web access is always on and cannot be limited, though you can still choose which connectors are enabled.",
+        "C": "These access controls exist in Chat but were dropped in Cowork, which simply inherits whatever Chat allows.",
+        "D": "You control which connectors and MCP servers Claude reaches and your web access, though an admin can turn web search off."
+      },
+      "answer": "D",
+      "explanationCorrect": "As in Chat, you control which connectors and MCP servers Claude can reach and how often each asks, plus web access, while an org admin can turn web search off entirely.",
+      "explanationDistractor": "Web access can be limited and users do have controls, so the claims that web is always on or that only admins decide misstate the shared control model.",
+      "reference": null
+    },
+    {
+      "id": "cw-025",
+      "domain": "task-patterns",
+      "studyArea": "Multi-Step Pattern",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "A request reads: gather last month's numbers, compare them to plan, research two anomalies, then draft and format a summary. Why is this a good Cowork task?",
+      "options": {
+        "A": "It is multi-step: gather, compare, research, draft, and format, all handed off in a single prompt.",
+        "B": "It is risky, because any task with more than two steps is too complex to be trusted to Cowork at all.",
+        "C": "It is trivial, since a task with several steps is really just a quick chat question dressed up longer.",
+        "D": "It is unsupported, since Cowork can only carry out one isolated step and then has to stop and wait."
+      },
+      "answer": "A",
+      "explanationCorrect": "This shows the multi-step pattern: gather, compare, research, draft, and format handed off as one prompt is a classic signal that a task fits Cowork.",
+      "explanationDistractor": "Cowork is built for exactly this multi-step arc, so calling it too complex, trivial, or unsupported misreads what Cowork is designed to do.",
+      "reference": null
+    },
+    {
+      "id": "cw-026",
+      "domain": "task-patterns",
+      "studyArea": "File-Based Pattern",
+      "scenario": "Working on Existing Files",
+      "difficulty": "medium",
+      "stem": "Your inputs are three spreadsheets already sitting in your folder, and you want a cleaned summary saved back there. Which statement about this file-based pattern is correct?",
+      "options": {
+        "A": "Cowork can only create brand-new files; it is unable to open or work on files that already exist for you.",
+        "B": "Cowork ignores your files entirely and instead pulls all of its inputs from connected cloud apps and the web.",
+        "C": "Its inputs are real files in your folder and its output is a real artifact saved back there.",
+        "D": "Cowork reads your existing files but is never able to write its results anywhere back onto your own computer."
+      },
+      "answer": "C",
+      "explanationCorrect": "The file-based pattern is when inputs are real files in your folder and the output is a real artifact saved back; Cowork works on files you already have, not just new ones.",
+      "explanationDistractor": "Cowork both reads existing files and writes results back, so claiming it can only create new files or never writes to disk contradicts the pattern.",
+      "reference": null
+    },
+    {
+      "id": "cw-027",
+      "domain": "task-patterns",
+      "studyArea": "Multi-Tool Pattern",
+      "scenario": "One Delegation Across Tools",
+      "difficulty": "medium",
+      "stem": "A task needs to read a Gmail thread, check a calendar, and post a recap to Slack. How does Cowork handle this multi-tool work?",
+      "options": {
+        "A": "Cowork opens each connector in turn and waits for you to copy results by hand between one tool and the next.",
+        "B": "Cowork plans across the connectors and runs the whole sequence as one delegation instead of you stitching prompts together.",
+        "C": "Cowork can reach only one connector per task, so a multi-tool job has to be split into many separate tasks.",
+        "D": "Cowork uses connectors only to read data and always relies on you to take the actions in each separate app."
+      },
+      "answer": "B",
+      "explanationCorrect": "In the multi-tool pattern, Cowork plans across connectors and runs the whole sequence as one delegation, instead of you stitching separate prompts together.",
+      "explanationDistractor": "You are not the one copying between tools or splitting the work per connector; the point is that Cowork runs the cross-tool sequence for you as a single task.",
+      "reference": null
+    },
+    {
+      "id": "cw-028",
+      "domain": "task-patterns",
+      "studyArea": "One Handed-Off Task",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "What is the through-line uniting the multi-step, file-based, and multi-tool patterns?",
+      "options": {
+        "A": "That work like this must always be broken into many small chats that you personally run one after another.",
+        "B": "That juggling steps, files, and tools in your own head is the only dependable way to get such work done.",
+        "C": "That Cowork is only worthwhile when a task involves exactly one file and exactly one connected tool.",
+        "D": "That work which used to mean juggling steps, files, and tools can now be handed off as a single task."
+      },
+      "answer": "D",
+      "explanationCorrect": "The through-line is that work which used to mean juggling steps, files, and tools in your own head can now be handed off as one delegated task.",
+      "explanationDistractor": "The patterns exist precisely to replace manual juggling and many small chats, so the options that keep that burden on you miss the point.",
+      "reference": null
+    },
+    {
+      "id": "cw-029",
+      "domain": "task-patterns",
+      "studyArea": "Prompt Anatomy",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "According to the anatomy of a good Cowork prompt, which three things should you name?",
+      "options": {
+        "A": "The single most exact file path to the output, the run time of day, and the model version to be used.",
+        "B": "The deliverable, the inputs, and the nuance: audience, purpose, and your own expert judgment.",
+        "C": "A long system prompt, a temperature setting, and a strict cap on how many tokens the reply may use.",
+        "D": "Your billing tier, the number of connectors you own, and how much disk space the project may consume."
+      },
+      "answer": "B",
+      "explanationCorrect": "A good Cowork prompt names three things: the deliverable, the inputs, and the nuance, such as audience, purpose, and the expert judgment Claude cannot guess.",
+      "explanationDistractor": "File paths, model settings, and billing details are not the anatomy; the three that matter are deliverable, inputs, and nuance.",
+      "reference": null
+    },
+    {
+      "id": "cw-030",
+      "domain": "task-patterns",
+      "studyArea": "Naming the Deliverable",
+      "scenario": "Specifying the Output",
+      "difficulty": "medium",
+      "stem": "When naming the deliverable in your prompt, what is the recommended level of specificity?",
+      "options": {
+        "A": "Leave the format open so Claude can choose whatever shape it thinks will look best for the result.",
+        "B": "Ask only for 'a summary' and refine the length and layout across several later rounds of feedback.",
+        "C": "Specify nothing about the output and simply approve or reject whatever Claude produces on its first try.",
+        "D": "Name the format and length up front, like 'a one-page brief' or 'a single QBR slide,' to save a regenerate."
+      },
+      "answer": "D",
+      "explanationCorrect": "Being specific about the deliverable's format and length up front, like a one-page brief or a single slide, saves a regenerate later.",
+      "explanationDistractor": "Leaving format open or vague pushes the back-and-forth to later rounds; specifics stated up front are what save the extra pass.",
+      "reference": null
+    },
+    {
+      "id": "cw-031",
+      "domain": "task-patterns",
+      "studyArea": "Naming the Inputs",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "In the anatomy of a prompt, what does naming 'the inputs' mean?",
+      "options": {
+        "A": "Which folder, which channels, which date range, and which app Claude should actually be drawing on.",
+        "B": "The exact wording of every single sentence you want to appear in the finished deliverable.",
+        "C": "The name of the model, its temperature, and the top number of tokens the response is allowed to reach.",
+        "D": "How many revisions you intend to request and the exact minute each of them will be sent."
+      },
+      "answer": "A",
+      "explanationCorrect": "The inputs are the context you point Claude at: which folder, which channels, which date range, which app; Cowork is only as good as what you point it toward.",
+      "explanationDistractor": "Inputs are the sources, not the exact output wording or model settings; naming the right sources is what grounds the work.",
+      "reference": null
+    },
+    {
+      "id": "cw-032",
+      "domain": "task-patterns",
+      "studyArea": "Adding the Nuance",
+      "scenario": "Expert Judgment",
+      "difficulty": "medium",
+      "stem": "What does the 'nuance' row of a good Cowork prompt capture?",
+      "options": {
+        "A": "Nuance means restating the whole deliverable a second time so that Claude cannot possibly misread your request.",
+        "B": "Nuance means listing out every connector by name so that Claude need not work out which tools it should reach for.",
+        "C": "Nuance is judgment Claude can't guess: audience, purpose, and directions like 'lead with the recommendation.'",
+        "D": "Nuance means setting the temperature and the token cap so the reply lands at the length you want."
+      },
+      "answer": "C",
+      "explanationCorrect": "Nuance is the expert judgment Claude cannot guess: audience, purpose, and specific directions like 'lead with the recommendation' or 'flag anything we can't verify.'",
+      "explanationDistractor": "Restating the deliverable or listing connectors is not nuance; nuance supplies the human judgment and intent behind the task.",
+      "reference": null
+    },
+    {
+      "id": "cw-033",
+      "domain": "task-patterns",
+      "studyArea": "Empty Rows Get Asked",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "If you leave one of the anatomy rows, such as the nuance, out of your prompt, what typically happens?",
+      "options": {
+        "A": "Cowork silently guesses the missing detail and never mentions that anything was unclear to it.",
+        "B": "Cowork refuses to start the task at all until every possible detail has been filled in by you first.",
+        "C": "Cowork usually asks you for it before starting, so more of the back-and-forth happens up front, not later.",
+        "D": "Cowork fails the task partway through once it reaches the step that needed the detail you left out."
+      },
+      "answer": "C",
+      "explanationCorrect": "Leaving a row empty usually means Cowork asks you for it before starting, so more of the back-and-forth happens up front rather than across later rounds of correction.",
+      "explanationDistractor": "It does not silently guess and hide the gap, nor refuse to start; the design front-loads the clarifying conversation instead.",
+      "reference": null
+    },
+    {
+      "id": "cw-034",
+      "domain": "task-patterns",
+      "studyArea": "Clarifying Questions",
+      "scenario": "Before Claude Starts",
+      "difficulty": "medium",
+      "stem": "Right before starting, Claude asks you a couple of questions. How should you think about them?",
+      "options": {
+        "A": "Claude asks a couple of clarifying questions first; usually you pick an option, or answer in your own words.",
+        "B": "Claude never asks you anything and simply proceeds, so any gap in your prompt turns into a silent error later.",
+        "C": "Claude asks dozens of questions before every task, which is why Cowork is slower than a normal chat is.",
+        "D": "Claude asks questions only after the deliverable is finished, to check whether you are happy with it."
+      },
+      "answer": "A",
+      "explanationCorrect": "Claude asks a couple of clarifying questions to close context gaps before starting; usually you click an option, or answer in your own words if none fit, and skipping means it uses its best guess.",
+      "explanationDistractor": "The clarifying questions come before work begins, not never and not only at the end; they are a small up-front step, not dozens of prompts.",
+      "reference": null
+    },
+    {
+      "id": "cw-035",
+      "domain": "task-patterns",
+      "studyArea": "Steering Mid-Task",
+      "scenario": "Course Correction",
+      "difficulty": "hard",
+      "stem": "Partway through a run you notice Claude is using the wrong source. What is the best move?",
+      "options": {
+        "A": "Wait for Claude to finish and then start over from scratch with a brand-new prompt saying what you meant.",
+        "B": "Immediately stop and delete the entire project, since a task on the wrong track cannot be salvaged now.",
+        "C": "Do nothing and accept it, because interrupting a running Cowork task will always ruin the output.",
+        "D": "Interrupt and queue a message; Cowork picks up where it was and reuses the analysis it already did."
+      },
+      "answer": "D",
+      "explanationCorrect": "Steer mid-task: interrupt and queue a message, and Cowork picks up from where it was, reusing analysis it already did; the cost of a redirect is low.",
+      "explanationDistractor": "Waiting to finish and regenerating is the Chat instinct; here you redirect in flight rather than throwing away the work already done.",
+      "reference": null
+    },
+    {
+      "id": "cw-036",
+      "domain": "task-patterns",
+      "studyArea": "Edit vs Regenerate",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "The finished deliverable is mostly right but has two wrong figures. What is the most efficient next step?",
+      "options": {
+        "A": "Throw out the whole deliverable and have Claude regenerate it entirely from the start again.",
+        "B": "Tell Claude what to change; it edits far faster than it regenerates from scratch.",
+        "C": "Open the file yourself and make every correction by hand instead of involving Claude at all.",
+        "D": "Accept it as it stands, since a Cowork output cannot be revised at all once produced."
+      },
+      "answer": "B",
+      "explanationCorrect": "If a deliverable is mostly right, tell Claude what to change rather than starting over; it edits faster than it regenerates.",
+      "explanationDistractor": "Regenerating from scratch or fixing everything by hand wastes the work already done; a targeted edit is quicker and keeps the good parts.",
+      "reference": null
+    },
+    {
+      "id": "cw-037",
+      "domain": "task-patterns",
+      "studyArea": "Reviewing the Deliverable",
+      "scenario": "Trust but Verify",
+      "difficulty": "medium",
+      "stem": "You are reviewing a finished Cowork brief before you rely on it. What is the right way to review it?",
+      "options": {
+        "A": "Review the artifact itself, verify the facts, and treat an untraceable date, name, or quote as a red flag.",
+        "B": "Skim only the chat transcript, since the conversation is what matters and the saved file rarely differs.",
+        "C": "Trust the deliverable fully whenever the run finished without showing you any error along the way.",
+        "D": "Rerun the entire task a second time and compare the two, since that is the only way to catch a fabrication."
+      },
+      "answer": "A",
+      "explanationCorrect": "Review the artifact, not the chat: check it meets the objective, verify the facts (ask which docs Claude pulled from), and treat an untraceable date, name, or quote as a flag.",
+      "explanationDistractor": "A clean run with no errors is not proof of accuracy, and the transcript is not the deliverable; you review the saved file itself and verify its claims.",
+      "reference": null
+    },
+    {
+      "id": "cw-038",
+      "domain": "task-patterns",
+      "studyArea": "Scheduled Tasks",
+      "scenario": "Recurring Friday Review",
+      "difficulty": "hard",
+      "stem": "You set up a Friday review with /schedule and close your laptop for the weekend. What actually happens to the scheduled run?",
+      "options": {
+        "A": "Scheduled tasks run on Anthropic's own servers around the clock, so your computer does not need to be on at all.",
+        "B": "A scheduled task runs only when your computer is on and Claude is running; otherwise it waits until you return.",
+        "C": "Once a task has been scheduled it can no longer be edited at all, so any change means deleting and rebuilding it.",
+        "D": "Scheduling is limited to one fixed daily time, with no hourly, weekday, or manual cadence offered."
+      },
+      "answer": "B",
+      "explanationCorrect": "Scheduled tasks only run when your computer is on and Claude is running; if the laptop is closed or asleep, Claude picks it up when you are back and tells you it was delayed.",
+      "explanationDistractor": "Scheduled runs are not server-side around the clock; they depend on your machine being on, which is why a closed laptop delays them.",
+      "reference": null
+    },
+    {
+      "id": "cw-039",
+      "domain": "task-patterns",
+      "studyArea": "Dispatch from Mobile",
+      "scenario": "Away from the Desk",
+      "difficulty": "hard",
+      "stem": "You are away from your computer and start a task from the Claude mobile app using Dispatch. Where does the work run?",
+      "options": {
+        "A": "Dispatch runs the task entirely on your phone's own hardware, so your desktop can be switched off meanwhile.",
+        "B": "Dispatch is generally available on every plan, including Enterprise, and needs no desktop app to be running.",
+        "C": "Dispatch starts a task from mobile; the work runs on your desktop, which must be on and signed in.",
+        "D": "Dispatch copies your files up to the cloud so the task can run there without your desktop being involved."
+      },
+      "answer": "C",
+      "explanationCorrect": "Dispatch lets you start a task from mobile, but the work runs on your desktop with the same files, connectors, and permissions; it only works when the desktop is on, awake, and signed in.",
+      "explanationDistractor": "The task does not run on the phone or purely in the cloud; Dispatch is a remote trigger for work that still executes on your desktop.",
+      "reference": null
+    },
+    {
+      "id": "cw-040",
+      "domain": "customization",
+      "studyArea": "Global Instructions",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "What are Cowork's global instructions?",
+      "options": {
+        "A": "A note that applies to just the one chat you are in and is forgotten the moment that chat is closed.",
+        "B": "A setting only your administrator can edit that governs every user across the whole organization at once.",
+        "C": "A prompt you must paste again by hand at the start of each new Cowork task for it to take any effect.",
+        "D": "A standing brief that applies to every Cowork session, set once in Settings, Cowork, Global instructions."
+      },
+      "answer": "D",
+      "explanationCorrect": "Global instructions are a standing brief that applies to every Cowork session, every chat, scheduled task, and Dispatch, set once in Settings, Cowork, Global instructions.",
+      "explanationDistractor": "They are neither per-chat nor admin-only nor pasted each time; they persist across all your sessions once you set them.",
+      "reference": null
+    },
+    {
+      "id": "cw-041",
+      "domain": "customization",
+      "studyArea": "What Goes in Global",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "Which content is most appropriate to put in your global instructions?",
+      "options": {
+        "A": "The full text of every single document you expect Cowork to produce for you across the next several months.",
+        "B": "Who you are, your shorthand and acronyms, and how you like output delivered: format, length, and tone.",
+        "C": "A list of the exact web addresses you visit most often, so that Claude opens each one when a session begins.",
+        "D": "Your account password and your billing details, so that Claude never pauses a task to ask you."
+      },
+      "answer": "B",
+      "explanationCorrect": "Good global instructions cover who you are and what you do, your shorthand and acronyms, and how you like output delivered in format, length, and tone.",
+      "explanationDistractor": "Full document text, browsing lists, or credentials do not belong there; global instructions are a compact standing brief about you and your preferences.",
+      "reference": null
+    },
+    {
+      "id": "cw-042",
+      "domain": "customization",
+      "studyArea": "Memory: Cowork vs Chat",
+      "scenario": null,
+      "difficulty": "hard",
+      "stem": "A user assumes Cowork will build up standing context on its own, the way Chat memory does. What is the accurate correction?",
+      "options": {
+        "A": "Cowork builds its standing context automatically from your own activity, just as Chat does.",
+        "B": "Cowork keeps no standing context of any kind, so you must re-explain everything at the start each time.",
+        "C": "Chat memory builds itself automatically, but Cowork's standing context is mostly what you set up.",
+        "D": "Chat and Cowork share one memory store, so anything learned in either surface instantly appears in the other."
+      },
+      "answer": "C",
+      "explanationCorrect": "Unlike Chat, whose memory builds itself automatically, Cowork's standing context is mostly what you set up, through global instructions and projects.",
+      "explanationDistractor": "Cowork does not auto-build global standing context like Chat, nor share one store with Chat; you provide most of its standing context deliberately.",
+      "reference": null
+    },
+    {
+      "id": "cw-043",
+      "domain": "customization",
+      "studyArea": "Projects Defined",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "What is a Cowork project?",
+      "options": {
+        "A": "A scoped workspace tied to one stream of work, such as an account, a recurring deliverable, or a launch.",
+        "B": "A single chat thread that is automatically deleted as soon as its very first task has been completed.",
+        "C": "A read-only archive of past deliverables that you can browse but can no longer add any new work into.",
+        "D": "A billing container that groups your usage for invoicing but has no effect on how any task is run."
+      },
+      "answer": "A",
+      "explanationCorrect": "A project is a scoped workspace tied to one stream of work, such as a customer or account, a recurring deliverable, or a launch or initiative.",
+      "explanationDistractor": "A project is not a disposable thread, a read-only archive, or a billing bucket; it is a persistent, working scope for a stream of work.",
+      "reference": null
+    },
+    {
+      "id": "cw-044",
+      "domain": "customization",
+      "studyArea": "What a Project Holds",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "Which set of things does a Cowork project contain?",
+      "options": {
+        "A": "Instructions you write, scheduled tasks, context folders or links, and a memory that Claude builds itself.",
+        "B": "A fixed set of three connectors that can never be changed once the project has first been created.",
+        "C": "Nothing you configure; a project is only a colored label used to group related chats in the sidebar.",
+        "D": "A separate copy of the model, fine-tuned on your own files and retrained from scratch each time you open it."
+      },
+      "answer": "A",
+      "explanationCorrect": "A project holds three things you set, instructions, scheduled tasks, and context folders or links, plus one Claude builds, memory that accrues from conversations inside it.",
+      "explanationDistractor": "A project is not a fixed connector set, a mere label, or a fine-tuned model copy; it bundles instructions, scheduled tasks, context, and memory.",
+      "reference": null
+    },
+    {
+      "id": "cw-045",
+      "domain": "customization",
+      "studyArea": "Project Memory",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "How does a project's memory work?",
+      "options": {
+        "A": "Memory is a file that you must write out and keep updating by hand for the project to remember anything.",
+        "B": "Memory is wiped at the end of each conversation, so every new task in the project has to start from nothing.",
+        "C": "Memory is what Claude learns inside the project; it builds over time, and you don't write it yourself.",
+        "D": "Memory is shared across all of your projects at once, so each project can see whatever another has learned."
+      },
+      "answer": "C",
+      "explanationCorrect": "Project memory is what Claude learns from conversations inside that project; it builds over time and you don't write it, so each task opens with the situation and last week's decisions.",
+      "explanationDistractor": "You do not hand-write project memory, it is not wiped each conversation, and it is scoped to the project rather than shared across all of them.",
+      "reference": null
+    },
+    {
+      "id": "cw-046",
+      "domain": "customization",
+      "studyArea": "Starting a Project",
+      "scenario": "Three Starting Points",
+      "difficulty": "hard",
+      "stem": "Which describes the ways you can start a Cowork project?",
+      "options": {
+        "A": "Only from an empty template; you cannot base a project on a folder that already exists on your computer.",
+        "B": "From scratch, from an existing folder on your computer, or from a Chat project as a one-way import into Cowork.",
+        "C": "Only by an administrator, who must provision every new project centrally before any user can open it.",
+        "D": "Only by cloning another user's project, since projects cannot be created new from nothing on their own."
+      },
+      "answer": "B",
+      "explanationCorrect": "You can start a project from scratch, from an existing folder that becomes the working directory, or from a Chat project as a one-way import where Cowork changes don't sync back.",
+      "explanationDistractor": "Projects are not template-only, admin-provisioned, or clone-only; an existing folder or a Chat project are valid starting points too.",
+      "reference": null
+    },
+    {
+      "id": "cw-047",
+      "domain": "customization",
+      "studyArea": "Skills Auto-Invoke",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "What is a skill in Cowork, and how does Claude decide to use one?",
+      "options": {
+        "A": "You have to name the exact skill in your prompt every single time, or else Claude will never load it for you.",
+        "B": "A skill is a single setting you flip on globally, after which it rewrites every prompt you send anywhere.",
+        "C": "Skills run only when your administrator triggers them centrally, never in response to your own task.",
+        "D": "A skill is a reusable playbook Claude auto-invokes when a task matches it, though you can also name it."
+      },
+      "answer": "D",
+      "explanationCorrect": "A skill is a reusable playbook, a folder of files, that teaches Claude how to do a kind of work your way; Claude auto-invokes it when a task matches, though you can also be explicit.",
+      "explanationDistractor": "You do not have to name a skill every time, and skills are not global prompt-rewriters or admin-only triggers; matching a task auto-invokes them.",
+      "reference": null
+    },
+    {
+      "id": "cw-048",
+      "domain": "customization",
+      "studyArea": "Anatomy of a Skill",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "What can a skill actually contain?",
+      "options": {
+        "A": "A single locked-up binary file that nobody who installs it can open, inspect, or change afterward.",
+        "B": "Instructions in a SKILL.md, plus optional assets, references, and scripts bundled in one folder.",
+        "C": "A live network service that Claude has to call over the internet each time the skill is needed.",
+        "D": "A saved transcript Claude replays word for word whenever a similar request comes up."
+      },
+      "answer": "B",
+      "explanationCorrect": "A skill is a folder that can hold instructions (the SKILL.md), assets like templates and fonts, references showing what good looks like, and scripts for parts that should run the same way every time.",
+      "explanationDistractor": "A skill is not an opaque binary, a remote service, or a replayed transcript; it is a readable folder of instructions and optional supporting files.",
+      "reference": null
+    },
+    {
+      "id": "cw-049",
+      "domain": "customization",
+      "studyArea": "Minimum Skill and skill-creator",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "What is the minimum a skill needs, and how might you build one quickly?",
+      "options": {
+        "A": "A skill must always include assets, references, and scripts, or Claude will refuse to load it at all.",
+        "B": "A skill can only be written by an Anthropic engineer and cannot be created by an ordinary user at all.",
+        "C": "A skill has to be at least ten files long before Claude will recognize it as a valid skill to run.",
+        "D": "A skill can be just a SKILL.md or add any mix of files; skill-creator helps you build one fast from a chat."
+      },
+      "answer": "D",
+      "explanationCorrect": "A skill can be just a SKILL.md, or add any combination of assets, references, and scripts; skill-creator helps you build one fast by interviewing you about the process.",
+      "explanationDistractor": "There is no requirement for extra files, a ten-file minimum, or an Anthropic engineer; a lone SKILL.md is a valid skill and users can build their own.",
+      "reference": null
+    },
+    {
+      "id": "cw-050",
+      "domain": "customization",
+      "studyArea": "Plugins Defined",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "What is a plugin in Cowork?",
+      "options": {
+        "A": "A packaged set of skills built around a job, along with the connectors and subagents those skills depend on.",
+        "B": "A one-off script you run in a terminal that has nothing to do with skills, connectors, or subagents.",
+        "C": "A theme that only restyles Cowork's appearance and changes nothing about what Claude can actually do.",
+        "D": "A permission profile that only decides which files Claude may read, bundling no skills or tools of its own at all."
+      },
+      "answer": "A",
+      "explanationCorrect": "A plugin is a packaged set of skills built around a job, plus the connectors and subagents those skills depend on, where a subagent is a helper spun up for one part of the work.",
+      "explanationDistractor": "A plugin is not a lone script, a cosmetic theme, or a bare permission profile; it bundles skills with the tools and helpers they rely on.",
+      "reference": null
+    },
+    {
+      "id": "cw-051",
+      "domain": "customization",
+      "studyArea": "Plugin Shapes and Marketplace",
+      "scenario": "Off-the-Shelf Plugins",
+      "difficulty": "hard",
+      "stem": "You install a finance plugin from a marketplace. Which statement about plugin shapes and marketplace plugins is correct?",
+      "options": {
+        "A": "Plugins come in exactly one rigid shape, and not a single one of them can bundle more than one skill at a time.",
+        "B": "Anyone installing a marketplace plugin may freely edit it, and every one of their edits flows back to all users.",
+        "C": "A plugin is an end-to-end pipeline or a bundle of a team's top skills; installers can't edit marketplace ones.",
+        "D": "Plugins are limited to Anthropic's own catalog, so a team can never build or publish one of its own."
+      },
+      "answer": "C",
+      "explanationCorrect": "A plugin can be an end-to-end pipeline for one process or a bundle of a team's most-used skills; marketplace plugins can't be edited by installers, and updates flow from the maintainer.",
+      "explanationDistractor": "Plugins are not single-shape or single-skill, and teams can build and publish their own, so the rigid-shape and Anthropic-only claims are wrong.",
+      "reference": null
+    },
+    {
+      "id": "cw-052",
+      "domain": "surfaces-safety",
+      "studyArea": "Claude in Chrome",
+      "scenario": "No Connector Exists",
+      "difficulty": "medium",
+      "stem": "Your task needs data from an internal dashboard that has no connector. How does Claude in Chrome fit in?",
+      "options": {
+        "A": "It logs you into any site automatically from stored credentials, so you never have to sign in yourself at all.",
+        "B": "It fully replaces every connector, so once it is installed you no longer need Gmail, Slack, or any other one.",
+        "C": "It runs the pages on Anthropic's servers rather than your browser, so your own signed-in session is never used.",
+        "D": "It bridges tools that have no connector; you must be signed in, since Claude works in your own session."
+      },
+      "answer": "D",
+      "explanationCorrect": "Claude in Chrome is the bridge for tools that lack a connector; it reads and acts on pages in your authenticated session, so you must be signed in because Claude can't log in for you.",
+      "explanationDistractor": "It cannot log in for you, does not replace all connectors, and works in your real browser session rather than on remote servers.",
+      "reference": null
+    },
+    {
+      "id": "cw-053",
+      "domain": "surfaces-safety",
+      "studyArea": "Claude for Microsoft 365",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "How does Claude for Microsoft 365 differ from Cowork in where it operates?",
+      "options": {
+        "A": "It lives inside Word, Excel, PowerPoint, and Outlook as an add-in and can carry context across those apps.",
+        "B": "It is a standalone desktop program that can open Office files but cannot edit them or move context between apps.",
+        "C": "It only works in Outlook and has no presence at all in Word, Excel, or PowerPoint for any kind of task.",
+        "D": "It replaces Cowork entirely, so once you have it there is no longer any reason to use a working folder."
+      },
+      "answer": "A",
+      "explanationCorrect": "Claude for M365 lives inside the document as an add-in in Word, Excel, PowerPoint, and Outlook, and one conversation can carry context across those apps, like Excel analysis into a PowerPoint slide.",
+      "explanationDistractor": "It is not a standalone editor limited to one app, and it does not replace Cowork; reach for Cowork when work pulls from many sources into a deliverable.",
+      "reference": null
+    },
+    {
+      "id": "cw-054",
+      "domain": "surfaces-safety",
+      "studyArea": "Safe Setup",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "Which habits set you up so a Cowork mistake can't reach what matters?",
+      "options": {
+        "A": "Run each new workflow directly on your only copy of the important files so you see real results quickly.",
+        "B": "Use a dedicated working folder, back up anything irreplaceable, and test new workflows on copies first.",
+        "C": "Grant Cowork your entire home directory up front so it is never blocked partway through a running task.",
+        "D": "Turn on act-without-asking for the very first run so you can watch how the task behaves."
+      },
+      "answer": "B",
+      "explanationCorrect": "Set up so mistakes can't reach what matters: use a dedicated working folder rather than a catch-all, back up anything irreplaceable, and test new workflows, especially scheduled ones, on copies first.",
+      "explanationDistractor": "Running on your only copy, opening your whole home directory, or removing the approval pauses on a first run all widen the blast radius instead of containing it.",
+      "reference": null
+    },
+    {
+      "id": "cw-055",
+      "domain": "surfaces-safety",
+      "studyArea": "In-the-Moment Safety",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "While a task is running, which in-the-moment habits keep it safe?",
+      "options": {
+        "A": "Approve each confirmation prompt as fast as you possibly can, so the task is never once slowed by any waiting.",
+        "B": "Ignore your instinct whenever something feels off, since the plan that Claude wrote is always the right one.",
+        "C": "Read the plan when it appears, watch for unexpected files or sites, and approve prompts deliberately.",
+        "D": "Skip the plan and just check the final file, since watching the steps rarely changes the end outcome anyway."
+      },
+      "answer": "C",
+      "explanationCorrect": "In the moment: read the plan once it's made, watch for unexpected patterns like files or sites you didn't mention, and approve confirmation prompts deliberately rather than clicking through.",
+      "explanationDistractor": "Rushing approvals or ignoring a 'something feels off' signal is how most mistakes happen; that instinct is a real cue to stop and check.",
+      "reference": null
+    },
+    {
+      "id": "cw-056",
+      "domain": "surfaces-safety",
+      "studyArea": "When Not to Use Cowork",
+      "scenario": "Wrong Tool for the Job",
+      "difficulty": "hard",
+      "stem": "Which situation is a sign that Cowork is not the right tool for the job?",
+      "options": {
+        "A": "Any task that touches more than one connector, because coordinating tools is beyond what Cowork can do.",
+        "B": "Any task that produces a document, since Cowork is meant only for quick conversational back-and-forth.",
+        "C": "Any task at all involving a spreadsheet, because Cowork is unable to open or edit tabular files safely.",
+        "D": "A regulated workflow that needs an audit trail, since Cowork activity isn't captured in audit logs or exports."
+      },
+      "answer": "D",
+      "explanationCorrect": "Cowork is the wrong tool for regulated workflows needing an audit trail, since Cowork activity isn't in audit logs, the Compliance API, or data exports, and for anything you wouldn't trust a quick colleague to do unsupervised.",
+      "explanationDistractor": "Multi-connector, document-producing, and spreadsheet tasks are squarely what Cowork is for; the real limits are audit trails and highly sensitive data outside your approved boundary.",
+      "reference": null
+    },
+    {
+      "id": "cw-057",
+      "domain": "surfaces-safety",
+      "studyArea": "Validating with Evals",
+      "scenario": "Trying Out a Skill",
+      "difficulty": "hard",
+      "stem": "Before you rely on or share a new skill, you validate it with evals. What is an eval in this context?",
+      "options": {
+        "A": "An eval is a formal certification that Anthropic issues for your skill after carefully reviewing all its files.",
+        "B": "An eval is a try-out: run a realistic request, compare with- and without-skill output, then say what to fix.",
+        "C": "An eval is a strict one-time pass-or-fail gate, and a skill may ship only after every eval case has fully passed.",
+        "D": "An eval is a speed test of how many seconds a skill takes to run over a batch of sample prompts."
+      },
+      "answer": "B",
+      "explanationCorrect": "An eval is a try-out: skill-creator generates realistic prompts and a with-skill versus without-skill output pair, you pick the one you'd send and give feedback, and Claude revises; it's a loop, not a one-time gate.",
+      "explanationDistractor": "An eval is not an Anthropic certification, a rigid pass-or-fail gate, or a speed test; the bar to ship is that the cases you care about beat the baseline meaningfully.",
+      "reference": null
+    },
+    {
+      "id": "cw-058",
+      "domain": "surfaces-safety",
+      "studyArea": "Bounding the Prompt",
+      "scenario": "Leaving No Room",
+      "difficulty": "medium",
+      "stem": "To write prompts that leave no room for the wrong action, what should you do?",
+      "options": {
+        "A": "Name the bounds explicitly, like 'only the 3 newest files' and 'draft only, don't message anyone.'",
+        "B": "Keep the prompt as vague as you possibly can so that Claude has full freedom to decide the right action.",
+        "C": "Use sweeping verbs such as 'clean up everything' so that Claude understands to be thorough across all files.",
+        "D": "Leave out any mention of what not to do and trust Claude to infer the limits from the folder's own contents."
+      },
+      "answer": "A",
+      "explanationCorrect": "Write prompts that leave no room for the wrong action: be specific about destructive verbs and name the bounds, like 'only the 3 most recently updated files' or 'draft only, don't message anyone.'",
+      "explanationDistractor": "Vague prompts and sweeping verbs like 'clean up everything' invite scope creep and the wrong destructive action; naming the bounds is what constrains the task.",
+      "reference": null
+    },
+    {
+      "id": "cw-059",
+      "domain": "surfaces-safety",
+      "studyArea": "Sharing Good Habits",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "Your team is about to share proven skills as a plugin. Which set of habits is recommended?",
+      "options": {
+        "A": "Give a shared plugin no single owner, so that responsibility for it is spread evenly across the whole team.",
+        "B": "Name skills as broadly as you can, like 'meeting-prep,' so the widest possible range of tasks will match.",
+        "C": "Give each shared plugin one named owner, run evals before every publish, and name skills specifically to avoid collisions.",
+        "D": "Publish a shared plugin once and then leave it in place forever, since a review rhythm only slows the team."
+      },
+      "answer": "C",
+      "explanationCorrect": "Good sharing habits: one named owner per shared plugin, evals before every publish, specific skill names like 'sales-customer-renewal-prep' to avoid collisions, and a regular review rhythm.",
+      "explanationDistractor": "No owner, broad collision-prone names, and never reviewing all work against the recommended habits, which stress clear ownership, specific naming, and a review cadence.",
+      "reference": null
+    },
+    {
+      "id": "cw-060",
+      "domain": "surfaces-safety",
+      "studyArea": "Private Marketplace and Levels",
+      "scenario": "Publishing to a Team",
+      "difficulty": "medium",
+      "stem": "Your org distributes plugins through a private marketplace. Which statement about publishing is correct?",
+      "options": {
+        "A": "Publish levels are purely cosmetic labels that have no effect on whether a plugin is installed or required.",
+        "B": "Any employee can spin up the org marketplace themselves, since it needs no administrator to be involved.",
+        "C": "A required plugin can still be turned off by each user whenever they personally decide they don't want it.",
+        "D": "Levels set how a plugin ships: Available, Installed by default, Required, or Hidden, managed by an admin."
+      },
+      "answer": "D",
+      "explanationCorrect": "Publish levels control how a plugin ships: Available (install if you want), Installed by default (on but can turn off), Required (on and stays on), or Hidden; an admin manages the marketplace.",
+      "explanationDistractor": "Levels are not cosmetic, an admin owns the marketplace rather than any employee, and a Required plugin stays on and can't be turned off by users.",
+      "reference": null
+    }
+  ]
+}
