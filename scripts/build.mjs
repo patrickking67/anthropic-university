@@ -63,7 +63,7 @@ function ensureDir(dir) {
 // ---------------------------------------------------------------------------
 function discoverExams() {
   if (!existsSync(CONTENT_DIR)) {
-    err(`content/ directory not found`);
+    warn(`content/ directory not found — no exams to build yet`);
     return [];
   }
   const dirs = readdirSync(CONTENT_DIR).filter((name) => {
