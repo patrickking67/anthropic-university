@@ -1679,7 +1679,7 @@ Reference: https://code.claude.com/docs/en/skills
 
 A skill performs a noisy, verbose repository scan whose intermediate output would clutter the main conversation, but you only need its final summary. Which frontmatter option keeps the main context clean?
 
-- **A.** Use allowed-tools to restrict which tools the skill can call, so its noisy scan can only touch the read commands that it actually needs to run
+- **A.** allowed-tools, restricting which tools the skill may call so its noisy scan can only touch the read commands it actually needs
 - **B.** argument-hint, prompting for parameters
 - **C.** model, pinning a specific model for the skill
 - **D.** context: fork, running the skill in an isolated subagent context so its verbose output does not pollute the main conversation
@@ -1732,8 +1732,8 @@ Reference: https://code.claude.com/docs/en/skills
 Your custom /deploy skill needs the target environment as a parameter, and you want Claude Code to prompt for it. Which frontmatter field is designed for this?
 
 - **A.** argument-hint, which declares and prompts for the expected parameter(s)
-- **B.** Use allowed-tools, the field that lists which tools a skill may call, treating the target environment as effectively another input to declare there
-- **C.** Use context: fork so the skill runs in its own isolated subagent and can be handed the environment separately from the main conversation
+- **B.** allowed-tools, which lists the tools a skill may call and could be misread as also declaring the environment it should receive
+- **C.** context: fork, which runs the skill in an isolated subagent that is handed the target environment separately from the main conversation
 - **D.** model
 
 <details><summary>Answer &amp; explanation</summary>
@@ -2148,7 +2148,7 @@ Reference: https://code.claude.com/docs/en/skills
 A developer new to the platform asks which endpoint handles a normal chat completion, a tool-use turn, and a vision request. What is the correct answer?
 
 - **A.** All of them go through the single Messages API endpoint (POST /v1/messages); tools, images, and text are all expressed within that one request
-- **B.** Each uses a different endpoint: /v1/chat, /v1/tools, and /v1/vision
+- **B.** Each capability uses a different endpoint: /v1/chat for text, /v1/tools for tool use, and /v1/vision for images, and you route each request to the matching one
 - **C.** Chat uses /v1/messages, but tool use requires a separate /v1/functions endpoint
 - **D.** Vision requires a dedicated /v1/images endpoint
 
@@ -2173,9 +2173,9 @@ Reference: https://platform.claude.com/docs/en/api/messages
 
 You want to force Claude to call one specific tool, get_weather, on this turn rather than letting it decide. Which tool_choice setting does that?
 
-- **A.** tool_choice: auto
+- **A.** tool_choice: auto, which leaves the decision to the model and tends to select get_weather when the prompt is obviously about weather, though it is not guaranteed
 - **B.** tool_choice: { type: "tool", name: "get_weather" }, which forces that specific tool
-- **C.** tool_choice: any
+- **C.** tool_choice: any, which requires the model to call some tool on this turn, making it very likely to reach for get_weather in a weather scenario
 - **D.** tool_choice: none
 
 <details><summary>Answer &amp; explanation</summary>
@@ -2199,7 +2199,7 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overvie
 
 You enabled prompt caching with a large static system prompt first, but cache hit rates are near zero. Logs show you prepend the current timestamp to the system prompt on every request. What is happening?
 
-- **A.** Timestamps are ignored by the cache, so this cannot be the cause
+- **A.** Timestamps are ignored by the cache when it computes a prefix match, so prepending one cannot be what is driving your near-zero cache hit rate here
 - **B.** Caching only works on the user message, not the system prompt
 - **C.** Any change in the cached prefix invalidates everything after it, so a per-request timestamp at the front busts the cache every time
 - **D.** The cache TTL is set too long, so entries never refresh
@@ -2227,7 +2227,7 @@ Which change will NOT, on its own, invalidate an existing prompt cache entry?
 
 - **A.** Changing the model
 - **B.** Changing the tool definitions sent with the request
-- **C.** Editing the text of the cached system prompt
+- **C.** Editing the text of the cached system prompt is a safe operation, because the cache keys on structure rather than exact wording, so the entry survives it
 - **D.** Adding a new user message after the cached prefix while leaving the prefix itself unchanged
 
 <details><summary>Answer &amp; explanation</summary>
@@ -2252,7 +2252,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 Which statement about the Message Batches API is accurate?
 
 - **A.** It is asynchronous, roughly 50% cheaper, completes within 24 hours (most finish sooner), and results are correlated by custom_id and may arrive in any order
-- **B.** It is synchronous and returns results in the exact order submitted
+- **B.** It is synchronous and returns results in the exact order they were submitted, so you can line the responses up against your inputs without any correlation id
 - **C.** It is real-time and cheaper because it skips safety checks
 - **D.** It guarantees sub-second latency for high-volume jobs
 
@@ -2277,7 +2277,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/batch-processin
 
 You are generating very long outputs with a high max_tokens and occasionally hit HTTP timeouts on non-streaming requests. What is the recommended fix, and how do you get the assembled result?
 
-- **A.** Lower max_tokens until the timeouts stop, accepting truncated answers
+- **A.** Lower max_tokens until the timeouts stop, accepting that some answers will be truncated, since a shorter completion is less likely to exceed the request timeout
 - **B.** Use streaming to avoid the timeout, then assemble the complete result with the SDK's get_final_message()/finalMessage() helper
 - **C.** Retry the non-streaming call with only a longer client timeout
 - **D.** Split the prompt across the Batches API
@@ -2303,7 +2303,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/streaming
 
 You need the model's final response to conform exactly to a JSON schema so a downstream service can parse it without defensive code. On current models, what is the recommended mechanism?
 
-- **A.** Prefill the assistant message with an opening brace to force JSON
+- **A.** Prefill the assistant message with an opening brace so the model is forced to continue as JSON, then parse whatever it produces after that starting token
 - **B.** Ask for JSON in the prompt and hope it complies
 - **C.** Use output_config.format with a JSON schema to constrain the response, and strict: true on a tool to guarantee valid tool arguments
 - **D.** Post-process the text with a JSON-repair library
@@ -2329,7 +2329,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/structured-outp
 
 In the Model Context Protocol, which trio names the core primitives a server can expose?
 
-- **A.** prompts, embeddings, and fine-tunes
+- **A.** prompts, embeddings, and fine-tunes, which together let a server supply reusable prompts and the vector data a client needs to ground its answers
 - **B.** endpoints, webhooks, and secrets
 - **C.** agents, workflows, and pipelines
 - **D.** tools, resources, and prompts
@@ -2356,7 +2356,7 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/mcp
 You are connecting Claude to a local MCP server running on the same machine and, separately, to a remote hosted one. Which transports fit these two cases?
 
 - **A.** stdio for the local server and streamable HTTP/SSE for the remote server
-- **B.** HTTP for the local server and stdio for the remote server
+- **B.** HTTP for the local server so it can be reached on localhost, and stdio for the remote server so it can stream over the network connection to the host
 - **C.** WebSocket for both, since MCP requires it
 - **D.** gRPC for the local server and REST for the remote server
 
@@ -2381,7 +2381,7 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/mcp
 
 A team wants Claude to run an agent loop with tool execution, context management, and file/permission handling largely handled for them, rather than writing that orchestration against raw HTTP. Which choice matches?
 
-- **A.** The raw Messages API, because it already includes an agent harness
+- **A.** The raw Messages API, because it already ships with a built-in agent harness that runs the loop, executes tools, and manages context on your behalf
 - **B.** The Claude Agent SDK, which provides the harness (loop, tool execution, context handling) on top of the API, whereas the raw Messages API gives you the primitives to build that yourself
 - **C.** The Batches API, which manages agent loops for you
 - **D.** There is no difference; both are identical
@@ -2407,7 +2407,7 @@ Reference: https://platform.claude.com/docs/en/api/agent-sdk/overview
 
 Before sending a large request you want an accurate token count for the exact model and message shape you will use. What is the right approach?
 
-- **A.** Estimate with a generic tokenizer library like tiktoken
+- **A.** Estimate with a generic tokenizer library like tiktoken, which is close enough in practice that the small difference rarely affects how you size a request
 - **B.** Divide the character count by four
 - **C.** Use the count_tokens endpoint, which counts for the actual model and request structure
 - **D.** Send the request and read usage afterward, since there is no way to count beforehand
@@ -2433,7 +2433,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/token-counting
 
 You need Claude to answer questions about a multi-page PDF and a screenshot. How are these provided?
 
-- **A.** Only plain text extracted from them can be sent; native PDF and image input is unsupported
+- **A.** Only plain text extracted from the PDF and image can be sent, so you must run OCR and text extraction yourself before putting anything into the request
 - **B.** They must be uploaded to a separate vision product outside the Messages API
 - **C.** PDFs are supported but images are not
 - **D.** Both PDFs and images are supported as content blocks within a Messages API request (document and image inputs)
@@ -2460,7 +2460,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/pdf-support
 Claude requested three tools in a single turn. Your code returns each tool_result in its own separate user message across three API calls. Over time Claude stops calling tools in parallel. Why?
 
 - **A.** Splitting tool_results across multiple messages trains the model away from parallel calls; all tool_results for a turn should be returned together in one user message
-- **B.** Parallel tool use is only available on Haiku models
+- **B.** Parallel tool use is only available on the Haiku models, so once your traffic shifts to a larger model the requests stop being dispatched in parallel
 - **C.** The tools' schemas must be merged into one combined schema
 - **D.** You must set tool_choice to any to keep parallelism
 
@@ -2485,7 +2485,7 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overvie
 
 How do you mark a block for caching, and what TTLs are available?
 
-- **A.** Set stream: true; caching is then automatic with a fixed 10-minute TTL
+- **A.** Set stream: true and caching then turns on automatically for the request, with a fixed ten-minute time-to-live that you do not configure yourself
 - **B.** Add cache_control { type: "ephemeral" } to the block; the default TTL is 5 minutes, with a 1-hour option
 - **C.** Prefix the block with a special token; the TTL is always 24 hours
 - **D.** Enable it globally in the dashboard; the TTL cannot be changed
@@ -2511,7 +2511,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 
 Your agent loop must handle every way a turn can end. Which set correctly lists Messages API stop_reason values you should branch on?
 
-- **A.** success, failure, retry, and timeout
+- **A.** success, failure, retry, and timeout, which between them describe every way an API turn can finish and tell the loop whether it should try again
 - **B.** complete, incomplete, and error
 - **C.** end_turn, tool_use, max_tokens, stop_sequence, plus pause_turn and refusal
 - **D.** done, continue, and stop
@@ -2537,7 +2537,7 @@ Reference: https://platform.claude.com/docs/en/api/handling-stop-reasons
 
 For a high-volume classification job where each item is simple and latency matters, which current model is the most cost-and-speed appropriate default, assuming quality is adequate?
 
-- **A.** Always use Opus 4.8 regardless of the task
+- **A.** Always use Opus 4.8 regardless of the task, on the reasoning that the strongest model gives the best quality and avoids any risk of misclassification
 - **B.** Use whichever model has the largest context window
 - **C.** Fine-tune a custom model first
 - **D.** Haiku 4.5, which targets simple, high-throughput, latency-sensitive work (with Sonnet 5 as the balanced step up and Opus 4.8 for the hardest reasoning)
@@ -2563,7 +2563,7 @@ Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
 On the newest models, how do you increase reasoning depth for a hard multi-step problem, given that fixed budget_tokens and sampling controls have changed?
 
-- **A.** Set a large budget_tokens value, exactly as before
+- **A.** Set a large budget_tokens value exactly as before, since reserving more thinking tokens is still how you give the model room for harder reasoning
 - **B.** Raise temperature so the model thinks harder
 - **C.** Use adaptive thinking (thinking type "adaptive") and set output_config.effort (low/medium/high/xhigh/max) to steer reasoning depth
 - **D.** There is no way to influence reasoning depth on current models
@@ -2590,7 +2590,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/extended-thinki
 After enabling prompt caching you want to confirm at runtime that reads are actually hitting the cache. What tells you?
 
 - **A.** The response latency alone proves it
-- **B.** A boolean 'cached' field on the message
+- **B.** A boolean 'cached' field on the message that is set to true whenever the response was served wholly or partly from a previously cached prefix
 - **C.** The absence of any error means it worked
 - **D.** The usage object's cache_read_input_tokens (alongside the cache-creation fields) reported on the response
 
