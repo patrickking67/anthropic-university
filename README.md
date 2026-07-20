@@ -55,8 +55,12 @@ Progress is saved in your browser (`localStorage`). Light/dark aware.
   no server needed.
 
 <p align="center">
-  <img src="assets/screenshot-home.png" alt="Anthropic University home screen" width="49%">
-  <img src="assets/screenshot-practice.png" alt="Practice mode with per-question feedback" width="49%">
+  <img src="assets/screenshot-home.png" alt="Anthropic University home screen with the four certification tracks" width="49%">
+  <img src="assets/screenshot-practice.png" alt="Practice mode — one scenario question at a time" width="49%">
+</p>
+<p align="center">
+  <img src="assets/screenshot-study.png" alt="Study mode rendering a track's study guide" width="49%">
+  <img src="assets/screenshot-flashcards.png" alt="Flashcard drilling mode" width="49%">
 </p>
 
 ## A suggested study workflow
