@@ -54,10 +54,10 @@
       "difficulty": "easy",
       "stem": "A developer wants Claude to read, edit, and run tests across the files of a local Git repository from the terminal. Which entry point is the best fit?",
       "options": {
-        "A": "claude.ai chat, pasting the files in one at a time",
+        "A": "claude.ai chat, pasting the repository files in one at a time by hand each time",
         "B": "Claude Code, which works directly with your repository in the terminal",
-        "C": "A Claude Project with the repository zipped as a knowledge source",
-        "D": "The API with a custom script the developer writes and maintains"
+        "C": "A Claude Project with the whole repository zipped and attached as a knowledge source",
+        "D": "The API, with a custom script the developer writes and maintains"
       },
       "answer": "B",
       "explanationCorrect": "Claude Code is the terminal-based entry point built to read, edit, and run code across a repository directly. It is purpose-built for hands-on local codebase work.",
@@ -72,10 +72,10 @@
       "difficulty": "easy",
       "stem": "Your team answers customer questions using the same product FAQ, tone guidelines, and policy documents every day, and you want every chat to start with that context without pasting it each time. Which entry point best fits?",
       "options": {
-        "A": "A new claude.ai chat each time, pasting the documents at the start",
-        "B": "Claude Code, with the documents committed to a repository",
+        "A": "A brand-new claude.ai chat every time, pasting the FAQ, tone guide, and policy documents in at the start",
+        "B": "Claude Code, with the FAQ and policy documents kept in a repository",
         "C": "A Claude Project with the FAQ and policies as knowledge and the tone in custom instructions",
-        "D": "The API, embedding all the documents in every single request"
+        "D": "The API, embedding all of the documents in every single request"
       },
       "answer": "C",
       "explanationCorrect": "Projects let you set durable custom instructions and attach knowledge sources, so every chat in the Project inherits that context automatically. That is ideal for a repeated workflow with shared reference material.",
@@ -91,9 +91,9 @@
       "stem": "An engineer needs Claude to classify incoming support tickets automatically inside the company's own application, with no person in the loop. Which entry point is most appropriate?",
       "options": {
         "A": "The Claude Developer Platform API, called from the application's code",
-        "B": "claude.ai chat, with a staff member pasting each ticket manually",
+        "B": "claude.ai chat, with a staff member manually pasting in each incoming ticket",
         "C": "A Claude Project shared with the whole support team",
-        "D": "Claude Code running in a developer's terminal"
+        "D": "Claude Code running in one of the individual developers' local terminals"
       },
       "answer": "A",
       "explanationCorrect": "Programmatic, automated classification inside your own software is what the API is for: the application sends each ticket to Claude and acts on the response with no manual steps.",
@@ -108,9 +108,9 @@
       "difficulty": "easy",
       "stem": "A marketer wants to brainstorm ten taglines for a campaign and refine the best few in a quick back-and-forth. There is no code, no repeated workflow, and nothing confidential. Which entry point is the simplest appropriate choice?",
       "options": {
-        "A": "The API, driven by a Python script",
-        "B": "Claude Code in the terminal",
-        "C": "A dedicated Claude Project with several knowledge sources",
+        "A": "The API, driven by a short Python script",
+        "B": "Claude Code, used from the terminal",
+        "C": "A dedicated Claude Project with knowledge sources",
         "D": "A claude.ai chat conversation"
       },
       "answer": "D",
@@ -128,7 +128,7 @@
       "options": {
         "A": "Claude Haiku 4.5, for the fastest possible response",
         "B": "Claude Opus 4.8, for the strongest reasoning",
-        "C": "Whichever model is cheapest per token that day",
+        "C": "Whichever model happens to be cheapest that day",
         "D": "Claude Sonnet 5, chosen mainly to minimize latency"
       },
       "answer": "B",
@@ -144,10 +144,10 @@
       "difficulty": "medium",
       "stem": "A product feature will summarize thousands of documents per day. Each summary is moderately complex, and you need a strong balance of quality, speed, and cost at scale. Which model is the most appropriate default?",
       "options": {
-        "A": "Claude Opus 4.8 for every request, regardless of cost",
-        "B": "Claude Haiku 4.5, accepting weaker quality on the harder documents",
+        "A": "Claude Opus 4.8 for every request, regardless of the cost",
+        "B": "Claude Haiku 4.5, accepting weaker quality on harder documents",
         "C": "Claude Sonnet 5, balancing quality and cost at volume",
-        "D": "A model chosen at random per request to average the cost"
+        "D": "A model chosen at random per request"
       },
       "answer": "C",
       "explanationCorrect": "Sonnet 5 is designed for the balanced, high-volume middle ground: strong quality at a cost and speed that scale to thousands of requests. It fits moderately complex work at volume.",
@@ -163,9 +163,9 @@
       "stem": "You need to detect whether each incoming message is written in English or Spanish: a simple, high-volume, latency-sensitive classification. Which model is the best fit?",
       "options": {
         "A": "Claude Haiku 4.5, the fastest and most economical option",
-        "B": "Claude Opus 4.8, to be safe on accuracy",
-        "C": "Whichever model has the largest context window",
-        "D": "A separate Opus call per language, then compare them"
+        "B": "Claude Opus 4.8, reached for just to be extra safe on accuracy",
+        "C": "Whichever model happens to have the largest available context window",
+        "D": "A separate Opus call per language, then compared side by side"
       },
       "answer": "A",
       "explanationCorrect": "Haiku 4.5 is built for simple, fast, high-volume tasks like language detection, delivering low latency and low cost where heavier reasoning is not needed.",
@@ -180,10 +180,10 @@
       "difficulty": "medium",
       "stem": "A logic puzzle keeps tripping Claude up because it involves several dependent reasoning steps. Which built-in capability is most directly aimed at improving multi-step reasoning like this?",
       "options": {
-        "A": "Web search, to look the answer up online",
+        "A": "Web search, to look the puzzle's answer up on the open internet",
         "B": "Extended (adaptive) thinking, which lets Claude reason through steps before answering",
-        "C": "File uploads, to attach the puzzle as a document",
-        "D": "Artifacts, to render the answer in a side panel"
+        "C": "File uploads, to attach the puzzle to the chat as a PDF document",
+        "D": "Artifacts, to render the finished answer neatly in its own dedicated side panel for later review"
       },
       "answer": "B",
       "explanationCorrect": "Extended (adaptive) thinking gives Claude room to reason through intermediate steps before committing to an answer, which directly helps on multi-step problems.",
@@ -198,10 +198,10 @@
       "difficulty": "easy",
       "stem": "You ask Claude about a regulation that changed last week, after the model's training cutoff. Which feature should you enable to get an accurate, current answer?",
       "options": {
-        "A": "Extended thinking, to reason harder about it",
-        "B": "Artifacts, to format the answer nicely",
+        "A": "Extended thinking, so Claude can reason harder about the new regulation",
+        "B": "Artifacts, used to format the final answer nicely in a side panel",
         "C": "Web search, so Claude can retrieve up-to-date information",
-        "D": "A larger maximum output length"
+        "D": "A larger maximum output length setting"
       },
       "answer": "C",
       "explanationCorrect": "Web search lets Claude retrieve current information from the internet, which is essential for facts that changed after its training cutoff. Reasoning alone cannot recover knowledge the model never had.",
@@ -217,9 +217,9 @@
       "stem": "You are drafting a policy document with Claude and want to see it in a dedicated panel, edit it across turns, and keep a stable version as you refine it. Which feature is designed for this?",
       "options": {
         "A": "Artifacts, a side panel for substantial, editable content",
-        "B": "Web search, to gather sources for the document",
-        "C": "Extended thinking, to plan the document",
-        "D": "Token counting, to measure the document's size"
+        "B": "Web search, used to gather outside sources for the document",
+        "C": "Extended thinking, to plan out the document's structure first",
+        "D": "Token counting, to measure the document's overall size"
       },
       "answer": "A",
       "explanationCorrect": "Artifacts render substantial, self-contained content (like a document or code) in a dedicated, editable side panel you can iterate on across turns, which is exactly this use case.",
@@ -234,10 +234,10 @@
       "difficulty": "easy",
       "stem": "A colleague sends you a 40-page PDF contract and asks for a plain-language summary of its key obligations. In claude.ai, what is the most direct way to have Claude work from the actual document?",
       "options": {
-        "A": "Retype the contract into the chat box by hand",
+        "A": "Retype the whole contract into the chat box by hand",
         "B": "Upload the PDF file directly to the conversation",
-        "C": "Describe the contract from memory and ask Claude to guess the rest",
-        "D": "Ask Claude to search the web for the contract"
+        "C": "Describe the contract from memory and let Claude fill the gaps",
+        "D": "Ask Claude to search the web to find the contract"
       },
       "answer": "B",
       "explanationCorrect": "claude.ai supports file uploads, including PDFs, so Claude can read the actual document and summarize it accurately rather than working from a paraphrase.",
@@ -252,10 +252,10 @@
       "difficulty": "medium",
       "stem": "After a long chat that drifted across several unrelated topics, Claude's answers start pulling in irrelevant details from earlier in the conversation. What is the best way to manage this?",
       "options": {
-        "A": "Keep going and hope the noise clears on its own",
-        "B": "Repeat your question in all capital letters",
+        "A": "Keep going and just hope the accumulated noise clears on its own",
+        "B": "Repeat your latest question in all capital letters",
         "C": "Start a new conversation focused only on the current topic",
-        "D": "Switch to a smaller, faster model"
+        "D": "Switch to a smaller and faster model midway through the long chat"
       },
       "answer": "C",
       "explanationCorrect": "Everything earlier in a conversation is context Claude may draw on. When accumulated, unrelated history starts to interfere, a fresh conversation gives Claude a clean, focused context.",
@@ -270,10 +270,10 @@
       "difficulty": "medium",
       "stem": "You want Claude to answer a specific question about one section of a large report. Which approach gives Claude the most useful context to work with?",
       "options": {
-        "A": "Paste the entire multi-hundred-page report and ask the question at the very end with no guidance",
+        "A": "Paste the entire multi-hundred-page report and ask the question at the very end",
         "B": "Provide the relevant section (or a focused excerpt) and state the specific question",
         "C": "Ask the question with no context and let Claude infer the report",
-        "D": "Send the question first, then the report in a separate message hours later"
+        "D": "Send the question first, then the report separately hours later"
       },
       "answer": "B",
       "explanationCorrect": "Giving Claude the relevant section plus a clear, specific question focuses its attention on what matters. Focused, on-point context generally produces better answers than dumping everything or nothing.",
@@ -288,10 +288,10 @@
       "difficulty": "medium",
       "stem": "You find yourself pasting the same brand style guide into a new chat several times a week to keep Claude's writing on-brand. What is the better long-term setup?",
       "options": {
-        "A": "Keep pasting it each time; it only takes a minute",
-        "B": "Memorize the guide so you can paraphrase it faster",
+        "A": "Keep pasting the brand style guide into each new chat, since it only takes a minute",
+        "B": "Memorize the style guide so you can paraphrase it more quickly",
         "C": "Create a Project with the style guide as knowledge and the brand voice in custom instructions",
-        "D": "Email the style guide to Claude and ask it to remember"
+        "D": "Email the style guide to Claude and ask it to remember for you"
       },
       "answer": "C",
       "explanationCorrect": "When the same reference is reused repeatedly, moving it into a Project (knowledge source plus custom instructions) means every chat inherits it automatically: durable, consistent, and no re-pasting.",
@@ -306,10 +306,10 @@
       "difficulty": "medium",
       "stem": "A teammate runs every task, even trivial reformatting, on the largest, most expensive model \"to be safe.\" What is the most sensible guidance?",
       "options": {
-        "A": "Always default to the largest model, since extra reasoning capability is never actually wasted",
+        "A": "Always default to the largest model, since its extra reasoning capability is never actually wasted",
         "B": "Match the model to the task, using a smaller model for simple work and the largest for hard reasoning",
-        "C": "Always default to the smallest model available to keep the per-task cost as low as possible",
-        "D": "Rotate models at random each time so the usage is spread evenly across all of them"
+        "C": "Always default to the smallest available model to keep the per-task cost as low as possible",
+        "D": "Rotate between the models at random each time so usage is spread evenly across them"
       },
       "answer": "B",
       "explanationCorrect": "Model selection is about fit: simple, high-volume tasks run well on Haiku or Sonnet, while Opus is reserved for the hardest reasoning. Matching model to task controls cost and latency without sacrificing needed quality.",
@@ -326,8 +326,8 @@
       "options": {
         "A": "Assign a clear role, like \"act as an experienced communications editor,\" and say what to review",
         "B": "Simply ask it to \"be helpful and thorough\" and see what comes back",
-        "C": "Paste the email with no other instructions and let Claude decide what to do",
-        "D": "Ask for the longest, most detailed response that Claude can possibly produce"
+        "C": "Paste the draft email in with no other instructions and simply let Claude decide what to do",
+        "D": "Ask for the longest, most detailed response it can produce"
       },
       "answer": "A",
       "explanationCorrect": "Giving Claude a specific role plus a clear task focuses its behavior and standards on the job; an editor's lens produces more targeted feedback than a vague request.",
@@ -342,9 +342,9 @@
       "difficulty": "easy",
       "stem": "Claude keeps returning its answer as flowing paragraphs, but you need a table with three named columns to drop into a report. What is the most effective fix?",
       "options": {
-        "A": "Ask the same question again and hope for a table",
-        "B": "Switch to a larger, more capable model",
-        "C": "Tell Claude to \"make it look nicer\"",
+        "A": "Ask the exact same question over again and simply hope that it comes back formatted as a table",
+        "B": "Switch to a larger, more capable model and try once more",
+        "C": "Tell Claude to \"make it look a bit nicer\" for the report",
         "D": "Explicitly specify the output format: a table with the three exact column names you need"
       },
       "answer": "D",
@@ -360,7 +360,7 @@
       "difficulty": "easy",
       "stem": "You ask Claude to \"write a follow-up message to the client,\" but its draft misses that the client is upset about a missed deadline. What would most improve the result?",
       "options": {
-        "A": "Ask Claude to add a general apology somewhere near the opening",
+        "A": "Ask Claude to work a general, non-specific apology in somewhere near the opening of the message",
         "B": "Repeat the exact same request again, word for word",
         "C": "Provide the context: the client's complaint, the missed deadline, and the outcome you want",
         "D": "Ask Claude to make the message shorter and more direct"
@@ -378,10 +378,10 @@
       "difficulty": "medium",
       "stem": "You need Claude to (1) analyze survey data, (2) draft an executive summary, and (3) create a slide outline. A single prompt asking for all three at once yields shallow results on each. What is the better approach?",
       "options": {
-        "A": "Demand more detail in the same all-in-one prompt",
+        "A": "Demand noticeably more detail and depth while still keeping it all in the same all-in-one prompt",
         "B": "Break the work into sequential steps, doing and reviewing each before moving to the next",
-        "C": "Ask for all three again but request a larger font",
-        "D": "Drop two of the three tasks to simplify"
+        "C": "Ask for all three again, but this time request a larger font",
+        "D": "Drop two of the three tasks to simplify the request"
       },
       "answer": "B",
       "explanationCorrect": "Decomposing a complex, multi-part request into focused steps lets Claude give each its full attention, and lets you check the output of one step before it feeds the next.",
@@ -396,9 +396,9 @@
       "difficulty": "medium",
       "stem": "An output is not quite right, so in one new attempt you rewrite the role, add three examples, change the format, and swap models all at once. It improves, but you have a problem. What is it?",
       "options": {
-        "A": "Nothing: changing everything at once is the fastest path",
-        "B": "You should have changed even more at the same time",
-        "C": "The model is now permanently biased by the earlier attempt",
+        "A": "Nothing at all is wrong here; changing everything at once is simply the fastest path to a fix",
+        "B": "You should have changed even more variables at the same time",
+        "C": "The model is now permanently biased by your earlier attempt",
         "D": "You changed too many variables at once, so you cannot tell which change actually helped"
       },
       "answer": "D",
@@ -414,10 +414,10 @@
       "difficulty": "easy",
       "stem": "Your prompts often produce vague, off-target answers. Which single change tends to help the most?",
       "options": {
-        "A": "Making the prompt longer by adding polite filler",
-        "B": "Asking Claude to \"be thorough\"",
+        "A": "Making the prompt longer by padding it out with polite filler around the actual request",
+        "B": "Asking Claude to simply \"be thorough\" and then leaving all of the rest to it",
         "C": "Being specific about what you want: the exact scope, format, and criteria",
-        "D": "Sending the request several more times"
+        "D": "Sending the identical request several more times in a row"
       },
       "answer": "C",
       "explanationCorrect": "Specificity is the highest-leverage prompting habit: stating the exact scope, format, and success criteria removes the guesswork that produces vague answers.",
@@ -433,9 +433,9 @@
       "stem": "You need every product description formatted in a very specific pattern, and written instructions keep producing near-misses. What most reliably locks in the exact format?",
       "options": {
         "A": "Provide two or three worked examples of the input and the exact output you want (few-shot)",
-        "B": "Add the word \"exactly\" to the instruction and repeat it",
+        "B": "Add the word \"exactly\" to the instruction and then repeat it",
         "C": "Ask Claude to try harder and be more careful next time",
-        "D": "Make the instruction paragraph noticeably longer and more detailed"
+        "D": "Make the written instruction paragraph a good deal longer and pack in considerably more detail"
       },
       "answer": "A",
       "explanationCorrect": "When a format is hard to convey in words, showing two or three concrete input-to-output examples (few-shot) demonstrates the pattern directly and is more reliable than more prose.",
@@ -450,9 +450,9 @@
       "difficulty": "medium",
       "stem": "Claude keeps misinterpreting how you want a data field transformed, even after you reworded the instruction twice. What is the most effective next move?",
       "options": {
-        "A": "Reword the instruction a third time",
-        "B": "Tell Claude it is wrong and to fix it",
-        "C": "Switch the output to all capital letters",
+        "A": "Reword the very same instruction a third time and simply hope that it finally lands",
+        "B": "Tell Claude that it is plainly wrong and then firmly ask it to correct the field",
+        "C": "Switch the output to all capital letters for emphasis",
         "D": "Show a concrete before-and-after example of the transformation you want"
       },
       "answer": "D",
@@ -468,7 +468,7 @@
       "difficulty": "medium",
       "stem": "A colleague's prompts are just a one-line task with no other detail, and results are inconsistent. Which set of additions best reflects good prompt structure?",
       "options": {
-        "A": "Louder wording, capital letters, and more exclamation points",
+        "A": "Much louder wording, plenty of capital letters, and a lot more exclamation points for emphasis",
         "B": "A clear role, the task, relevant context, the desired output format, and an example or two",
         "C": "A higher maximum-token setting and a request for the longest answer",
         "D": "Several unrelated questions bundled together into one message"
@@ -487,9 +487,9 @@
       "stem": "You keep telling Claude \"don't be so formal,\" but the tone still misses. Which instruction is likely to work better?",
       "options": {
         "A": "Describe the tone you do want, warm and conversational like advice to a colleague, with a short example",
-        "B": "Repeat the instruction \"don't use any formal words at all, ever\" more emphatically",
-        "C": "Tell Claude firmly to \"stop being formal\" and leave it at that",
-        "D": "Ask Claude to simply \"be less of everything\" going forward"
+        "B": "Repeat the instruction to \"never, ever use any formal words at all\" to Claude much more emphatically",
+        "C": "Tell Claude firmly to \"stop being so formal\" and leave it there",
+        "D": "Ask Claude to simply \"be less of everything\" from now on"
       },
       "answer": "A",
       "explanationCorrect": "Positively describing the target, the tone you do want with an example, gives Claude something concrete to aim at, which steers behavior better than a vague prohibition.",
@@ -504,9 +504,9 @@
       "difficulty": "easy",
       "stem": "You want Claude to answer questions using your company's internal policy, which it was never trained on. What is the essential step?",
       "options": {
-        "A": "Assume Claude already knows your internal policy",
-        "B": "Ask Claude to imagine what the policy probably says",
-        "C": "Use a bigger model so it \"knows more\"",
+        "A": "Simply assume that Claude already has your company's private internal policy memorized in full",
+        "B": "Ask Claude to imagine what the internal policy probably says",
+        "C": "Switch to a bigger model so that it \"knows more\" about it",
         "D": "Provide the policy text as context (paste it or attach it) so Claude answers from it"
       },
       "answer": "D",
@@ -522,10 +522,10 @@
       "difficulty": "medium",
       "stem": "A teammate asks Claude to \"make this report better\" and is frustrated by the results. What advice best addresses the root problem?",
       "options": {
-        "A": "Ask Claude to define \"better\" for you",
-        "B": "Run the request on every model and compare",
+        "A": "Ask Claude to define what \"better\" should mean for you",
+        "B": "Run the same request on every model and compare the results",
         "C": "Tell Claude what \"better\" means here: clearer structure, shorter, more data-driven, and so on",
-        "D": "Accept that Claude cannot meaningfully improve reports"
+        "D": "Simply accept that Claude cannot ever meaningfully improve written business reports"
       },
       "answer": "C",
       "explanationCorrect": "\"Better\" is subjective; Claude cannot read your mind about which dimension you care about. Naming the specific improvements you want turns an ambiguous ask into an actionable one.",
@@ -540,10 +540,10 @@
       "difficulty": "hard",
       "stem": "For a straightforward task like \"summarize this paragraph in one sentence,\" Claude already does exactly what you want. When is adding few-shot examples actually worth the effort?",
       "options": {
-        "A": "Always add examples to every prompt, no matter how simple",
-        "B": "Never add examples; they only confuse the model",
+        "A": "Always add several worked examples to every single prompt you write, no matter how simple the task is",
+        "B": "Never add examples, since they only end up confusing the model",
         "C": "When the task has a specific format or edge cases that plain instructions keep getting wrong",
-        "D": "Only when using the smallest available model"
+        "D": "Only when you happen to be using the smallest available model"
       },
       "answer": "C",
       "explanationCorrect": "Few-shot examples pay off when a task has a particular format or tricky edge cases that instructions alone do not nail. For simple tasks Claude already handles, the extra examples add little.",
@@ -558,9 +558,9 @@
       "difficulty": "medium",
       "stem": "Your first prompt gives a decent but too-technical answer for a general audience. What is the most efficient single adjustment to try next?",
       "options": {
-        "A": "Rewrite the entire prompt from scratch with many changes at once",
-        "B": "Switch entry points from chat to the API",
-        "C": "Ask the same prompt three more times",
+        "A": "Completely rewrite the whole prompt from scratch, making many different changes all at once",
+        "B": "Switch entry points from claude.ai chat over to the API",
+        "C": "Ask the very same prompt three or four more times",
         "D": "Add one instruction specifying the audience and reading level, then compare the result"
       },
       "answer": "D",
@@ -577,8 +577,8 @@
       "stem": "A prompt reads simply \"Write a job description,\" and the drafts come back generic and unusable. Which elements are most important to add?",
       "options": {
         "A": "The role, the responsibilities, the required skills, the sections to include, and the tone",
-        "B": "An emphatic tone, bold text, and several exclamation points for energy",
-        "C": "A request for the maximum possible length and lots of detail",
+        "B": "A far more emphatic tone, plenty of bold text, and several extra exclamation points for energy",
+        "C": "A request for the maximum possible length and lots of extra detail",
         "D": "A firm demand that Claude not make any mistakes this time"
       },
       "answer": "A",
@@ -595,9 +595,9 @@
       "stem": "Claude's answer includes three specific statistics attributed to named studies. Before you use them in a published report, what should you do?",
       "options": {
         "A": "Independently verify each statistic, and that the cited studies actually say it",
-        "B": "Trust them, since Claude cited specific sources",
-        "C": "Publish first and correct later if someone complains",
-        "D": "Assume any confidently stated number is reliable"
+        "B": "Trust the statistics, since Claude took care to cite specific, named studies for each one",
+        "C": "Publish the report first and then correct it later on if anyone happens to complain",
+        "D": "Assume any confidently stated number in the answer is reliable"
       },
       "answer": "A",
       "explanationCorrect": "Claude can produce fluent, specific-looking citations that are inaccurate or fabricated. For anything you publish, verify each factual claim and citation against the primary source before relying on it.",
@@ -612,10 +612,10 @@
       "difficulty": "easy",
       "stem": "An answer is written with total confidence and reads smoothly, with no hedging. What can you conclude about its accuracy?",
       "options": {
-        "A": "Confident, fluent writing means it is almost certainly correct",
+        "A": "Confident, fluent, and polished writing means the answer is almost certainly correct",
         "B": "Fluency and confidence say nothing about accuracy; it can be confidently wrong",
-        "C": "The lack of hedging proves it was fact-checked",
-        "D": "Smooth writing indicates the model used web search"
+        "C": "The complete lack of any hedging in it proves that it was carefully fact-checked",
+        "D": "Smooth, polished writing indicates the model used web search"
       },
       "answer": "B",
       "explanationCorrect": "The tone and fluency of an answer are independent of its correctness. Claude can be confidently and articulately wrong, so confidence is not a reliability signal.",
@@ -630,10 +630,10 @@
       "difficulty": "medium",
       "stem": "You ask Claude for case law supporting an argument, and it returns a citation with a court, year, and quote that looks authoritative, but you cannot find the case anywhere. What is the most likely explanation?",
       "options": {
-        "A": "The case is real but too obscure to appear anywhere",
-        "B": "Your search skills are the problem; the citation is surely valid",
+        "A": "The case is genuinely real but simply far too obscure to appear anywhere at all",
+        "B": "Your own search skills are the problem; the citation is surely valid",
         "C": "Claude may have hallucinated a plausible-looking but nonexistent citation",
-        "D": "The court must have removed the case from public records"
+        "D": "The court itself must have quietly pulled the case from every public record somewhere"
       },
       "answer": "C",
       "explanationCorrect": "Models can generate citations that look authoritative but do not exist, a hallucination. If a specific, checkable source cannot be found, treat it as unverified rather than assuming it is merely obscure.",
@@ -648,8 +648,8 @@
       "difficulty": "medium",
       "stem": "Claude drafts what looks like sound guidance on adjusting a patient's medication dosage. What is the responsible way to use this output?",
       "options": {
-        "A": "Follow it directly, since the reasoning is detailed",
-        "B": "Share it with the patient as a definitive answer",
+        "A": "Follow the dosing guidance directly, since the underlying clinical reasoning looks detailed",
+        "B": "Share it with the patient right away as a definitive answer",
         "C": "Use it only if it happens to agree with your initial hunch",
         "D": "Treat it as a draft to be reviewed and approved by a qualified medical professional"
       },
@@ -667,9 +667,9 @@
       "stem": "Claude generates a database command that will permanently delete every record matching a filter. What should you do before running it?",
       "options": {
         "A": "Review and verify exactly what it will delete before executing an irreversible action",
-        "B": "Run it immediately to save time",
-        "C": "Run it on the production database first, then check",
-        "D": "Assume it is safe because Claude wrote it"
+        "B": "Run it immediately to save yourself some time",
+        "C": "Run the command against the live production database first, then check it after",
+        "D": "Assume it is perfectly safe simply because Claude wrote it"
       },
       "answer": "A",
       "explanationCorrect": "Irreversible actions demand human verification first. Reviewing precisely what the command affects before executing catches mistakes while they are still reversible.",
@@ -684,10 +684,10 @@
       "difficulty": "medium",
       "stem": "You use Claude to screen resumes and notice its shortlist skews heavily toward one demographic. What is the appropriate response?",
       "options": {
-        "A": "Trust the output; the model is objective by design",
+        "A": "Trust the ranked shortlist completely, since the model is objective and neutral by design",
         "B": "Treat it as a possible bias signal, examine the criteria, and add human review",
-        "C": "Assume the applicant pool simply looked that way",
-        "D": "Remove the human reviewers to speed things up"
+        "C": "Assume the applicant pool itself simply looked that way",
+        "D": "Remove the human reviewers from the process to speed it up"
       },
       "answer": "B",
       "explanationCorrect": "AI outputs can reflect and amplify bias. A skewed result is a signal to scrutinize the criteria and keep human oversight, especially for consequential decisions about people.",
@@ -702,10 +702,10 @@
       "difficulty": "medium",
       "stem": "Claude summarizes a long report and includes a striking claim you do not remember reading. Before quoting that claim, what is the right step?",
       "options": {
-        "A": "Quote it; summaries are reliable by nature",
-        "B": "Rephrase it so it sounds less striking",
+        "A": "Quote the striking claim directly, since summaries are reliable by their very nature",
+        "B": "Rephrase the striking claim so that it ends up sounding a good deal less striking",
         "C": "Check the claim against the source document to confirm it is actually there",
-        "D": "Delete the whole summary to be safe"
+        "D": "Delete the entire summary, just to be on the safe side"
       },
       "answer": "C",
       "explanationCorrect": "Summaries can introduce claims that are not in the source. Verifying a surprising claim against the original document guards against repeating something Claude inferred or fabricated.",
@@ -720,9 +720,9 @@
       "difficulty": "medium",
       "stem": "For which task is it most reasonable to accept Claude's output with only a light check?",
       "options": {
-        "A": "Calculating the correct dosage for a prescription",
-        "B": "Drafting the binding wording of a legal contract",
-        "C": "Confirming a specific historical date for a published article",
+        "A": "Calculating the exact correct dosage for a patient's prescription",
+        "B": "Drafting the binding wording of a legal contract for signature",
+        "C": "Confirming a specific historical date for a soon-to-be-published article",
         "D": "Brainstorming a list of possible names for an internal project"
       },
       "answer": "D",
@@ -739,9 +739,9 @@
       "stem": "You are about to send a client-facing analysis that Claude largely wrote, under your own name. What is the guiding principle?",
       "options": {
         "A": "You are accountable for it, so validate the facts and reasoning before it goes out",
-        "B": "Claude wrote it, so any errors are not your responsibility",
-        "C": "Client-facing work needs no more care than internal notes",
-        "D": "Send it now; clients expect occasional errors"
+        "B": "Claude actually wrote the analysis, so any errors it contains are not your responsibility",
+        "C": "Client-facing work really needs no more care than internal notes",
+        "D": "Send it now, since clients generally expect the occasional error"
       },
       "answer": "A",
       "explanationCorrect": "When you put your name on Claude's output, you own its accuracy. Validating the facts and reasoning before it goes out is the core responsibility of using AI in real work.",
@@ -756,10 +756,10 @@
       "difficulty": "medium",
       "stem": "Asked for market-size figures, Claude returns very precise numbers such as \"$4.37B in 2023\" with no source. How should you treat them?",
       "options": {
-        "A": "Use them as-is; the precision signals reliability",
+        "A": "Use the figures exactly as-is, since their very precision signals that they are reliable",
         "B": "Treat them as unverified estimates and confirm against a real source before using",
-        "C": "Round them off, which makes them accurate",
-        "D": "Assume Claude retrieved them from a live database"
+        "C": "Round the numbers off, which is what makes them accurate",
+        "D": "Assume that Claude just now retrieved them from a live and up-to-date market database"
       },
       "answer": "B",
       "explanationCorrect": "Oddly precise figures with no source are a classic hallucination pattern. Precision is not provenance; confirm the numbers against an authoritative source before relying on them.",
@@ -774,10 +774,10 @@
       "difficulty": "medium",
       "stem": "A quick way to gauge whether a long Claude answer is trustworthy on a topic you do not know well is to:",
       "options": {
-        "A": "Count how many sources it mentions",
-        "B": "See whether it sounds confident throughout",
+        "A": "Count up how many separate sources the long answer happens to mention in total",
+        "B": "See whether the entire answer sounds confident all the way through to the end",
         "C": "Spot-check a few claims you can verify against known facts or sources",
-        "D": "Measure how long the response is"
+        "D": "Measure how long the overall response happened to turn out to be in total"
       },
       "answer": "C",
       "explanationCorrect": "Spot-checking verifiable claims gives real evidence about accuracy. If the checkable parts are wrong, that is a strong signal to distrust the parts you cannot immediately verify.",
@@ -792,9 +792,9 @@
       "difficulty": "medium",
       "stem": "Claude reviews a vendor contract and flags no issues, and your company is about to sign. What is the responsible next step?",
       "options": {
-        "A": "Sign immediately, since Claude found nothing",
-        "B": "Skip legal review to save time and money",
-        "C": "Assume no flags means no legal risk",
+        "A": "Sign the contract right away, since Claude reviewed it and flagged nothing at all",
+        "B": "Skip the legal review entirely to save both time and money",
+        "C": "Assume that no flags raised must simply mean there is no real legal risk",
         "D": "Have a qualified lawyer review it before signing a binding agreement"
       },
       "answer": "D",
@@ -811,9 +811,9 @@
       "stem": "A team has used Claude for months with good results and now approves its outputs without any review. What is the main risk?",
       "options": {
         "A": "Errors will slip through unnoticed precisely because no one is checking anymore",
-        "B": "The model will run out of capacity",
-        "C": "Reviewing was never necessary in the first place",
-        "D": "Claude will refuse to answer without a reviewer present"
+        "B": "The model will eventually run out of processing capacity",
+        "C": "Reviewing the outputs was clearly never really necessary here in the first place anyway",
+        "D": "Claude will eventually refuse to answer anything at all without a reviewer present"
       },
       "answer": "A",
       "explanationCorrect": "A good track record does not make outputs infallible. Dropping verification entirely means the inevitable errors reach production with nothing to catch them; appropriate review should remain.",
@@ -828,10 +828,10 @@
       "difficulty": "hard",
       "stem": "Claude provides a real, working URL as a citation for a claim. What still needs checking?",
       "options": {
-        "A": "Nothing; a working link fully validates the claim",
+        "A": "Nothing further; a working link on its own fully validates the claim",
         "B": "That the linked source actually says what the claim attributes to it",
-        "C": "Only that the link loads quickly",
-        "D": "Only the website's visual design"
+        "C": "Only that the link happens to load reasonably quickly in a browser",
+        "D": "Only the linked website's overall visual design and layout"
       },
       "answer": "B",
       "explanationCorrect": "A valid link is necessary but not sufficient. Claude may cite a real page that does not actually support the specific claim, so you must confirm the source says what is attributed to it.",
@@ -846,9 +846,9 @@
       "difficulty": "easy",
       "stem": "Which output most clearly demands independent human verification before you act on it?",
       "options": {
-        "A": "A haiku Claude wrote for a birthday card",
-        "B": "A list of icebreaker questions for a casual meeting",
-        "C": "A suggested color palette for a slide deck",
+        "A": "A short, lighthearted haiku that Claude drafted for a close friend's birthday card",
+        "B": "A list of icebreaker questions for a casual team meeting",
+        "C": "A suggested color palette for an internal slide deck",
         "D": "A tax-filing figure Claude calculated that you will submit to the authorities"
       },
       "answer": "D",
@@ -865,9 +865,9 @@
       "stem": "You are deciding which parts of a monthly reporting process to hand to Claude. Which step is the best candidate to delegate?",
       "options": {
         "A": "Reformatting the raw numbers into the standard report template, a repeatable and checkable step",
-        "B": "Deciding whether to lay off part of the team based on what the numbers show",
-        "C": "Choosing the company's confidential strategic priorities for the year",
-        "D": "Signing off on the final figures that will be submitted to the board"
+        "B": "Deciding whether to lay off part of the team based on the numbers",
+        "C": "Choosing the company's confidential, high-level strategic priorities for the entire year",
+        "D": "Signing off on the final figures that will go to the board"
       },
       "answer": "A",
       "explanationCorrect": "The best tasks to delegate are well-specified, repeatable, and easy to verify. Reformatting numbers into a template fits all three; the judgment-heavy, accountability-bearing steps stay with a human.",
@@ -882,10 +882,10 @@
       "difficulty": "easy",
       "stem": "Which task should stay with a human rather than being fully delegated to Claude?",
       "options": {
-        "A": "Converting a bulleted list into a formatted table",
+        "A": "Converting a plain bulleted list into a neatly formatted table",
         "B": "Making the final call on a sensitive personnel decision",
-        "C": "Drafting a first version of routine meeting notes",
-        "D": "Suggesting synonyms for a marketing headline"
+        "C": "Drafting an initial first version of routine meeting notes",
+        "D": "Suggesting a few alternative synonyms for a marketing headline"
       },
       "answer": "B",
       "explanationCorrect": "Ambiguous, high-stakes decisions that carry human accountability, like sensitive personnel calls, should remain human judgments. Claude can inform them but should not own them.",
@@ -900,10 +900,10 @@
       "difficulty": "medium",
       "stem": "You are presenting a new Claude-assisted workflow to leadership. How should you describe its capabilities?",
       "options": {
-        "A": "Promise it is fully autonomous and error-free to build confidence",
-        "B": "Avoid mentioning any limitations so the project gets approved",
+        "A": "Promise leadership that it is fully autonomous and completely error-free, to build their confidence",
+        "B": "Avoid mentioning any of its limitations so that the project gets approved",
         "C": "Present both the value and the limitations honestly, including where human review is still required",
-        "D": "Claim it will replace the whole team immediately"
+        "D": "Claim it will replace the entire team almost immediately"
       },
       "answer": "C",
       "explanationCorrect": "Responsible adoption depends on setting accurate expectations. Communicating both the value and the limitations, including where humans stay in the loop, builds durable trust and prevents overreliance.",
@@ -918,9 +918,9 @@
       "difficulty": "medium",
       "stem": "You personally get great results from Claude, but your teammates get inconsistent ones on the same tasks. What best moves the team from \"I use Claude\" to \"our workflow uses Claude\"?",
       "options": {
-        "A": "Keep your prompting techniques to yourself as a personal edge",
-        "B": "Tell teammates to simply try harder",
-        "C": "Let everyone figure it out independently",
+        "A": "Keep all of your best prompting techniques to yourself and quietly hold them as a personal edge",
+        "B": "Tell your teammates that they simply need to try harder",
+        "C": "Let everyone on the team figure it out on their own",
         "D": "Capture the working prompts, context, and configuration in a shared setup others can reuse"
       },
       "answer": "D",
@@ -937,9 +937,9 @@
       "stem": "A team wants a first win with Claude. Which process is the best starting candidate?",
       "options": {
         "A": "A frequent, well-defined, low-risk task with clear inputs and checkable outputs",
-        "B": "The most ambiguous, high-stakes decision the team faces",
-        "C": "A rare one-off task that will never recur",
-        "D": "A process no one currently understands"
+        "B": "The single most ambiguous and highest-stakes decision that the whole team currently faces",
+        "C": "A rare, one-off kind of task that the team will essentially never have to repeat again",
+        "D": "A tangled process that nobody on the team currently understands"
       },
       "answer": "A",
       "explanationCorrect": "Good first candidates are frequent, well-defined, and low-risk with verifiable outputs: they deliver clear value, are easy to validate, and build confidence before tackling harder work.",
@@ -954,10 +954,10 @@
       "difficulty": "medium",
       "stem": "How should you frame the value of a Claude-assisted drafting workflow to stakeholders?",
       "options": {
-        "A": "\"It eliminates the need for any human writers on the team entirely.\"",
+        "A": "\"It completely removes any need to keep human writers anywhere on the team at all, ever again.\"",
         "B": "\"It produces solid first drafts fast, which we then review and refine to keep quality high.\"",
-        "C": "\"It is essentially perfect and its drafts never need any editing.\"",
-        "D": "\"It will do everything the team currently does, only instantly and at no cost.\""
+        "C": "\"It is essentially perfect, and its drafts never need any editing.\"",
+        "D": "\"It will do everything the team does now, only instantly and free.\""
       },
       "answer": "B",
       "explanationCorrect": "Honest value framing pairs the real benefit (faster first drafts, less turnaround) with the human role that preserves quality. It is credible and sustainable, unlike overclaiming.",
@@ -972,10 +972,10 @@
       "difficulty": "easy",
       "stem": "In a Claude-assisted approval workflow, who should hold accountability for the final decision?",
       "options": {
-        "A": "The model, since it produced the recommendation",
-        "B": "No one in particular, as long as it works",
+        "A": "The model itself, since it produced the underlying recommendation",
+        "B": "No one in particular, just as long as the workflow keeps working",
         "C": "A designated human owner who reviews and approves the outcome",
-        "D": "Whichever teammate happens to be least busy that day"
+        "D": "Whichever teammate happens to be the least busy on that given day"
       },
       "answer": "C",
       "explanationCorrect": "Accountability must rest with a person. A designated human owner who reviews and approves keeps responsibility clear and ensures a competent check on consequential outcomes.",
@@ -990,9 +990,9 @@
       "difficulty": "hard",
       "stem": "A hiring workflow has four steps: (1) format incoming resumes, (2) draft interview questions, (3) decide who advances, and (4) send templated scheduling emails. Which split is most appropriate?",
       "options": {
-        "A": "Delegate all four steps entirely to Claude with no human review",
-        "B": "Keep all four steps fully manual and do not use Claude at all",
-        "C": "Delegate only the who-advances decision to Claude and do the rest by hand",
+        "A": "Delegate all four of the steps entirely to Claude with no human review",
+        "B": "Keep all four steps fully manual and do not use Claude for any of them",
+        "C": "Delegate only the who-advances hiring decision to Claude and do all the rest by hand",
         "D": "Delegate formatting, drafting, and templated emails; keep the advancement decision human"
       },
       "answer": "D",
@@ -1009,9 +1009,9 @@
       "stem": "Your Claude-assisted workflow works well, but only you know how to run it. What most improves its long-term resilience?",
       "options": {
         "A": "Documenting the steps, prompts, and configuration so others can run it if you are away",
-        "B": "Keeping it all in your head to stay indispensable",
-        "C": "Deleting your notes once it works",
-        "D": "Rebuilding it from scratch each month"
+        "B": "Keep the whole workflow entirely in your own head so that you stay indispensable to the team",
+        "C": "Delete all of your notes about it once the workflow finally works",
+        "D": "Rebuild the entire workflow again from scratch every single month"
       },
       "answer": "A",
       "explanationCorrect": "A workflow that lives only in one person's head is fragile. Documenting the steps, prompts, and configuration lets the team operate it reliably even when the original author is unavailable.",
@@ -1026,10 +1026,10 @@
       "difficulty": "medium",
       "stem": "A stakeholder expects the new Claude workflow to be \"100% accurate with no oversight.\" What is the best response?",
       "options": {
-        "A": "Agree, to keep them happy",
+        "A": "Simply agree with the stakeholder's expectation outright, just to keep them satisfied and happy",
         "B": "Clarify that some human review remains necessary and explain where errors are most likely",
-        "C": "Quietly remove all review steps to match their expectation",
-        "D": "Tell them accuracy is not measurable"
+        "C": "Quietly remove all of the review steps to match their expectation",
+        "D": "Tell them that output accuracy is not really something you can measure"
       },
       "answer": "B",
       "explanationCorrect": "Managing expectations honestly, that review is still needed and where errors tend to occur, protects the project and the stakeholder from an unrealistic promise the tool cannot keep.",
@@ -1044,8 +1044,8 @@
       "difficulty": "hard",
       "stem": "You want to show that adopting Claude improved a workflow. What is the most credible way to communicate the value?",
       "options": {
-        "A": "Assert broadly that everything is just \"so much better now\" than before",
-        "B": "Share a single dramatic success anecdote and generalize from that one case",
+        "A": "Assert broadly and vaguely that basically everything is just \"so much better now\" than before",
+        "B": "Share one dramatic success story and then generalize from that case",
         "C": "Compare before-and-after measures like turnaround time and rework rate, noting the human steps kept",
         "D": "Claim sweeping benefits that cannot really be measured or verified"
       },
@@ -1062,9 +1062,9 @@
       "difficulty": "medium",
       "stem": "When deciding whether Claude can take an action automatically or a human must approve it first, which factor matters most?",
       "options": {
-        "A": "How quickly the action can be completed",
-        "B": "How impressive the automation looks to others",
-        "C": "Whether the model seems to handle it confidently",
+        "A": "How quickly the action itself can actually be carried out end to end",
+        "B": "How impressive the finished automation ends up looking to others",
+        "C": "Whether the model itself appears to handle the action confidently enough",
         "D": "How reversible the action is and how costly a mistake would be"
       },
       "answer": "D",
@@ -1081,8 +1081,8 @@
       "stem": "A colleague proposes building an elaborate automated system for a task the team does twice a year by hand in ten minutes. What is the most sensible guidance?",
       "options": {
         "A": "Match the investment to the need; a heavyweight system is overkill for a rare, quick task",
-        "B": "Always build the most fully automated solution that is technically possible",
-        "C": "Automate it thoroughly precisely because the task is so infrequent",
+        "B": "Always build the most fully automated solution that is technically possible to build",
+        "C": "Automate it thoroughly, precisely because the task is so infrequent",
         "D": "Add as many features as possible up front so nothing is missing later"
       },
       "answer": "A",
@@ -1098,9 +1098,9 @@
       "difficulty": "medium",
       "stem": "You are integrating Claude into a customer-refund process. Refunds under $20 are routine; refunds over $500 are sensitive. How should you place the human checkpoint?",
       "options": {
-        "A": "Require human approval for every refund, including $2 ones",
-        "B": "Let Claude approve all refunds of any size automatically",
-        "C": "Require human approval only for the smallest refunds",
+        "A": "Require a manual human approval step for every single refund, even the tiny $2 ones",
+        "B": "Let Claude automatically approve every single refund of any size, no matter how large",
+        "C": "Require human approval only for the very smallest refunds",
         "D": "Auto-process small routine refunds and route large or unusual ones to a human"
       },
       "answer": "D",
@@ -1117,9 +1117,9 @@
       "stem": "In a Claude Project, you set custom instructions that say \"always write in British English and cite the source section.\" What is the effect?",
       "options": {
         "A": "Every chat started in that Project follows those instructions automatically",
-        "B": "Only the very next message follows them",
-        "C": "The instructions apply to all Projects you own",
-        "D": "The instructions apply only after you repeat them each chat"
+        "B": "Only the very next single message that you send will actually follow those instructions",
+        "C": "The custom instructions then apply across every single one of the Projects you own",
+        "D": "They apply only after you repeat them again in each new chat"
       },
       "answer": "A",
       "explanationCorrect": "A Project's custom instructions persist and apply to every conversation started within that Project, so shared preferences are enforced automatically without re-stating them.",
@@ -1134,10 +1134,10 @@
       "difficulty": "easy",
       "stem": "Your team keeps asking Claude questions about a 60-page internal handbook. What is the durable way to make that handbook available in every relevant chat?",
       "options": {
-        "A": "Paste the whole handbook at the start of each new chat",
+        "A": "Paste the entire 60-page internal handbook in at the start of each and every new chat",
         "B": "Add the handbook as a knowledge source in a Project so chats can draw on it",
-        "C": "Ask Claude to memorize it once and rely on that",
-        "D": "Summarize it from memory each time it comes up"
+        "C": "Ask Claude to memorize the handbook once and rely on that",
+        "D": "Summarize the handbook from your own memory each time that it happens to come up"
       },
       "answer": "B",
       "explanationCorrect": "Attaching the handbook as a Project knowledge source makes it available to every chat in the Project, so Claude can ground answers in it without anyone re-pasting the document.",
@@ -1152,10 +1152,10 @@
       "difficulty": "medium",
       "stem": "A Project's knowledge base still contains last year's pricing, and Claude keeps quoting the old prices. What is the root-cause fix?",
       "options": {
-        "A": "Tell users to mentally adjust the prices themselves",
-        "B": "Add a note in each chat correcting the price",
+        "A": "Simply tell all of the users to mentally adjust the outdated pricing for themselves every time",
+        "B": "Add a note in each chat correcting the price after the fact",
         "C": "Update the knowledge source to the current pricing so every chat inherits the correct data",
-        "D": "Switch to a larger model"
+        "D": "Switch to a larger, more capable model for those chats"
       },
       "answer": "C",
       "explanationCorrect": "Stale configuration is a leading cause of wrong output. Updating the Project's knowledge source to current pricing fixes the problem at its root for every future chat, rather than patching each conversation.",
@@ -1171,8 +1171,8 @@
       "stem": "What is the main advantage of putting durable context into a Project rather than into individual prompts?",
       "options": {
         "A": "It mainly just makes each individual prompt take longer to type out",
-        "B": "It hides the shared context from the people who are using the Project",
-        "C": "It helps only the very first chat you create and none of the ones after",
+        "B": "It ends up hiding the shared context from the very people using the Project",
+        "C": "It helps only the very first chat you create and none afterward",
         "D": "Every chat in the Project inherits that context, so quality and consistency improve"
       },
       "answer": "D",
@@ -1189,9 +1189,9 @@
       "stem": "Which item is best placed in a Project's custom instructions rather than typed into a single prompt?",
       "options": {
         "A": "A standing rule that all outputs use the company's four-part report structure",
-        "B": "A one-time question about today's weather",
-        "C": "A throwaway request to rephrase a single sentence",
-        "D": "A personal note unrelated to the Project's purpose"
+        "B": "A quick one-time question about what today's local weather is",
+        "C": "A throwaway request to rephrase one single sentence for you",
+        "D": "A personal note that has nothing to do with the Project's stated purpose"
       },
       "answer": "A",
       "explanationCorrect": "Durable, always-apply rules, like a standard report structure every output should follow, belong in custom instructions so they take effect automatically in every chat.",
@@ -1206,10 +1206,10 @@
       "difficulty": "medium",
       "stem": "You have (1) reference documents Claude should consult and (2) rules about tone and format. In a Project, where does each belong?",
       "options": {
-        "A": "Put both the documents and the rules into the custom instructions",
+        "A": "Put both the reference documents and the rules into the custom instructions field",
         "B": "Reference documents as knowledge sources, tone and format rules as custom instructions",
-        "C": "Put both the documents and the rules in as knowledge sources",
-        "D": "Neither the documents nor the rules belong in a Project at all"
+        "C": "Put both the reference documents and the behavioral rules in as knowledge",
+        "D": "Neither the documents nor the rules really belong in a Project at all"
       },
       "answer": "B",
       "explanationCorrect": "Knowledge sources hold reference material Claude draws on; custom instructions hold standing behavioral rules like tone and format. Matching each to its slot keeps the Project organized and effective.",
@@ -1224,10 +1224,10 @@
       "difficulty": "medium",
       "stem": "Your company just changed its refund policy, and several Projects rely on the old policy document. What should you do?",
       "options": {
-        "A": "Leave the documents; Claude will figure out the new policy on its own",
-        "B": "Wait until someone complains about a wrong answer",
+        "A": "Leave the outdated documents in place; Claude will simply work out the new policy on its own",
+        "B": "Wait until someone actually complains about a wrong policy answer",
         "C": "Update the policy document in the affected Projects so chats reflect the new rules",
-        "D": "Delete the Projects and start over from nothing"
+        "D": "Delete all of the affected Projects entirely and then start over again from nothing"
       },
       "answer": "C",
       "explanationCorrect": "Configuration must be kept current as facts change. Proactively updating the policy document in the affected Projects prevents Claude from confidently applying outdated rules.",
@@ -1242,9 +1242,9 @@
       "difficulty": "medium",
       "stem": "You do two very different kinds of work: legal contract review and social-media copywriting. How should you organize Projects for the best context in each?",
       "options": {
-        "A": "Put everything in one Project so all context is always available",
-        "B": "Use no Projects and paste context each time",
-        "C": "Randomly assign chats to whichever Project is open",
+        "A": "Cram everything into one single Project so that all of the context is always available at once",
+        "B": "Use no Projects at all and just paste the relevant context each time",
+        "C": "Randomly assign each chat to whichever Project happens to be open",
         "D": "Create a separate Project for each, with its own instructions and knowledge tailored to that work"
       },
       "answer": "D",
@@ -1261,9 +1261,9 @@
       "stem": "A new hire's Claude outputs do not match the team's house style, while veterans' outputs do. What is the most scalable fix?",
       "options": {
         "A": "Give the team a shared Project whose instructions and knowledge encode the house style, so everyone starts the same",
-        "B": "Have the new hire shadow a veteran for a full month before they are allowed to use Claude",
+        "B": "Have the new hire shadow an experienced veteran for a full month before they are allowed to touch Claude",
         "C": "Ask the new hire to infer the house style on their own from past documents",
-        "D": "Accept that new hires will always be off-style for their first while"
+        "D": "Simply accept that new hires will always be off-style for their first while"
       },
       "answer": "A",
       "explanationCorrect": "Encoding the house style once in a shared Project gives every team member, new or veteran, the same durable context, making consistent output the default rather than something each person recreates.",
@@ -1278,10 +1278,10 @@
       "difficulty": "easy",
       "stem": "What is a good practice for Project knowledge that references facts, policies, or data that change over time?",
       "options": {
-        "A": "Set it once and never look at it again",
+        "A": "Set the knowledge once and then never actually look at it again",
         "B": "Review and refresh it on a regular cadence so it stays accurate",
-        "C": "Assume Claude will update it automatically",
-        "D": "Only update it after a major public incident"
+        "C": "Assume that Claude itself will keep the knowledge updated automatically",
+        "D": "Only bother to update it after some major public incident occurs"
       },
       "answer": "B",
       "explanationCorrect": "Knowledge that references changeable facts drifts out of date. Reviewing and refreshing it on a regular cadence keeps every chat grounded in current information.",
@@ -1296,7 +1296,7 @@
       "difficulty": "medium",
       "stem": "Without any reference material, Claude sometimes guesses at your product's specifications. How does a well-configured Project reduce this?",
       "options": {
-        "A": "It mainly makes Claude sound more confident when it is guessing",
+        "A": "It mainly just makes Claude sound a great deal more confident even while it is still guessing",
         "B": "It disables Claude's ability to answer questions about the product",
         "C": "It supplies the real specifications as knowledge, so Claude answers from your source",
         "D": "It has no real effect on the accuracy of the answers either way"
@@ -1314,9 +1314,9 @@
       "difficulty": "medium",
       "stem": "A Project's custom instruction reads only \"be professional,\" yet outputs vary widely in structure and length. What would most improve consistency?",
       "options": {
-        "A": "Remove the instruction entirely",
-        "B": "Add more vague adjectives like \"good\" and \"nice\"",
-        "C": "Switch models for each chat",
+        "A": "Remove the vague instruction from the Project entirely",
+        "B": "Add several more vague, subjective adjectives, such as \"good\" and \"nice\"",
+        "C": "Switch to a different model for each new chat in the Project",
         "D": "Make the instruction specific: define the structure, length, and tone you expect"
       },
       "answer": "D",
@@ -1332,10 +1332,10 @@
       "difficulty": "hard",
       "stem": "Different team members keep their own slightly different copies of the prompt instructions, and outputs have drifted apart. What is the best remedy?",
       "options": {
-        "A": "Let each person keep refining their private version",
+        "A": "Let every individual person simply keep refining their own separate and private version of it",
         "B": "Consolidate into one shared Project configuration that everyone uses as the source of truth",
-        "C": "Email a new instruction sheet every week",
-        "D": "Stop giving Claude any instructions at all"
+        "C": "Email a freshly revised instruction sheet out to everyone every week",
+        "D": "Stop giving Claude any standing instructions at all from now on"
       },
       "answer": "B",
       "explanationCorrect": "Divergent private copies cause drift. A single shared Project configuration acts as the source of truth so everyone works from the same, maintained instructions and knowledge.",
@@ -1350,9 +1350,9 @@
       "difficulty": "medium",
       "stem": "A Project's knowledge contains three versions of the same policy: last year's, a draft, and the current one. Claude sometimes cites the wrong version. What should you do?",
       "options": {
-        "A": "Add a fourth, combined version to be safe",
-        "B": "Tell users to specify the version in every question",
-        "C": "Leave all three; more documents is always better",
+        "A": "Add a fourth, combined version of the policy just to be safe",
+        "B": "Tell all of the users to specify the exact policy version they mean in each question",
+        "C": "Leave all three in place, since having more documents is always better",
         "D": "Remove the outdated and draft versions, keeping only the current authoritative one"
       },
       "answer": "D",
@@ -1369,9 +1369,9 @@
       "stem": "While debugging, you are about to paste a configuration file that includes a live production API key into a chat. What should you do?",
       "options": {
         "A": "Remove or redact the secret before sharing; never paste live credentials",
-        "B": "Paste it as-is; it speeds up debugging",
-        "C": "Paste it but ask Claude to ignore the key",
-        "D": "Paste it now and rotate the key next quarter"
+        "B": "Paste the whole config file in as-is, since doing so noticeably speeds up the debugging",
+        "C": "Paste the file in, but ask Claude to simply ignore the embedded production key",
+        "D": "Paste it now and then rotate the key sometime next quarter"
       },
       "answer": "A",
       "explanationCorrect": "Live credentials should never be pasted into external tools. Redact or remove the secret first; asking a tool to \"ignore\" a key does not undo the exposure.",
@@ -1386,10 +1386,10 @@
       "difficulty": "medium",
       "stem": "You want to analyze a spreadsheet of customers' names, addresses, and health conditions. What is the responsible first step?",
       "options": {
-        "A": "Paste it immediately; analysis is harmless",
+        "A": "Paste the spreadsheet immediately, since analysis is harmless",
         "B": "Check your organization's data policy and get authorization before using regulated personal data",
-        "C": "Assume it is fine because the data is only being summarized",
-        "D": "Remove just the addresses and paste the rest"
+        "C": "Assume that it is perfectly fine simply because the data is only ever being summarized here",
+        "D": "Remove just the mailing addresses and paste in all of the rest"
       },
       "answer": "B",
       "explanationCorrect": "Names tied to health conditions are sensitive, regulated personal data. Responsible use requires following your organization's data policy and obtaining authorization before putting such data into any tool.",
@@ -1404,10 +1404,10 @@
       "difficulty": "medium",
       "stem": "A teammate suggests pasting an unreleased, confidential product roadmap into a tool that is not approved for confidential data. What is the right response?",
       "options": {
-        "A": "Go ahead and paste it; a roadmap is not really that secret",
-        "B": "Paste a \"lightly edited\" version of it to be a bit safer",
+        "A": "Just go ahead and paste the whole roadmap in, since a roadmap is not really that secret anyway",
+        "B": "Paste a \"lightly edited\" version of the roadmap to be a bit safer",
         "C": "Do not use an unapproved tool for confidential data; follow the policy on where it may go",
-        "D": "Paste it, then delete the chat afterward to clean up"
+        "D": "Paste it, and then delete the chat afterward to clean it all up"
       },
       "answer": "C",
       "explanationCorrect": "Confidential material should only go to tools approved for it. Understanding and following the policy on where sensitive data is allowed to flow is central to responsible use.",
@@ -1422,9 +1422,9 @@
       "difficulty": "medium",
       "stem": "Before entering any sensitive business data into an AI tool, the most important thing to understand is:",
       "options": {
-        "A": "How fast the tool responds",
-        "B": "How colorful the interface is",
-        "C": "Whether the output will be formatted as a table",
+        "A": "How quickly the AI tool itself tends to respond to a fairly typical everyday request from a user",
+        "B": "How colorful and modern the tool's user interface happens to be",
+        "C": "Whether the tool's output will be neatly formatted as a table",
         "D": "Where the data goes, how it may be used or retained, and whether your policy permits it"
       },
       "answer": "D",
@@ -1441,9 +1441,9 @@
       "stem": "Which of the following is clearly inappropriate to paste into a general AI chat tool?",
       "options": {
         "A": "A colleague's password and a customer's full credit-card number",
-        "B": "A publicly available product brochure",
-        "C": "A draft blog post you wrote for the public site",
-        "D": "A list of common English idioms"
+        "B": "A publicly available product brochure put out by the marketing team",
+        "C": "A rough draft of a blog post you already wrote for the public website",
+        "D": "A short list of some common English-language idioms and everyday sayings"
       },
       "answer": "A",
       "explanationCorrect": "Secrets and sensitive personal financial data, passwords and full card numbers, must never be entered into a general tool. The other items are already public or non-sensitive.",
@@ -1458,10 +1458,10 @@
       "difficulty": "medium",
       "stem": "You need Claude to help spot trends in support tickets, but the tickets contain customer names and emails you do not need for the analysis. What is the best practice?",
       "options": {
-        "A": "Include all the personal details to be thorough",
+        "A": "Include every single one of the customer's personal details, just to be extra thorough",
         "B": "Remove or anonymize the personal details you do not need before sending the data",
-        "C": "Include the emails but not the names",
-        "D": "Send everything and hope it is not retained"
+        "C": "Include the customer emails, but strip out the customer names",
+        "D": "Send absolutely everything over to the tool and just hope that none of it is retained"
       },
       "answer": "B",
       "explanationCorrect": "Data minimization means sharing only what the task requires. Stripping or anonymizing personal details you do not need for trend analysis reduces exposure while still enabling the work.",
@@ -1476,10 +1476,10 @@
       "difficulty": "medium",
       "stem": "A user asks Claude to help them access an ex-partner's private accounts without permission. As a responsible operator, what is the right stance?",
       "options": {
-        "A": "Help them out, since the user asked for it politely",
-        "B": "Help them, as long as it is technically feasible to do",
+        "A": "Help them out, since the user did ask for it quite politely",
+        "B": "Go ahead and help them, as long as doing so is technically feasible in the first place",
         "C": "Decline; this is unauthorized access to someone else's private accounts, however it is framed",
-        "D": "Help, but add a disclaimer about using it responsibly"
+        "D": "Help, but attach a disclaimer about using the access responsibly"
       },
       "answer": "C",
       "explanationCorrect": "Responsible use includes refusing tasks that facilitate harm or unauthorized access to others' private data. Neither politeness nor technical feasibility makes the request acceptable.",
@@ -1494,9 +1494,9 @@
       "difficulty": "hard",
       "stem": "Your company classifies data as Public, Internal, Confidential, and Restricted. Before pasting a document into an AI tool, the classification matters because:",
       "options": {
-        "A": "Higher classifications always produce better answers",
-        "B": "Classification only affects file-size limits",
-        "C": "The color of the label changes the model's behavior",
+        "A": "A document with a higher data classification reliably produces noticeably better model answers",
+        "B": "The classification really only affects the tool's file-size limits",
+        "C": "The color of the label itself changes how the model behaves",
         "D": "It tells you the handling rules: some classes may not be entered into certain tools at all"
       },
       "answer": "D",
@@ -1513,9 +1513,9 @@
       "stem": "A clinic wants to use a general consumer AI tool to summarize identifiable patient records. Before doing so, the key governance question is:",
       "options": {
         "A": "Whether that use is permitted under applicable health-privacy rules and the tool's approved handling",
-        "B": "Whether the generated summaries will each come in under 200 words",
-        "C": "Whether the clinic staff would prefer bullet points or flowing prose",
-        "D": "Whether the tool offers a dark mode for late-night shifts"
+        "B": "Whether each of the generated summaries will come in under 200 words",
+        "C": "Whether the clinic's own staff would tend to prefer neat bullet points or flowing narrative prose",
+        "D": "Whether the tool offers a dark mode for the late-night shifts"
       },
       "answer": "A",
       "explanationCorrect": "Identifiable patient records are protected health information. The governing question is whether the intended use complies with health-privacy rules and the tool's approved handling, not stylistic preferences.",
@@ -1530,10 +1530,10 @@
       "difficulty": "medium",
       "stem": "Before forwarding a Claude-generated report to an external partner, you should:",
       "options": {
-        "A": "Send it right away; it was generated internally",
+        "A": "Just send the report straight to the partner, since it was generated internally in the first place",
         "B": "Review it to ensure no confidential or personal internal data was carried into the output",
-        "C": "Only check the spelling",
-        "D": "Assume Claude removed anything sensitive automatically"
+        "C": "Only check the report over carefully for any spelling mistakes",
+        "D": "Assume Claude already removed anything sensitive automatically"
       },
       "answer": "B",
       "explanationCorrect": "Outputs can inadvertently include sensitive details drawn from your inputs. Reviewing before external sharing prevents leaking confidential or personal information outside the organization.",
@@ -1548,10 +1548,10 @@
       "difficulty": "medium",
       "stem": "An employee starts using a personal, unvetted AI account for work involving company data because it is convenient. What is the governance concern?",
       "options": {
-        "A": "There is none; convenience is really all that matters here",
-        "B": "Only that the personal account might be a little slower",
+        "A": "There really is no concern here; convenience is honestly all that truly matters",
+        "B": "Only that the personal account might turn out to be a little slower",
         "C": "Company data may flow through an unapproved tool, outside the organization's controls",
-        "D": "Only that the tool's fonts and colors look a bit different"
+        "D": "Only that the tool's fonts and colors happen to look a bit different"
       },
       "answer": "C",
       "explanationCorrect": "Using unapproved, personal tools for company data routes sensitive information outside sanctioned controls, data-handling agreements, and oversight, a core governance risk regardless of convenience.",
@@ -1567,9 +1567,9 @@
       "stem": "Which principle best guides how much data to include when prompting with real business information?",
       "options": {
         "A": "Include only the data necessary for the task, and no more",
-        "B": "Always include the maximum data available for context",
-        "C": "Include everything and let Claude decide what to ignore",
-        "D": "Include extra unrelated data to test the model"
+        "B": "Always include the maximum data available, for the fullest context",
+        "C": "Include everything and let Claude decide what it should ignore",
+        "D": "Include some extra unrelated data as a way to test the model"
       },
       "answer": "A",
       "explanationCorrect": "Data minimization, sharing only what the task needs, limits exposure of sensitive information and is a foundational responsible-use practice.",
@@ -1584,10 +1584,10 @@
       "difficulty": "medium",
       "stem": "Two AI tools are available. Tool X is approved by your company with a data agreement in place; Tool Y is a random free site with unknown data practices. For confidential work, which should you use and why?",
       "options": {
-        "A": "Tool Y, because free is cheaper",
-        "B": "Either one; it makes no difference for confidential data",
+        "A": "Tool Y, purely on the grounds that a free tool is simply cheaper for the whole team to keep using",
+        "B": "Either one of the two tools; honestly it makes no real difference for confidential data",
         "C": "Tool X, because its approved status and data agreement govern how your data is handled",
-        "D": "Whichever loads faster in your browser"
+        "D": "Whichever of the two tools happens to load faster in your browser"
       },
       "answer": "C",
       "explanationCorrect": "For confidential work, the approved tool with a known data agreement is the responsible choice; you understand and have assurances about where the data goes and how it is handled.",
@@ -1602,9 +1602,9 @@
       "difficulty": "hard",
       "stem": "An organization wants a simple rule for employees about sensitive data and AI tools. Which rule is soundest?",
       "options": {
-        "A": "\"Move fast: any tool is fine as long as it helps you hit deadlines, and worry about data later.\"",
-        "B": "\"Never use AI tools for work; the risk of any data exposure always outweighs the benefit.\"",
-        "C": "\"Use any tool you like for sensitive data, but delete the conversation afterward to erase the exposure.\"",
+        "A": "\"Move fast: any tool is fine as long as it helps you hit deadlines, and sort out the data questions later.\"",
+        "B": "\"Never use AI tools for any work at all; the risk of data exposure always outweighs any possible benefit.\"",
+        "C": "\"Use whatever tool you happen to like even for sensitive data, so long as you delete the conversation afterward to erase the exposure.\"",
         "D": "\"Use only approved tools, follow the data-classification policy, and never enter secrets or regulated personal data without authorization.\""
       },
       "answer": "D",
@@ -1621,9 +1621,9 @@
       "stem": "Claude's answers to your question are consistently generic and could apply to any company. What is the most likely root cause and fix?",
       "options": {
         "A": "The prompt lacks specific context; add the concrete details unique to your situation",
-        "B": "The model is broken; file a bug report",
-        "C": "You need to ask the same question more times",
-        "D": "The output length is set too high"
+        "B": "The underlying model itself must be fundamentally broken, so you should go file a bug report",
+        "C": "You simply need to go ahead and ask it the exact same question several more times over",
+        "D": "The maximum output length setting is turned up far too high"
       },
       "answer": "A",
       "explanationCorrect": "Generic output usually traces back to a generic, context-poor prompt. Supplying the specifics of your situation is the durable fix that makes answers relevant.",
@@ -1638,10 +1638,10 @@
       "difficulty": "medium",
       "stem": "You have clearly described the output format three times and Claude still gets the layout slightly wrong. What is the most effective durable fix?",
       "options": {
-        "A": "Describe the format a fourth time, more emphatically",
+        "A": "Describe the desired format a fourth time, only more emphatically",
         "B": "Provide a concrete example of the exact output layout you want",
-        "C": "Give up and reformat by hand every time",
-        "D": "Switch to a completely different task"
+        "C": "Give up on it and simply reformat the output by hand every single time",
+        "D": "Switch over to a completely different task altogether instead of this one"
       },
       "answer": "B",
       "explanationCorrect": "When descriptions of a format keep missing, a worked example demonstrates the target directly. It is usually the durable fix that repeated re-describing is not.",
@@ -1656,10 +1656,10 @@
       "difficulty": "medium",
       "stem": "A high-volume, simple text-cleanup job is running slowly and costing more than expected on your largest model. What is the root-cause fix?",
       "options": {
-        "A": "Add more instructions to the prompt",
-        "B": "Run it twice to be sure of the result",
+        "A": "Add quite a few more detailed instructions on top of the existing cleanup prompt",
+        "B": "Run the whole job twice over just to be sure of the result",
         "C": "Switch the job to a smaller, faster model suited to simple high-volume work",
-        "D": "Increase the maximum output length"
+        "D": "Increase the maximum output length that is allowed for each and every response"
       },
       "answer": "C",
       "explanationCorrect": "Running a simple, high-volume task on the largest model wastes cost and latency. Matching the model to the task, a smaller, faster model, fixes the root cause.",
@@ -1674,9 +1674,9 @@
       "difficulty": "medium",
       "stem": "A genuinely complex, multi-step analysis produces shallow, error-prone results on a small, fast model. What is the most appropriate fix?",
       "options": {
-        "A": "Ask the question several more times on the same model",
-        "B": "Shorten the prompt so there is less to confuse it",
-        "C": "Lower the output length",
+        "A": "Ask the very same question several more times over on that exact same small and fast model",
+        "B": "Shorten the prompt sharply so there is less to confuse the model",
+        "C": "Lower the maximum output length setting for the responses",
         "D": "Move to a more capable model (and enable extended thinking) suited to hard reasoning"
       },
       "answer": "D",
@@ -1693,9 +1693,9 @@
       "stem": "Every day you correct Claude's tone the same way in a fresh chat. What is the durable fix?",
       "options": {
         "A": "Put the tone rule in the Project's custom instructions once, so it applies automatically",
-        "B": "Keep correcting it by hand in every new chat, day after day",
-        "C": "Accept the off tone as an unavoidable limitation of the tool",
-        "D": "Try opening Claude in a different web browser instead"
+        "B": "Simply keep on correcting the tone by hand in every single new chat, day after day after day",
+        "C": "Accept the off tone as an unavoidable limitation of the tool itself",
+        "D": "Try opening Claude in a different web browser and see if it helps"
       },
       "answer": "A",
       "explanationCorrect": "A repeated manual correction is a signal to fix the configuration. Putting the tone rule in the Project's custom instructions solves it once for every future chat.",
@@ -1710,10 +1710,10 @@
       "difficulty": "medium",
       "stem": "A developer keeps pasting files from a large codebase into chat one at a time to get Claude to make coordinated edits, and it is painful and error-prone. What is the root-cause fix?",
       "options": {
-        "A": "Paste the files faster",
+        "A": "Simply paste the individual code files into the chat one by one, only faster this time",
         "B": "Use Claude Code, which works directly across the repository, instead of chat",
-        "C": "Paste all the files in a single giant message",
-        "D": "Reduce the number of files by deleting code"
+        "C": "Paste every one of the files into a single, giant chat message",
+        "D": "Reduce the number of files involved by deleting some of the existing code first"
       },
       "answer": "B",
       "explanationCorrect": "The pain comes from using the wrong entry point. Claude Code operates directly on the repository, eliminating the manual file-by-file pasting that chat forces.",
@@ -1728,10 +1728,10 @@
       "difficulty": "easy",
       "stem": "Claude's answer about a fast-moving topic is confidently out of date. What is the most direct fix?",
       "options": {
-        "A": "Rephrase the question with synonyms",
-        "B": "Ask Claude to \"be more current\"",
+        "A": "Rephrase the very same question using a whole handful of different synonyms",
+        "B": "Ask Claude directly to please try to \"be more current\" about the topic",
         "C": "Enable web search so Claude can retrieve up-to-date information",
-        "D": "Switch to a smaller model"
+        "D": "Switch over to a smaller and faster model just for this one question"
       },
       "answer": "C",
       "explanationCorrect": "Out-of-date answers on recent topics stem from the training cutoff. Enabling web search lets Claude pull current information rather than relying on stale knowledge.",
@@ -1746,9 +1746,9 @@
       "difficulty": "medium",
       "stem": "Two people give Claude \"clean up this text\" and get very different results, and neither is what they wanted. What is the root cause and fix?",
       "options": {
-        "A": "The model is just inconsistent, so nothing can really be done",
-        "B": "The text they gave it is simply far too long to handle",
-        "C": "They should each just ask the same thing several more times",
+        "A": "The model itself is just inherently inconsistent, so really nothing can be done about it here",
+        "B": "The text that they each handed it is simply far too long for the model to handle well",
+        "C": "They should each simply ask the very same thing several more times",
         "D": "\"Clean up\" is ambiguous; specify what to change (grammar, tone, length, formatting)"
       },
       "answer": "D",
@@ -1765,9 +1765,9 @@
       "stem": "An output got worse after you edited your prompt, but you changed several things at once. What is the best troubleshooting move?",
       "options": {
         "A": "Revert, then reintroduce the changes one at a time to find which caused the regression",
-        "B": "Change even more things at once and hope the result improves",
-        "C": "Abandon the prompt entirely and start over from nothing",
-        "D": "Assume the model itself degraded and just wait a day"
+        "B": "Go ahead and change even more things all at once, and just hope the overall result improves",
+        "C": "Abandon the whole prompt entirely and just start over from nothing",
+        "D": "Assume the model itself quietly degraded and simply wait a day"
       },
       "answer": "A",
       "explanationCorrect": "Isolating variables is core to troubleshooting. Reverting and reapplying changes one at a time reveals exactly which edit caused the regression, so you can fix it precisely.",
@@ -1782,10 +1782,10 @@
       "difficulty": "medium",
       "stem": "Claude gives wrong answers about your internal process. You are tempted to blame the model, but it was never given the process documentation. What is the real root cause?",
       "options": {
-        "A": "The model is fundamentally incapable of the task",
+        "A": "The model is simply and fundamentally incapable of the entire task at hand here",
         "B": "Missing context: Claude was not given the internal information it needs",
-        "C": "An incorrect temperature setting",
-        "D": "The time of day you asked"
+        "C": "An incorrectly configured temperature setting on the underlying model itself",
+        "D": "The particular time of day at which you happened to ask"
       },
       "answer": "B",
       "explanationCorrect": "Wrong answers about private information usually mean the context is missing, not that the model is incapable. Supplying the internal documentation is the fix.",
@@ -1800,10 +1800,10 @@
       "difficulty": "medium",
       "stem": "Claude's responses are far longer and more rambling than you need for a quick summary. What is the durable fix?",
       "options": {
-        "A": "Delete parts of each response by hand every time",
-        "B": "Ask it to \"be concise\" with no further detail and hope",
+        "A": "Manually delete the unnecessary parts out of each and every single response by hand every time",
+        "B": "Ask it to \"be concise\" with no further detail and hope for the best",
         "C": "Specify explicit constraints, for example \"at most five bullet points, one line each\"",
-        "D": "Switch to a larger model"
+        "D": "Switch over to a larger, more capable model for the summaries"
       },
       "answer": "C",
       "explanationCorrect": "Rambling output is best fixed by explicit constraints on length and structure. Concrete limits like \"five bullets, one line each\" reliably shape the response.",
@@ -1818,9 +1818,9 @@
       "difficulty": "hard",
       "stem": "A prompt underperforms. Which sequence best reflects sound troubleshooting?",
       "options": {
-        "A": "Immediately switch to the biggest available model and move on",
-        "B": "Randomly tweak the wording until something finally sticks",
-        "C": "Blame the model, decide it simply cannot do this, and stop using it",
+        "A": "Immediately switch straight to the biggest, most expensive model available, and then simply move on",
+        "B": "Randomly tweak the prompt wording until something finally sticks",
+        "C": "Blame the model, decide it just cannot do this, and stop using it",
         "D": "Identify the likely root cause (ambiguous ask, missing context, wrong model or entry point) and fix it"
       },
       "answer": "D",
@@ -1836,9 +1836,9 @@
       "difficulty": "medium",
       "stem": "You discover a prompt tweak that reliably fixes a recurring problem across your team's chats. What is the best way to capture the win?",
       "options": {
-        "A": "Keep the tweak to yourself for next time",
-        "B": "Apply it manually whenever you happen to remember",
-        "C": "Mention it once in a meeting and move on",
+        "A": "Keep the useful prompt tweak to yourself and simply reuse it again yourself the next time around",
+        "B": "Apply the tweak by hand whenever you happen to remember to",
+        "C": "Mention the tweak once in a team meeting and then move on",
         "D": "Build it into the shared Project configuration so every chat benefits automatically"
       },
       "answer": "D",
