@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anthropic University — Claude Certification study hub</title>
+  <meta name="description" content="Unofficial practice exams, study guides, and flashcards for the Claude Certification program. Study, practice, take timed mock exams, and drill flashcards.">
+  <meta name="theme-color" content="#CC6A4E">
+  <link rel="icon" href="mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <a class="brand" href="#/" aria-label="Anthropic University home">
+      <img src="mark.svg" alt="" width="34" height="34">
+      <span class="brand-text">Anthropic <b>University</b></span>
+    </a>
+    <div class="topbar-right">
+      <span class="pill" title="Not affiliated with Anthropic">Unofficial</span>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+    </div>
+  </header>
+
+  <main id="main" class="main">
+    <div id="app" class="app">
+      <noscript>
+        <p class="notice">This study app needs JavaScript. You can still read the
+        <a href="https://github.com/patrickking67/anthropic-university">study guides and practice exams on GitHub</a>.</p>
+      </noscript>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>
+      <strong>Anthropic University</strong> is an unofficial, community-authored study aid — not
+      affiliated with, endorsed by, or produced by Anthropic. Questions are original and do not
+      reproduce real exam content. Scores are approximate study estimates.
+    </p>
+    <p class="footer-links">
+      <a href="https://github.com/patrickking67/anthropic-university">Source on GitHub</a> ·
+      <a href="https://platform.claude.com/docs">Claude docs</a> ·
+      <a href="https://code.claude.com/docs">Claude Code docs</a>
+    </p>
+  </footer>
+
+  <!-- Catalog first, then the app loads each exam's data file listed in the catalog. -->
+  <script src="data/index.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
