@@ -1,0 +1,28 @@
+{
+  "name": "anthropic-university",
+  "owner": {
+    "name": "Patrick King",
+    "url": "https://github.com/patrickking67"
+  },
+  "metadata": {
+    "description": "Study plugins for the Claude Certification program — quizzing, timed mock exams, concept explainers, and flashcard drilling. Unofficial; not affiliated with Anthropic.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "exam-coach",
+      "source": "./plugins/exam-coach",
+      "description": "Interactive tutor for the Claude certifications: adaptive quizzing, timed mock exams, deep-dive concept explanations, and answer grading."
+    },
+    {
+      "name": "flashcard-drill",
+      "source": "./plugins/flashcard-drill",
+      "description": "Terminal spaced-repetition flashcard drilling for any Anthropic University track."
+    },
+    {
+      "name": "cert-author",
+      "source": "./plugins/cert-author",
+      "description": "Maintainer tools for contributors: author original questions, adversarially review a bank, and rebuild content."
+    }
+  ]
+}

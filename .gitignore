@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Local env / secrets (never commit tokens)
+.env
+.env.local
+*.local
+
+# Build scratch
+.cache/
+tmp/

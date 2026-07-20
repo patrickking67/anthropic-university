@@ -1,0 +1,39 @@
+# Anthropic University
+
+> An open, **unofficial** study hub for the Claude Certification program. It provides original
+> practice exams (100 questions each), study guides, and flashcards for four tracks — Claude
+> Certified Associate (Foundations), Developer (Foundations), Architect (Foundations), and Architect
+> (Professional) — plus an interactive web app and a Claude Code plugin marketplace. All content is
+> community-authored to teach publicly documented concepts and is **not affiliated with or endorsed
+> by Anthropic**; it does not reproduce real exam questions.
+
+This file follows the llmstxt.org convention to help language models navigate the repository.
+
+## Start here
+
+- [README](README.md): overview, how to study, and links to every track
+- [How content is structured and built](CLAUDE.md): canonical JSON → generated markdown + web app
+- [Contributing guide](CONTRIBUTING.md): question schema and authoring quality bar
+
+## Certification tracks
+
+- [Associate – Foundations study guide](content/associate-foundations/study-guide.md): knowledge-worker track — entry points, prompting, evaluation, workflow integration, configuration, governance, troubleshooting
+- [Associate – Foundations practice exam](content/associate-foundations/practice-exam.md): 100 original questions with explanations
+- [Developer – Foundations study guide](content/developer-foundations/study-guide.md): model fundamentals, production prompting/agents/tools, Claude Code + MCP, evals + security, packaging
+- [Developer – Foundations practice exam](content/developer-foundations/practice-exam.md): 100 original questions with explanations
+- [Architect – Foundations study guide](content/architect-foundations/study-guide.md): multi-agent orchestration, Claude Code for CI, support agents, code generation, core API/SDK/MCP
+- [Architect – Foundations practice exam](content/architect-foundations/practice-exam.md): 100 original questions with explanations
+- [Architect – Professional study guide](content/architect-professional/study-guide.md): solution design, enterprise integration, safety stack, evals as acceptance criteria, stakeholder lifecycle
+- [Architect – Professional practice exam](content/architect-professional/practice-exam.md): 100 original questions with explanations
+
+## Interactive app & tools
+
+- [Learning app (GitHub Pages)](docs/index.html): Study, Practice, timed Exam, and Flashcard modes, self-contained vanilla JS
+- [Plugin marketplace catalog](.claude-plugin/marketplace.json): learner-facing Claude Code plugins (exam-coach, flashcard-drill, cert-author)
+
+## Canonical data
+
+- [Associate question bank](content/associate-foundations/questions.json)
+- [Developer question bank](content/developer-foundations/questions.json)
+- [Architect Foundations question bank](content/architect-foundations/questions.json)
+- [Architect Professional question bank](content/architect-professional/questions.json)
