@@ -14,10 +14,10 @@
 
 A developer wants Claude to read, edit, and run tests across the files of a local Git repository from the terminal. Which entry point is the best fit?
 
-- **A.** claude.ai chat, pasting the files in one at a time
+- **A.** claude.ai chat, pasting the repository files in one at a time by hand each time
 - **B.** Claude Code, which works directly with your repository in the terminal
-- **C.** A Claude Project with the repository zipped as a knowledge source
-- **D.** The API with a custom script the developer writes and maintains
+- **C.** A Claude Project with the whole repository zipped and attached as a knowledge source
+- **D.** The API, with a custom script the developer writes and maintains
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -40,10 +40,10 @@ Reference: https://code.claude.com/docs/en/overview
 
 Your team answers customer questions using the same product FAQ, tone guidelines, and policy documents every day, and you want every chat to start with that context without pasting it each time. Which entry point best fits?
 
-- **A.** A new claude.ai chat each time, pasting the documents at the start
-- **B.** Claude Code, with the documents committed to a repository
+- **A.** A brand-new claude.ai chat every time, pasting the FAQ, tone guide, and policy documents in at the start
+- **B.** Claude Code, with the FAQ and policy documents kept in a repository
 - **C.** A Claude Project with the FAQ and policies as knowledge and the tone in custom instructions
-- **D.** The API, embedding all the documents in every single request
+- **D.** The API, embedding all of the documents in every single request
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -64,9 +64,9 @@ _Why a tempting wrong answer misses:_ Re-pasting the documents into a fresh chat
 An engineer needs Claude to classify incoming support tickets automatically inside the company's own application, with no person in the loop. Which entry point is most appropriate?
 
 - **A.** The Claude Developer Platform API, called from the application's code
-- **B.** claude.ai chat, with a staff member pasting each ticket manually
+- **B.** claude.ai chat, with a staff member manually pasting in each incoming ticket
 - **C.** A Claude Project shared with the whole support team
-- **D.** Claude Code running in a developer's terminal
+- **D.** Claude Code running in one of the individual developers' local terminals
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -86,9 +86,9 @@ _Why a tempting wrong answer misses:_ claude.ai chat requires a person to paste 
 
 A marketer wants to brainstorm ten taglines for a campaign and refine the best few in a quick back-and-forth. There is no code, no repeated workflow, and nothing confidential. Which entry point is the simplest appropriate choice?
 
-- **A.** The API, driven by a Python script
-- **B.** Claude Code in the terminal
-- **C.** A dedicated Claude Project with several knowledge sources
+- **A.** The API, driven by a short Python script
+- **B.** Claude Code, used from the terminal
+- **C.** A dedicated Claude Project with knowledge sources
 - **D.** A claude.ai chat conversation
 
 <details><summary>Answer &amp; explanation</summary>
@@ -111,7 +111,7 @@ You need Claude to work through a complex, multi-step financial analysis that re
 
 - **A.** Claude Haiku 4.5, for the fastest possible response
 - **B.** Claude Opus 4.8, for the strongest reasoning
-- **C.** Whichever model is cheapest per token that day
+- **C.** Whichever model happens to be cheapest that day
 - **D.** Claude Sonnet 5, chosen mainly to minimize latency
 
 <details><summary>Answer &amp; explanation</summary>
@@ -134,10 +134,10 @@ Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
 A product feature will summarize thousands of documents per day. Each summary is moderately complex, and you need a strong balance of quality, speed, and cost at scale. Which model is the most appropriate default?
 
-- **A.** Claude Opus 4.8 for every request, regardless of cost
-- **B.** Claude Haiku 4.5, accepting weaker quality on the harder documents
+- **A.** Claude Opus 4.8 for every request, regardless of the cost
+- **B.** Claude Haiku 4.5, accepting weaker quality on harder documents
 - **C.** Claude Sonnet 5, balancing quality and cost at volume
-- **D.** A model chosen at random per request to average the cost
+- **D.** A model chosen at random per request
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -160,9 +160,9 @@ Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 You need to detect whether each incoming message is written in English or Spanish: a simple, high-volume, latency-sensitive classification. Which model is the best fit?
 
 - **A.** Claude Haiku 4.5, the fastest and most economical option
-- **B.** Claude Opus 4.8, to be safe on accuracy
-- **C.** Whichever model has the largest context window
-- **D.** A separate Opus call per language, then compare them
+- **B.** Claude Opus 4.8, reached for just to be extra safe on accuracy
+- **C.** Whichever model happens to have the largest available context window
+- **D.** A separate Opus call per language, then compared side by side
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -184,10 +184,10 @@ Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
 A logic puzzle keeps tripping Claude up because it involves several dependent reasoning steps. Which built-in capability is most directly aimed at improving multi-step reasoning like this?
 
-- **A.** Web search, to look the answer up online
+- **A.** Web search, to look the puzzle's answer up on the open internet
 - **B.** Extended (adaptive) thinking, which lets Claude reason through steps before answering
-- **C.** File uploads, to attach the puzzle as a document
-- **D.** Artifacts, to render the answer in a side panel
+- **C.** File uploads, to attach the puzzle to the chat as a PDF document
+- **D.** Artifacts, to render the finished answer neatly in its own dedicated side panel for later review
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -207,10 +207,10 @@ _Why a tempting wrong answer misses:_ Artifacts only change how output is displa
 
 You ask Claude about a regulation that changed last week, after the model's training cutoff. Which feature should you enable to get an accurate, current answer?
 
-- **A.** Extended thinking, to reason harder about it
-- **B.** Artifacts, to format the answer nicely
+- **A.** Extended thinking, so Claude can reason harder about the new regulation
+- **B.** Artifacts, used to format the final answer nicely in a side panel
 - **C.** Web search, so Claude can retrieve up-to-date information
-- **D.** A larger maximum output length
+- **D.** A larger maximum output length setting
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -231,9 +231,9 @@ _Why a tempting wrong answer misses:_ Extended thinking helps Claude reason abou
 You are drafting a policy document with Claude and want to see it in a dedicated panel, edit it across turns, and keep a stable version as you refine it. Which feature is designed for this?
 
 - **A.** Artifacts, a side panel for substantial, editable content
-- **B.** Web search, to gather sources for the document
-- **C.** Extended thinking, to plan the document
-- **D.** Token counting, to measure the document's size
+- **B.** Web search, used to gather outside sources for the document
+- **C.** Extended thinking, to plan out the document's structure first
+- **D.** Token counting, to measure the document's overall size
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -253,10 +253,10 @@ _Why a tempting wrong answer misses:_ Web search retrieves information; it has n
 
 A colleague sends you a 40-page PDF contract and asks for a plain-language summary of its key obligations. In claude.ai, what is the most direct way to have Claude work from the actual document?
 
-- **A.** Retype the contract into the chat box by hand
+- **A.** Retype the whole contract into the chat box by hand
 - **B.** Upload the PDF file directly to the conversation
-- **C.** Describe the contract from memory and ask Claude to guess the rest
-- **D.** Ask Claude to search the web for the contract
+- **C.** Describe the contract from memory and let Claude fill the gaps
+- **D.** Ask Claude to search the web to find the contract
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -276,10 +276,10 @@ _Why a tempting wrong answer misses:_ Describing the contract from memory strips
 
 After a long chat that drifted across several unrelated topics, Claude's answers start pulling in irrelevant details from earlier in the conversation. What is the best way to manage this?
 
-- **A.** Keep going and hope the noise clears on its own
-- **B.** Repeat your question in all capital letters
+- **A.** Keep going and just hope the accumulated noise clears on its own
+- **B.** Repeat your latest question in all capital letters
 - **C.** Start a new conversation focused only on the current topic
-- **D.** Switch to a smaller, faster model
+- **D.** Switch to a smaller and faster model midway through the long chat
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -299,10 +299,10 @@ _Why a tempting wrong answer misses:_ Switching to a smaller model does not remo
 
 You want Claude to answer a specific question about one section of a large report. Which approach gives Claude the most useful context to work with?
 
-- **A.** Paste the entire multi-hundred-page report and ask the question at the very end with no guidance
+- **A.** Paste the entire multi-hundred-page report and ask the question at the very end
 - **B.** Provide the relevant section (or a focused excerpt) and state the specific question
 - **C.** Ask the question with no context and let Claude infer the report
-- **D.** Send the question first, then the report in a separate message hours later
+- **D.** Send the question first, then the report separately hours later
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -322,10 +322,10 @@ _Why a tempting wrong answer misses:_ Dumping hundreds of irrelevant pages burie
 
 You find yourself pasting the same brand style guide into a new chat several times a week to keep Claude's writing on-brand. What is the better long-term setup?
 
-- **A.** Keep pasting it each time; it only takes a minute
-- **B.** Memorize the guide so you can paraphrase it faster
+- **A.** Keep pasting the brand style guide into each new chat, since it only takes a minute
+- **B.** Memorize the style guide so you can paraphrase it more quickly
 - **C.** Create a Project with the style guide as knowledge and the brand voice in custom instructions
-- **D.** Email the style guide to Claude and ask it to remember
+- **D.** Email the style guide to Claude and ask it to remember for you
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -345,10 +345,10 @@ _Why a tempting wrong answer misses:_ Continuing to paste the guide every time i
 
 A teammate runs every task, even trivial reformatting, on the largest, most expensive model "to be safe." What is the most sensible guidance?
 
-- **A.** Always default to the largest model, since extra reasoning capability is never actually wasted
+- **A.** Always default to the largest model, since its extra reasoning capability is never actually wasted
 - **B.** Match the model to the task, using a smaller model for simple work and the largest for hard reasoning
-- **C.** Always default to the smallest model available to keep the per-task cost as low as possible
-- **D.** Rotate models at random each time so the usage is spread evenly across all of them
+- **C.** Always default to the smallest available model to keep the per-task cost as low as possible
+- **D.** Rotate between the models at random each time so usage is spread evenly across them
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -372,8 +372,8 @@ You want Claude to review a draft email the way an experienced communications ed
 
 - **A.** Assign a clear role, like "act as an experienced communications editor," and say what to review
 - **B.** Simply ask it to "be helpful and thorough" and see what comes back
-- **C.** Paste the email with no other instructions and let Claude decide what to do
-- **D.** Ask for the longest, most detailed response that Claude can possibly produce
+- **C.** Paste the draft email in with no other instructions and simply let Claude decide what to do
+- **D.** Ask for the longest, most detailed response it can produce
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -395,9 +395,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 Claude keeps returning its answer as flowing paragraphs, but you need a table with three named columns to drop into a report. What is the most effective fix?
 
-- **A.** Ask the same question again and hope for a table
-- **B.** Switch to a larger, more capable model
-- **C.** Tell Claude to "make it look nicer"
+- **A.** Ask the exact same question over again and simply hope that it comes back formatted as a table
+- **B.** Switch to a larger, more capable model and try once more
+- **C.** Tell Claude to "make it look a bit nicer" for the report
 - **D.** Explicitly specify the output format: a table with the three exact column names you need
 
 <details><summary>Answer &amp; explanation</summary>
@@ -418,7 +418,7 @@ _Why a tempting wrong answer misses:_ "Make it look nicer" is subjective and uns
 
 You ask Claude to "write a follow-up message to the client," but its draft misses that the client is upset about a missed deadline. What would most improve the result?
 
-- **A.** Ask Claude to add a general apology somewhere near the opening
+- **A.** Ask Claude to work a general, non-specific apology in somewhere near the opening of the message
 - **B.** Repeat the exact same request again, word for word
 - **C.** Provide the context: the client's complaint, the missed deadline, and the outcome you want
 - **D.** Ask Claude to make the message shorter and more direct
@@ -442,10 +442,10 @@ _Why a tempting wrong answer misses:_ Repeating the identical request gives Clau
 
 You need Claude to (1) analyze survey data, (2) draft an executive summary, and (3) create a slide outline. A single prompt asking for all three at once yields shallow results on each. What is the better approach?
 
-- **A.** Demand more detail in the same all-in-one prompt
+- **A.** Demand noticeably more detail and depth while still keeping it all in the same all-in-one prompt
 - **B.** Break the work into sequential steps, doing and reviewing each before moving to the next
-- **C.** Ask for all three again but request a larger font
-- **D.** Drop two of the three tasks to simplify
+- **C.** Ask for all three again, but this time request a larger font
+- **D.** Drop two of the three tasks to simplify the request
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -465,9 +465,9 @@ _Why a tempting wrong answer misses:_ Cramming more instructions into the same o
 
 An output is not quite right, so in one new attempt you rewrite the role, add three examples, change the format, and swap models all at once. It improves, but you have a problem. What is it?
 
-- **A.** Nothing: changing everything at once is the fastest path
-- **B.** You should have changed even more at the same time
-- **C.** The model is now permanently biased by the earlier attempt
+- **A.** Nothing at all is wrong here; changing everything at once is simply the fastest path to a fix
+- **B.** You should have changed even more variables at the same time
+- **C.** The model is now permanently biased by your earlier attempt
 - **D.** You changed too many variables at once, so you cannot tell which change actually helped
 
 <details><summary>Answer &amp; explanation</summary>
@@ -490,10 +490,10 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 Your prompts often produce vague, off-target answers. Which single change tends to help the most?
 
-- **A.** Making the prompt longer by adding polite filler
-- **B.** Asking Claude to "be thorough"
+- **A.** Making the prompt longer by padding it out with polite filler around the actual request
+- **B.** Asking Claude to simply "be thorough" and then leaving all of the rest to it
 - **C.** Being specific about what you want: the exact scope, format, and criteria
-- **D.** Sending the request several more times
+- **D.** Sending the identical request several more times in a row
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -514,9 +514,9 @@ _Why a tempting wrong answer misses:_ Telling Claude to "be thorough" adds no co
 You need every product description formatted in a very specific pattern, and written instructions keep producing near-misses. What most reliably locks in the exact format?
 
 - **A.** Provide two or three worked examples of the input and the exact output you want (few-shot)
-- **B.** Add the word "exactly" to the instruction and repeat it
+- **B.** Add the word "exactly" to the instruction and then repeat it
 - **C.** Ask Claude to try harder and be more careful next time
-- **D.** Make the instruction paragraph noticeably longer and more detailed
+- **D.** Make the written instruction paragraph a good deal longer and pack in considerably more detail
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -538,9 +538,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 Claude keeps misinterpreting how you want a data field transformed, even after you reworded the instruction twice. What is the most effective next move?
 
-- **A.** Reword the instruction a third time
-- **B.** Tell Claude it is wrong and to fix it
-- **C.** Switch the output to all capital letters
+- **A.** Reword the very same instruction a third time and simply hope that it finally lands
+- **B.** Tell Claude that it is plainly wrong and then firmly ask it to correct the field
+- **C.** Switch the output to all capital letters for emphasis
 - **D.** Show a concrete before-and-after example of the transformation you want
 
 <details><summary>Answer &amp; explanation</summary>
@@ -561,7 +561,7 @@ _Why a tempting wrong answer misses:_ Rewording the instruction a third time is 
 
 A colleague's prompts are just a one-line task with no other detail, and results are inconsistent. Which set of additions best reflects good prompt structure?
 
-- **A.** Louder wording, capital letters, and more exclamation points
+- **A.** Much louder wording, plenty of capital letters, and a lot more exclamation points for emphasis
 - **B.** A clear role, the task, relevant context, the desired output format, and an example or two
 - **C.** A higher maximum-token setting and a request for the longest answer
 - **D.** Several unrelated questions bundled together into one message
@@ -585,9 +585,9 @@ _Why a tempting wrong answer misses:_ Bundling several unrelated questions toget
 You keep telling Claude "don't be so formal," but the tone still misses. Which instruction is likely to work better?
 
 - **A.** Describe the tone you do want, warm and conversational like advice to a colleague, with a short example
-- **B.** Repeat the instruction "don't use any formal words at all, ever" more emphatically
-- **C.** Tell Claude firmly to "stop being formal" and leave it at that
-- **D.** Ask Claude to simply "be less of everything" going forward
+- **B.** Repeat the instruction to "never, ever use any formal words at all" to Claude much more emphatically
+- **C.** Tell Claude firmly to "stop being so formal" and leave it there
+- **D.** Ask Claude to simply "be less of everything" from now on
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -607,9 +607,9 @@ _Why a tempting wrong answer misses:_ "Stop being formal" says what to avoid but
 
 You want Claude to answer questions using your company's internal policy, which it was never trained on. What is the essential step?
 
-- **A.** Assume Claude already knows your internal policy
-- **B.** Ask Claude to imagine what the policy probably says
-- **C.** Use a bigger model so it "knows more"
+- **A.** Simply assume that Claude already has your company's private internal policy memorized in full
+- **B.** Ask Claude to imagine what the internal policy probably says
+- **C.** Switch to a bigger model so that it "knows more" about it
 - **D.** Provide the policy text as context (paste it or attach it) so Claude answers from it
 
 <details><summary>Answer &amp; explanation</summary>
@@ -630,10 +630,10 @@ _Why a tempting wrong answer misses:_ A bigger model has more general capability
 
 A teammate asks Claude to "make this report better" and is frustrated by the results. What advice best addresses the root problem?
 
-- **A.** Ask Claude to define "better" for you
-- **B.** Run the request on every model and compare
+- **A.** Ask Claude to define what "better" should mean for you
+- **B.** Run the same request on every model and compare the results
 - **C.** Tell Claude what "better" means here: clearer structure, shorter, more data-driven, and so on
-- **D.** Accept that Claude cannot meaningfully improve reports
+- **D.** Simply accept that Claude cannot ever meaningfully improve written business reports
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -653,10 +653,10 @@ _Why a tempting wrong answer misses:_ Asking Claude to define "better" just outs
 
 For a straightforward task like "summarize this paragraph in one sentence," Claude already does exactly what you want. When is adding few-shot examples actually worth the effort?
 
-- **A.** Always add examples to every prompt, no matter how simple
-- **B.** Never add examples; they only confuse the model
+- **A.** Always add several worked examples to every single prompt you write, no matter how simple the task is
+- **B.** Never add examples, since they only end up confusing the model
 - **C.** When the task has a specific format or edge cases that plain instructions keep getting wrong
-- **D.** Only when using the smallest available model
+- **D.** Only when you happen to be using the smallest available model
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -676,9 +676,9 @@ _Why a tempting wrong answer misses:_ Adding examples to every prompt regardless
 
 Your first prompt gives a decent but too-technical answer for a general audience. What is the most efficient single adjustment to try next?
 
-- **A.** Rewrite the entire prompt from scratch with many changes at once
-- **B.** Switch entry points from chat to the API
-- **C.** Ask the same prompt three more times
+- **A.** Completely rewrite the whole prompt from scratch, making many different changes all at once
+- **B.** Switch entry points from claude.ai chat over to the API
+- **C.** Ask the very same prompt three or four more times
 - **D.** Add one instruction specifying the audience and reading level, then compare the result
 
 <details><summary>Answer &amp; explanation</summary>
@@ -702,8 +702,8 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 A prompt reads simply "Write a job description," and the drafts come back generic and unusable. Which elements are most important to add?
 
 - **A.** The role, the responsibilities, the required skills, the sections to include, and the tone
-- **B.** An emphatic tone, bold text, and several exclamation points for energy
-- **C.** A request for the maximum possible length and lots of detail
+- **B.** A far more emphatic tone, plenty of bold text, and several extra exclamation points for energy
+- **C.** A request for the maximum possible length and lots of extra detail
 - **D.** A firm demand that Claude not make any mistakes this time
 
 <details><summary>Answer &amp; explanation</summary>
@@ -725,9 +725,9 @@ _Why a tempting wrong answer misses:_ Demanding that Claude "not make mistakes" 
 Claude's answer includes three specific statistics attributed to named studies. Before you use them in a published report, what should you do?
 
 - **A.** Independently verify each statistic, and that the cited studies actually say it
-- **B.** Trust them, since Claude cited specific sources
-- **C.** Publish first and correct later if someone complains
-- **D.** Assume any confidently stated number is reliable
+- **B.** Trust the statistics, since Claude took care to cite specific, named studies for each one
+- **C.** Publish the report first and then correct it later on if anyone happens to complain
+- **D.** Assume any confidently stated number in the answer is reliable
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -747,10 +747,10 @@ _Why a tempting wrong answer misses:_ A confident, specific citation is not evid
 
 An answer is written with total confidence and reads smoothly, with no hedging. What can you conclude about its accuracy?
 
-- **A.** Confident, fluent writing means it is almost certainly correct
+- **A.** Confident, fluent, and polished writing means the answer is almost certainly correct
 - **B.** Fluency and confidence say nothing about accuracy; it can be confidently wrong
-- **C.** The lack of hedging proves it was fact-checked
-- **D.** Smooth writing indicates the model used web search
+- **C.** The complete lack of any hedging in it proves that it was carefully fact-checked
+- **D.** Smooth, polished writing indicates the model used web search
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -770,10 +770,10 @@ _Why a tempting wrong answer misses:_ Absence of hedging is a stylistic feature,
 
 You ask Claude for case law supporting an argument, and it returns a citation with a court, year, and quote that looks authoritative, but you cannot find the case anywhere. What is the most likely explanation?
 
-- **A.** The case is real but too obscure to appear anywhere
-- **B.** Your search skills are the problem; the citation is surely valid
+- **A.** The case is genuinely real but simply far too obscure to appear anywhere at all
+- **B.** Your own search skills are the problem; the citation is surely valid
 - **C.** Claude may have hallucinated a plausible-looking but nonexistent citation
-- **D.** The court must have removed the case from public records
+- **D.** The court itself must have quietly pulled the case from every public record somewhere
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -794,8 +794,8 @@ _Why a tempting wrong answer misses:_ Assuming the citation must be valid and bl
 
 Claude drafts what looks like sound guidance on adjusting a patient's medication dosage. What is the responsible way to use this output?
 
-- **A.** Follow it directly, since the reasoning is detailed
-- **B.** Share it with the patient as a definitive answer
+- **A.** Follow the dosing guidance directly, since the underlying clinical reasoning looks detailed
+- **B.** Share it with the patient right away as a definitive answer
 - **C.** Use it only if it happens to agree with your initial hunch
 - **D.** Treat it as a draft to be reviewed and approved by a qualified medical professional
 
@@ -818,9 +818,9 @@ _Why a tempting wrong answer misses:_ Following detailed-looking reasoning direc
 Claude generates a database command that will permanently delete every record matching a filter. What should you do before running it?
 
 - **A.** Review and verify exactly what it will delete before executing an irreversible action
-- **B.** Run it immediately to save time
-- **C.** Run it on the production database first, then check
-- **D.** Assume it is safe because Claude wrote it
+- **B.** Run it immediately to save yourself some time
+- **C.** Run the command against the live production database first, then check it after
+- **D.** Assume it is perfectly safe simply because Claude wrote it
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -840,10 +840,10 @@ _Why a tempting wrong answer misses:_ Assuming the command is safe because Claud
 
 You use Claude to screen resumes and notice its shortlist skews heavily toward one demographic. What is the appropriate response?
 
-- **A.** Trust the output; the model is objective by design
+- **A.** Trust the ranked shortlist completely, since the model is objective and neutral by design
 - **B.** Treat it as a possible bias signal, examine the criteria, and add human review
-- **C.** Assume the applicant pool simply looked that way
-- **D.** Remove the human reviewers to speed things up
+- **C.** Assume the applicant pool itself simply looked that way
+- **D.** Remove the human reviewers from the process to speed it up
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -863,10 +863,10 @@ _Why a tempting wrong answer misses:_ Treating the model as inherently objective
 
 Claude summarizes a long report and includes a striking claim you do not remember reading. Before quoting that claim, what is the right step?
 
-- **A.** Quote it; summaries are reliable by nature
-- **B.** Rephrase it so it sounds less striking
+- **A.** Quote the striking claim directly, since summaries are reliable by their very nature
+- **B.** Rephrase the striking claim so that it ends up sounding a good deal less striking
 - **C.** Check the claim against the source document to confirm it is actually there
-- **D.** Delete the whole summary to be safe
+- **D.** Delete the entire summary, just to be on the safe side
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -886,9 +886,9 @@ _Why a tempting wrong answer misses:_ Rephrasing a claim to sound less striking 
 
 For which task is it most reasonable to accept Claude's output with only a light check?
 
-- **A.** Calculating the correct dosage for a prescription
-- **B.** Drafting the binding wording of a legal contract
-- **C.** Confirming a specific historical date for a published article
+- **A.** Calculating the exact correct dosage for a patient's prescription
+- **B.** Drafting the binding wording of a legal contract for signature
+- **C.** Confirming a specific historical date for a soon-to-be-published article
 - **D.** Brainstorming a list of possible names for an internal project
 
 <details><summary>Answer &amp; explanation</summary>
@@ -910,9 +910,9 @@ _Why a tempting wrong answer misses:_ A binding legal contract is high-stakes an
 You are about to send a client-facing analysis that Claude largely wrote, under your own name. What is the guiding principle?
 
 - **A.** You are accountable for it, so validate the facts and reasoning before it goes out
-- **B.** Claude wrote it, so any errors are not your responsibility
-- **C.** Client-facing work needs no more care than internal notes
-- **D.** Send it now; clients expect occasional errors
+- **B.** Claude actually wrote the analysis, so any errors it contains are not your responsibility
+- **C.** Client-facing work really needs no more care than internal notes
+- **D.** Send it now, since clients generally expect the occasional error
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -932,10 +932,10 @@ _Why a tempting wrong answer misses:_ Disclaiming responsibility because "Claude
 
 Asked for market-size figures, Claude returns very precise numbers such as "$4.37B in 2023" with no source. How should you treat them?
 
-- **A.** Use them as-is; the precision signals reliability
+- **A.** Use the figures exactly as-is, since their very precision signals that they are reliable
 - **B.** Treat them as unverified estimates and confirm against a real source before using
-- **C.** Round them off, which makes them accurate
-- **D.** Assume Claude retrieved them from a live database
+- **C.** Round the numbers off, which is what makes them accurate
+- **D.** Assume that Claude just now retrieved them from a live and up-to-date market database
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -955,10 +955,10 @@ _Why a tempting wrong answer misses:_ Precision does not signal reliability; a f
 
 A quick way to gauge whether a long Claude answer is trustworthy on a topic you do not know well is to:
 
-- **A.** Count how many sources it mentions
-- **B.** See whether it sounds confident throughout
+- **A.** Count up how many separate sources the long answer happens to mention in total
+- **B.** See whether the entire answer sounds confident all the way through to the end
 - **C.** Spot-check a few claims you can verify against known facts or sources
-- **D.** Measure how long the response is
+- **D.** Measure how long the overall response happened to turn out to be in total
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -979,9 +979,9 @@ _Why a tempting wrong answer misses:_ The number of sources mentioned says nothi
 
 Claude reviews a vendor contract and flags no issues, and your company is about to sign. What is the responsible next step?
 
-- **A.** Sign immediately, since Claude found nothing
-- **B.** Skip legal review to save time and money
-- **C.** Assume no flags means no legal risk
+- **A.** Sign the contract right away, since Claude reviewed it and flagged nothing at all
+- **B.** Skip the legal review entirely to save both time and money
+- **C.** Assume that no flags raised must simply mean there is no real legal risk
 - **D.** Have a qualified lawyer review it before signing a binding agreement
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1003,9 +1003,9 @@ _Why a tempting wrong answer misses:_ Treating "Claude found nothing" as proof o
 A team has used Claude for months with good results and now approves its outputs without any review. What is the main risk?
 
 - **A.** Errors will slip through unnoticed precisely because no one is checking anymore
-- **B.** The model will run out of capacity
-- **C.** Reviewing was never necessary in the first place
-- **D.** Claude will refuse to answer without a reviewer present
+- **B.** The model will eventually run out of processing capacity
+- **C.** Reviewing the outputs was clearly never really necessary here in the first place anyway
+- **D.** Claude will eventually refuse to answer anything at all without a reviewer present
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1025,10 +1025,10 @@ _Why a tempting wrong answer misses:_ Concluding review was never necessary misr
 
 Claude provides a real, working URL as a citation for a claim. What still needs checking?
 
-- **A.** Nothing; a working link fully validates the claim
+- **A.** Nothing further; a working link on its own fully validates the claim
 - **B.** That the linked source actually says what the claim attributes to it
-- **C.** Only that the link loads quickly
-- **D.** Only the website's visual design
+- **C.** Only that the link happens to load reasonably quickly in a browser
+- **D.** Only the linked website's overall visual design and layout
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1048,9 +1048,9 @@ _Why a tempting wrong answer misses:_ A link merely loading proves the page exis
 
 Which output most clearly demands independent human verification before you act on it?
 
-- **A.** A haiku Claude wrote for a birthday card
-- **B.** A list of icebreaker questions for a casual meeting
-- **C.** A suggested color palette for a slide deck
+- **A.** A short, lighthearted haiku that Claude drafted for a close friend's birthday card
+- **B.** A list of icebreaker questions for a casual team meeting
+- **C.** A suggested color palette for an internal slide deck
 - **D.** A tax-filing figure Claude calculated that you will submit to the authorities
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1073,9 +1073,9 @@ _Why a tempting wrong answer misses:_ A haiku for a birthday card is low-stakes 
 You are deciding which parts of a monthly reporting process to hand to Claude. Which step is the best candidate to delegate?
 
 - **A.** Reformatting the raw numbers into the standard report template, a repeatable and checkable step
-- **B.** Deciding whether to lay off part of the team based on what the numbers show
-- **C.** Choosing the company's confidential strategic priorities for the year
-- **D.** Signing off on the final figures that will be submitted to the board
+- **B.** Deciding whether to lay off part of the team based on the numbers
+- **C.** Choosing the company's confidential, high-level strategic priorities for the entire year
+- **D.** Signing off on the final figures that will go to the board
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1095,10 +1095,10 @@ _Why a tempting wrong answer misses:_ Deciding whether to lay off a team is a hi
 
 Which task should stay with a human rather than being fully delegated to Claude?
 
-- **A.** Converting a bulleted list into a formatted table
+- **A.** Converting a plain bulleted list into a neatly formatted table
 - **B.** Making the final call on a sensitive personnel decision
-- **C.** Drafting a first version of routine meeting notes
-- **D.** Suggesting synonyms for a marketing headline
+- **C.** Drafting an initial first version of routine meeting notes
+- **D.** Suggesting a few alternative synonyms for a marketing headline
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1118,10 +1118,10 @@ _Why a tempting wrong answer misses:_ Converting a list to a table is a mechanic
 
 You are presenting a new Claude-assisted workflow to leadership. How should you describe its capabilities?
 
-- **A.** Promise it is fully autonomous and error-free to build confidence
-- **B.** Avoid mentioning any limitations so the project gets approved
+- **A.** Promise leadership that it is fully autonomous and completely error-free, to build their confidence
+- **B.** Avoid mentioning any of its limitations so that the project gets approved
 - **C.** Present both the value and the limitations honestly, including where human review is still required
-- **D.** Claim it will replace the whole team immediately
+- **D.** Claim it will replace the entire team almost immediately
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1142,9 +1142,9 @@ _Why a tempting wrong answer misses:_ Promising an error-free, fully autonomous 
 
 You personally get great results from Claude, but your teammates get inconsistent ones on the same tasks. What best moves the team from "I use Claude" to "our workflow uses Claude"?
 
-- **A.** Keep your prompting techniques to yourself as a personal edge
-- **B.** Tell teammates to simply try harder
-- **C.** Let everyone figure it out independently
+- **A.** Keep all of your best prompting techniques to yourself and quietly hold them as a personal edge
+- **B.** Tell your teammates that they simply need to try harder
+- **C.** Let everyone on the team figure it out on their own
 - **D.** Capture the working prompts, context, and configuration in a shared setup others can reuse
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1166,9 +1166,9 @@ _Why a tempting wrong answer misses:_ Leaving each teammate to figure it out ind
 A team wants a first win with Claude. Which process is the best starting candidate?
 
 - **A.** A frequent, well-defined, low-risk task with clear inputs and checkable outputs
-- **B.** The most ambiguous, high-stakes decision the team faces
-- **C.** A rare one-off task that will never recur
-- **D.** A process no one currently understands
+- **B.** The single most ambiguous and highest-stakes decision that the whole team currently faces
+- **C.** A rare, one-off kind of task that the team will essentially never have to repeat again
+- **D.** A tangled process that nobody on the team currently understands
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1188,10 +1188,10 @@ _Why a tempting wrong answer misses:_ Starting with the most ambiguous, high-sta
 
 How should you frame the value of a Claude-assisted drafting workflow to stakeholders?
 
-- **A.** "It eliminates the need for any human writers on the team entirely."
+- **A.** "It completely removes any need to keep human writers anywhere on the team at all, ever again."
 - **B.** "It produces solid first drafts fast, which we then review and refine to keep quality high."
-- **C.** "It is essentially perfect and its drafts never need any editing."
-- **D.** "It will do everything the team currently does, only instantly and at no cost."
+- **C.** "It is essentially perfect, and its drafts never need any editing."
+- **D.** "It will do everything the team does now, only instantly and free."
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1211,10 +1211,10 @@ _Why a tempting wrong answer misses:_ Claiming the output is perfect and never n
 
 In a Claude-assisted approval workflow, who should hold accountability for the final decision?
 
-- **A.** The model, since it produced the recommendation
-- **B.** No one in particular, as long as it works
+- **A.** The model itself, since it produced the underlying recommendation
+- **B.** No one in particular, just as long as the workflow keeps working
 - **C.** A designated human owner who reviews and approves the outcome
-- **D.** Whichever teammate happens to be least busy that day
+- **D.** Whichever teammate happens to be the least busy on that given day
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1235,9 +1235,9 @@ _Why a tempting wrong answer misses:_ Assigning accountability to the model is a
 
 A hiring workflow has four steps: (1) format incoming resumes, (2) draft interview questions, (3) decide who advances, and (4) send templated scheduling emails. Which split is most appropriate?
 
-- **A.** Delegate all four steps entirely to Claude with no human review
-- **B.** Keep all four steps fully manual and do not use Claude at all
-- **C.** Delegate only the who-advances decision to Claude and do the rest by hand
+- **A.** Delegate all four of the steps entirely to Claude with no human review
+- **B.** Keep all four steps fully manual and do not use Claude for any of them
+- **C.** Delegate only the who-advances hiring decision to Claude and do all the rest by hand
 - **D.** Delegate formatting, drafting, and templated emails; keep the advancement decision human
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1259,9 +1259,9 @@ _Why a tempting wrong answer misses:_ Delegating the hiring decision itself hand
 Your Claude-assisted workflow works well, but only you know how to run it. What most improves its long-term resilience?
 
 - **A.** Documenting the steps, prompts, and configuration so others can run it if you are away
-- **B.** Keeping it all in your head to stay indispensable
-- **C.** Deleting your notes once it works
-- **D.** Rebuilding it from scratch each month
+- **B.** Keep the whole workflow entirely in your own head so that you stay indispensable to the team
+- **C.** Delete all of your notes about it once the workflow finally works
+- **D.** Rebuild the entire workflow again from scratch every single month
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1281,10 +1281,10 @@ _Why a tempting wrong answer misses:_ Keeping it all in your head makes you a si
 
 A stakeholder expects the new Claude workflow to be "100% accurate with no oversight." What is the best response?
 
-- **A.** Agree, to keep them happy
+- **A.** Simply agree with the stakeholder's expectation outright, just to keep them satisfied and happy
 - **B.** Clarify that some human review remains necessary and explain where errors are most likely
-- **C.** Quietly remove all review steps to match their expectation
-- **D.** Tell them accuracy is not measurable
+- **C.** Quietly remove all of the review steps to match their expectation
+- **D.** Tell them that output accuracy is not really something you can measure
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1304,8 +1304,8 @@ _Why a tempting wrong answer misses:_ Agreeing to "100% accurate with no oversig
 
 You want to show that adopting Claude improved a workflow. What is the most credible way to communicate the value?
 
-- **A.** Assert broadly that everything is just "so much better now" than before
-- **B.** Share a single dramatic success anecdote and generalize from that one case
+- **A.** Assert broadly and vaguely that basically everything is just "so much better now" than before
+- **B.** Share one dramatic success story and then generalize from that case
 - **C.** Compare before-and-after measures like turnaround time and rework rate, noting the human steps kept
 - **D.** Claim sweeping benefits that cannot really be measured or verified
 
@@ -1327,9 +1327,9 @@ _Why a tempting wrong answer misses:_ A single dramatic anecdote is not represen
 
 When deciding whether Claude can take an action automatically or a human must approve it first, which factor matters most?
 
-- **A.** How quickly the action can be completed
-- **B.** How impressive the automation looks to others
-- **C.** Whether the model seems to handle it confidently
+- **A.** How quickly the action itself can actually be carried out end to end
+- **B.** How impressive the finished automation ends up looking to others
+- **C.** Whether the model itself appears to handle the action confidently enough
 - **D.** How reversible the action is and how costly a mistake would be
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1351,8 +1351,8 @@ _Why a tempting wrong answer misses:_ Speed is a benefit, not a safety criterion
 A colleague proposes building an elaborate automated system for a task the team does twice a year by hand in ten minutes. What is the most sensible guidance?
 
 - **A.** Match the investment to the need; a heavyweight system is overkill for a rare, quick task
-- **B.** Always build the most fully automated solution that is technically possible
-- **C.** Automate it thoroughly precisely because the task is so infrequent
+- **B.** Always build the most fully automated solution that is technically possible to build
+- **C.** Automate it thoroughly, precisely because the task is so infrequent
 - **D.** Add as many features as possible up front so nothing is missing later
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1374,9 +1374,9 @@ _Why a tempting wrong answer misses:_ Building the most automated solution regar
 
 You are integrating Claude into a customer-refund process. Refunds under $20 are routine; refunds over $500 are sensitive. How should you place the human checkpoint?
 
-- **A.** Require human approval for every refund, including $2 ones
-- **B.** Let Claude approve all refunds of any size automatically
-- **C.** Require human approval only for the smallest refunds
+- **A.** Require a manual human approval step for every single refund, even the tiny $2 ones
+- **B.** Let Claude automatically approve every single refund of any size, no matter how large
+- **C.** Require human approval only for the very smallest refunds
 - **D.** Auto-process small routine refunds and route large or unusual ones to a human
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1398,9 +1398,9 @@ _Why a tempting wrong answer misses:_ Letting Claude auto-approve refunds of any
 In a Claude Project, you set custom instructions that say "always write in British English and cite the source section." What is the effect?
 
 - **A.** Every chat started in that Project follows those instructions automatically
-- **B.** Only the very next message follows them
-- **C.** The instructions apply to all Projects you own
-- **D.** The instructions apply only after you repeat them each chat
+- **B.** Only the very next single message that you send will actually follow those instructions
+- **C.** The custom instructions then apply across every single one of the Projects you own
+- **D.** They apply only after you repeat them again in each new chat
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1420,10 +1420,10 @@ _Why a tempting wrong answer misses:_ Custom instructions are not limited to a s
 
 Your team keeps asking Claude questions about a 60-page internal handbook. What is the durable way to make that handbook available in every relevant chat?
 
-- **A.** Paste the whole handbook at the start of each new chat
+- **A.** Paste the entire 60-page internal handbook in at the start of each and every new chat
 - **B.** Add the handbook as a knowledge source in a Project so chats can draw on it
-- **C.** Ask Claude to memorize it once and rely on that
-- **D.** Summarize it from memory each time it comes up
+- **C.** Ask Claude to memorize the handbook once and rely on that
+- **D.** Summarize the handbook from your own memory each time that it happens to come up
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1444,10 +1444,10 @@ _Why a tempting wrong answer misses:_ Asking Claude to "memorize" a document onc
 
 A Project's knowledge base still contains last year's pricing, and Claude keeps quoting the old prices. What is the root-cause fix?
 
-- **A.** Tell users to mentally adjust the prices themselves
-- **B.** Add a note in each chat correcting the price
+- **A.** Simply tell all of the users to mentally adjust the outdated pricing for themselves every time
+- **B.** Add a note in each chat correcting the price after the fact
 - **C.** Update the knowledge source to the current pricing so every chat inherits the correct data
-- **D.** Switch to a larger model
+- **D.** Switch to a larger, more capable model for those chats
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1468,8 +1468,8 @@ _Why a tempting wrong answer misses:_ Correcting the price by hand in each chat 
 What is the main advantage of putting durable context into a Project rather than into individual prompts?
 
 - **A.** It mainly just makes each individual prompt take longer to type out
-- **B.** It hides the shared context from the people who are using the Project
-- **C.** It helps only the very first chat you create and none of the ones after
+- **B.** It ends up hiding the shared context from the very people using the Project
+- **C.** It helps only the very first chat you create and none afterward
 - **D.** Every chat in the Project inherits that context, so quality and consistency improve
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1491,9 +1491,9 @@ _Why a tempting wrong answer misses:_ Project context is not limited to the firs
 Which item is best placed in a Project's custom instructions rather than typed into a single prompt?
 
 - **A.** A standing rule that all outputs use the company's four-part report structure
-- **B.** A one-time question about today's weather
-- **C.** A throwaway request to rephrase a single sentence
-- **D.** A personal note unrelated to the Project's purpose
+- **B.** A quick one-time question about what today's local weather is
+- **C.** A throwaway request to rephrase one single sentence for you
+- **D.** A personal note that has nothing to do with the Project's stated purpose
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1513,10 +1513,10 @@ _Why a tempting wrong answer misses:_ A one-time weather question is transient a
 
 You have (1) reference documents Claude should consult and (2) rules about tone and format. In a Project, where does each belong?
 
-- **A.** Put both the documents and the rules into the custom instructions
+- **A.** Put both the reference documents and the rules into the custom instructions field
 - **B.** Reference documents as knowledge sources, tone and format rules as custom instructions
-- **C.** Put both the documents and the rules in as knowledge sources
-- **D.** Neither the documents nor the rules belong in a Project at all
+- **C.** Put both the reference documents and the behavioral rules in as knowledge
+- **D.** Neither the documents nor the rules really belong in a Project at all
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1536,10 +1536,10 @@ _Why a tempting wrong answer misses:_ Pasting large reference documents into the
 
 Your company just changed its refund policy, and several Projects rely on the old policy document. What should you do?
 
-- **A.** Leave the documents; Claude will figure out the new policy on its own
-- **B.** Wait until someone complains about a wrong answer
+- **A.** Leave the outdated documents in place; Claude will simply work out the new policy on its own
+- **B.** Wait until someone actually complains about a wrong policy answer
 - **C.** Update the policy document in the affected Projects so chats reflect the new rules
-- **D.** Delete the Projects and start over from nothing
+- **D.** Delete all of the affected Projects entirely and then start over again from nothing
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1559,9 +1559,9 @@ _Why a tempting wrong answer misses:_ Waiting for a complaint means Claude keeps
 
 You do two very different kinds of work: legal contract review and social-media copywriting. How should you organize Projects for the best context in each?
 
-- **A.** Put everything in one Project so all context is always available
-- **B.** Use no Projects and paste context each time
-- **C.** Randomly assign chats to whichever Project is open
+- **A.** Cram everything into one single Project so that all of the context is always available at once
+- **B.** Use no Projects at all and just paste the relevant context each time
+- **C.** Randomly assign each chat to whichever Project happens to be open
 - **D.** Create a separate Project for each, with its own instructions and knowledge tailored to that work
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1584,9 +1584,9 @@ _Why a tempting wrong answer misses:_ Cramming both kinds of work into one Proje
 A new hire's Claude outputs do not match the team's house style, while veterans' outputs do. What is the most scalable fix?
 
 - **A.** Give the team a shared Project whose instructions and knowledge encode the house style, so everyone starts the same
-- **B.** Have the new hire shadow a veteran for a full month before they are allowed to use Claude
+- **B.** Have the new hire shadow an experienced veteran for a full month before they are allowed to touch Claude
 - **C.** Ask the new hire to infer the house style on their own from past documents
-- **D.** Accept that new hires will always be off-style for their first while
+- **D.** Simply accept that new hires will always be off-style for their first while
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1606,10 +1606,10 @@ _Why a tempting wrong answer misses:_ Having the new hire guess the style from o
 
 What is a good practice for Project knowledge that references facts, policies, or data that change over time?
 
-- **A.** Set it once and never look at it again
+- **A.** Set the knowledge once and then never actually look at it again
 - **B.** Review and refresh it on a regular cadence so it stays accurate
-- **C.** Assume Claude will update it automatically
-- **D.** Only update it after a major public incident
+- **C.** Assume that Claude itself will keep the knowledge updated automatically
+- **D.** Only bother to update it after some major public incident occurs
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1629,7 +1629,7 @@ _Why a tempting wrong answer misses:_ Claude does not automatically update your 
 
 Without any reference material, Claude sometimes guesses at your product's specifications. How does a well-configured Project reduce this?
 
-- **A.** It mainly makes Claude sound more confident when it is guessing
+- **A.** It mainly just makes Claude sound a great deal more confident even while it is still guessing
 - **B.** It disables Claude's ability to answer questions about the product
 - **C.** It supplies the real specifications as knowledge, so Claude answers from your source
 - **D.** It has no real effect on the accuracy of the answers either way
@@ -1652,9 +1652,9 @@ _Why a tempting wrong answer misses:_ A Project does not make guessing more conf
 
 A Project's custom instruction reads only "be professional," yet outputs vary widely in structure and length. What would most improve consistency?
 
-- **A.** Remove the instruction entirely
-- **B.** Add more vague adjectives like "good" and "nice"
-- **C.** Switch models for each chat
+- **A.** Remove the vague instruction from the Project entirely
+- **B.** Add several more vague, subjective adjectives, such as "good" and "nice"
+- **C.** Switch to a different model for each new chat in the Project
 - **D.** Make the instruction specific: define the structure, length, and tone you expect
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1675,10 +1675,10 @@ _Why a tempting wrong answer misses:_ Adding more vague adjectives compounds the
 
 Different team members keep their own slightly different copies of the prompt instructions, and outputs have drifted apart. What is the best remedy?
 
-- **A.** Let each person keep refining their private version
+- **A.** Let every individual person simply keep refining their own separate and private version of it
 - **B.** Consolidate into one shared Project configuration that everyone uses as the source of truth
-- **C.** Email a new instruction sheet every week
-- **D.** Stop giving Claude any instructions at all
+- **C.** Email a freshly revised instruction sheet out to everyone every week
+- **D.** Stop giving Claude any standing instructions at all from now on
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1698,9 +1698,9 @@ _Why a tempting wrong answer misses:_ Letting each person refine a private versi
 
 A Project's knowledge contains three versions of the same policy: last year's, a draft, and the current one. Claude sometimes cites the wrong version. What should you do?
 
-- **A.** Add a fourth, combined version to be safe
-- **B.** Tell users to specify the version in every question
-- **C.** Leave all three; more documents is always better
+- **A.** Add a fourth, combined version of the policy just to be safe
+- **B.** Tell all of the users to specify the exact policy version they mean in each question
+- **C.** Leave all three in place, since having more documents is always better
 - **D.** Remove the outdated and draft versions, keeping only the current authoritative one
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1722,9 +1722,9 @@ _Why a tempting wrong answer misses:_ "More documents is always better" is false
 While debugging, you are about to paste a configuration file that includes a live production API key into a chat. What should you do?
 
 - **A.** Remove or redact the secret before sharing; never paste live credentials
-- **B.** Paste it as-is; it speeds up debugging
-- **C.** Paste it but ask Claude to ignore the key
-- **D.** Paste it now and rotate the key next quarter
+- **B.** Paste the whole config file in as-is, since doing so noticeably speeds up the debugging
+- **C.** Paste the file in, but ask Claude to simply ignore the embedded production key
+- **D.** Paste it now and then rotate the key sometime next quarter
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1745,10 +1745,10 @@ _Why a tempting wrong answer misses:_ Asking Claude to "ignore" the key does not
 
 You want to analyze a spreadsheet of customers' names, addresses, and health conditions. What is the responsible first step?
 
-- **A.** Paste it immediately; analysis is harmless
+- **A.** Paste the spreadsheet immediately, since analysis is harmless
 - **B.** Check your organization's data policy and get authorization before using regulated personal data
-- **C.** Assume it is fine because the data is only being summarized
-- **D.** Remove just the addresses and paste the rest
+- **C.** Assume that it is perfectly fine simply because the data is only ever being summarized here
+- **D.** Remove just the mailing addresses and paste in all of the rest
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1768,10 +1768,10 @@ _Why a tempting wrong answer misses:_ Removing only the addresses still leaves n
 
 A teammate suggests pasting an unreleased, confidential product roadmap into a tool that is not approved for confidential data. What is the right response?
 
-- **A.** Go ahead and paste it; a roadmap is not really that secret
-- **B.** Paste a "lightly edited" version of it to be a bit safer
+- **A.** Just go ahead and paste the whole roadmap in, since a roadmap is not really that secret anyway
+- **B.** Paste a "lightly edited" version of the roadmap to be a bit safer
 - **C.** Do not use an unapproved tool for confidential data; follow the policy on where it may go
-- **D.** Paste it, then delete the chat afterward to clean up
+- **D.** Paste it, and then delete the chat afterward to clean it all up
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1791,9 +1791,9 @@ _Why a tempting wrong answer misses:_ Deleting the chat afterward does not retro
 
 Before entering any sensitive business data into an AI tool, the most important thing to understand is:
 
-- **A.** How fast the tool responds
-- **B.** How colorful the interface is
-- **C.** Whether the output will be formatted as a table
+- **A.** How quickly the AI tool itself tends to respond to a fairly typical everyday request from a user
+- **B.** How colorful and modern the tool's user interface happens to be
+- **C.** Whether the tool's output will be neatly formatted as a table
 - **D.** Where the data goes, how it may be used or retained, and whether your policy permits it
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1815,9 +1815,9 @@ _Why a tempting wrong answer misses:_ Response speed is a convenience factor, no
 Which of the following is clearly inappropriate to paste into a general AI chat tool?
 
 - **A.** A colleague's password and a customer's full credit-card number
-- **B.** A publicly available product brochure
-- **C.** A draft blog post you wrote for the public site
-- **D.** A list of common English idioms
+- **B.** A publicly available product brochure put out by the marketing team
+- **C.** A rough draft of a blog post you already wrote for the public website
+- **D.** A short list of some common English-language idioms and everyday sayings
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1837,10 +1837,10 @@ _Why a tempting wrong answer misses:_ A publicly available brochure carries no c
 
 You need Claude to help spot trends in support tickets, but the tickets contain customer names and emails you do not need for the analysis. What is the best practice?
 
-- **A.** Include all the personal details to be thorough
+- **A.** Include every single one of the customer's personal details, just to be extra thorough
 - **B.** Remove or anonymize the personal details you do not need before sending the data
-- **C.** Include the emails but not the names
-- **D.** Send everything and hope it is not retained
+- **C.** Include the customer emails, but strip out the customer names
+- **D.** Send absolutely everything over to the tool and just hope that none of it is retained
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1860,10 +1860,10 @@ _Why a tempting wrong answer misses:_ Keeping the emails but dropping the names 
 
 A user asks Claude to help them access an ex-partner's private accounts without permission. As a responsible operator, what is the right stance?
 
-- **A.** Help them out, since the user asked for it politely
-- **B.** Help them, as long as it is technically feasible to do
+- **A.** Help them out, since the user did ask for it quite politely
+- **B.** Go ahead and help them, as long as doing so is technically feasible in the first place
 - **C.** Decline; this is unauthorized access to someone else's private accounts, however it is framed
-- **D.** Help, but add a disclaimer about using it responsibly
+- **D.** Help, but attach a disclaimer about using the access responsibly
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1883,9 +1883,9 @@ _Why a tempting wrong answer misses:_ Adding a disclaimer does not change the na
 
 Your company classifies data as Public, Internal, Confidential, and Restricted. Before pasting a document into an AI tool, the classification matters because:
 
-- **A.** Higher classifications always produce better answers
-- **B.** Classification only affects file-size limits
-- **C.** The color of the label changes the model's behavior
+- **A.** A document with a higher data classification reliably produces noticeably better model answers
+- **B.** The classification really only affects the tool's file-size limits
+- **C.** The color of the label itself changes how the model behaves
 - **D.** It tells you the handling rules: some classes may not be entered into certain tools at all
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1907,9 +1907,9 @@ _Why a tempting wrong answer misses:_ Classification is about handling rules and
 A clinic wants to use a general consumer AI tool to summarize identifiable patient records. Before doing so, the key governance question is:
 
 - **A.** Whether that use is permitted under applicable health-privacy rules and the tool's approved handling
-- **B.** Whether the generated summaries will each come in under 200 words
-- **C.** Whether the clinic staff would prefer bullet points or flowing prose
-- **D.** Whether the tool offers a dark mode for late-night shifts
+- **B.** Whether each of the generated summaries will come in under 200 words
+- **C.** Whether the clinic's own staff would tend to prefer neat bullet points or flowing narrative prose
+- **D.** Whether the tool offers a dark mode for the late-night shifts
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1929,10 +1929,10 @@ _Why a tempting wrong answer misses:_ The length or formatting of the summaries 
 
 Before forwarding a Claude-generated report to an external partner, you should:
 
-- **A.** Send it right away; it was generated internally
+- **A.** Just send the report straight to the partner, since it was generated internally in the first place
 - **B.** Review it to ensure no confidential or personal internal data was carried into the output
-- **C.** Only check the spelling
-- **D.** Assume Claude removed anything sensitive automatically
+- **C.** Only check the report over carefully for any spelling mistakes
+- **D.** Assume Claude already removed anything sensitive automatically
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1953,10 +1953,10 @@ _Why a tempting wrong answer misses:_ Claude does not automatically know which o
 
 An employee starts using a personal, unvetted AI account for work involving company data because it is convenient. What is the governance concern?
 
-- **A.** There is none; convenience is really all that matters here
-- **B.** Only that the personal account might be a little slower
+- **A.** There really is no concern here; convenience is honestly all that truly matters
+- **B.** Only that the personal account might turn out to be a little slower
 - **C.** Company data may flow through an unapproved tool, outside the organization's controls
-- **D.** Only that the tool's fonts and colors look a bit different
+- **D.** Only that the tool's fonts and colors happen to look a bit different
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1977,9 +1977,9 @@ _Why a tempting wrong answer misses:_ Speed is not the issue; the real concern i
 Which principle best guides how much data to include when prompting with real business information?
 
 - **A.** Include only the data necessary for the task, and no more
-- **B.** Always include the maximum data available for context
-- **C.** Include everything and let Claude decide what to ignore
-- **D.** Include extra unrelated data to test the model
+- **B.** Always include the maximum data available, for the fullest context
+- **C.** Include everything and let Claude decide what it should ignore
+- **D.** Include some extra unrelated data as a way to test the model
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1999,10 +1999,10 @@ _Why a tempting wrong answer misses:_ Dumping the maximum available data needles
 
 Two AI tools are available. Tool X is approved by your company with a data agreement in place; Tool Y is a random free site with unknown data practices. For confidential work, which should you use and why?
 
-- **A.** Tool Y, because free is cheaper
-- **B.** Either one; it makes no difference for confidential data
+- **A.** Tool Y, purely on the grounds that a free tool is simply cheaper for the whole team to keep using
+- **B.** Either one of the two tools; honestly it makes no real difference for confidential data
 - **C.** Tool X, because its approved status and data agreement govern how your data is handled
-- **D.** Whichever loads faster in your browser
+- **D.** Whichever of the two tools happens to load faster in your browser
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2022,9 +2022,9 @@ _Why a tempting wrong answer misses:_ A free site with unknown data practices of
 
 An organization wants a simple rule for employees about sensitive data and AI tools. Which rule is soundest?
 
-- **A.** "Move fast: any tool is fine as long as it helps you hit deadlines, and worry about data later."
-- **B.** "Never use AI tools for work; the risk of any data exposure always outweighs the benefit."
-- **C.** "Use any tool you like for sensitive data, but delete the conversation afterward to erase the exposure."
+- **A.** "Move fast: any tool is fine as long as it helps you hit deadlines, and sort out the data questions later."
+- **B.** "Never use AI tools for any work at all; the risk of data exposure always outweighs any possible benefit."
+- **C.** "Use whatever tool you happen to like even for sensitive data, so long as you delete the conversation afterward to erase the exposure."
 - **D.** "Use only approved tools, follow the data-classification policy, and never enter secrets or regulated personal data without authorization."
 
 <details><summary>Answer &amp; explanation</summary>
@@ -2046,9 +2046,9 @@ _Why a tempting wrong answer misses:_ Deleting the chat afterward (option C) doe
 Claude's answers to your question are consistently generic and could apply to any company. What is the most likely root cause and fix?
 
 - **A.** The prompt lacks specific context; add the concrete details unique to your situation
-- **B.** The model is broken; file a bug report
-- **C.** You need to ask the same question more times
-- **D.** The output length is set too high
+- **B.** The underlying model itself must be fundamentally broken, so you should go file a bug report
+- **C.** You simply need to go ahead and ask it the exact same question several more times over
+- **D.** The maximum output length setting is turned up far too high
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2068,10 +2068,10 @@ _Why a tempting wrong answer misses:_ Repeating the same context-free question j
 
 You have clearly described the output format three times and Claude still gets the layout slightly wrong. What is the most effective durable fix?
 
-- **A.** Describe the format a fourth time, more emphatically
+- **A.** Describe the desired format a fourth time, only more emphatically
 - **B.** Provide a concrete example of the exact output layout you want
-- **C.** Give up and reformat by hand every time
-- **D.** Switch to a completely different task
+- **C.** Give up on it and simply reformat the output by hand every single time
+- **D.** Switch over to a completely different task altogether instead of this one
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2091,10 +2091,10 @@ _Why a tempting wrong answer misses:_ Reformatting by hand every time treats the
 
 A high-volume, simple text-cleanup job is running slowly and costing more than expected on your largest model. What is the root-cause fix?
 
-- **A.** Add more instructions to the prompt
-- **B.** Run it twice to be sure of the result
+- **A.** Add quite a few more detailed instructions on top of the existing cleanup prompt
+- **B.** Run the whole job twice over just to be sure of the result
 - **C.** Switch the job to a smaller, faster model suited to simple high-volume work
-- **D.** Increase the maximum output length
+- **D.** Increase the maximum output length that is allowed for each and every response
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2114,9 +2114,9 @@ _Why a tempting wrong answer misses:_ Adding more instructions does not address 
 
 A genuinely complex, multi-step analysis produces shallow, error-prone results on a small, fast model. What is the most appropriate fix?
 
-- **A.** Ask the question several more times on the same model
-- **B.** Shorten the prompt so there is less to confuse it
-- **C.** Lower the output length
+- **A.** Ask the very same question several more times over on that exact same small and fast model
+- **B.** Shorten the prompt sharply so there is less to confuse the model
+- **C.** Lower the maximum output length setting for the responses
 - **D.** Move to a more capable model (and enable extended thinking) suited to hard reasoning
 
 <details><summary>Answer &amp; explanation</summary>
@@ -2138,9 +2138,9 @@ _Why a tempting wrong answer misses:_ Repeating the prompt on the same small mod
 Every day you correct Claude's tone the same way in a fresh chat. What is the durable fix?
 
 - **A.** Put the tone rule in the Project's custom instructions once, so it applies automatically
-- **B.** Keep correcting it by hand in every new chat, day after day
-- **C.** Accept the off tone as an unavoidable limitation of the tool
-- **D.** Try opening Claude in a different web browser instead
+- **B.** Simply keep on correcting the tone by hand in every single new chat, day after day after day
+- **C.** Accept the off tone as an unavoidable limitation of the tool itself
+- **D.** Try opening Claude in a different web browser and see if it helps
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2161,10 +2161,10 @@ _Why a tempting wrong answer misses:_ Correcting the tone by hand each day is th
 
 A developer keeps pasting files from a large codebase into chat one at a time to get Claude to make coordinated edits, and it is painful and error-prone. What is the root-cause fix?
 
-- **A.** Paste the files faster
+- **A.** Simply paste the individual code files into the chat one by one, only faster this time
 - **B.** Use Claude Code, which works directly across the repository, instead of chat
-- **C.** Paste all the files in a single giant message
-- **D.** Reduce the number of files by deleting code
+- **C.** Paste every one of the files into a single, giant chat message
+- **D.** Reduce the number of files involved by deleting some of the existing code first
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2186,10 +2186,10 @@ Reference: https://code.claude.com/docs/en/overview
 
 Claude's answer about a fast-moving topic is confidently out of date. What is the most direct fix?
 
-- **A.** Rephrase the question with synonyms
-- **B.** Ask Claude to "be more current"
+- **A.** Rephrase the very same question using a whole handful of different synonyms
+- **B.** Ask Claude directly to please try to "be more current" about the topic
 - **C.** Enable web search so Claude can retrieve up-to-date information
-- **D.** Switch to a smaller model
+- **D.** Switch over to a smaller and faster model just for this one question
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2209,9 +2209,9 @@ _Why a tempting wrong answer misses:_ Asking Claude to "be more current" cannot 
 
 Two people give Claude "clean up this text" and get very different results, and neither is what they wanted. What is the root cause and fix?
 
-- **A.** The model is just inconsistent, so nothing can really be done
-- **B.** The text they gave it is simply far too long to handle
-- **C.** They should each just ask the same thing several more times
+- **A.** The model itself is just inherently inconsistent, so really nothing can be done about it here
+- **B.** The text that they each handed it is simply far too long for the model to handle well
+- **C.** They should each simply ask the very same thing several more times
 - **D.** "Clean up" is ambiguous; specify what to change (grammar, tone, length, formatting)
 
 <details><summary>Answer &amp; explanation</summary>
@@ -2233,9 +2233,9 @@ _Why a tempting wrong answer misses:_ The variability is not randomness to accep
 An output got worse after you edited your prompt, but you changed several things at once. What is the best troubleshooting move?
 
 - **A.** Revert, then reintroduce the changes one at a time to find which caused the regression
-- **B.** Change even more things at once and hope the result improves
-- **C.** Abandon the prompt entirely and start over from nothing
-- **D.** Assume the model itself degraded and just wait a day
+- **B.** Go ahead and change even more things all at once, and just hope the overall result improves
+- **C.** Abandon the whole prompt entirely and just start over from nothing
+- **D.** Assume the model itself quietly degraded and simply wait a day
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2255,10 +2255,10 @@ _Why a tempting wrong answer misses:_ Changing even more at once makes the regre
 
 Claude gives wrong answers about your internal process. You are tempted to blame the model, but it was never given the process documentation. What is the real root cause?
 
-- **A.** The model is fundamentally incapable of the task
+- **A.** The model is simply and fundamentally incapable of the entire task at hand here
 - **B.** Missing context: Claude was not given the internal information it needs
-- **C.** An incorrect temperature setting
-- **D.** The time of day you asked
+- **C.** An incorrectly configured temperature setting on the underlying model itself
+- **D.** The particular time of day at which you happened to ask
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2278,10 +2278,10 @@ _Why a tempting wrong answer misses:_ Blaming the model's core capability misdia
 
 Claude's responses are far longer and more rambling than you need for a quick summary. What is the durable fix?
 
-- **A.** Delete parts of each response by hand every time
-- **B.** Ask it to "be concise" with no further detail and hope
+- **A.** Manually delete the unnecessary parts out of each and every single response by hand every time
+- **B.** Ask it to "be concise" with no further detail and hope for the best
 - **C.** Specify explicit constraints, for example "at most five bullet points, one line each"
-- **D.** Switch to a larger model
+- **D.** Switch over to a larger, more capable model for the summaries
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -2301,9 +2301,9 @@ _Why a tempting wrong answer misses:_ Editing every response by hand is an endle
 
 A prompt underperforms. Which sequence best reflects sound troubleshooting?
 
-- **A.** Immediately switch to the biggest available model and move on
-- **B.** Randomly tweak the wording until something finally sticks
-- **C.** Blame the model, decide it simply cannot do this, and stop using it
+- **A.** Immediately switch straight to the biggest, most expensive model available, and then simply move on
+- **B.** Randomly tweak the prompt wording until something finally sticks
+- **C.** Blame the model, decide it just cannot do this, and stop using it
 - **D.** Identify the likely root cause (ambiguous ask, missing context, wrong model or entry point) and fix it
 
 <details><summary>Answer &amp; explanation</summary>
@@ -2325,9 +2325,9 @@ _Why a tempting wrong answer misses:_ Randomly tweaking wording may occasionally
 
 You discover a prompt tweak that reliably fixes a recurring problem across your team's chats. What is the best way to capture the win?
 
-- **A.** Keep the tweak to yourself for next time
-- **B.** Apply it manually whenever you happen to remember
-- **C.** Mention it once in a meeting and move on
+- **A.** Keep the useful prompt tweak to yourself and simply reuse it again yourself the next time around
+- **B.** Apply the tweak by hand whenever you happen to remember to
+- **C.** Mention the tweak once in a team meeting and then move on
 - **D.** Build it into the shared Project configuration so every chat benefits automatically
 
 <details><summary>Answer &amp; explanation</summary>
