@@ -1,0 +1,8 @@
+{
+  "name": "flashcard-drill",
+  "description": "Terminal spaced-repetition flashcard drilling for the Claude Certification tracks. Unofficial study aid.",
+  "version": "1.0.0",
+  "author": { "name": "Patrick King", "url": "https://github.com/patrickking67" },
+  "homepage": "https://github.com/patrickking67/anthropic-university",
+  "keywords": ["claude", "certification", "flashcards", "study", "spaced-repetition"]
+}

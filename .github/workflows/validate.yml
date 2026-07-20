@@ -1,0 +1,25 @@
+name: Validate content
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate question banks (schema, keys, duplicates)
+        run: node scripts/build.mjs --check
+      - name: Ensure generated files are committed and in sync
+        run: |
+          node scripts/build.mjs
+          if ! git diff --quiet; then
+            echo "::error::Generated files are out of date. Run 'node scripts/build.mjs' and commit the result."
+            git --no-pager diff --stat
+            exit 1
+          fi
