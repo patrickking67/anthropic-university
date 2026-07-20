@@ -44,7 +44,7 @@
       "difficulty": "medium",
       "stem": "An engineer proposes letting the web-search worker hand its raw findings straight to the citation-checking worker to 'save a hop' instead of returning through the coordinator. Why does the orchestrator-workers pattern deliberately route worker output through the coordinator?",
       "options": {
-        "A": "Direct worker-to-worker links are slower because each additional hop adds network latency",
+        "A": "Direct worker-to-worker links add measurable network latency at every hop, so removing the coordinator from the path is the only way to keep parallel workers fast enough for production loads",
         "B": "The coordinator provides centralized visibility, consistent error handling, and control over exactly what each worker receives, which direct links would lose",
         "C": "Workers cannot serialize their messages into a format that other workers are able to parse",
         "D": "The Messages API forbids more than two agents from sharing a single conversation"
@@ -64,7 +64,7 @@
       "options": {
         "A": "The coordinator decomposed the topic too narrowly, so no subagent was ever assigned the regulatory dimension to research",
         "B": "The synthesis prompt lacked a regulatory section header, so Claude dropped that content while aggregating",
-        "C": "Lost-in-the-middle positioning caused the regulatory findings to be under-weighted during synthesis",
+        "C": "Lost-in-the-middle positioning caused the regulatory findings to be under-weighted during synthesis, so they were gathered by a worker but never surfaced into the final written brief",
         "D": "The workers deduplicated too aggressively and removed the regulatory content as redundant"
       },
       "answer": "A",
@@ -81,7 +81,7 @@
       "stem": "Three workers each search 'the whole web' for a market-sizing question and return heavily overlapping sources, roughly tripling cost with no coverage gain. You want to keep them running in parallel. What is the best design change?",
       "options": {
         "A": "Reduce to a single worker so there is no overlap to worry about",
-        "B": "Add a shared 'claimed sources' list that each worker checks before fetching",
+        "B": "Add a shared 'claimed sources' list in external storage that every worker reads and writes before each fetch, so in principle no two workers ever pull the same source twice",
         "C": "Have the coordinator assign each worker a distinct source class up front (filings, news, analyst reports) so their searches cannot collide",
         "D": "Let all three run, then have the coordinator deduplicate sources before synthesis"
       },
@@ -98,7 +98,7 @@
       "difficulty": "hard",
       "stem": "A document-analysis worker is given a general fetch_url tool to pull cited PDFs. Logs show it also points fetch_url at search-engine URLs and scrapes results, doing the search worker's job badly. What is the most robust fix?",
       "options": {
-        "A": "Add a system-prompt rule telling the worker never to use fetch_url for search",
+        "A": "Add a firmly worded system-prompt rule instructing the worker never to point fetch_url at search engines and to use it only for retrieving the specific cited documents it was given",
         "B": "Block search-engine domains with a denylist inside fetch_url",
         "C": "Route every fetch through the coordinator so it can review each request",
         "D": "Replace fetch_url with a narrower load_document tool that only accepts an allowlisted document identifier, making ad-hoc search impossible at the interface"
@@ -117,7 +117,7 @@
       "stem": "Your synthesis agent constantly needs quick single-fact confirmations (dates, figures) and currently routes every check back through the coordinator, adding latency. Genuine multi-hop verifications are rare. What is the best least-privilege design?",
       "options": {
         "A": "Give the synthesis agent a narrow verify_fact tool for the common single-fact case, and keep routing complex verification through the coordinator",
-        "B": "Give the synthesis agent the full research toolset so it can verify anything itself",
+        "B": "Give the synthesis agent the full research toolset, including web search and document loaders, so it can independently verify any claim it encounters without ever waiting on the coordinator",
         "C": "Have the coordinator pre-verify every fact before synthesis even begins",
         "D": "Cache all prior findings so the synthesis agent never has to verify anything"
       },
@@ -134,7 +134,7 @@
       "difficulty": "medium",
       "stem": "A worker's primary data source times out mid-run. Which return value best lets the coordinator recover intelligently?",
       "options": {
-        "A": "An empty result set, so the pipeline keeps moving without stalling",
+        "A": "Return an empty result set so the pipeline keeps moving, and let the downstream synthesis step infer from the conspicuously missing data that this particular source must have been unavailable",
         "B": "A structured error object: failure type (timeout), the query attempted, any partial results gathered, and suggested alternative sources",
         "C": "A thrown exception that aborts the entire research run",
         "D": "A success response containing a prose note that 'some data may be missing'"
@@ -155,7 +155,7 @@
         "A": "Timeouts are always transient, so the coordinator should silently retry both cases in exactly the same way",
         "B": "Both are failures and the run should abort to avoid publishing incomplete data",
         "C": "'Zero matches' is a valid finding to report as-is, while a timeout is an access failure to retry or annotate; collapsing both into 'no results' produces misleading coverage",
-        "D": "Zero matches should escalate to a human reviewer while timeouts should not"
+        "D": "Zero matches should quietly trigger an escalation to a human reviewer while timeouts are retried automatically, since a genuinely missing record is the more suspicious of the two outcomes"
       },
       "answer": "C",
       "explanationCorrect": "A legitimate empty result and an access failure carry different meanings and demand different responses; conflating them either discards valid findings or hides real gaps.",
@@ -170,7 +170,7 @@
       "difficulty": "medium",
       "stem": "A search worker hits an intermittent HTTP 429 on one of its ten queries. Where should this be handled?",
       "options": {
-        "A": "In the coordinator, which should catch every error from every worker centrally",
+        "A": "In the coordinator, which should catch every error from every worker centrally so that all retry and backoff logic lives in one place and the individual workers can stay simple",
         "B": "In a global exception handler that restarts the entire research run",
         "C": "Nowhere in particular: drop the failed query and proceed, since nine of ten succeeded",
         "D": "In the worker, which retries with backoff locally and only escalates to the coordinator (with context) if its retries are exhausted"
@@ -189,7 +189,7 @@
       "stem": "During a run, two of six planned sources are unavailable and the deadline is firm. What should the final report do?",
       "options": {
         "A": "Proceed and annotate coverage, marking which conclusions are well-supported and which rest on gapped sources, rather than hiding the missing coverage",
-        "B": "Silently omit the topics the failed sources would have covered so the report reads cleanly",
+        "B": "Silently omit the topics the failed sources would have covered so the report reads cleanly, and record the reduced scope only in an internal log that the team can consult later",
         "C": "Fail the run and deliver nothing until all six sources are reachable again",
         "D": "Fill the gaps with the model's best guesses to keep the report looking complete"
       },
@@ -206,7 +206,7 @@
       "difficulty": "medium",
       "stem": "Your synthesis agent receives 40 worker reports concatenated into one long message. Key conclusions buried in the middle are consistently underused in the final brief. What is the most effective mitigation?",
       "options": {
-        "A": "Randomly rotate the order of the reports on each run so no position is consistently disadvantaged",
+        "A": "Randomly rotate the order of the reports on each run so that no single position is consistently disadvantaged and, over many runs, every report eventually lands near the top of the input",
         "B": "Put a key-findings summary at the top and add explicit section headers, so critical content sits where the model attends most and is easy to navigate",
         "C": "Summarize every report down to a single sentence to shrink the whole input",
         "D": "Increase max_tokens so the model has more room to consider everything"
@@ -227,7 +227,7 @@
         "A": "Truncate every worker report to the first 500 tokens before synthesis",
         "B": "Switch the synthesis model to a larger context window so cost stops mattering",
         "C": "Have each worker return structured findings (key facts, citations, relevance scores) instead of raw page text and full reasoning transcripts",
-        "D": "Add a separate summarization pass over the reports after they arrive"
+        "D": "Add a separate summarization pass over the reports after they arrive, compressing each one down to its essentials before the synthesis agent has to read the whole set"
       },
       "answer": "C",
       "explanationCorrect": "Cutting bloat at the source, by having workers emit structured findings rather than verbose dumps, reduces tokens without a second model pass and keeps only the signal synthesis needs.",
@@ -242,7 +242,7 @@
       "difficulty": "medium",
       "stem": "Two workers return contradictory figures for the same metric: one source reports 12%, another reports 18%. How should the system handle the conflict when producing the brief?",
       "options": {
-        "A": "Average the two figures and report the 15% midpoint as the answer",
+        "A": "Average the two figures and report the 15% midpoint as the answer, treating the gap between the sources as ordinary measurement noise that should roughly cancel out",
         "B": "Keep whichever figure arrived first and discard the other as noise",
         "C": "Have the coordinator pick the source it deems most authoritative and silently drop the other",
         "D": "Surface the disagreement with both values and their sources so synthesis and the reader can weigh them, rather than hiding the conflict behind a single number"
@@ -262,7 +262,7 @@
       "options": {
         "A": "Rewrite both tools' names and descriptions so each states an unambiguous, non-overlapping purpose and when to use it versus the other",
         "B": "Delete search_articles and force every query through search_news",
-        "C": "Add a system-prompt paragraph listing which kinds of query should go to which tool",
+        "C": "Add a system-prompt paragraph that lists which kinds of query should go to search_news versus search_articles, overriding whatever the model infers from the two tool descriptions",
         "D": "Lower the sampling temperature so tool selection becomes more deterministic"
       },
       "answer": "A",
@@ -281,7 +281,7 @@
         "A": "Cache each call's result so the next entity is faster",
         "B": "Provide a composite get_company_profile tool that returns the company, its filings, and its officers in a single call",
         "C": "Increase the worker's max_tokens so it can request more per call",
-        "D": "Move all three calls into the coordinator instead of the worker"
+        "D": "Move all three calls into the coordinator instead of the worker so they can be issued together, centralizing the round-trips in the place where they are easiest to observe and manage"
       },
       "answer": "B",
       "explanationCorrect": "A composite tool collapses several dependent round-trips into one call, directly cutting the latency that comes from sequential hops.",
@@ -296,7 +296,7 @@
       "difficulty": "medium",
       "stem": "A worker fetches a document that turns out to be corrupted and cannot be parsed. What is the best behavior?",
       "options": {
-        "A": "Return the corrupted bytes to the coordinator and let the synthesis step try to interpret them",
+        "A": "Return the corrupted bytes to the coordinator and let the synthesis step attempt to interpret whatever partial content can still be salvaged from the damaged document",
         "B": "Silently skip the document and report the subtask as successful",
         "C": "Return a structured error with context (which document, what failed) so the coordinator can decide whether to retry, substitute, or annotate the gap",
         "D": "Retry the same fetch indefinitely until the document finally parses"
@@ -314,7 +314,7 @@
       "difficulty": "hard",
       "stem": "A teammate justifies the central-coordinator design by saying its main advantage is batching worker requests to reduce API latency. Why is that justification off-base?",
       "options": {
-        "A": "The coordinator always increases latency, so latency can never be counted as an advantage",
+        "A": "The coordinator always adds an extra serialization and routing hop that increases end-to-end latency, so pointing to latency as the pattern's advantage gets the actual trade-off backwards",
         "B": "Batching requests is impossible in an orchestrator-workers topology",
         "C": "Reducing latency is the job of prompt caching, never of a coordinator",
         "D": "The coordinator's core value is centralized visibility, consistent error handling, and control over each worker's inputs; latency and batching are not why you adopt the pattern"
@@ -333,7 +333,7 @@
       "stem": "The coordinator must gather a company's current CEO and then find that person's published statements. An engineer wants both workers to run in parallel to save time. Why is parallel delegation the wrong call here?",
       "options": {
         "A": "The second task depends on the first task's output (the CEO's identity), so it is a genuine sequential dependency, not parallelizable work",
-        "B": "Parallel workers always consume more tokens than sequential ones",
+        "B": "Parallel workers always consume more tokens than sequential ones because their contexts cannot be shared, so the extra token cost alone makes parallelism the wrong choice in this case",
         "C": "The Messages API cannot run two workers concurrently",
         "D": "Parallel workers are unable to return structured error context"
       },
@@ -422,7 +422,7 @@
       "difficulty": "medium",
       "stem": "Given that under-decomposition can silently drop whole topics, which practice best guards against coverage gaps before workers are dispatched?",
       "options": {
-        "A": "Dispatch workers immediately and rely on the synthesis step to notice anything missing",
+        "A": "Dispatch the workers immediately and rely on the synthesis step to notice anything missing, since it sees all of the results together and can always request additional follow-up research",
         "B": "Have the coordinator enumerate the required subtopics or dimensions explicitly and confirm every one is assigned to a worker before delegating",
         "C": "Always spawn the maximum number of workers so more ground gets covered",
         "D": "Let each worker pick its own subtopic at runtime to avoid a central bottleneck"
@@ -440,7 +440,7 @@
       "difficulty": "easy",
       "stem": "You are wiring Claude Code into a CI job that must run non-interactively, print its result to stdout, and then exit. Which invocation fits?",
       "options": {
-        "A": "Launch the interactive REPL and pipe the diff into it",
+        "A": "Launch the interactive REPL and pipe the diff into it, then capture whatever it prints once the session settles, which keeps a human in the loop for the CI run",
         "B": "Run claude --watch to keep a session alive across the whole pipeline",
         "C": "Run claude -p \"<review prompt>\" (the --print flag), which executes once, prints to stdout, and exits",
         "D": "Run claude --serve to expose an HTTP endpoint that the CI calls into"
@@ -459,7 +459,7 @@
       "stem": "Your CI step must post each review finding as an inline PR comment through the GitHub API, so it needs machine-parseable output carrying file, line, and message fields. What should the Claude Code invocation use?",
       "options": {
         "A": "Ask Claude in the prompt to 'format findings nicely' and screen-scrape the text",
-        "B": "Pipe the default text output through a regex to pull out the fields",
+        "B": "Pipe the default text output through a carefully maintained regex that pulls out the file, line, and message fields for each finding before posting them as comments",
         "C": "Enable streaming so the CI can read tokens as they arrive",
         "D": "Use --output-format json with a schema so findings return as structured data the CI can post directly"
       },
@@ -477,7 +477,7 @@
       "stem": "A senior engineer has already reviewed a PR. You want an automated check that catches issues a single reviewer, human or model, might rationalize past. What adds the most value?",
       "options": {
         "A": "A second, independent Claude Code review instance that sees only the diff, not the first reviewer's notes, reducing shared blind spots",
-        "B": "Re-running the same review prompt three times and taking the majority verdict",
+        "B": "Re-run the exact same review prompt three separate times and take the majority verdict, on the theory that a real issue will surface in at least two of the three passes",
         "C": "Giving the reviewer the author's own justification for each change",
         "D": "Increasing the review model's max_tokens so it writes longer comments"
       },
@@ -494,7 +494,7 @@
       "difficulty": "medium",
       "stem": "Your review must complete and block the merge before a PR can land. Which execution model fits, and why not the Message Batches API?",
       "options": {
-        "A": "The Batches API, because it is about 50% cheaper and cost matters most here",
+        "A": "Use the Batches API, because it is roughly 50% cheaper and, for a review that mostly runs unattended, saving on cost matters more than exactly when the result comes back",
         "B": "A synchronous, blocking review call, because a required pre-merge gate needs a result now, whereas the Batches API is asynchronous with up to a 24-hour turnaround",
         "C": "The Batches API, because it guarantees results within one minute",
         "D": "Either one; there is no meaningful difference for a blocking gate"
@@ -512,7 +512,7 @@
       "difficulty": "medium",
       "stem": "You want a nightly scan of the entire repository's open TODOs and dead code, where results can land by morning and cost should be minimized. Which is the best fit?",
       "options": {
-        "A": "A synchronous claude -p call per file, run during the workday",
+        "A": "Run a synchronous claude -p call for every file during the workday so a person can watch the results come in and react to anything urgent right away",
         "B": "An interactive session that an engineer supervises overnight",
         "C": "The Message Batches API, which is about 50% cheaper and asynchronous (up to 24h), ideal for latency-tolerant scheduled jobs",
         "D": "Streaming responses to a live dashboard in real time"
@@ -530,7 +530,7 @@
       "difficulty": "hard",
       "stem": "You considered moving your iterative, tool-calling review agent (it reads files, runs a linter, then revises its findings) onto the Batches API to cut cost. Why does that not work?",
       "options": {
-        "A": "The Batches API rejects prompts longer than a few thousand tokens",
+        "A": "The Batches API rejects any prompt longer than a few thousand tokens, so a review agent that reads whole files would blow past that limit almost immediately",
         "B": "The Batches API cannot return JSON output",
         "C": "Batch jobs are actually more expensive than synchronous calls when tools are involved",
         "D": "The Batches API is fire-and-forget and cannot execute a tool mid-request and continue, so it does not fit interactive tool-calling loops"
@@ -551,7 +551,7 @@
         "A": "Temporarily disable the noisy low-precision categories (style, naming), keep the high-precision ones, then improve those prompts and re-enable",
         "B": "Keep every category but add a disclaimer that some findings may be wrong",
         "C": "Switch to a cheaper model tier so at least the noise costs less",
-        "D": "Post all findings but sort the style issues to the bottom of the comment"
+        "D": "Post all of the findings but sort the style and naming issues to the bottom of the comment, so the security findings engineers care about appear first and get read"
       },
       "answer": "A",
       "explanationCorrect": "A high false-positive category poisons trust in every finding; muting the noisy categories restores signal, after which you refine their prompts and bring them back.",
@@ -569,7 +569,7 @@
         "A": "Tell it to be less strict and flag fewer comments",
         "B": "Specify explicit criteria, for example flag a comment only when it contradicts the actual behavior of the code it describes",
         "C": "Remove comment-checking from the review altogether",
-        "D": "Ask it to rate each comment's accuracy on a 1-to-10 scale"
+        "D": "Ask the reviewer to rate each comment's accuracy on a 1-to-10 scale so that borderline comments land on a middling score and only the clearly wrong ones stand out"
       },
       "answer": "B",
       "explanationCorrect": "A vague instruction yields vague over-flagging; a concrete criterion (flag only when a comment contradicts code behavior) gives the model a precise, testable bar.",
@@ -585,7 +585,7 @@
       "stem": "Findings come back as vague one-liners like 'improve error handling here' that engineers cannot act on. What most reliably fixes the format?",
       "options": {
         "A": "Increase the review temperature for more creative suggestions",
-        "B": "Add a sentence asking for 'more actionable' findings",
+        "B": "Add a sentence to the prompt asking the reviewer for 'more actionable' findings and reminding it that engineers need to be able to act on each one directly",
         "C": "Provide a few-shot example of the exact desired finding format: problem, location, and a concrete suggested change",
         "D": "Switch to the largest available model"
       },
@@ -602,7 +602,7 @@
       "difficulty": "medium",
       "stem": "On each new commit to a long-lived PR, the bot re-reports the same issues it already flagged, burying the genuinely new ones. What is the best fix?",
       "options": {
-        "A": "Review only the most recent commit's diff and ignore earlier commits",
+        "A": "Review only the most recent commit's diff and ignore the earlier commits, on the assumption that anything already flagged must have been addressed in a prior round",
         "B": "Post findings to a separate channel so the PR stays clean",
         "C": "Reduce how often the review runs",
         "D": "Include the prior findings in the review context and ask Claude to report only new or still-unaddressed issues"
@@ -622,7 +622,7 @@
       "options": {
         "A": "Include the existing test file in the review context so Claude can see what is already covered",
         "B": "Tell Claude to assume tests exist and never suggest any",
-        "C": "Delete the redundant suggestions in a post-processing step using keyword matching",
+        "C": "Delete the redundant suggestions in a post-processing step that keyword-matches each suggested test against the names of the tests already present in the repository",
         "D": "Ask Claude to suggest only integration tests"
       },
       "answer": "A",
@@ -641,7 +641,7 @@
         "A": "Feed the entire PR in one prompt but raise max_tokens",
         "B": "Run focused per-file review passes for depth, then a separate integration pass that checks cross-file data flow",
         "C": "Review only the three largest files and sample the rest",
-        "D": "Split the PR into three smaller PRs and review each once"
+        "D": "Split the large PR into three smaller pull requests and review each of them once, so no single review has to hold all thirty files in context at the same time"
       },
       "answer": "B",
       "explanationCorrect": "Per-file passes give every file consistent depth, and a dedicated integration pass catches the cross-file interactions that a single wide sweep skims over.",
@@ -656,7 +656,7 @@
       "difficulty": "medium",
       "stem": "Reviewers spend most of their time deciding which bot findings are worth investigating, and policy forbids auto-filtering any finding out. What change most reduces that triage cost?",
       "options": {
-        "A": "Post fewer findings by raising the severity bar",
+        "A": "Post fewer findings by raising the severity bar so only the most serious issues appear, which shrinks the list the reviewers have to work through on each run",
         "B": "Group the findings by file",
         "C": "Have Claude include its reasoning and a confidence level inline with each finding so humans can triage faster",
         "D": "Convert the findings into a spreadsheet"
@@ -675,7 +675,7 @@
       "stem": "The same class of issue is labeled 'critical' in one file and 'minor' in another across runs. What most improves severity consistency?",
       "options": {
         "A": "Default every finding to 'medium' severity",
-        "B": "Let engineers relabel severities by hand after the fact",
+        "B": "Let engineers relabel the severities by hand after each run so the team gradually converges on a shared, if informal, sense of what counts as critical",
         "C": "Ask the model to be more consistent",
         "D": "Give explicit severity definitions with concrete examples of what counts as critical, major, and minor"
       },
@@ -693,7 +693,7 @@
       "stem": "Your pipeline must fail the build when the reviewer finds a blocking issue. Given a headless claude -p run with --output-format json, what is the cleanest way to gate the build?",
       "options": {
         "A": "Parse the structured JSON for a blocking-severity finding and have the CI step exit non-zero based on that field",
-        "B": "Grep the raw transcript for the word 'blocking'",
+        "B": "Grep the raw transcript for the word 'blocking' and fail the build whenever it appears anywhere in the reviewer's free-text output for the pull request",
         "C": "Always pass the build and email the findings to the author",
         "D": "Let Claude Code itself decide whether to merge the PR"
       },
@@ -710,7 +710,7 @@
       "difficulty": "hard",
       "stem": "You must cut the cost of a synchronous pre-merge review without changing its blocking behavior, and you cannot switch to the Batches API. Which lever applies?",
       "options": {
-        "A": "Move the review to the Batches API anyway and accept the added latency",
+        "A": "Move the review to the Batches API anyway and simply accept the added latency, since the roughly 50% cost saving is worth more than keeping the gate perfectly synchronous",
         "B": "Cache the stable prefix (system prompt, conventions, unchanged files) with prompt caching so repeat reviews reread it at reduced cost",
         "C": "Truncate the diff to only the first few files",
         "D": "Remove the system prompt entirely to save tokens"
@@ -728,7 +728,7 @@
       "difficulty": "hard",
       "stem": "The reviewer flags a 'null pointer' bug on a changed line, but the value is guaranteed non-null by a check three lines above the diff hunk. What context change reduces these false positives?",
       "options": {
-        "A": "Tell the reviewer to assume all inputs are already validated",
+        "A": "Tell the reviewer to assume all inputs are already validated upstream, so it stops flagging null-pointer concerns on values that some caller was supposed to check",
         "B": "Lower the model's confidence so it flags fewer things",
         "C": "Include enough surrounding file context, not just the isolated diff hunk, so the reviewer can see the guards and invariants around the change",
         "D": "Review only added lines, never modified ones"
@@ -748,7 +748,7 @@
       "options": {
         "A": "A single free-text 'summary' string covering the whole review",
         "B": "Just a boolean 'approved' flag",
-        "C": "A list of markdown blobs, one per finding",
+        "C": "A list of markdown blobs, one per finding, that the script can drop straight into the PR conversation without having to parse any individual fields out of them",
         "D": "A list of findings, each with file path, line number, severity, message, and rationale"
       },
       "answer": "D",
@@ -765,7 +765,7 @@
       "stem": "Your headless claude -p review job occasionally stalls in CI. Investigation shows it is waiting on an interactive approval prompt for a tool it wants to use. What is the right fix for unattended CI?",
       "options": {
         "A": "Pre-authorize the specific tools the job needs (via allowed-tools / permission settings) so the headless run never blocks on an interactive prompt",
-        "B": "Add a long sleep so the prompt times out and the run continues",
+        "B": "Add a long sleep before the tool call so the interactive approval prompt times out on its own and the headless run is then free to continue past it",
         "C": "Run the job on a faster machine",
         "D": "Switch the model to Haiku so it requests fewer tools"
       },
@@ -785,7 +785,7 @@
         "A": "A separate session is cheaper to run than continuing the original one",
         "B": "A fresh instance has no access to the generation session's reasoning, so it evaluates the script on its merits and avoids confirmation bias toward the author's assumptions",
         "C": "The original session's context window is always full immediately after generating code",
-        "D": "Claude Code is technically unable to review code it wrote in the same session"
+        "D": "Claude Code is technically unable to review code that it wrote earlier in the same session, so spinning up a separate instance is the only way to get any review at all"
       },
       "answer": "B",
       "explanationCorrect": "A fresh reviewer that never saw the generator's reasoning judges the code independently, avoiding the confirmation bias of re-endorsing the same assumptions that produced it.",
@@ -800,7 +800,7 @@
       "difficulty": "medium",
       "stem": "Your support agent has get_order_status and track_shipment tools, but it frequently calls track_shipment when a user's question should be answered by get_order_status. Both schemas are valid. What should you try FIRST?",
       "options": {
-        "A": "Add a routing rule in the system prompt mapping phrases to tools",
+        "A": "Add a routing rule in the system prompt that maps common phrases to specific tools, so a mention of tracking always sends the request to track_shipment",
         "B": "Remove track_shipment from the agent",
         "C": "Lower the sampling temperature to make selection more deterministic",
         "D": "Improve both tools' descriptions so each clearly states its purpose and when to use it versus the other"
@@ -818,7 +818,7 @@
       "difficulty": "medium",
       "stem": "A customer writes 'cancel my order for John Smith.' The lookup returns three customers named John Smith with active orders. What should the agent do?",
       "options": {
-        "A": "Cancel the most recently placed order, since it is the likeliest one",
+        "A": "Cancel the most recently placed order, since a customer asking to cancel is most likely referring to their latest purchase rather than an older one",
         "B": "Cancel all three to be safe and let the customers re-order",
         "C": "Ask the customer for an additional identifier (email, phone, or order number) to disambiguate before taking any action",
         "D": "Cancel the first match returned by the database"
@@ -836,7 +836,7 @@
       "difficulty": "hard",
       "stem": "Policy requires verifying identity before any account change. A system-prompt instruction to 'always verify first' is followed most of the time but occasionally skipped. What is the most reliable enforcement?",
       "options": {
-        "A": "Add stronger wording and capitalization to the system prompt",
+        "A": "Add stronger, capitalized wording to the system prompt stressing that identity must always be verified before any account change is ever attempted",
         "B": "Programmatically block the account-change tools until get_customer has returned a verified identity, enforcing the order in code rather than by prompt",
         "C": "Ask the model to self-report whether it verified identity first",
         "D": "Add a few-shot example showing verification happening before the change"
@@ -855,7 +855,7 @@
       "stem": "A customer asks the agent to match a competitor's lower price. The company's policy documents say nothing about price matching at all. What is the appropriate behavior?",
       "options": {
         "A": "Escalate to a human, because the policy is genuinely silent and the agent would otherwise have to invent a policy",
-        "B": "Confidently tell the customer that price matching is not allowed",
+        "B": "Confidently tell the customer that price matching is not allowed, on the principle that anything not explicitly permitted in the policy should be treated as prohibited",
         "C": "Approve the price match to satisfy the customer",
         "D": "Ask the customer to prove the competitor's price, then decide unilaterally"
       },
@@ -872,7 +872,7 @@
       "difficulty": "hard",
       "stem": "Your agent escalates too often on cases it could handle and misses some it should escalate. A teammate suggests escalating whenever the model's self-reported confidence drops below 0.7. What is the better approach?",
       "options": {
-        "A": "Trust the confidence score but tune the threshold down to 0.5",
+        "A": "Trust the model's self-reported confidence but tune the threshold down to 0.5, so the agent only escalates when it is genuinely quite unsure of the resolution",
         "B": "Escalate every case to be safe",
         "C": "Never escalate and always attempt a resolution",
         "D": "Define explicit escalation criteria with few-shot examples of when to escalate versus resolve, since self-reported confidence is poorly calibrated"
@@ -890,7 +890,7 @@
       "difficulty": "hard",
       "stem": "Two backend tools return timestamps in different formats (one Unix epoch, one ISO 8601) and the agent occasionally misreads dates to customers. One tool is a third-party MCP server you cannot modify. What is the most maintainable fix?",
       "options": {
-        "A": "Add a prompt instruction telling the agent how to convert each format",
+        "A": "Add a prompt instruction telling the agent how to convert each timestamp format, with a worked example of turning an epoch value into a readable date",
         "B": "Fork the third-party MCP server and patch its output",
         "C": "Add a PostToolUse hook that normalizes both tools' timestamps to one readable format before the agent sees them",
         "D": "Ask the customer to specify which timezone they meant"
@@ -908,7 +908,7 @@
       "difficulty": "medium",
       "stem": "For each ticket the agent runs get_customer, then get_orders, then get_subscription across three sequential turns, making resolution feel slow. Given the customer id, those last lookups are independent. What best cuts the round-trips?",
       "options": {
-        "A": "Cache the results between tickets",
+        "A": "Cache the results of each lookup between tickets so that repeat customers are resolved faster, amortizing the three calls across the day's overall volume",
         "B": "Have the agent issue the independent lookups in parallel within a single turn (or expose a composite tool that returns all three) and return the results together",
         "C": "Drop get_subscription to save a call",
         "D": "Increase max_tokens so the agent can think longer"
@@ -929,7 +929,7 @@
         "A": "Keep a persistent 'case facts' block (order number, amounts, dates) maintained verbatim outside the summarized history",
         "B": "Summarize more aggressively so there is less content to get wrong",
         "C": "Ask the customer to repeat the details on every turn",
-        "D": "Disable summarization and let the context grow without bound"
+        "D": "Disable summarization entirely and let the full conversation context grow without bound, so that no precise detail is ever lost to a lossy summary step"
       },
       "answer": "A",
       "explanationCorrect": "Precise identifiers belong in a persistent case-facts block kept verbatim outside the lossy summary, so summarization cannot corrupt the exact values.",
@@ -946,7 +946,7 @@
       "options": {
         "A": "Tell the agent to write longer replies",
         "B": "Lower the sampling temperature",
-        "C": "Route every ticket to a human for a completeness check",
+        "C": "Route every ticket to a human for a completeness check before the reply is sent, so a person always confirms that each question was actually addressed",
         "D": "Add a self-critique/evaluator step that checks the drafted reply against explicit completeness criteria before sending"
       },
       "answer": "D",
@@ -962,7 +962,7 @@
       "difficulty": "medium",
       "stem": "A customer's message contains three separate concerns (a billing dispute, a shipping delay, and a feature question), and the agent redundantly re-fetches the customer record for each. What is the best approach?",
       "options": {
-        "A": "Handle only the first concern and ask the customer to resend the others separately",
+        "A": "Handle only the first concern and politely ask the customer to resend the other two as separate messages so that each can be worked cleanly on its own",
         "B": "Escalate the whole message because it is too complex",
         "C": "Decompose the message into its three concerns, investigate them in parallel over one shared customer context, then synthesize a single reply",
         "D": "Answer all three from memory without any lookups to save calls"
@@ -980,7 +980,7 @@
       "difficulty": "easy",
       "stem": "You are writing the loop that drives the support agent on the Messages API. After each response, how should the loop decide whether to run the requested tools and call the API again, or to stop?",
       "options": {
-        "A": "Stop when the assistant text contains a closing phrase like 'let me know if there is anything else'",
+        "A": "Stop when the assistant text contains a closing phrase like 'let me know if there is anything else', which usually signals that the agent considers itself finished",
         "B": "Check stop_reason: continue the loop when it is tool_use, and stop when it is end_turn",
         "C": "Stop after a fixed three iterations regardless of the response",
         "D": "Stop as soon as any text block appears in the response"
@@ -999,7 +999,7 @@
       "stem": "Despite well-written tool descriptions, the agent almost always calls issue_refund whenever a message contains the word 'refund,' even for questions that only ask about the refund policy. What is the most likely cause?",
       "options": {
         "A": "The system prompt contains keyword-sensitive routing instructions (e.g. 'if the user says refund, use issue_refund') that override nuanced tool selection",
-        "B": "The issue_refund tool's schema is malformed",
+        "B": "The issue_refund tool's input schema is subtly malformed, so the model falls back to calling it defensively whenever refunds are mentioned in the conversation",
         "C": "The model is too small to read tool descriptions",
         "D": "The sampling temperature is set too high"
       },
@@ -1016,7 +1016,7 @@
       "difficulty": "medium",
       "stem": "The agent selects the right tool but often passes the date argument in the wrong format, causing failures. Where is the most effective place to fix this?",
       "options": {
-        "A": "Retry the call repeatedly until some format happens to work",
+        "A": "Retry the call repeatedly with different formats until one of them happens to be accepted, then reuse that format for the rest of the conversation",
         "B": "Add a global instruction to 'use correct formats'",
         "C": "Lower the sampling temperature",
         "D": "Put the expected format and a concrete example directly in the tool's description, and constrain it in the input_schema"
@@ -1034,7 +1034,7 @@
       "difficulty": "hard",
       "stem": "A customer claims their package never arrived, but the tracking tool shows 'delivered.' A teammate says the agent should escalate any time evidence conflicts. Is escalation the right default here?",
       "options": {
-        "A": "Yes, any conflicting evidence should always be escalated immediately",
+        "A": "Yes, any time the evidence conflicts the agent should escalate immediately, since a mismatch between the customer and the system is inherently beyond its authority",
         "B": "Yes, because the agent is not capable of handling disputes",
         "C": "No, this is a handleable case within policy (open a missing-package claim per the documented process); escalate for genuine policy gaps, not every evidentiary conflict",
         "D": "No, the agent should simply side with the tracking system and close the ticket"
@@ -1052,7 +1052,7 @@
       "difficulty": "medium",
       "stem": "One of the agent's tool calls fails with an error. How should the loop handle it so the agent can recover?",
       "options": {
-        "A": "Silently drop the failed tool_result and continue as though it succeeded",
+        "A": "Silently drop the failed tool_result and continue as though it had succeeded, so that a single flaky call does not derail the rest of the resolution",
         "B": "Return a tool_result with is_error set to true describing the failure, so the agent sees it and can adapt (retry, try another tool, or ask the user)",
         "C": "Abort the entire conversation",
         "D": "Remove the tool from the agent so it cannot fail again"
@@ -1071,7 +1071,7 @@
       "stem": "A customer says 'I want a refund' with no order reference, and the agent has no way to identify which purchase they mean. What is the best next step?",
       "options": {
         "A": "Ask the customer for the order number or another identifier so the correct order can be located before acting",
-        "B": "Refund the customer's most expensive recent order",
+        "B": "Refund the customer's most expensive recent order, on the assumption that a refund request most likely concerns the purchase they care about most",
         "C": "Refund every order on the account",
         "D": "Tell the customer that refunds are impossible without more staff"
       },
@@ -1088,7 +1088,7 @@
       "difficulty": "medium",
       "stem": "Under pressure to resolve tickets without escalating, the agent starts stating specific policies (return windows, fees) that do not appear anywhere in its knowledge base. What is the root problem and fix?",
       "options": {
-        "A": "The model is too creative; lower the temperature to stop it",
+        "A": "The model is simply being too creative; lower the temperature so that it stops volunteering specific policy details it cannot actually support",
         "B": "The knowledge base is too long; shorten it",
         "C": "The agent simply needs more tools",
         "D": "The agent is filling policy gaps by fabricating; give it explicit criteria to recognize gaps and escalate them instead of inventing policy"
@@ -1106,7 +1106,7 @@
       "difficulty": "medium",
       "stem": "Refund policy caps automatic refunds at $100, above which a manager must approve. Relying on the prompt, the agent occasionally issues automatic refunds above the cap. What is the best fix?",
       "options": {
-        "A": "Add the cap to the system prompt in bold",
+        "A": "Add the refund cap to the system prompt in bold and restate it near the tool definition so the agent is reminded of the limit on every relevant turn",
         "B": "Ask the agent to double-check the amount before issuing",
         "C": "Enforce the cap in code so the issue_refund tool (or a wrapper) rejects or routes over-$100 amounts to manager approval, independent of the prompt",
         "D": "Give the agent more examples of the cap during prompting"
@@ -1124,7 +1124,7 @@
       "difficulty": "medium",
       "stem": "Early in a chat the customer states they are in the EU, which changes the applicable return window. Twenty turns later, after summarization, the agent quotes the US window. What prevents this?",
       "options": {
-        "A": "Ask the customer to restate their region at the end of the chat",
+        "A": "Ask the customer to restate their region at the end of the chat so the agent can double-check which return window it should have been applying",
         "B": "Record region and other durable constraints in a persistent case-facts block that survives summarization, and have the agent consult it",
         "C": "Never summarize the conversation at all",
         "D": "Shorten the return policy so that region no longer matters"
@@ -1143,7 +1143,7 @@
       "stem": "Your support agent loop is driven by stop_reason, but you also want to prevent a pathological case where the model keeps requesting tools indefinitely. What is a reasonable safeguard that does not break normal operation?",
       "options": {
         "A": "Keep stop_reason as the primary control but add a maximum-iteration cap as a backstop, surfacing a graceful message or escalation if it is ever hit",
-        "B": "Replace the stop_reason check with a fixed two-iteration limit",
+        "B": "Replace the stop_reason check with a fixed two-iteration limit, so the loop always runs the tools once and then produces a final answer on the next pass",
         "C": "Parse the assistant text for 'done' instead of using stop_reason",
         "D": "Remove all tools so the loop can never continue"
       },
@@ -1160,7 +1160,7 @@
       "difficulty": "medium",
       "stem": "Your team wants test-writing conventions to apply automatically whenever anyone edits a file matching **/*.test.ts, wherever it lives, without loading those rules for unrelated work. What mechanism fits best?",
       "options": {
-        "A": "Put the conventions in the root CLAUDE.md so they always load",
+        "A": "Put the test-writing conventions in the root CLAUDE.md so that they are always loaded and every engineer sees them on every task, regardless of the file being edited",
         "B": "Add a file under .claude/rules/ with YAML frontmatter specifying the **/*.test.ts glob, so it applies automatically based on the file being edited",
         "C": "Create a skill that engineers must invoke by name before writing tests",
         "D": "Paste the conventions into each pull request description"
@@ -1179,7 +1179,7 @@
       "stem": "You have a detailed, multi-step database-migration workflow that should load only when someone is actually doing a migration, not on every task. Where does it belong?",
       "options": {
         "A": "In a Skill (.claude/skills/<name>/SKILL.md) that loads on demand when its trigger keywords appear",
-        "B": "In the root CLAUDE.md so it is always available",
+        "B": "Put the migration workflow in the root CLAUDE.md so it is always available and no one ever has to remember to invoke it before starting a migration",
         "C": "In a .claude/rules/ file scoped by a glob",
         "D": "In the user-level ~/.claude/CLAUDE.md"
       },
@@ -1196,7 +1196,7 @@
       "difficulty": "hard",
       "stem": "A skill performs a noisy, verbose repository scan whose intermediate output would clutter the main conversation, but you only need its final summary. Which frontmatter option keeps the main context clean?",
       "options": {
-        "A": "allowed-tools, restricting which tools the skill may call",
+        "A": "Use allowed-tools to restrict which tools the skill can call, so its noisy scan can only touch the read commands that it actually needs to run",
         "B": "argument-hint, prompting for parameters",
         "C": "model, pinning a specific model for the skill",
         "D": "context: fork, running the skill in an isolated subagent context so its verbose output does not pollute the main conversation"
@@ -1217,7 +1217,7 @@
         "A": "context: fork",
         "B": "argument-hint",
         "C": "allowed-tools, restricting the skill to just the read tools it needs",
-        "D": "A sentence in the skill body asking it not to edit files"
+        "D": "Add a clear sentence in the skill body asking it to only read files and never run shell commands or make edits while it generates the documentation"
       },
       "answer": "C",
       "explanationCorrect": "allowed-tools restricts what a skill can do at the harness level, a deterministic guardrail that is far stronger than an in-body request.",
@@ -1233,8 +1233,8 @@
       "stem": "Your custom /deploy skill needs the target environment as a parameter, and you want Claude Code to prompt for it. Which frontmatter field is designed for this?",
       "options": {
         "A": "argument-hint, which declares and prompts for the expected parameter(s)",
-        "B": "allowed-tools",
-        "C": "context: fork",
+        "B": "Use allowed-tools, the field that lists which tools a skill may call, treating the target environment as effectively another input to declare there",
+        "C": "Use context: fork so the skill runs in its own isolated subagent and can be handed the environment separately from the main conversation",
         "D": "model"
       },
       "answer": "A",
@@ -1250,7 +1250,7 @@
       "difficulty": "hard",
       "stem": "The project defines a skill named 'review' in .claude/skills/. You want your own personal variant with different behavior, but your personal 'review' skill never runs. Why, and what is the clean fix?",
       "options": {
-        "A": "Personal skills are disabled inside project repos; enable them in settings",
+        "A": "Personal skills are disabled inside project repositories by default; switch them back on in your settings and your personal 'review' skill will start taking priority",
         "B": "Project skills take precedence over a same-named personal skill; give your personal skill a different name in ~/.claude/skills/ so both can coexist",
         "C": "Move your personal skill into the project directory to override the team's",
         "D": "Delete the project skill so yours can run"
@@ -1268,7 +1268,7 @@
       "difficulty": "medium",
       "stem": "You want a custom slash command to be available to everyone on the team automatically when they clone or pull the repository. Where should it live?",
       "options": {
-        "A": "In each developer's personal ~/.claude/commands/ directory",
+        "A": "Put the command in each developer's personal ~/.claude/commands/ directory and ask everyone on the team to add it there after they clone the repository",
         "B": "In a .claude/config.json 'commands' array",
         "C": "In the project's .claude/commands/ (or .claude/skills/) directory, so it is version-controlled and ships with the repo",
         "D": "In an environment variable set on the CI runner"
@@ -1288,7 +1288,7 @@
       "options": {
         "A": "Start editing the largest file directly to make progress",
         "B": "Ask Claude to compact the context first",
-        "C": "Immediately generate the full implementation and review it afterward",
+        "C": "Immediately generate the full implementation across all of the services and then review the result afterward, iterating on whatever the first pass gets wrong",
         "D": "Use plan mode to explore the codebase and design the approach before touching code"
       },
       "answer": "D",
@@ -1304,7 +1304,7 @@
       "difficulty": "medium",
       "stem": "Before implementing, you must understand how authentication flows through a large unfamiliar codebase, which means reading many files. You want to preserve your main context window. What is the best approach?",
       "options": {
-        "A": "Read every file yourself in the main session, then run /compact when it fills up",
+        "A": "Read every file yourself in the main session to build a complete picture, then run /compact once the context window starts to fill up from all of that reading",
         "B": "Delegate the discovery to the Explore subagent, which isolates the verbose reading and returns a summary, preserving the main context",
         "C": "Increase the context window size in settings",
         "D": "Skip discovery and start implementing, correcting as you go"
@@ -1323,7 +1323,7 @@
       "stem": "Claude keeps misinterpreting a data transformation you described in prose, producing subtly wrong output shapes. What most reliably communicates the transform?",
       "options": {
         "A": "Provide a concrete input-to-output example pair showing exactly what goes in and what should come out",
-        "B": "Rewrite the prose description to be longer and more detailed",
+        "B": "Rewrite the prose description of the transformation to be considerably longer and more detailed, spelling out each edge case the model keeps getting wrong",
         "C": "Raise the model's thinking effort",
         "D": "Add more constraints as bullet points"
       },
@@ -1340,7 +1340,7 @@
       "difficulty": "medium",
       "stem": "Your team wants a shared MCP server configuration checked into the repo, but each developer must supply their own GitHub token and no secret may be committed. What is the idiomatic setup?",
       "options": {
-        "A": "Commit .mcp.json with the token hard-coded and rotate it frequently",
+        "A": "Commit .mcp.json with the token hard-coded into the file and simply rotate that token frequently so that a leak has only a limited window of usefulness",
         "B": "Have each developer keep a private copy of the config outside the repo",
         "C": "Store the token in CLAUDE.md so Claude can read it",
         "D": "Commit .mcp.json using ${GITHUB_TOKEN} environment-variable expansion, so each developer supplies their own secret at runtime"
@@ -1358,7 +1358,7 @@
       "difficulty": "easy",
       "stem": "You want a coding standard that applies to every engineer working in this repository, loaded in every session. Where should it go?",
       "options": {
-        "A": "In your personal ~/.claude/CLAUDE.md",
+        "A": "Put the coding standard in your personal ~/.claude/CLAUDE.md so it travels with you, and ask each teammate to copy the same content into their own personal file",
         "B": "In a .claude/rules/ file scoped to a single glob",
         "C": "In the project's CLAUDE.md (checked into the repo) so the whole team inherits it every session",
         "D": "In a Skill that engineers invoke when they remember to"
@@ -1378,7 +1378,7 @@
       "options": {
         "A": "Universal standards to CLAUDE.md; file-path-scoped conventions to .claude/rules/ globs; task-triggered workflows to Skills",
         "B": "Universal standards to Skills; file-path conventions to CLAUDE.md; workflows to rules",
-        "C": "Everything to CLAUDE.md, since it always loads",
+        "C": "Put everything into CLAUDE.md, since it always loads and therefore guarantees that every standard, convention, and workflow is available on every single task",
         "D": "Universal standards to rules; conventions to Skills; workflows to CLAUDE.md"
       },
       "answer": "A",
@@ -1394,7 +1394,7 @@
       "difficulty": "easy",
       "stem": "A ticket says: 'rename the variable userId to accountId across the auth module and update all references.' It is unambiguous and low-risk. What is the appropriate mode?",
       "options": {
-        "A": "Plan mode, to design the rename carefully before acting",
+        "A": "Use plan mode to design the rename carefully before acting, mapping out every reference to the variable so that nothing in the auth module gets missed",
         "B": "Direct execution, since the task is well-specified and low-ambiguity",
         "C": "A multi-agent research system to investigate the rename",
         "D": "Escalate to a human architect"
@@ -1413,7 +1413,7 @@
       "stem": "A teammate proposes using a .claude/rules/ file with a glob to encode your five-step release workflow so it 'loads automatically.' Why is a rule the wrong tool, and what fits?",
       "options": {
         "A": "Rules cannot contain markdown, so use a skill",
-        "B": "Rules load for every task, so use CLAUDE.md instead",
+        "B": "Rules actually load for every task the way CLAUDE.md does, so the release workflow belongs in CLAUDE.md instead, where its always-on nature is expected",
         "C": ".claude/rules/ globs scope by file path, not by task; a multi-step workflow should be a Skill triggered by keywords",
         "D": "Rules are deprecated, so use CLAUDE.md"
       },
@@ -1430,7 +1430,7 @@
       "difficulty": "medium",
       "stem": "You configured an MCP server in .mcp.json and a teammate says it should instead go in the 'user' scope. What distinguishes the project scope (.mcp.json) from the user and local scopes?",
       "options": {
-        "A": "Project scope is only for stdio servers; user scope is only for HTTP",
+        "A": "Project scope is only for stdio servers while user scope is only for HTTP servers, so where the config lives is determined by the transport the server uses",
         "B": "Project and user scopes are identical, so the choice is cosmetic",
         "C": "Project scope disables environment-variable expansion",
         "D": "The project scope (.mcp.json) is version-controlled and shared with everyone who clones the repo, while user and local scopes are private to an individual developer"
@@ -1448,7 +1448,7 @@
       "difficulty": "medium",
       "stem": "Generated code keeps coming back in a formatting style your repo does not use, even after you describe the style in words. What most reliably fixes it?",
       "options": {
-        "A": "Describe the style rules in even more detail in the prompt",
+        "A": "Describe the repository's formatting style in even more detail in the prompt, enumerating the spacing, ordering, and naming rules that the model keeps missing",
         "B": "Show a few-shot example of a correctly-formatted snippet from your repo so the model has a concrete pattern to match",
         "C": "Increase max_tokens so there is room for correct formatting",
         "D": "Switch to a larger model"
@@ -1467,7 +1467,7 @@
       "stem": "You personally prefer verbose commit messages and want that to apply across all of your repositories, without imposing it on teammates. Where does that instruction belong?",
       "options": {
         "A": "In your user-level ~/.claude/CLAUDE.md, which applies to your sessions across projects without affecting teammates",
-        "B": "In each project's CLAUDE.md",
+        "B": "Put the verbose-commit-message preference in each project's CLAUDE.md so it applies while you work there, accepting that teammates in those repos inherit it too",
         "C": "In a .claude/rules/ file committed to every repo",
         "D": "In a project Skill"
       },
@@ -1484,7 +1484,7 @@
       "difficulty": "medium",
       "stem": "In Claude Code's subagent model, which pairing correctly describes the Explore and Plan subagents?",
       "options": {
-        "A": "Explore writes the final code; Plan runs the tests",
+        "A": "Explore writes the final implementation code while Plan runs the test suite, so the two subagents together cover building and then verifying the change",
         "B": "Explore and Plan both edit files directly in the main context",
         "C": "Explore compacts the conversation; Plan deletes stale context",
         "D": "Explore isolates verbose discovery and returns a summary; Plan designs the implementation approach"
@@ -1502,7 +1502,7 @@
       "difficulty": "medium",
       "stem": "You maintain a set of canonical example implementations that Claude should reference only when building a new API endpoint, not on every task. What is the best home for them?",
       "options": {
-        "A": "Paste them into the root CLAUDE.md so they are always available",
+        "A": "Paste the canonical example implementations into the root CLAUDE.md so they are always on hand, ensuring the model can reference them the moment they are needed",
         "B": "Put them in a .claude/rules/ file with a broad glob",
         "C": "Put them in a Skill that loads on demand when endpoint-building keywords trigger it, keeping them out of unrelated tasks",
         "D": "Keep them only in a wiki outside the repo"
