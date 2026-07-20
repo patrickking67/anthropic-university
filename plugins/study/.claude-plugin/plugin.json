@@ -1,0 +1,9 @@
+{
+  "name": "study",
+  "displayName": "Study",
+  "description": "Learn the Claude certification material: read a track's study guide, get any concept explained with citations from the official Claude Code docs, and build a study roadmap around your weak areas. Unofficial study aid.",
+  "version": "2.0.0",
+  "author": { "name": "Patrick King", "url": "https://github.com/patrickking67" },
+  "homepage": "https://github.com/patrickking67/anthropic-university",
+  "keywords": ["claude", "certification", "study", "tutor", "docs"]
+}

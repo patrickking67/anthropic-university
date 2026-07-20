@@ -34,6 +34,7 @@ const EXAM_ORDER = [
   "developer-foundations",
   "architect-foundations",
   "architect-professional",
+  "cowork-foundations",
 ];
 
 const errors = [];
@@ -299,23 +300,34 @@ function writeIndexJs(catalog) {
 }
 
 function writePluginData(examId, payload, flashcards) {
-  // Best-effort: only emit if a plugin dir exists. Keeps marketplace plugins self-contained.
+  // Best-effort: only emit if a plugin dir exists. Keeps marketplace plugins self-contained
+  // after they're copied to their install cache.
+  const fullBank = () => ({
+    examId,
+    title: payload.title,
+    meta: payload.meta,
+    domains: payload.domains,
+    questions: payload.questions,
+  });
   const targets = [
+    // exam-prep and coach serve real questions + explanations.
+    { dir: join(PLUGINS_DIR, "exam-prep", "data"), file: `${examId}.json`, content: fullBank },
+    { dir: join(PLUGINS_DIR, "coach", "data"), file: `${examId}.json`, content: fullBank },
+    // study also bundles the embedded study guide so the tutor works offline.
     {
-      dir: join(PLUGINS_DIR, "exam-coach", "data"),
+      dir: join(PLUGINS_DIR, "study", "data"),
       file: `${examId}.json`,
-      // Full self-contained bank so the coach can serve real questions + explanations
-      // even after the plugin is copied to its install cache.
       content: () => ({
         examId,
         title: payload.title,
         meta: payload.meta,
         domains: payload.domains,
+        guide: payload.guide || "",
         questions: payload.questions,
       }),
     },
     {
-      dir: join(PLUGINS_DIR, "flashcard-drill", "data"),
+      dir: join(PLUGINS_DIR, "flashcards", "data"),
       file: `${examId}.json`,
       content: () => ({ examId, title: payload.title, cards: (flashcards && flashcards.cards) || [] }),
     },
