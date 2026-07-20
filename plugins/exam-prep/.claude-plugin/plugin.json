@@ -1,0 +1,9 @@
+{
+  "name": "exam-prep",
+  "displayName": "Exam Prep",
+  "description": "Sit an interactive practice exam for a Claude certification track — one question at a time, scored on the approximate 100–1000 scale (720 to pass), with a per-domain breakdown and a review of every miss. Unofficial study aid.",
+  "version": "2.0.0",
+  "author": { "name": "Patrick King", "url": "https://github.com/patrickking67" },
+  "homepage": "https://github.com/patrickking67/anthropic-university",
+  "keywords": ["claude", "certification", "exam", "practice", "quiz"]
+}

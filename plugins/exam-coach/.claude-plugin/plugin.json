@@ -1,8 +1,0 @@
-{
-  "name": "exam-coach",
-  "description": "Interactive tutor for the Claude Certification program — adaptive quizzing, timed mock exams, concept explanations, and answer grading. Unofficial study aid.",
-  "version": "1.0.0",
-  "author": { "name": "Patrick King", "url": "https://github.com/patrickking67" },
-  "homepage": "https://github.com/patrickking67/anthropic-university",
-  "keywords": ["claude", "certification", "study", "quiz", "exam"]
-}

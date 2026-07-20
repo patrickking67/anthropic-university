@@ -1,0 +1,9 @@
+{
+  "name": "flashcards",
+  "displayName": "Flashcards",
+  "description": "Spaced-repetition flashcard drilling in the terminal for any Anthropic University track — flip, self-grade, and focus on the cards you keep missing. Unofficial study aid.",
+  "version": "2.0.0",
+  "author": { "name": "Patrick King", "url": "https://github.com/patrickking67" },
+  "homepage": "https://github.com/patrickking67/anthropic-university",
+  "keywords": ["claude", "certification", "flashcards", "drill", "memory"]
+}

@@ -1,11 +1,11 @@
 # Anthropic University
 
 > An open, **unofficial** study hub for the Claude Certification program. It provides original
-> practice exams (100 questions each), study guides, and flashcards for four tracks — Claude
-> Certified Associate (Foundations), Developer (Foundations), Architect (Foundations), and Architect
-> (Professional) — plus an interactive web app and a Claude Code plugin marketplace. All content is
-> community-authored to teach publicly documented concepts and is **not affiliated with or endorsed
-> by Anthropic**; it does not reproduce real exam questions.
+> practice exams, study guides, and flashcards for five tracks — the four Claude certifications
+> (Associate, Developer, Architect Foundations, Architect Professional) plus a Claude Cowork course
+> companion — with an interactive web app and a Claude Code plugin marketplace (shown as "Anthropic
+> University"). All content is community-authored to teach publicly documented concepts and is **not
+> affiliated with or endorsed by Anthropic**; it does not reproduce real exam questions.
 
 This file follows the llmstxt.org convention to help language models navigate the repository.
 
@@ -15,7 +15,7 @@ This file follows the llmstxt.org convention to help language models navigate th
 - [How content is structured and built](CLAUDE.md): canonical JSON → generated markdown + web app
 - [Contributing guide](CONTRIBUTING.md): question schema and authoring quality bar
 
-## Certification tracks
+## Tracks
 
 - [Associate – Foundations study guide](content/associate-foundations/study-guide.md): knowledge-worker track — entry points, prompting, evaluation, workflow integration, configuration, governance, troubleshooting
 - [Associate – Foundations practice exam](content/associate-foundations/practice-exam.md): 100 original questions with explanations
@@ -25,11 +25,13 @@ This file follows the llmstxt.org convention to help language models navigate th
 - [Architect – Foundations practice exam](content/architect-foundations/practice-exam.md): 100 original questions with explanations
 - [Architect – Professional study guide](content/architect-professional/study-guide.md): solution design, enterprise integration, safety stack, evals as acceptance criteria, stakeholder lifecycle
 - [Architect – Professional practice exam](content/architect-professional/practice-exam.md): 100 original questions with explanations
+- [Cowork – Foundations study guide](content/cowork-foundations/study-guide.md): course companion for Claude Cowork — foundations, setup/connectors/permissions, task patterns & delegation, customization (instructions/projects/skills/plugins), surfaces/safety/sharing
+- [Cowork – Foundations practice exam](content/cowork-foundations/practice-exam.md): 60 original questions with explanations
 
 ## Interactive app & tools
 
 - [Learning app (GitHub Pages)](docs/index.html): Study, Practice, timed Exam, and Flashcard modes, self-contained vanilla JS
-- [Plugin marketplace catalog](.claude-plugin/marketplace.json): learner-facing Claude Code plugins (exam-coach, flashcard-drill, cert-author)
+- [Plugin marketplace catalog](.claude-plugin/marketplace.json): learner-facing Claude Code plugins — Exam Prep, Study (bundles the Claude Code Docs MCP), Flashcards, Coach, and Author
 
 ## Canonical data
 
@@ -37,3 +39,4 @@ This file follows the llmstxt.org convention to help language models navigate th
 - [Developer question bank](content/developer-foundations/questions.json)
 - [Architect Foundations question bank](content/architect-foundations/questions.json)
 - [Architect Professional question bank](content/architect-professional/questions.json)
+- [Cowork Foundations question bank](content/cowork-foundations/questions.json)

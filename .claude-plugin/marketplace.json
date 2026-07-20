@@ -5,24 +5,49 @@
     "url": "https://github.com/patrickking67"
   },
   "metadata": {
-    "description": "Study plugins for the Claude Certification program — quizzing, timed mock exams, concept explainers, and flashcard drilling. Unofficial; not affiliated with Anthropic.",
-    "version": "1.0.0"
+    "description": "Anthropic University — an open, unofficial study hub for the Claude Certification program: an interactive exam runner, flashcard drilling, a docs-connected tutor, and a study coach. Not affiliated with, endorsed by, or produced by Anthropic.",
+    "version": "2.0.0"
   },
   "plugins": [
     {
-      "name": "exam-coach",
-      "source": "./plugins/exam-coach",
-      "description": "Interactive tutor for the Claude certifications: adaptive quizzing, timed mock exams, deep-dive concept explanations, and answer grading."
+      "name": "exam-prep",
+      "displayName": "Exam Prep",
+      "source": "./plugins/exam-prep",
+      "description": "Sit a practice exam interactively, one question at a time — scored on the approximate 100–1000 scale (720 to pass) with a per-domain breakdown and a review of every miss.",
+      "category": "learning",
+      "keywords": ["claude", "certification", "exam", "practice", "quiz"]
     },
     {
-      "name": "flashcard-drill",
-      "source": "./plugins/flashcard-drill",
-      "description": "Terminal spaced-repetition flashcard drilling for any Anthropic University track."
+      "name": "study",
+      "displayName": "Study",
+      "source": "./plugins/study",
+      "description": "Learn the material: read a track's study guide, get any concept explained with citations from the official Claude Code docs, and build a study roadmap around your weak areas.",
+      "category": "learning",
+      "keywords": ["claude", "certification", "study", "tutor", "docs"]
     },
     {
-      "name": "cert-author",
-      "source": "./plugins/cert-author",
-      "description": "Maintainer tools for contributors: author original questions, adversarially review a bank, and rebuild content."
+      "name": "flashcards",
+      "displayName": "Flashcards",
+      "source": "./plugins/flashcards",
+      "description": "Spaced-repetition flashcard drilling in the terminal for any track — flip, self-grade, and focus on the cards you keep missing.",
+      "category": "learning",
+      "keywords": ["claude", "certification", "flashcards", "drill", "memory"]
+    },
+    {
+      "name": "coach",
+      "displayName": "Coach",
+      "source": "./plugins/coach",
+      "description": "Your certification coach: pinpoint weak domains, grade your written answers against the rubric, and get a day-by-day plan to exam day.",
+      "category": "learning",
+      "keywords": ["claude", "certification", "coach", "grading", "plan"]
+    },
+    {
+      "name": "author",
+      "displayName": "Author",
+      "source": "./plugins/author",
+      "description": "Maintainer toolkit for contributors: author new original questions to the schema, adversarially review a bank for accuracy and fairness, and rebuild all generated content.",
+      "category": "authoring",
+      "keywords": ["claude", "certification", "authoring", "review", "build"]
     }
   ]
 }

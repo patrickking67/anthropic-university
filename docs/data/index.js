@@ -170,5 +170,45 @@ window.AU.index = [
       }
     ],
     "flashcardCount": 58
+  },
+  {
+    "examId": "cowork-foundations",
+    "title": "Claude Cowork – Foundations",
+    "shortTitle": "Cowork – Foundations",
+    "track": "Cowork",
+    "level": "Foundations",
+    "questionCount": 60,
+    "passScaled": 720,
+    "scaleMin": 100,
+    "scaleMax": 1000,
+    "timeMinutes": 75,
+    "domains": [
+      {
+        "id": "cowork-foundations",
+        "name": "Cowork Foundations",
+        "weight": 0.2
+      },
+      {
+        "id": "setup-permissions",
+        "name": "Setup, Connectors & Permissions",
+        "weight": 0.2
+      },
+      {
+        "id": "task-patterns",
+        "name": "Task Patterns & Delegation",
+        "weight": 0.25
+      },
+      {
+        "id": "customization",
+        "name": "Customization: Instructions, Projects, Skills & Plugins",
+        "weight": 0.2
+      },
+      {
+        "id": "surfaces-safety",
+        "name": "Surfaces, Safety & Sharing",
+        "weight": 0.15
+      }
+    ],
+    "flashcardCount": 58
   }
 ];

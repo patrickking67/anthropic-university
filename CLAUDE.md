@@ -5,17 +5,23 @@ Project context for Claude Code working in this repository. Read this before mak
 ## What this repo is
 
 **Anthropic University** is an open study hub for the **Claude Certification** program. It contains
-original practice exams, study guides, and flashcards for four certification tracks, plus an
-interactive web app (GitHub Pages) and a Claude Code plugin marketplace.
+original practice exams, study guides, and flashcards for the four certification tracks plus a
+**Claude Cowork** course companion, an interactive web app (GitHub Pages), and a Claude Code plugin
+marketplace.
 
-The four tracks (each in `content/<examId>/`):
+The tracks (each in `content/<examId>/`):
 
-| examId                   | Title                                    |
-| ------------------------ | ---------------------------------------- |
-| `associate-foundations`  | Claude Certified Associate – Foundations |
-| `developer-foundations`  | Claude Certified Developer – Foundations |
-| `architect-foundations`  | Claude Certified Architect – Foundations |
-| `architect-professional` | Claude Certified Architect – Professional |
+| examId                   | Title                                     | Kind             |
+| ------------------------ | ----------------------------------------- | ---------------- |
+| `associate-foundations`  | Claude Certified Associate – Foundations  | certification    |
+| `developer-foundations`  | Claude Certified Developer – Foundations  | certification    |
+| `architect-foundations`  | Claude Certified Architect – Foundations  | certification    |
+| `architect-professional` | Claude Certified Architect – Professional | certification    |
+| `cowork-foundations`     | Claude Cowork – Foundations               | course companion |
+
+Each certification track maps to the official CPN prep course of the same name; the Cowork track maps
+to the **Introduction to Claude Cowork** course. `meta.questionCount` varies per track (100 for the
+certification banks, 60 for the Cowork companion).
 
 ## ⚠️ Content integrity rules (read first)
 
@@ -91,10 +97,30 @@ scripts/build.mjs    validation + generation pipeline (Node stdlib, no deps)
 docs/                GitHub Pages app (static, no build step): index.html, app.js, styles.css, data/
 assets/              original SVG logo + favicon + screenshots
 .claude/skills/      maintainer skills (author-questions, review-questions, build-content, add-exam)
-.claude-plugin/      marketplace.json (learner-facing plugin catalog)
-plugins/             exam-coach, flashcard-drill, cert-author
+.claude-plugin/      marketplace.json (learner-facing plugin catalog; slug anthropic-university)
+plugins/             exam-prep · study · flashcards · coach · author (each: skills/ + agents/; study has .mcp.json)
 .github/workflows/   validate.yml (PR gate) + pages.yml (deploy on merge to main)
 ```
+
+## Plugin marketplace
+
+`.claude-plugin/marketplace.json` catalogs the learner-facing plugins. Its `name` is the required
+kebab-case slug `anthropic-university` (used for `/plugin install <p>@anthropic-university`); the
+human name **"Anthropic University"** is carried by `metadata.description` and each plugin's
+`displayName` (Claude Code ≥ 2.1.143 — marketplace `name` itself may not contain spaces). Five
+plugins, each with multiple skills (`plugins/<p>/skills/<name>/SKILL.md`) and, where useful, agents
+(`plugins/<p>/agents/*.md`):
+
+- **exam-prep** (Exam Prep) — `mock-exam` (interactive AskUserQuestion runner), `quiz`, `diagnostic`, + `proctor` agent
+- **study** (Study) — `study-guide`, `explain`, `roadmap`, + `tutor` agent; bundles the `claude-code-docs` MCP (`plugins/study/.mcp.json`)
+- **flashcards** (Flashcards) — `flashcards`, `cram`
+- **coach** (Coach) — `weak-areas`, `grade-answer`, `plan`, + `coach` agent
+- **author** (Author) — maintainer: `author-question`, `review-bank`, `build`, + `bank-reviewer` agent
+
+`scripts/build.mjs` copies self-contained data into `plugins/{exam-prep,study,coach}/data/` (full
+banks; study also embeds the guide) and `plugins/flashcards/data/` (cards) so plugins work after the
+install-cache copy. Skills read `${CLAUDE_PLUGIN_ROOT}/data/<examId>.json` (or `content/<examId>/`
+inside the repo).
 
 ## Conventions
 

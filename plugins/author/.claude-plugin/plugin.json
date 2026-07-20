@@ -1,0 +1,9 @@
+{
+  "name": "author",
+  "displayName": "Author",
+  "description": "Maintainer toolkit for Anthropic University contributors: author new original questions to the schema, adversarially review a bank for accuracy and fairness, and rebuild all generated content. Works inside the repo.",
+  "version": "2.0.0",
+  "author": { "name": "Patrick King", "url": "https://github.com/patrickking67" },
+  "homepage": "https://github.com/patrickking67/anthropic-university",
+  "keywords": ["claude", "certification", "authoring", "review", "build", "maintainer"]
+}
