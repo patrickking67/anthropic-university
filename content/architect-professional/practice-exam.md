@@ -792,7 +792,7 @@ _Why a tempting wrong answer misses:_ Rewriting in a faster language (A) optimiz
 Your primary choice is Opus, but during peak load some requests get overloaded responses even after backoff, and the feature must stay available. What is a reasonable reliability pattern?
 
 - **A.** Fall back to a capable secondary model (e.g., Sonnet) when the primary is unavailable, accepting a small quality trade-off to preserve availability
-- **B.** Duplicate every single request across three separate model providers at the same time so that at least one of them always answers it during the spike
+- **B.** Return an error to the user and ask them to try the same request again a little later, once the peak load has passed and the service has spare capacity again
 - **C.** Duplicate every single request across three separate providers at once so at least one always answers it
 - **D.** Cache one previously good answer and return that same response for all future requests during the spike
 

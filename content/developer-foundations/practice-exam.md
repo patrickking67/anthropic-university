@@ -783,7 +783,7 @@ A long-running agent conversation is approaching the context window limit. Which
 - **A.** Increasing max_tokens on each subsequent call so more of the history fits alongside the reply
 - **B.** Switching to a smaller, cheaper model partway through so the same history costs less context
 - **C.** Compaction, which condenses older conversation history into a summary to free context space
-- **D.** Setting a stop_sequence that cuts the conversation short before it reaches the window limit
+- **D.** Setting a stop_sequence that ends the conversation before it reaches the window limit
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1190,7 +1190,7 @@ Your team ships a project skill named review in .claude/skills/. You want your o
 
 - **A.** Put your version in ~/.claude/skills/review, since a personal skill of the same name wins over the project one and quietly shadows it during each and every session
 - **B.** Edit the shared project skill directly on your machine and then simply avoid ever committing that local change back to the repository
-- **C.** Give your personal skill a different name (for example review-mine) in ~/.claude/skills/, since project skills take precedence over same-named personal ones
+- **C.** Give your personal skill a different name (for example review-mine) in ~/.claude/skills/, because project skills take precedence over same-named personal ones
 - **D.** Delete the shared project skill from .claude/skills/ so that your own personal review skill is the only one that remains and gets used
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1243,7 +1243,7 @@ You want Claude Code to run a single prompt in a CI job, print the result to std
 - **A.** claude -p '<prompt>' (a.k.a. --print), which runs once and exits
 - **B.** claude --interactive '<prompt>', which opens and keeps a session running
 - **C.** claude --daemon '<prompt>', which runs the prompt in the background
-- **D.** claude chat '<prompt>', which opens the full interactive chat UI
+- **D.** claude chat '<prompt>', which opens the interactive chat UI
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -1446,7 +1446,7 @@ Reference: https://code.claude.com/docs/en/hooks
 
 Match the mechanism to the need: an always-apply house style, a workflow that should trigger only during migrations, and a convention scoped to *.sql files. Which mapping is correct?
 
-- **A.** CLAUDE.md for the always-apply style, a Skill for the migration workflow, and a .claude/rules/ glob for the *.sql convention
+- **A.** CLAUDE.md for the always-apply style, a Skill for the migration workflow, a .claude/rules/ glob for the *.sql convention
 - **B.** A single Skill for all three needs, since a skill can be keyword-scoped, path-scoped, and always-on at the same time
 - **C.** CLAUDE.md for all three needs, since one always-loaded memory file can encode every kind of rule you might want
 - **D.** .claude/rules/ for the always-apply house style, CLAUDE.md for the migration workflow, and a keyword Skill for the *.sql path convention
@@ -1602,7 +1602,7 @@ You want to move an interactive agent that calls tools each turn onto the Batche
 
 - **A.** Batch jobs do not support system prompts at all, so any agent that relies on a system prompt to steer its behavior simply cannot be run as a batch job
 - **B.** Batch processing is billed at a premium over synchronous calls, so moving the interactive agent onto the Batches API would raise its per-request cost instead of lowering it
-- **C.** Batch processing is fire-and-forget, so you cannot execute a tool mid-request and feed results back, and an interactive tool-calling loop cannot run inside a batch
+- **C.** Batch processing is fire-and-forget: you cannot execute a tool mid-request and feed results back, so an interactive tool-calling loop cannot run inside a batch
 - **D.** Batch jobs cap max_tokens at 100 tokens per request, so the agent's tool-calling turns would be truncated long before they ever had a chance to finish
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1956,7 +1956,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/streaming
 
 For a large offline re-processing job, a teammate proposes relying solely on prompt caching to cut costs. Why is that incomplete?
 
-- **A.** For big latency-tolerant bulk jobs the Batches API is the larger cost lever (~50% off) and adds async processing that caching does not
+- **A.** For big latency-tolerant bulk jobs the Batches API is the larger cost lever (~50% off) and provides async processing that caching does not
 - **B.** Prompt caching actually increases the total cost for a large bulk job rather than reducing it
 - **C.** Caching and batching simply cannot really be reasoned about separately from one another, so neither one can ever truly substitute for the other
 - **D.** Prompt caching only works on the Haiku model tier, so it is entirely irrelevant to this job
@@ -2010,7 +2010,7 @@ Your cached prefix includes a tools array and a JSON blob, and the hit rate is e
 
 - **A.** The tools array is never actually part of the cached prefix at all, so its specific contents simply cannot influence whether or not a cache hit happens on any given request you send
 - **B.** JSON is always canonicalized for you automatically before caching, so the ordering of keys or fields cannot possibly matter to the cache
-- **C.** Nondeterministic ordering, such as tools listed in a different order or unsorted JSON keys, changes the prefix bytes and breaks the cache, so serialize them deterministically
+- **C.** Nondeterministic ordering, tools listed in a different order or unsorted JSON keys, changes the prefix bytes and breaks the cache; serialize them deterministically
 - **D.** The cache ignores both the tools array and any JSON blobs entirely, so erratic hit rates from this cause are simply not possible
 
 <details><summary>Answer &amp; explanation</summary>
