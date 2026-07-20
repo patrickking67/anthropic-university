@@ -295,8 +295,8 @@ A pipeline extracts structured fields from documents and writes them straight in
 
 - **A.** Use the API's structured-output format with a JSON schema so responses are constrained to valid, typed JSON
 - **B.** Add a regex post-processor that tries to detect and repair the malformed JSON before the database write happens
-- **C.** Ask the model in the prompt to please return only valid JSON and nothing at all outside the object itself
-- **D.** Prefill the assistant turn with an opening brace to nudge the model into emitting a JSON object each time
+- **C.** Ask the model in the system prompt to please return only valid JSON and nothing at all outside the object itself
+- **D.** Prefill the assistant turn with an opening curly brace to nudge the model into emitting a JSON object each time
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -347,8 +347,8 @@ Most user questions are easy and a small model answers them well, but a minority
 
 - **A.** Send every question to Opus to be safe, accepting the higher bill in exchange for consistently top-tier answers
 - **B.** Route by difficulty — a small model handles the easy questions and escalates the hard ones to a larger model
-- **C.** Send every question to Haiku and simply accept the misses on the genuinely hard minority of the questions
-- **D.** Run every question through both a small and a large model and compare their answers before responding
+- **C.** Send every question to Haiku and simply accept the misses on the genuinely hard minority of the incoming questions
+- **D.** Run every question through both a small and a large model and compare their answers before responding to the user
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -421,7 +421,7 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overvie
 
 A loan pre-screen is mostly deterministic rule checks, but one step — assessing a free-text explanation of a past credit event — needs judgment. Which design is the best fit?
 
-- **A.** A fully autonomous agent that re-decides the entire pre-screen on each application for maximum adaptability
+- **A.** A fully autonomous agent that re-decides the entire pre-screen on each application for maximum adaptability and runtime flexibility
 - **B.** A single prompt that performs every deterministic rule check and the free-text judgment together in one pass, so the pre-screen is a single call
 - **C.** A code-controlled workflow that runs the deterministic checks in code and calls the model only for the free-text judgment step
 - **D.** A multi-agent system with one dedicated agent per rule so each check can be reasoned about independently
@@ -497,7 +497,7 @@ Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
 A single giant prompt is asked to gather data, analyze it, and write a formatted report in one shot. It mostly works, but failures are hard to diagnose and partial reruns are impossible. What change most improves reliability and observability?
 
-- **A.** Increase max_tokens and add 'think step by step' to the existing single prompt so it reasons more before answering
+- **A.** Increase max_tokens and add 'think step by step' to the existing single prompt so it reasons more before answering on each incoming question
 - **B.** Switch to a larger, more capable model while keeping the same one-shot single-prompt design, letting the extra raw capability absorb the complexity
 - **C.** Convert the whole thing into an autonomous multi-agent system that plans and runs the entire report on its own
 - **D.** Decompose it into a code-controlled workflow of discrete steps — gather, analyze, format — each independently testable and re-runnable
@@ -722,7 +722,7 @@ A research assistant aggregates three data sources. In production, one source is
 - **A.** Fail the whole request whenever any single one of the three data sources is momentarily unavailable
 - **B.** Silently omit the unavailable source and present the resulting answer to the user as though it were fully complete and well-supported
 - **C.** Proceed with the available sources and annotate which parts of the answer are missing or lower-confidence due to the outage
-- **D.** Fabricate plausible-looking data for the missing source so the answer still appears whole and confident
+- **D.** Fabricate plausible-looking data for the missing source so the answer still appears whole and confident to the end user each time
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -743,9 +743,9 @@ _Why a tempting wrong answer misses:_ Silently omitting the missing source (B) h
 
 A new model version is released. Your production system currently references a pinned version. What is the safe rollout practice?
 
-- **A.** Auto-adopt the latest model version immediately across every environment the moment that it ships
+- **A.** Auto-adopt the latest model version immediately across every environment the moment that it ships, without any testing
 - **B.** Ignore new model versions indefinitely and simply never upgrade off the current pinned baseline, avoiding any change at all
-- **C.** Let each server randomly pick among the available versions to spread the risk of any one regressing
+- **C.** Let each server randomly pick among the available versions to spread the risk of any one regressing badly in production
 - **D.** Run the new version against your eval suite, compare it to the pinned baseline, and promote only if it meets the bar
 
 <details><summary>Answer &amp; explanation</summary>
@@ -866,7 +866,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 An engineer proposes moving a real-time, tool-calling chat assistant to the Batches API to cut costs. Why is this the wrong fit?
 
 - **A.** Batch processing is actually more expensive per token than the equivalent synchronous calls would be, so it cannot possibly save this workload any money
-- **B.** The Batches API cannot make use of prompt caching at all, which erases the savings you were counting on
+- **B.** The Batches API cannot make use of prompt caching at all, which erases the savings you were counting on, so the entire cost argument here falls apart
 - **C.** Batch is asynchronous and fire-and-forget — you cannot execute a tool mid-request and continue — so it can't run an interactive tool-calling loop
 - **D.** The Batches API does not yet support the newest models the chat assistant depends on for its quality
 
@@ -892,9 +892,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/batch-processin
 A production service needs its Claude API key and several downstream service tokens. What is the accepted enterprise pattern for handling these credentials?
 
 - **A.** Load them from a secret manager or injected environment variables, never committed to source control
-- **B.** Hardcode the credentials directly into the source so that deployments stay as simple as they can be
+- **B.** Hardcode the credentials directly into the application source so that deployments stay as simple as they can be
 - **C.** Commit them to the repository inside a shared config file so that the whole team is able to run the service
-- **D.** Email the keys and tokens to each engineer who needs to run the service on their own local machine
+- **D.** Email the keys and tokens to each engineer who needs to run the service on their own local development machine
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -963,7 +963,7 @@ _Why a tempting wrong answer misses:_ Letting checkout wait on the enrichment (A
 
 An agent depends on a third-party API that occasionally has extended outages. During those outages the agent currently retries endlessly, piling up load and hanging requests. Which pattern addresses this?
 
-- **A.** Increase the per-call timeout so each retry is given more time to succeed during the downstream outage
+- **A.** Increase the per-call timeout so each retry is given more time to succeed during the downstream outage before it finally gives up
 - **B.** A circuit breaker that stops calling the failing dependency after repeated failures and fails fast or degrades until it recovers
 - **C.** Remove the agent's error handling entirely so that failing requests just hang until they eventually time out on their own during the outage
 - **D.** Switch the agent to a larger, more capable model on the theory that it can power through the outage
@@ -1110,7 +1110,7 @@ _Why a tempting wrong answer misses:_ Asking the model to self-check in the same
 An agent can call a delete-production-database tool. You must ensure it can never fire without proper authorization, regardless of what the model decides. Where should the guardrail live?
 
 - **A.** In the tool's description, which tells the model to be careful and to only ever delete the database when it is truly appropriate to
-- **B.** In the system prompt, instructing the model to never delete the production database without permission first
+- **B.** In the system prompt, instructing the model to never delete the production database without permission first from a human operator
 - **C.** In an external authorization check that the system enforces before executing the tool call, independent of the model's decision
 - **D.** In a few-shot example that shows the model correctly refusing a dangerous request to delete the database
 
@@ -1349,9 +1349,9 @@ _Why a tempting wrong answer misses:_ Broadening permissions (A) enlarges exactl
 
 Your safety layers are blocking some requests, and the security team wants to detect emerging attack patterns. What should the system do with blocked and flagged events?
 
-- **A.** Discard the blocked and flagged events immediately in order to save on storage and keep the logs small
+- **A.** Discard the blocked and flagged events immediately in order to save on storage and keep the logs small and inexpensive
 - **B.** Show the blocked and flagged events verbatim to the very end users who triggered them, all in the name of transparency
-- **C.** Count how many events get blocked but keep no detail at all about what any individual one contained
+- **C.** Count how many events get blocked but keep no detail at all about what any individual one contained, purely to save space
 - **D.** Log blocked and flagged events with context so the security team can review them and spot emerging attack patterns
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1397,9 +1397,9 @@ _Why a tempting wrong answer misses:_ Only restricting readers of the store (B) 
 
 A patient-facing assistant has a moderation gate for medically unsafe advice. If the gate service is unavailable, should the assistant answer freely or hold responses? Which principle governs a high-stakes context?
 
-- **A.** Fail open and keep answering, so that patients are never blocked from a response when the gate is down
+- **A.** Fail open and keep answering, so that patients are never blocked from a response when the gate is down for any reason at all
 - **B.** Fail closed — hold or safe-default the response when the gate is unavailable, because the cost of unsafe advice is high
-- **C.** Randomly choose whether to answer or to hold each response, on the idea that it reduces systematic bias
+- **C.** Randomly choose whether to answer or to hold each response, on the idea that it reduces systematic bias over the long run
 - **D.** Always answer regardless of the gate, but append a disclaimer telling the patient to verify the advice for themselves afterward
 
 <details><summary>Answer &amp; explanation</summary>
@@ -1470,7 +1470,7 @@ _Why a tempting wrong answer misses:_ Telling the model who is read-only in the 
 An agent has access to configuration that includes secrets. You must ensure it never reveals those secrets in a response, even if a user tries to extract them. What is the strongest safeguard?
 
 - **A.** Trust the model to refuse any extraction attempts on its own, because it is generally well-behaved and cautious about secrets by its very nature
-- **B.** Put the secrets into the system prompt but firmly instruct the model to keep them hidden from every user
+- **B.** Put the secrets into the system prompt but firmly instruct the model to keep them hidden from every user at all times, no matter what they ask
 - **C.** Add a notice in the UI telling users that they should not ask the assistant to reveal any secrets at all
 - **D.** Avoid exposing secrets to the model where possible, and add output screening that blocks known secret patterns before responses leave
 
@@ -1638,7 +1638,7 @@ _Why a tempting wrong answer misses:_ Upgrading the model (A) doesn't address th
 You need to score open-ended summaries at scale, where exact-match grading doesn't apply. What is a sound approach?
 
 - **A.** Assume that every generated summary is correct so long as it reads as grammatical, well-formed, and reasonably fluent English prose
-- **B.** Have the very same prompt that wrote each summary also grade the quality of that same output it produced
+- **B.** Have the very same prompt that wrote each summary also grade the quality of that same output it produced right afterward in one pass
 - **C.** Use an LLM-as-judge with an explicit rubric, run as a separate independent instance, and validate the judge against human labels
 - **D.** Grade only the summaries that happen to come out short enough to be skimmed quickly and by hand
 
@@ -1661,8 +1661,8 @@ _Why a tempting wrong answer misses:_ Letting the generating prompt grade its ow
 
 A team runs a thorough pre-deployment eval and considers quality assured forever. What is missing?
 
-- **A.** Nothing at all; a single strong offline eval is sufficient to assure quality for the system's entire lifetime
-- **B.** They should stop evaluating altogether once the system is launched, in order to save the cost of running evals
+- **A.** Nothing at all; a single strong offline eval is sufficient to assure quality for the system's entire lifetime with no further checks
+- **B.** They should stop evaluating altogether once the system is launched, in order to save the ongoing cost of continuously running evals
 - **C.** They should retire the offline evals entirely and instead rely only on periodic user-satisfaction surveys from then on going forward
 - **D.** Ongoing online monitoring of live traffic, since real-world inputs and model or data drift can degrade quality after launch
 
@@ -1733,8 +1733,8 @@ _Why a tempting wrong answer misses:_ Shipping because the aggregate rose (B) le
 
 Prompt and model changes currently ship without any automatic quality check. Which practice enforces the eval gate reliably?
 
-- **A.** Ask each engineer to remember to run the eval suite manually before they ship any prompt or model change
-- **B.** Run the full eval suite only once a quarter rather than on each individual change as it goes out the door
+- **A.** Ask each engineer to remember to run the eval suite manually before they ship any prompt or model change out to production
+- **B.** Run the full eval suite only once a quarter rather than on each individual change as it goes out the door, which keeps costs down
 - **C.** Trust ordinary code review on its own to catch any quality regressions that a prompt change or model change might introduce
 - **D.** Run the eval suite automatically in CI on every prompt or model change and block merges that fall below the threshold
 
@@ -1902,7 +1902,7 @@ _Why a tempting wrong answer misses:_ Assuming existing control code is enough (
 An eval rewards shorter answers, and the system learns to give terse, less-helpful responses that score well. What is the lesson for eval design?
 
 - **A.** Shorter answers are simply always better anyway, so the system learning to optimize purely for brevity is exactly the outcome that was wanted
-- **B.** Remove the eval entirely, since a metric that can be gamed like this provides no useful signal about quality at all
+- **B.** Remove the eval entirely, since a metric that can be gamed like this provides no useful signal about quality at all to anyone whatsoever
 - **C.** The metric is a proxy being gamed; align the eval with the true objective (helpfulness and correctness), not an easily-gamed surrogate
 - **D.** Increase the model size, on the assumption that a stronger model will stop gaming the length-based scoring metric
 
@@ -2191,9 +2191,9 @@ _Why a tempting wrong answer misses:_ Building all ten in parallel (C) spreads t
 
 A convention every engineer must follow — how the team wants tests written — is currently only in your personal ~/.claude/CLAUDE.md. Teammates aren't following it. Why, and what's the fix?
 
-- **A.** The convention itself is wrong and should simply be dropped rather than being shared any more widely
+- **A.** The convention itself is wrong and should simply be dropped rather than being shared any more widely across the wider engineering team
 - **B.** Personal user-level config isn't shared; move the team-wide guidance into the project's committed CLAUDE.md so everyone loads it
-- **C.** Teammates need to be reminded of the testing convention verbally each and every time that they start work
+- **C.** Teammates need to be reminded of the testing convention verbally each and every time that they start work, since nothing else enforces it
 - **D.** Put the convention into a Slack message and pin it to the team's channel so that people are always able to go refer back to it later
 
 <details><summary>Answer &amp; explanation</summary>
@@ -2315,7 +2315,7 @@ _Why a tempting wrong answer misses:_ Starting to build on 'accurate' and 'nothi
 
 The system is live. Leadership asks how you'll know it's delivering value and where to improve. What do you put in place?
 
-- **A.** Nothing further at all; shipping a successful launch is simply the natural end of the work on the project
+- **A.** Nothing further at all; shipping a successful launch is simply the natural end of the work on the project for the whole team involved
 - **B.** Only a simple running count of the total number of requests that the whole system ends up handling on each day following its public launch
 - **C.** A vanity metric, such as the raw parameter size of the model that you ended up deploying into production
 - **D.** Adoption and outcome metrics tied to the original success criteria, plus a feedback channel to capture issues and drive iteration
