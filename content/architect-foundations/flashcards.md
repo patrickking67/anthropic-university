@@ -127,7 +127,7 @@
 **A:** For task/workflow-scoped guidance that should load on demand by trigger keywords, not on every task. CLAUDE.md is for always-on universal standards.
 
 **Q:** What does 'context: fork' do in a skill?  
-**A:** Runs the skill in an isolated subagent context so its verbose output doesn't pollute the main conversation, only the result returns.
+**A:** Runs the skill in an isolated subagent with the SKILL.md as its task prompt, so verbose work stays out of the main conversation and only the result returns. Prefer it for skills with explicit steps, not vague guidelines.
 
 **Q:** What does 'allowed-tools' in skill frontmatter give you?  
 **A:** A deterministic guardrail restricting what the skill can do (e.g. read-only), stronger than a prompt instruction.

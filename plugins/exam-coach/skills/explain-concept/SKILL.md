@@ -12,17 +12,24 @@ certification.
 
 ## Approach
 
-1. **Ground it in the docs.** If the `claude-code-docs` MCP server or the `claude-api` skill is
-   available, verify specifics (parameter names, defaults, behaviors) rather than relying on memory.
-   The exam banks under `${CLAUDE_PLUGIN_ROOT}/data/*.json` (or `content/*/questions.json` in the
-   repo) are a good source of the exact study areas and the principle behind each — grep them for the
-   topic to see how it's tested.
-2. **Explain in layers:** a one-sentence definition → why it matters / when to reach for it → the key
-   rules or trade-offs → a short concrete example.
-3. **Contrast with look-alikes** the exam likes to confuse (e.g. batch API vs. prompt caching;
-   `.claude/rules/` glob-scoped rules vs. skills with trigger keywords; `context: fork` vs.
-   `/compact`; `stop_reason` "tool_use" vs. "end_turn").
-4. **End with one check question** (A–D) so the user can test understanding, then reveal and explain
-   the answer.
+1. **Ground it in the docs.** Prefer the `claude-code-docs` MCP server and the `claude-api` skill
+   over memory for parameter names, defaults, and behaviors. Grep the exam banks under
+   `${CLAUDE_PLUGIN_ROOT}/data/*.json` (or `content/*/questions.json`) for the topic to see how it
+   is tested and which principle the keyed answers encode.
+2. **Explain in layers:**
+   - one-sentence definition
+   - when to reach for it / why it matters
+   - key rules, defaults, and trade-offs
+   - a short concrete example (CLI flag, JSON snippet, or workflow step)
+3. **Contrast with look-alikes** the exam likes to confuse, for example:
+   - Batches API vs. prompt caching vs. streaming
+   - `.claude/rules/` glob-scoped rules vs. Skills with trigger keywords vs. `CLAUDE.md`
+   - `context: fork` vs. Explore subagent vs. `/compact`
+   - `stop_reason` `tool_use` vs. `end_turn` vs. `max_tokens` vs. `pause_turn`
+4. **End with one check question** (A–D, original or from the bank). Wait for their answer, then
+   reveal and explain. Offer a second check if they miss.
 
-Keep it tight and correct. If something is genuinely ambiguous or version-dependent, say so.
+## Tone
+
+Tight, correct, and practical. If something is version-dependent or ambiguous in the docs, say so
+and point to the page. Unofficial study aid — do not imply Anthropic endorsement.

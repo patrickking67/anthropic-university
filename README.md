@@ -41,13 +41,15 @@ Grounded in the official docs: [platform.claude.com/docs](https://platform.claud
 
 A self-contained web app (vanilla JS, no build step) with four modes:
 
-- **📖 Study** — read the guide for a track, jump by domain
-- **✅ Practice** — one question at a time, immediate feedback, explanations, and a study-area tag
-- **⏱️ Exam** — a timed run scored on an approximate **100–1000 scale (720 to pass)**, with a
-  per-domain breakdown and a review of everything you missed
-- **🃏 Flashcards** — flip, shuffle, and mark cards known/unknown
+- **Study** — read the guide for a track
+- **Practice** — one question at a time, immediate feedback, study-area tags, and filters for
+  unanswered / missed / flagged (keyboard: `A`–`D`, arrows, `F` to flag)
+- **Exam** — timed mock scored on an approximate **100–1000 scale (720 to pass)**, with a
+  per-domain breakdown and review filters for misses, flags, or all items
+- **Flashcards** — flip, shuffle, and mark known/unknown (`Space` to flip, `1`/`2` to grade)
 
-Progress is saved in your browser (`localStorage`). Light/dark aware.
+Progress is saved in your browser (`localStorage`). Light/dark aware. Mode nav stays available
+inside each track.
 
 - **Live site:** `https://patrickking67.github.io/anthropic-university/` *(publishes automatically
   once this branch merges to `main` — see [Deploy](#deploy--github-pages))*

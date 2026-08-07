@@ -53,6 +53,8 @@ Projects let you set durable custom instructions and attach knowledge sources, s
 
 _Why a tempting wrong answer misses:_ Re-pasting the documents into a fresh chat each time is exactly the manual repetition Projects eliminate; it is error-prone and easy to forget.
 
+Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+
 </details>
 
 ---
@@ -76,6 +78,8 @@ Programmatic, automated classification inside your own software is what the API 
 
 _Why a tempting wrong answer misses:_ claude.ai chat requires a person to paste each ticket and read each answer, which defeats the goal of automatic, in-app classification.
 
+Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+
 </details>
 
 ---
@@ -98,6 +102,8 @@ A marketer wants to brainstorm ten taglines for a campaign and refine the best f
 For a quick, one-off, conversational task with no code or reusable context, a plain claude.ai chat is the simplest fit; no extra setup is warranted.
 
 _Why a tempting wrong answer misses:_ Creating a Project with knowledge sources is unnecessary overhead for a single throwaway brainstorm that will not be repeated.
+
+Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
 </details>
 
@@ -197,6 +203,8 @@ Extended (adaptive) thinking gives Claude room to reason through intermediate st
 
 _Why a tempting wrong answer misses:_ Artifacts only change how output is displayed in a side panel; they do nothing to improve the underlying reasoning on a multi-step problem.
 
+Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+
 </details>
 
 ---
@@ -219,6 +227,8 @@ You ask Claude about a regulation that changed last week, after the model's trai
 Web search lets Claude retrieve current information from the internet, which is essential for facts that changed after its training cutoff. Reasoning alone cannot recover knowledge the model never had.
 
 _Why a tempting wrong answer misses:_ Extended thinking helps Claude reason about what it already knows; it cannot conjure facts about an event that postdates its training data.
+
+Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
 </details>
 
@@ -243,6 +253,8 @@ Artifacts render substantial, self-contained content (like a document or code) i
 
 _Why a tempting wrong answer misses:_ Web search retrieves information; it has nothing to do with displaying and iterating on a document you are co-writing.
 
+Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+
 </details>
 
 ---
@@ -265,6 +277,8 @@ A colleague sends you a 40-page PDF contract and asks for a plain-language summa
 claude.ai supports file uploads, including PDFs, so Claude can read the actual document and summarize it accurately rather than working from a paraphrase.
 
 _Why a tempting wrong answer misses:_ Describing the contract from memory strips out the exact terms Claude needs and invites an inaccurate summary of a document Claude never actually saw.
+
+Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
 </details>
 
@@ -289,6 +303,8 @@ Everything earlier in a conversation is context Claude may draw on. When accumul
 
 _Why a tempting wrong answer misses:_ Switching to a smaller model does not remove the irrelevant conversation history that is actually causing the interference.
 
+Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+
 </details>
 
 ---
@@ -312,6 +328,8 @@ Giving Claude the relevant section plus a clear, specific question focuses its a
 
 _Why a tempting wrong answer misses:_ Dumping hundreds of irrelevant pages buries the pertinent section and can dilute Claude's attention, making a precise answer harder rather than easier.
 
+Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+
 </details>
 
 ---
@@ -334,6 +352,8 @@ You find yourself pasting the same brand style guide into a new chat several tim
 When the same reference is reused repeatedly, moving it into a Project (knowledge source plus custom instructions) means every chat inherits it automatically: durable, consistent, and no re-pasting.
 
 _Why a tempting wrong answer misses:_ Continuing to paste the guide every time is the manual, error-prone repetition that a Project is designed to eliminate.
+
+Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
 </details>
 
@@ -408,6 +428,8 @@ Stating the desired output format precisely, a table with named columns, tells C
 
 _Why a tempting wrong answer misses:_ "Make it look nicer" is subjective and unspecified; Claude cannot reliably infer that you want a three-column table from it.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -430,6 +452,8 @@ You ask Claude to "write a follow-up message to the client," but its draft misse
 Claude can only account for facts it is given. Supplying the situation, the client's concern, and your goal lets Claude write a genuinely responsive message instead of a generic one.
 
 _Why a tempting wrong answer misses:_ Repeating the identical request gives Claude no new information, so the draft will keep missing the context it never received.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 
@@ -454,6 +478,8 @@ You need Claude to (1) analyze survey data, (2) draft an executive summary, and 
 Decomposing a complex, multi-part request into focused steps lets Claude give each its full attention, and lets you check the output of one step before it feeds the next.
 
 _Why a tempting wrong answer misses:_ Cramming more instructions into the same overloaded prompt keeps Claude splitting attention across three tasks at once, which is why each came out shallow.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 
@@ -503,6 +529,8 @@ Specificity is the highest-leverage prompting habit: stating the exact scope, fo
 
 _Why a tempting wrong answer misses:_ Telling Claude to "be thorough" adds no concrete direction; it does not tell Claude what to cover or how to shape the answer.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -551,6 +579,8 @@ When instructions keep being misread, a concrete input-to-output example removes
 
 _Why a tempting wrong answer misses:_ Rewording the instruction a third time is more of the same approach that already failed twice; a demonstration communicates what words could not.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -573,6 +603,8 @@ A colleague's prompts are just a one-line task with no other detail, and results
 Well-structured prompts typically combine role, a clear task, relevant context, an explicit output format, and examples. Together these remove ambiguity and steer Claude toward the intended result.
 
 _Why a tempting wrong answer misses:_ Bundling several unrelated questions together fragments Claude's focus and makes the prompt harder to answer well, not easier.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 
@@ -597,6 +629,8 @@ Positively describing the target, the tone you do want with an example, gives Cl
 
 _Why a tempting wrong answer misses:_ "Stop being formal" says what to avoid but not what to do instead, leaving Claude to guess at the tone you actually want.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -619,6 +653,8 @@ You want Claude to answer questions using your company's internal policy, which 
 Claude has no knowledge of your private, internal documents unless you supply them. Giving it the actual policy text as context is what lets it answer accurately from your source.
 
 _Why a tempting wrong answer misses:_ A bigger model has more general capability but still has never seen your internal policy; capability cannot substitute for the missing document.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 
@@ -643,6 +679,8 @@ A teammate asks Claude to "make this report better" and is frustrated by the res
 
 _Why a tempting wrong answer misses:_ Asking Claude to define "better" just outsources your own criteria; it may optimize for a dimension you did not actually care about.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -665,6 +703,8 @@ For a straightforward task like "summarize this paragraph in one sentence," Clau
 Few-shot examples pay off when a task has a particular format or tricky edge cases that instructions alone do not nail. For simple tasks Claude already handles, the extra examples add little.
 
 _Why a tempting wrong answer misses:_ Adding examples to every prompt regardless of need is wasted effort and token cost when a plain instruction already yields exactly what you want.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 
@@ -714,6 +754,8 @@ A generic draft is usually a symptom of a generic prompt. Supplying the specific
 
 _Why a tempting wrong answer misses:_ Demanding that Claude "not make mistakes" provides none of the concrete details, role, skills, or structure, that the draft is actually missing.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -736,6 +778,8 @@ Claude's answer includes three specific statistics attributed to named studies. 
 Claude can produce fluent, specific-looking citations that are inaccurate or fabricated. For anything you publish, verify each factual claim and citation against the primary source before relying on it.
 
 _Why a tempting wrong answer misses:_ A confident, specific citation is not evidence of accuracy; Claude can state a fabricated source just as fluently as a real one, so trusting it unverified is risky.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -760,6 +804,8 @@ The tone and fluency of an answer are independent of its correctness. Claude can
 
 _Why a tempting wrong answer misses:_ Absence of hedging is a stylistic feature, not a fact-check; it does not mean the claims were verified against any source.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -782,6 +828,8 @@ You ask Claude for case law supporting an argument, and it returns a citation wi
 Models can generate citations that look authoritative but do not exist, a hallucination. If a specific, checkable source cannot be found, treat it as unverified rather than assuming it is merely obscure.
 
 _Why a tempting wrong answer misses:_ Assuming the citation must be valid and blaming your search ignores a well-known failure mode: confidently formatted citations that were never real.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -807,6 +855,8 @@ Medical dosing is high-stakes and potentially irreversible, so it requires human
 
 _Why a tempting wrong answer misses:_ Following detailed-looking reasoning directly skips the professional judgment that high-stakes medical decisions require; detail is not the same as clinical validation.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -829,6 +879,8 @@ Claude generates a database command that will permanently delete every record ma
 Irreversible actions demand human verification first. Reviewing precisely what the command affects before executing catches mistakes while they are still reversible.
 
 _Why a tempting wrong answer misses:_ Assuming the command is safe because Claude produced it skips the check that matters most, exactly when the consequences cannot be undone.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -853,6 +905,8 @@ AI outputs can reflect and amplify bias. A skewed result is a signal to scrutini
 
 _Why a tempting wrong answer misses:_ Treating the model as inherently objective ignores that it can reproduce bias; a skewed shortlist warrants investigation, not blind trust.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -875,6 +929,8 @@ Claude summarizes a long report and includes a striking claim you do not remembe
 Summaries can introduce claims that are not in the source. Verifying a surprising claim against the original document guards against repeating something Claude inferred or fabricated.
 
 _Why a tempting wrong answer misses:_ Rephrasing a claim to sound less striking does nothing to establish whether it is actually supported by the source.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -899,6 +955,8 @@ Verification effort should scale with stakes. A low-stakes, easily reversible, n
 
 _Why a tempting wrong answer misses:_ A binding legal contract is high-stakes and hard to reverse; its wording needs careful human review, not a light check.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -921,6 +979,8 @@ You are about to send a client-facing analysis that Claude largely wrote, under 
 When you put your name on Claude's output, you own its accuracy. Validating the facts and reasoning before it goes out is the core responsibility of using AI in real work.
 
 _Why a tempting wrong answer misses:_ Disclaiming responsibility because "Claude wrote it" does not hold up; the person who sends the work is accountable for it.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -945,6 +1005,8 @@ Oddly precise figures with no source are a classic hallucination pattern. Precis
 
 _Why a tempting wrong answer misses:_ Precision does not signal reliability; a fabricated figure can be stated to the cent just as easily as a rounded one.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -967,6 +1029,8 @@ A quick way to gauge whether a long Claude answer is trustworthy on a topic you 
 Spot-checking verifiable claims gives real evidence about accuracy. If the checkable parts are wrong, that is a strong signal to distrust the parts you cannot immediately verify.
 
 _Why a tempting wrong answer misses:_ The number of sources mentioned says nothing about whether those sources are real or support the claims; it is easy to list citations that do not check out.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -992,6 +1056,8 @@ A binding contract is high-stakes and hard to reverse. Claude's review can assis
 
 _Why a tempting wrong answer misses:_ Treating "Claude found nothing" as proof of no legal risk over-trusts a tool that can miss issues and is not a substitute for professional legal judgment.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1014,6 +1080,8 @@ A team has used Claude for months with good results and now approves its outputs
 A good track record does not make outputs infallible. Dropping verification entirely means the inevitable errors reach production with nothing to catch them; appropriate review should remain.
 
 _Why a tempting wrong answer misses:_ Concluding review was never necessary misreads past success; the good results likely depended in part on the very checking now being removed.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1038,6 +1106,8 @@ A valid link is necessary but not sufficient. Claude may cite a real page that d
 
 _Why a tempting wrong answer misses:_ A link merely loading proves the page exists, not that its content backs the claim it was attached to.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1060,6 +1130,8 @@ Which output most clearly demands independent human verification before you act 
 Verification scales with stakes and reversibility. A tax figure you will formally submit is high-stakes, factual, and consequential if wrong, so it demands independent verification, unlike creative, low-risk outputs.
 
 _Why a tempting wrong answer misses:_ A haiku for a birthday card is low-stakes and subjective; an error carries no real consequence, so it does not require the same scrutiny.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1085,6 +1157,8 @@ The best tasks to delegate are well-specified, repeatable, and easy to verify. R
 
 _Why a tempting wrong answer misses:_ Deciding whether to lay off a team is a high-stakes judgment call with human accountability, exactly the kind of step to keep with a person.
 
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
+
 </details>
 
 ---
@@ -1108,6 +1182,8 @@ Ambiguous, high-stakes decisions that carry human accountability, like sensitive
 
 _Why a tempting wrong answer misses:_ Converting a list to a table is a mechanical, low-risk transformation that is a fine fit for delegation, unlike a consequential personnel decision.
 
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
+
 </details>
 
 ---
@@ -1130,6 +1206,8 @@ You are presenting a new Claude-assisted workflow to leadership. How should you 
 Responsible adoption depends on setting accurate expectations. Communicating both the value and the limitations, including where humans stay in the loop, builds durable trust and prevents overreliance.
 
 _Why a tempting wrong answer misses:_ Promising an error-free, fully autonomous system oversells the tool and sets up the project to lose credibility the first time it makes a mistake.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 </details>
 
@@ -1155,6 +1233,8 @@ Scaling from individual to team use means turning personal know-how into shared,
 
 _Why a tempting wrong answer misses:_ Leaving each teammate to figure it out independently reproduces the very inconsistency you are trying to solve; the knowledge stays trapped with one person.
 
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
+
 </details>
 
 ---
@@ -1177,6 +1257,8 @@ A team wants a first win with Claude. Which process is the best starting candida
 Good first candidates are frequent, well-defined, and low-risk with verifiable outputs: they deliver clear value, are easy to validate, and build confidence before tackling harder work.
 
 _Why a tempting wrong answer misses:_ Starting with the most ambiguous, high-stakes decision maximizes risk and the chance of a visible failure, undermining early adoption.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 </details>
 
@@ -1201,6 +1283,8 @@ Honest value framing pairs the real benefit (faster first drafts, less turnaroun
 
 _Why a tempting wrong answer misses:_ Claiming the output is perfect and never needs editing sets an expectation the tool cannot meet and erodes trust at the first necessary edit.
 
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
+
 </details>
 
 ---
@@ -1223,6 +1307,8 @@ In a Claude-assisted approval workflow, who should hold accountability for the f
 Accountability must rest with a person. A designated human owner who reviews and approves keeps responsibility clear and ensures a competent check on consequential outcomes.
 
 _Why a tempting wrong answer misses:_ Assigning accountability to the model is a category error; a tool cannot be answerable for a decision, so a named human must own it.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 </details>
 
@@ -1248,6 +1334,8 @@ Delegate the well-specified, low-judgment steps (formatting, drafting, templated
 
 _Why a tempting wrong answer misses:_ Delegating the hiring decision itself hands a high-stakes judgment about people to a tool, which is exactly the step that should stay human.
 
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
+
 </details>
 
 ---
@@ -1270,6 +1358,8 @@ Your Claude-assisted workflow works well, but only you know how to run it. What 
 A workflow that lives only in one person's head is fragile. Documenting the steps, prompts, and configuration lets the team operate it reliably even when the original author is unavailable.
 
 _Why a tempting wrong answer misses:_ Keeping it all in your head makes you a single point of failure; the workflow breaks the moment you are unavailable.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 </details>
 
@@ -1294,6 +1384,8 @@ Managing expectations honestly, that review is still needed and where errors ten
 
 _Why a tempting wrong answer misses:_ Agreeing to "100% accurate with no oversight" commits to a standard no AI workflow can guarantee, setting up an inevitable, trust-damaging failure.
 
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
+
 </details>
 
 ---
@@ -1316,6 +1408,8 @@ You want to show that adopting Claude improved a workflow. What is the most cred
 Credible value communication uses concrete, comparable measures (time, rework) and is honest about what still requires people. It gives stakeholders something real to evaluate.
 
 _Why a tempting wrong answer misses:_ A single dramatic anecdote is not representative and can mislead; one story does not establish that the workflow reliably improved.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 </details>
 
@@ -1340,6 +1434,8 @@ The key delegation test is the cost and reversibility of error: cheap, reversibl
 
 _Why a tempting wrong answer misses:_ Speed is a benefit, not a safety criterion; automating an irreversible, high-cost action just because it is fast invites serious harm.
 
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
+
 </details>
 
 ---
@@ -1362,6 +1458,8 @@ A colleague proposes building an elaborate automated system for a task the team 
 Solution design should fit the problem. For a rare, quick task, the overhead of an elaborate system outweighs any benefit; a simple manual approach (or a light assist) is more sensible.
 
 _Why a tempting wrong answer misses:_ Building the most automated solution regardless of need wastes effort on a twice-a-year task and creates a system to maintain for little return.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 </details>
 
@@ -1387,6 +1485,8 @@ Place human review where the stakes are: automate the low-risk, routine refunds 
 
 _Why a tempting wrong answer misses:_ Letting Claude auto-approve refunds of any size removes oversight exactly where it matters most: the large, sensitive payouts.
 
+Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
+
 </details>
 
 ---
@@ -1410,6 +1510,8 @@ A Project's custom instructions persist and apply to every conversation started 
 
 _Why a tempting wrong answer misses:_ Custom instructions are not limited to a single message; the whole point is that they persist across every chat in the Project.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+
 </details>
 
 ---
@@ -1432,6 +1534,8 @@ Your team keeps asking Claude questions about a 60-page internal handbook. What 
 Attaching the handbook as a Project knowledge source makes it available to every chat in the Project, so Claude can ground answers in it without anyone re-pasting the document.
 
 _Why a tempting wrong answer misses:_ Asking Claude to "memorize" a document once does not work; it has no persistent memory of pasted text across separate conversations.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
 
 </details>
 
@@ -1457,6 +1561,8 @@ Stale configuration is a leading cause of wrong output. Updating the Project's k
 
 _Why a tempting wrong answer misses:_ Correcting the price by hand in each chat treats the symptom repeatedly while the outdated source keeps producing the same error.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+
 </details>
 
 ---
@@ -1479,6 +1585,8 @@ What is the main advantage of putting durable context into a Project rather than
 Project context is shared by every conversation in the Project. Investing in good instructions and knowledge once raises the baseline quality and consistency of all chats that follow.
 
 _Why a tempting wrong answer misses:_ Project context is not limited to the first chat; its value is precisely that it carries into every conversation in the Project.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
 
 </details>
 
@@ -1503,6 +1611,8 @@ Durable, always-apply rules, like a standard report structure every output shoul
 
 _Why a tempting wrong answer misses:_ A one-time weather question is transient and specific to one conversation; putting it in standing instructions would wrongly apply it to every future chat.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+
 </details>
 
 ---
@@ -1525,6 +1635,8 @@ You have (1) reference documents Claude should consult and (2) rules about tone 
 Knowledge sources hold reference material Claude draws on; custom instructions hold standing behavioral rules like tone and format. Matching each to its slot keeps the Project organized and effective.
 
 _Why a tempting wrong answer misses:_ Pasting large reference documents into the instructions field misuses it; bulky reference material belongs in knowledge sources, with instructions reserved for rules.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
 
 </details>
 
@@ -1549,6 +1661,8 @@ Configuration must be kept current as facts change. Proactively updating the pol
 
 _Why a tempting wrong answer misses:_ Waiting for a complaint means Claude keeps giving wrong, outdated answers in the meantime; keeping config current is a proactive maintenance task.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+
 </details>
 
 ---
@@ -1571,6 +1685,8 @@ You do two very different kinds of work: legal contract review and social-media 
 Separate Projects keep each body of instructions and knowledge focused and relevant. Tailored context per Project prevents the legal rules and the copywriting rules from bleeding into the wrong chats.
 
 _Why a tempting wrong answer misses:_ Cramming both kinds of work into one Project mixes unrelated instructions and knowledge, diluting the context and risking cross-contamination of guidance.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
 
 </details>
 
@@ -1596,6 +1712,8 @@ Encoding the house style once in a shared Project gives every team member, new o
 
 _Why a tempting wrong answer misses:_ Having the new hire guess the style from old documents is slow and unreliable, and it leaves the knowledge uncaptured for the next new hire.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+
 </details>
 
 ---
@@ -1618,6 +1736,8 @@ What is a good practice for Project knowledge that references facts, policies, o
 Knowledge that references changeable facts drifts out of date. Reviewing and refreshing it on a regular cadence keeps every chat grounded in current information.
 
 _Why a tempting wrong answer misses:_ Claude does not automatically update your uploaded knowledge sources; keeping them current is the owner's responsibility.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
 
 </details>
 
@@ -1642,6 +1762,8 @@ Providing the actual specifications as Project knowledge grounds Claude's answer
 
 _Why a tempting wrong answer misses:_ A Project does not make guessing more confident; it replaces guessing with grounded answers by giving Claude the real reference material.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+
 </details>
 
 ---
@@ -1664,6 +1786,8 @@ A Project's custom instruction reads only "be professional," yet outputs vary wi
 Vague instructions produce varied results. Specifying the concrete structure, length, and tone gives every chat a precise target, which is what drives consistency.
 
 _Why a tempting wrong answer misses:_ Adding more vague adjectives compounds the ambiguity; "good" and "nice" give Claude no more concrete direction than "professional" did.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
 
 </details>
 
@@ -1688,6 +1812,8 @@ Divergent private copies cause drift. A single shared Project configuration acts
 
 _Why a tempting wrong answer misses:_ Letting each person refine a private version is what produced the drift; it guarantees the copies keep diverging.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+
 </details>
 
 ---
@@ -1711,6 +1837,8 @@ Conflicting documents let Claude cite the wrong one. Keeping only the current, a
 
 _Why a tempting wrong answer misses:_ "More documents is always better" is false when they conflict; extra outdated versions are exactly what causes Claude to cite the wrong policy.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+
 </details>
 
 ---
@@ -1733,6 +1861,8 @@ While debugging, you are about to paste a configuration file that includes a liv
 Live credentials should never be pasted into external tools. Redact or remove the secret first; asking a tool to "ignore" a key does not undo the exposure.
 
 _Why a tempting wrong answer misses:_ Asking Claude to "ignore" the key does nothing to protect it; the secret has still left your controlled environment the moment it is pasted.
+
+Reference: https://privacy.anthropic.com
 
 </details>
 
@@ -1758,6 +1888,8 @@ Names tied to health conditions are sensitive, regulated personal data. Responsi
 
 _Why a tempting wrong answer misses:_ Removing only the addresses still leaves names linked to health conditions, highly sensitive PII that its own governance requirements apply to.
 
+Reference: https://privacy.anthropic.com
+
 </details>
 
 ---
@@ -1780,6 +1912,8 @@ A teammate suggests pasting an unreleased, confidential product roadmap into a t
 Confidential material should only go to tools approved for it. Understanding and following the policy on where sensitive data is allowed to flow is central to responsible use.
 
 _Why a tempting wrong answer misses:_ Deleting the chat afterward does not retroactively make an unapproved destination compliant; the confidential data was already sent there.
+
+Reference: https://privacy.anthropic.com
 
 </details>
 
@@ -1804,6 +1938,8 @@ Responsible use starts with data awareness: knowing where your input goes, how i
 
 _Why a tempting wrong answer misses:_ Response speed is a convenience factor, not a governance consideration; it tells you nothing about whether the data is safe or permitted to enter the tool.
 
+Reference: https://privacy.anthropic.com
+
 </details>
 
 ---
@@ -1826,6 +1962,8 @@ Which of the following is clearly inappropriate to paste into a general AI chat 
 Secrets and sensitive personal financial data, passwords and full card numbers, must never be entered into a general tool. The other items are already public or non-sensitive.
 
 _Why a tempting wrong answer misses:_ A publicly available brochure carries no confidentiality or privacy risk, so it is not comparable to pasting passwords or card numbers.
+
+Reference: https://privacy.anthropic.com
 
 </details>
 
@@ -1850,6 +1988,8 @@ Data minimization means sharing only what the task requires. Stripping or anonym
 
 _Why a tempting wrong answer misses:_ Keeping the emails but dropping the names still transmits personal contact data that the trend analysis does not require.
 
+Reference: https://privacy.anthropic.com
+
 </details>
 
 ---
@@ -1872,6 +2012,8 @@ A user asks Claude to help them access an ex-partner's private accounts without 
 Responsible use includes refusing tasks that facilitate harm or unauthorized access to others' private data. Neither politeness nor technical feasibility makes the request acceptable.
 
 _Why a tempting wrong answer misses:_ Adding a disclaimer does not change the nature of the act; assisting unauthorized access to someone's private accounts is inappropriate regardless of a caveat.
+
+Reference: https://privacy.anthropic.com
 
 </details>
 
@@ -1896,6 +2038,8 @@ Data classification drives handling requirements. Knowing a document's class tel
 
 _Why a tempting wrong answer misses:_ Classification is about handling rules and permitted destinations, not file-size limits; it governs whether the data may be entered at all.
 
+Reference: https://privacy.anthropic.com
+
 </details>
 
 ---
@@ -1919,6 +2063,8 @@ Identifiable patient records are protected health information. The governing que
 
 _Why a tempting wrong answer misses:_ The length or formatting of the summaries is irrelevant to whether it is lawful and permitted to process identifiable patient data in that tool.
 
+Reference: https://privacy.anthropic.com
+
 </details>
 
 ---
@@ -1941,6 +2087,8 @@ Before forwarding a Claude-generated report to an external partner, you should:
 Outputs can inadvertently include sensitive details drawn from your inputs. Reviewing before external sharing prevents leaking confidential or personal information outside the organization.
 
 _Why a tempting wrong answer misses:_ Claude does not automatically know which of your internal details are confidential; assuming it stripped them is unsafe before an external send.
+
+Reference: https://privacy.anthropic.com
 
 </details>
 
@@ -1966,6 +2114,8 @@ Using unapproved, personal tools for company data routes sensitive information o
 
 _Why a tempting wrong answer misses:_ Speed is not the issue; the real concern is company data leaving approved, governed channels through an unvetted personal account.
 
+Reference: https://privacy.anthropic.com
+
 </details>
 
 ---
@@ -1988,6 +2138,8 @@ Which principle best guides how much data to include when prompting with real bu
 Data minimization, sharing only what the task needs, limits exposure of sensitive information and is a foundational responsible-use practice.
 
 _Why a tempting wrong answer misses:_ Dumping the maximum available data needlessly exposes sensitive information that the task never required, increasing risk with no benefit.
+
+Reference: https://privacy.anthropic.com
 
 </details>
 
@@ -2012,6 +2164,8 @@ For confidential work, the approved tool with a known data agreement is the resp
 
 _Why a tempting wrong answer misses:_ A free site with unknown data practices offers no assurances about retention or use, making it unsuitable for confidential data regardless of cost.
 
+Reference: https://privacy.anthropic.com
+
 </details>
 
 ---
@@ -2034,6 +2188,8 @@ An organization wants a simple rule for employees about sensitive data and AI to
 A sound rule combines approved tools, adherence to data classification, and a clear prohibition on entering secrets or regulated personal data without authorization, covering the main governance risks concisely.
 
 _Why a tempting wrong answer misses:_ Deleting the chat afterward (option C) does not reverse the exposure; the sensitive data has already left your controlled environment, so "delete later" is not real protection.
+
+Reference: https://privacy.anthropic.com
 
 </details>
 
@@ -2058,6 +2214,8 @@ Generic output usually traces back to a generic, context-poor prompt. Supplying 
 
 _Why a tempting wrong answer misses:_ Repeating the same context-free question just yields more generic answers; the missing ingredient is the specific context, not repetition.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -2080,6 +2238,8 @@ You have clearly described the output format three times and Claude still gets t
 When descriptions of a format keep missing, a worked example demonstrates the target directly. It is usually the durable fix that repeated re-describing is not.
 
 _Why a tempting wrong answer misses:_ Reformatting by hand every time treats the symptom forever; an example fixes the root cause so Claude produces the right layout itself.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 
@@ -2104,6 +2264,8 @@ Running a simple, high-volume task on the largest model wastes cost and latency.
 
 _Why a tempting wrong answer misses:_ Adding more instructions does not address the mismatch between a heavyweight model and a lightweight task; the model choice is the lever.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -2127,6 +2289,8 @@ When a task genuinely exceeds a small model's reasoning, the fix is to match the
 
 _Why a tempting wrong answer misses:_ Repeating the prompt on the same small model does not add the reasoning capacity the complex task needs; the model is the constraint.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -2149,6 +2313,8 @@ Every day you correct Claude's tone the same way in a fresh chat. What is the du
 A repeated manual correction is a signal to fix the configuration. Putting the tone rule in the Project's custom instructions solves it once for every future chat.
 
 _Why a tempting wrong answer misses:_ Correcting the tone by hand each day is the endlessly repeated one-off patch that a durable configuration change is meant to replace.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 
@@ -2199,6 +2365,8 @@ Out-of-date answers on recent topics stem from the training cutoff. Enabling web
 
 _Why a tempting wrong answer misses:_ Asking Claude to "be more current" cannot conjure post-cutoff facts it never learned; it needs a retrieval tool like web search.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -2221,6 +2389,8 @@ Two people give Claude "clean up this text" and get very different results, and 
 Ambiguous instructions like "clean up" invite divergent interpretations. Specifying exactly which changes you want removes the ambiguity and makes results predictable.
 
 _Why a tempting wrong answer misses:_ The variability is not randomness to accept; it stems from an under-specified request, which precise instructions resolve.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 
@@ -2245,6 +2415,8 @@ Isolating variables is core to troubleshooting. Reverting and reapplying changes
 
 _Why a tempting wrong answer misses:_ Changing even more at once makes the regression harder to diagnose, compounding the very problem that caused it.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -2267,6 +2439,8 @@ Claude gives wrong answers about your internal process. You are tempted to blame
 Wrong answers about private information usually mean the context is missing, not that the model is incapable. Supplying the internal documentation is the fix.
 
 _Why a tempting wrong answer misses:_ Blaming the model's core capability misdiagnoses the problem; Claude simply never received the internal information the answer depends on.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 
@@ -2291,6 +2465,8 @@ Rambling output is best fixed by explicit constraints on length and structure. C
 
 _Why a tempting wrong answer misses:_ Editing every response by hand is an endless one-off patch; setting a concrete length constraint fixes the behavior at the source.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+
 </details>
 
 ---
@@ -2313,6 +2489,8 @@ A prompt underperforms. Which sequence best reflects sound troubleshooting?
 Effective troubleshooting diagnoses the specific root cause, ambiguity, missing context, model fit, or entry point, before applying a targeted fix, rather than guessing.
 
 _Why a tempting wrong answer misses:_ Randomly tweaking wording may occasionally help by luck but teaches you nothing and often misses the actual cause, like missing context or a model mismatch.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 
@@ -2337,6 +2515,8 @@ You discover a prompt tweak that reliably fixes a recurring problem across your 
 A durable fix belongs in shared configuration. Encoding the improvement in the team's Project makes every future chat benefit automatically, instead of depending on individuals remembering to apply it.
 
 _Why a tempting wrong answer misses:_ Applying the tweak manually whenever you remember is fragile and does not help teammates; building it into shared config makes the fix permanent and universal.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
 
 </details>
 

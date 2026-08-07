@@ -194,7 +194,7 @@
     },
     {
       "front": "What does 'context: fork' do in a skill?",
-      "back": "Runs the skill in an isolated subagent context so its verbose output doesn't pollute the main conversation, only the result returns.",
+      "back": "Runs the skill in an isolated subagent with the SKILL.md as its task prompt, so verbose work stays out of the main conversation and only the result returns. Prefer it for skills with explicit steps, not vague guidelines.",
       "domain": "code-generation"
     },
     {

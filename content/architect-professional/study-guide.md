@@ -101,3 +101,12 @@ An architect's value is only realized if stakeholders can act on it and the syst
 - **Project skills take precedence** over same-named personal skills; to customize privately, use a **different name** in `~/.claude/skills` rather than editing shared config.
 
 Finally, treat the **lifecycle** as ongoing: roll out in **phases** with a pilot and feedback loop; practice **change management** (tell users what's changing, why, and how, with support ready); set expectations **honestly** about value *and* limits, naming mitigations (output screening, human review, verifiable citations) rather than denying risk; confirm delivery with a **formal acceptance review and recorded sign-off** against the agreed criteria; and after launch, measure **adoption and outcome metrics tied to the original success criteria** with a channel to drive iteration. Enablement — training, example workflows, internal champions, office hours — closes adoption gaps far better than mandates.
+
+## How to study with this bank
+
+1. For every scenario, force the altitude question first: single call → workflow → agent. Escalate only when the lower rung cannot meet the requirement.
+2. Practice Safety & Risk and Evals & Governance until you default to defense-in-depth (code gates + evals + monitoring), not prompt-only hope.
+3. Drill flashcards for stakeholder discovery, ADRs/runbooks, and handoff artifacts (evals + dashboards + shared config).
+4. Run domain-filtered practice on your weakest 20%, then a Full mock. Aim comfortably above 720 before exam day.
+
+Docs: [platform.claude.com/docs](https://platform.claude.com/docs) · [code.claude.com/docs](https://code.claude.com/docs).
