@@ -498,10 +498,10 @@
       "difficulty": "medium",
       "stem": "Your review must complete and block the merge before a PR can land. Which execution model fits, and why not the Message Batches API?",
       "options": {
-        "A": "Use the Batches API, because it is roughly 50% cheaper, and for an unattended review cost matters more than when the result arrives",
-        "B": "A synchronous, blocking review call, because a required pre-merge gate needs a result now, whereas the Batches API is asynchronous with up to a 24-hour turnaround",
-        "C": "The Batches API, because it guarantees results within one minute",
-        "D": "Either one; there is no meaningful difference for a blocking gate"
+        "A": "Use the Batches API for the ~50% cost cut; for unattended review, cost outweighs when the result arrives",
+        "B": "Run a synchronous blocking review call; a required pre-merge gate needs a result now, and Batches can take up to 24 hours",
+        "C": "Use the Batches API because it guarantees results within one minute for any workload",
+        "D": "Use either model interchangeably; there is no meaningful difference for a blocking merge gate"
       },
       "answer": "B",
       "explanationCorrect": "A blocking pre-merge gate is latency-sensitive and needs an immediate answer, so it must run synchronously; the Batches API is fire-and-forget with up to a 24-hour completion window.",
@@ -876,10 +876,10 @@
       "difficulty": "hard",
       "stem": "Your agent escalates too often on cases it could handle and misses some it should escalate. A teammate suggests escalating whenever the model's self-reported confidence drops below 0.7. What is the better approach?",
       "options": {
-        "A": "Trust the model's self-reported confidence but tune the threshold down to 0.5, so the agent escalates only when quite unsure",
-        "B": "Escalate every case to be safe",
-        "C": "Never escalate and always attempt a resolution",
-        "D": "Define explicit escalation criteria with few-shot examples of when to escalate versus resolve, since self-reported confidence is poorly calibrated"
+        "A": "Trust self-reported confidence but lower the threshold to 0.5 so the agent escalates only when quite unsure",
+        "B": "Escalate every case to a human so the agent never makes an unsupported resolution decision",
+        "C": "Never escalate and always attempt a resolution so ticket volume and handle time stay low",
+        "D": "Define explicit escalation criteria with few-shot examples; self-reported confidence is poorly calibrated"
       },
       "answer": "D",
       "explanationCorrect": "Model self-reported confidence is poorly calibrated, so explicit escalation criteria plus few-shot examples of escalate-versus-resolve produce far more reliable routing.",
@@ -966,10 +966,10 @@
       "difficulty": "medium",
       "stem": "A customer's message contains three separate concerns (a billing dispute, a shipping delay, and a feature question), and the agent redundantly re-fetches the customer record for each. What is the best approach?",
       "options": {
-        "A": "Handle only the first concern and ask the customer to resend the other two as separate messages",
-        "B": "Escalate the whole message because it is too complex",
-        "C": "Decompose the message into its three concerns, investigate them in parallel over one shared customer context, then synthesize a single reply",
-        "D": "Answer all three from memory without any lookups to save calls"
+        "A": "Handle only the first concern and ask the customer to resend the other two as separate tickets",
+        "B": "Escalate the whole multi-concern message because parallel investigation is too complex for the agent",
+        "C": "Decompose into three concerns, investigate in parallel over one shared customer context, then synthesize one reply",
+        "D": "Answer all three from memory without lookups so the agent avoids redundant tool round-trips"
       },
       "answer": "C",
       "explanationCorrect": "Decomposing the request and investigating the parts in parallel over a shared customer context avoids redundant fetches and yields one coherent, complete reply.",
@@ -1002,10 +1002,10 @@
       "difficulty": "hard",
       "stem": "Despite well-written tool descriptions, the agent almost always calls issue_refund whenever a message contains the word 'refund,' even for questions that only ask about the refund policy. What is the most likely cause?",
       "options": {
-        "A": "The system prompt contains keyword-sensitive routing instructions (e.g. 'if the user says refund, use issue_refund') that override nuanced tool selection",
-        "B": "The issue_refund tool's input schema is subtly malformed, so the model falls back to calling it defensively when refunds come up",
-        "C": "The model is too small to read tool descriptions",
-        "D": "The sampling temperature is set too high"
+        "A": "Keyword-sensitive routing in the system prompt (e.g. 'if they say refund, use issue_refund') overrides nuanced tool choice",
+        "B": "The issue_refund input schema is subtly malformed, so the model falls back to calling it whenever refunds come up",
+        "C": "The model is too small to read tool descriptions, so it ignores them and keys only on message keywords",
+        "D": "Sampling temperature is set too high, which makes the agent randomly prefer refund tools over policy tools"
       },
       "answer": "A",
       "explanationCorrect": "When descriptions are good but a keyword still forces a specific tool, the usual culprit is keyword-based routing instructions in the system prompt biasing the model toward that tool.",
@@ -1056,10 +1056,10 @@
       "difficulty": "medium",
       "stem": "One of the agent's tool calls fails with an error. How should the loop handle it so the agent can recover?",
       "options": {
-        "A": "Silently drop the failed tool_result and continue as though it had succeeded, to keep the resolution moving",
-        "B": "Return a tool_result with is_error set to true describing the failure, so the agent sees it and can adapt (retry, try another tool, or ask the user)",
-        "C": "Abort the entire conversation",
-        "D": "Remove the tool from the agent so it cannot fail again"
+        "A": "Silently drop the failed tool_result and continue as though it succeeded so the resolution keeps moving",
+        "B": "Return a tool_result with is_error: true describing the failure so the agent can retry, switch tools, or ask",
+        "C": "Abort the entire conversation immediately so a failed tool cannot cascade into a wrong customer action",
+        "D": "Remove the failing tool from the agent permanently so that particular error can never occur again"
       },
       "answer": "B",
       "explanationCorrect": "A failed tool should return a tool_result with is_error true so the model can see the failure and recover, rather than being misled into thinking the call succeeded.",
@@ -1092,10 +1092,10 @@
       "difficulty": "medium",
       "stem": "Under pressure to resolve tickets without escalating, the agent starts stating specific policies (return windows, fees) that do not appear anywhere in its knowledge base. What is the root problem and fix?",
       "options": {
-        "A": "The model is simply being too creative; lower the temperature so it stops volunteering policy it cannot support",
-        "B": "The knowledge base is too long; shorten it",
-        "C": "The agent simply needs more tools",
-        "D": "The agent is filling policy gaps by fabricating; give it explicit criteria to recognize gaps and escalate them instead of inventing policy"
+        "A": "The model is being too creative; lower temperature so it stops volunteering policy it cannot support",
+        "B": "The knowledge base is too long; shorten it so the agent can retrieve the right policy snippets faster",
+        "C": "The agent simply needs more tools so it can look up fees and return windows without inventing them",
+        "D": "The agent is fabricating to fill policy gaps; give explicit criteria to recognize gaps and escalate instead"
       },
       "answer": "D",
       "explanationCorrect": "Fabricated policy is the failure mode of not escalating genuine gaps; explicit gap-recognition criteria plus an escalation path stop the model from inventing rules.",
@@ -1110,10 +1110,10 @@
       "difficulty": "medium",
       "stem": "Refund policy caps automatic refunds at $100, above which a manager must approve. Relying on the prompt, the agent occasionally issues automatic refunds above the cap. What is the best fix?",
       "options": {
-        "A": "Add the refund cap to the system prompt in bold and restate it near the tool definition to remind the agent each turn",
-        "B": "Ask the agent to double-check the amount before issuing",
-        "C": "Enforce the cap in code so the issue_refund tool (or a wrapper) rejects or routes over-$100 amounts to manager approval, independent of the prompt",
-        "D": "Give the agent more examples of the cap during prompting"
+        "A": "Restate the $100 cap in the system prompt in bold near the tool definition so the agent sees it each turn",
+        "B": "Ask the agent to double-check the amount before issuing so it catches over-cap refunds itself",
+        "C": "Enforce the cap in code so issue_refund (or a wrapper) rejects or routes over-$100 amounts to approval",
+        "D": "Give the agent more few-shot examples of the cap during prompting so it internalizes the limit"
       },
       "answer": "C",
       "explanationCorrect": "A hard business limit should be enforced programmatically at the tool boundary so it holds regardless of whether the model follows the prompt on a given run.",
@@ -1129,9 +1129,9 @@
       "stem": "Early in a chat the customer states they are in the EU, which changes the applicable return window. Twenty turns later, after summarization, the agent quotes the US window. What prevents this?",
       "options": {
         "A": "Ask the customer to restate their region at the end of the chat so the agent can verify it before replying",
-        "B": "Record region and other durable constraints in a persistent case-facts block that survives summarization, and have the agent consult it",
-        "C": "Never summarize the conversation at all",
-        "D": "Shorten the return policy so that region no longer matters"
+        "B": "Keep region and other durable constraints in a persistent case-facts block that survives summarization",
+        "C": "Never summarize the conversation at all so early regional details cannot be lost mid-session",
+        "D": "Shorten the return policy so region no longer changes the window the agent is allowed to quote"
       },
       "answer": "B",
       "explanationCorrect": "Durable constraints like region or entitlements belong in a persistent facts block that outlives summarization, so the agent keeps applying the right rule throughout the conversation.",
@@ -1146,10 +1146,10 @@
       "difficulty": "medium",
       "stem": "Your support agent loop is driven by stop_reason, but you also want to prevent a pathological case where the model keeps requesting tools indefinitely. What is a reasonable safeguard that does not break normal operation?",
       "options": {
-        "A": "Keep stop_reason as the primary control but add a maximum-iteration cap as a backstop, surfacing a graceful message or escalation if it is ever hit",
-        "B": "Replace the stop_reason check with a fixed two-iteration limit, so the loop runs the tools once and then answers",
-        "C": "Parse the assistant text for 'done' instead of using stop_reason",
-        "D": "Remove all tools so the loop can never continue"
+        "A": "Keep stop_reason as the primary control but add a maximum-iteration cap as a safety backstop",
+        "B": "Replace the stop_reason check with a fixed two-iteration limit so the loop always stops early",
+        "C": "Parse the assistant's natural-language text for 'done' instead of reading stop_reason",
+        "D": "Remove all tools from the agent so the loop can never continue after the first response"
       },
       "answer": "A",
       "explanationCorrect": "stop_reason should remain the primary signal, with a max-iteration cap only as a backstop for pathological loops, degrading gracefully if the cap is reached.",
@@ -1200,10 +1200,10 @@
       "difficulty": "hard",
       "stem": "A skill performs a noisy, verbose repository scan whose intermediate output would clutter the main conversation, but you only need its final summary. Which frontmatter option keeps the main context clean?",
       "options": {
-        "A": "allowed-tools, restricting which tools the skill may call, limiting it to read commands",
-        "B": "argument-hint, prompting for parameters",
-        "C": "model, pinning a specific model for the skill",
-        "D": "context: fork, running the skill in an isolated subagent context so its verbose output does not pollute the main conversation"
+        "A": "allowed-tools, which restricts which tools the skill may call (for example to read-only commands)",
+        "B": "argument-hint, which only suggests parameters in the UI and does not isolate context",
+        "C": "model, which pins a specific model for the skill but still runs in the main conversation",
+        "D": "context: fork, which runs the skill in an isolated subagent so verbose output stays out of the main chat"
       },
       "answer": "D",
       "explanationCorrect": "context: fork runs a skill in an isolated subagent so its verbose intermediate output stays out of the main conversation and only the result returns.",
@@ -1254,10 +1254,10 @@
       "difficulty": "hard",
       "stem": "The project defines a skill named 'review' in .claude/skills/. You want your own personal variant with different behavior, but your personal 'review' skill never runs. Why, and what is the clean fix?",
       "options": {
-        "A": "Personal skills are disabled inside project repositories by default; switch them back on in your settings so yours will run",
-        "B": "Project skills take precedence over a same-named personal skill; give your personal skill a different name in ~/.claude/skills/ so both can coexist",
-        "C": "Move your personal skill into the project directory to override the team's",
-        "D": "Delete the project skill so yours can run"
+        "A": "Personal skills are disabled inside project repos by default; re-enable them in local settings",
+        "B": "Project skills take precedence over a same-named personal skill; rename your personal skill to coexist",
+        "C": "Move your personal skill into the project directory so it overrides the team's shared skill",
+        "D": "Delete the project skill from the repo so your personal skill is the only one that can run"
       },
       "answer": "B",
       "explanationCorrect": "A project skill wins over a same-named personal skill; to customize personally without conflict, give your personal skill a different name so both remain available.",
@@ -1596,10 +1596,10 @@
       "difficulty": "medium",
       "stem": "Which statement about the Message Batches API is accurate?",
       "options": {
-        "A": "It is asynchronous, roughly 50% cheaper, completes within 24 hours (most finish sooner), and results are correlated by custom_id and may arrive in any order",
-        "B": "It is synchronous and returns results in the exact order they were submitted, so responses line up with inputs by position",
-        "C": "It is real-time and cheaper because it skips safety checks",
-        "D": "It guarantees sub-second latency for high-volume jobs"
+        "A": "It is asynchronous, about 50% cheaper, finishes within 24 hours (often sooner), and results may return out of order",
+        "B": "It is synchronous and returns results in submission order, so responses can drive a live agent loop",
+        "C": "It is real-time and cheaper because it skips safety checks that the Messages API would apply",
+        "D": "It guarantees sub-second latency for high-volume jobs, making it ideal for blocking merge gates"
       },
       "answer": "A",
       "explanationCorrect": "Batch processing is asynchronous and about 50% cheaper, finishes within 24 hours (usually faster), and you correlate results to requests by custom_id since they return in any order.",
@@ -1686,10 +1686,10 @@
       "difficulty": "medium",
       "stem": "A team wants Claude to run an agent loop with tool execution, context management, and file/permission handling largely handled for them, rather than writing that orchestration against raw HTTP. Which choice matches?",
       "options": {
-        "A": "The raw Messages API, because it already ships with a built-in agent harness that runs the loop, executes tools, and manages context on your behalf",
-        "B": "The Claude Agent SDK, which provides the harness (loop, tool execution, context handling) on top of the API, whereas the raw Messages API gives you the primitives to build that yourself",
-        "C": "The Batches API, which manages agent loops for you",
-        "D": "There is no difference; both are identical"
+        "A": "The raw Messages API, because it already ships with a built-in harness that runs the full agent loop",
+        "B": "The Claude Agent SDK, which provides the harness (loop, tool execution, context handling) on top of the API",
+        "C": "The Batches API, which manages multi-step agent loops asynchronously at a lower unit cost",
+        "D": "Either surface interchangeably; the Messages API and Agent SDK expose the same harness behavior"
       },
       "answer": "B",
       "explanationCorrect": "The Claude Agent SDK provides the agent harness (loop, tool execution, context handling) built on the API, while the raw Messages API gives you the primitives and you assemble the loop yourself.",
@@ -1812,10 +1812,10 @@
       "difficulty": "hard",
       "stem": "On the newest models, how do you increase reasoning depth for a hard multi-step problem, given that fixed budget_tokens and sampling controls have changed?",
       "options": {
-        "A": "Set a large budget_tokens value exactly as before, since reserving more thinking tokens still controls depth",
-        "B": "Raise temperature so the model thinks harder",
-        "C": "Use adaptive thinking (thinking type \"adaptive\") and set output_config.effort (low/medium/high/xhigh/max) to steer reasoning depth",
-        "D": "There is no way to influence reasoning depth on current models"
+        "A": "Set a large budget_tokens value as before, since reserving more thinking tokens still controls depth",
+        "B": "Raise temperature so the model samples more aggressively and appears to think harder",
+        "C": "Use adaptive thinking (thinking type \"adaptive\") and set output_config.effort (low through max)",
+        "D": "There is no supported way to influence reasoning depth on current Claude models"
       },
       "answer": "C",
       "explanationCorrect": "Current models use adaptive thinking (replacing fixed budget_tokens) with an effort setting from low through max to control reasoning depth; temperature is not the lever.",

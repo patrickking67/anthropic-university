@@ -103,3 +103,12 @@ Troubleshooting is **root-cause diagnosis, then a durable fix.** When an output 
 - **Ambiguous instruction ("clean up this") →** specify exactly what to change.
 
 Two meta-skills: **isolate variables** (if an edit made things worse, revert and reintroduce changes one at a time), and **fix durably, not once.** A correction you repeat every day, or a tweak that reliably helps the whole team, belongs in the **shared Project configuration** so every future chat benefits automatically — not in a one-off patch you have to remember to apply.
+
+## How to study with this bank
+
+1. Read each domain section above once, then practice that domain until you can explain *why* the keyed answer wins.
+2. Drill the flashcards for entry points, model choice, Projects vs. chat, and verification rules.
+3. Take a Quick mock exam (20 questions). Review every miss by domain, then re-practice the weakest two.
+4. Sit a Full mock only when Quick scores sit comfortably above the approximate pass mark (720 on the 100–1000 scale).
+
+Official docs to keep open: [platform.claude.com/docs](https://platform.claude.com/docs) · [code.claude.com/docs](https://code.claude.com/docs).
