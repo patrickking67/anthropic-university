@@ -106,6 +106,8 @@ With a large, frequently changing corpus where each query needs only a few passa
 
 _Why a tempting wrong answer misses:_ Loading all 40,000 pages into every request (A) is expensive, dilutes attention across irrelevant material, and must be rebuilt as the corpus changes; retrieval targets just what each question needs.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -156,6 +158,8 @@ Projects give non-technical users persistent custom instructions plus attached k
 
 _Why a tempting wrong answer misses:_ Building on the API (A) forces the non-technical team to own a codebase they can't maintain; a Project delivers the same persistence with no engineering.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -179,6 +183,8 @@ An engineering team needs to make a sweeping, repository-wide code change across
 Repository-wide, tool-using code work with test execution is precisely what Claude Code is for — it has direct file and shell access in the repo. The entry point should match the workflow.
 
 _Why a tempting wrong answer misses:_ Uploading a zip to a Project (A) gives read-only knowledge, not the ability to edit files and run tests across the repo, so it can't perform the migration.
+
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
 
 </details>
 
@@ -282,6 +288,8 @@ When a long session nears the context limit but earlier context still binds late
 
 _Why a tempting wrong answer misses:_ Blind truncation (A) drops whichever old messages happen to be first, which may include decisions that still constrain later steps; a preserving summary keeps them.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -384,6 +392,8 @@ An ambiguous business ask must be scoped into concrete requirements — outcomes
 
 _Why a tempting wrong answer misses:_ Jumping straight to a multi-agent prototype (A) commits to complexity before anyone knows whether the task even needs an agent, risking rework once the real requirements surface.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -459,6 +469,8 @@ A team wants an assistant that answers questions about a huge monorepo. They not
 Even with a very large context window, retrieving just the relevant files per question is more accurate and far cheaper than reloading the whole repo every time; large context is a capability, not a license to ignore cost and attention dilution.
 
 _Why a tempting wrong answer misses:_ A one-time whole-repo summary (C) loses the specific detail needed to answer precise code questions; targeted retrieval keeps the exact relevant code in view.
+
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
 
 </details>
 
@@ -562,6 +574,8 @@ Transient 429/529 responses should be retried with exponential backoff and jitte
 
 _Why a tempting wrong answer misses:_ A tight immediate retry loop (A) amplifies load during the exact moment the service is overloaded, making the condition worse; backoff with jitter spreads retries out.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
 </details>
 
 ---
@@ -585,6 +599,8 @@ An agent calls a charge-card tool. Network retries occasionally cause the same c
 Idempotency keys let the payment system recognize and collapse duplicate submissions of the same operation, so retries are safe. Side-effecting actions must be made idempotent, not merely retry-free.
 
 _Why a tempting wrong answer misses:_ Removing retries (A) trades one failure mode (double charge) for another (dropped charges on transient errors); idempotency keeps retries safe instead of abandoning them.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 
 </details>
 
@@ -636,6 +652,8 @@ Routing high-impact actions to a human while auto-approving low-cost reversible 
 
 _Why a tempting wrong answer misses:_ Fully autonomous payouts with a monthly audit (A) catch errors only after the money is gone; for irreversible actions the gate must be before execution.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
 </details>
 
 ---
@@ -659,6 +677,8 @@ A European client's contract requires that regulated customer data never be proc
 A data-residency obligation constrains where processing may occur, so the architecture must use a deployment/region that keeps data in-jurisdiction. Compliance requirements drive the deployment topology.
 
 _Why a tempting wrong answer misses:_ Encryption in transit (C) protects data on the wire but doesn't satisfy a residency requirement about where processing physically happens; the jurisdiction of processing is the binding constraint.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 
 </details>
 
@@ -684,6 +704,8 @@ Auditability requires logging the full decision trail — inputs, model and prom
 
 _Why a tempting wrong answer misses:_ Storing only the final recommendation (A) makes it impossible to explain why a decision was made, which is exactly what auditors need to see.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
 </details>
 
 ---
@@ -707,6 +729,8 @@ You are standing up monitoring for a Claude-powered production service. Beyond g
 Model-layer health and economics are captured by token usage, latency percentiles, error/refusal rates, cache-hit rate, and ongoing eval pass rate — these expose cost drift, degradation, and quality regressions. Instrument the model layer, not just the host.
 
 _Why a tempting wrong answer misses:_ Host CPU and memory (A) say nothing about model cost, quality, or refusal behavior — the service can be 'up' while quality or spend quietly degrades.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 
 </details>
 
@@ -732,6 +756,8 @@ Graceful degradation with transparency — return what you have and mark the gap
 
 _Why a tempting wrong answer misses:_ Silently omitting the missing source (B) hides a real coverage gap and lets users over-trust an incomplete answer; the outage must be surfaced, not concealed.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
 </details>
 
 ---
@@ -755,6 +781,8 @@ A new model version is released. Your production system currently references a p
 Treat a model swap like any change: gate it on your eval suite against the pinned baseline and promote only if it holds or improves. Pinning gives reproducibility; the eval gate governs the upgrade.
 
 _Why a tempting wrong answer misses:_ Auto-adopting the latest everywhere (A) ships an unvalidated change straight to users and can silently regress behaviors your evals would have caught.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 
 </details>
 
@@ -780,6 +808,8 @@ Productionizing a POC means adding the operational layer it lacks — secure sec
 
 _Why a tempting wrong answer misses:_ Rewriting in a faster language (A) optimizes something that isn't the problem; an insecure, unmonitored service with a hardcoded key isn't production-ready regardless of language speed.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
 </details>
 
 ---
@@ -804,6 +834,8 @@ A graceful fallback to a capable secondary model preserves availability when the
 
 _Why a tempting wrong answer misses:_ Returning an error and asking the user to retry (B) simply drops availability during exactly the peaks when the feature is most in demand; a fallback keeps it serving.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
 </details>
 
 ---
@@ -827,6 +859,8 @@ A multi-tenant SaaS must attribute model spend to each customer for billing. Wha
 Attaching a per-tenant identifier to each request and summing reported token usage gives accurate, defensible cost attribution. Instrument spend at the request level with the identifier you bill on.
 
 _Why a tempting wrong answer misses:_ Estimating from login count (A) has no reliable relationship to actual token consumption, so bills won't match cost; measure the tokens directly per tenant.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 
 </details>
 
@@ -904,6 +938,8 @@ Credentials belong in a secret manager or injected environment variables, kept o
 
 _Why a tempting wrong answer misses:_ Committing secrets to the repo (C) exposes them to everyone with read access and to history forever; secrets must never live in version control.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
 </details>
 
 ---
@@ -927,6 +963,8 @@ A request must gather four independent pieces of information, each a separate mo
 Independent calls with no data dependency should run concurrently; parallelizing collapses their latency from the sum to roughly the slowest one. Look for independence before optimizing anything else.
 
 _Why a tempting wrong answer misses:_ A larger model per call (C) doesn't address the real cost — running four independent calls back-to-back — and would likely increase each call's latency.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 
 </details>
 
@@ -952,6 +990,8 @@ A non-critical enrichment must never block a critical path: bound it with a time
 
 _Why a tempting wrong answer misses:_ Letting checkout wait on the enrichment (A) couples a critical business flow to an optional call's latency, so a slow model call can break checkout — the opposite of the goal.
 
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
 </details>
 
 ---
@@ -975,6 +1015,8 @@ An agent depends on a third-party API that occasionally has extended outages. Du
 A circuit breaker detects sustained downstream failure and stops hammering the dependency, failing fast or degrading until it recovers — protecting the system from cascading hangs. Bound retries and trip the breaker on sustained failure.
 
 _Why a tempting wrong answer misses:_ A longer timeout (A) makes each hung call last longer during an outage, worsening resource exhaustion rather than protecting the system.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 
 </details>
 
@@ -1026,6 +1068,8 @@ Safety is layered: independent input screening, output screening, and tool-call 
 
 _Why a tempting wrong answer misses:_ Strengthening the wording of the single instruction (D) still leaves exactly one control; a prompt injection that defeats it defeats everything, which is what layering prevents.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
 </details>
 
 ---
@@ -1049,6 +1093,8 @@ A safety classifier that must approve a high-impact tool call occasionally times
 For high-impact, irreversible actions you fail closed: on uncertainty or classifier failure, deny or hold rather than let a possibly-unsafe action through. The safe default is 'no' when you can't confirm 'yes'.
 
 _Why a tempting wrong answer misses:_ Proceeding to protect availability (A) fails open, allowing exactly the unsafe irreversible actions the control exists to stop.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
@@ -1074,6 +1120,8 @@ Screening malicious content, injection attempts, and unauthorized PII belongs at
 
 _Why a tempting wrong answer misses:_ A post-response cleanup pass (B) runs after the model has already processed the malicious input, which is too late to prevent injection from influencing the model's behavior.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
 </details>
 
 ---
@@ -1097,6 +1145,8 @@ Even with good input controls, you need to stop unsafe, incorrect, or PII-leakin
 Output screening sits between the model and its consumers, catching unsafe, incorrect, or PII-leaking responses before they land. It's the second half of the input/output screening pair.
 
 _Why a tempting wrong answer misses:_ Asking the model to self-check in the same call (C) is not an independent control — the same failure that produced the bad output can also pass its own self-check; screening must be out of band.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
@@ -1122,6 +1172,8 @@ High-impact, irreversible tool calls must be gated by an external authorization 
 
 _Why a tempting wrong answer misses:_ A cautionary tool description (A) only influences the model's choice; a prompt-injected or jailbroken model can still emit the call, so the real gate must be external and deterministic.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
 </details>
 
 ---
@@ -1145,6 +1197,8 @@ An agent summarizes user-uploaded documents. One document contains text saying '
 Retrieved and tool content is untrusted input and must never act as privileged instructions; combined with least-privilege tools, the injected 'email the data' command has no capability to execute. Isolate data from instructions and constrain what the agent can do.
 
 _Why a tempting wrong answer misses:_ A prompt line saying to ignore malicious instructions (B) is itself just another instruction an injection can try to override; the durable defense is architectural (untrusted-data boundary plus least privilege), not another prompt.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
@@ -1170,6 +1224,8 @@ Data minimization: if the task doesn't need the PII, redact or tokenize it befor
 
 _Why a tempting wrong answer misses:_ Removing PII from logs only (C) still sends unnecessary personal data to the model and widens exposure; minimize at the source, before the model sees it.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
 </details>
 
 ---
@@ -1193,6 +1249,8 @@ A reviewer asks you to place safety controls so that a single compromised compon
 Separating enforcement from the model means compromising or jailbreaking the model doesn't by itself authorize a dangerous action — the independent policy layer still has to approve it. Controls are placed so no single failure opens the system.
 
 _Why a tempting wrong answer misses:_ Centralizing all safety logic in the prompt (A) collapses the layers into one component, so a single prompt injection defeats every 'control' at once.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
@@ -1218,6 +1276,8 @@ Input and output screening cover different surfaces: input screening can't see P
 
 _Why a tempting wrong answer misses:_ Claiming input screening also catches output PII (B) misunderstands where each control sits — they inspect different points in the flow and neither substitutes for the other.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
 </details>
 
 ---
@@ -1241,6 +1301,8 @@ A proposed design asks the model itself to decide whether an incoming instructio
 A model-judged injection check lives in the same channel the attacker controls, so the malicious input can also steer the judgment; robust controls are enforced outside the model's influence. Don't place a guardrail where the attacker can reach it.
 
 _Why a tempting wrong answer misses:_ Speed (A) isn't the concern; the problem is the trust boundary — the attacker-controlled input is judging itself, which is architecturally unsound regardless of latency.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
@@ -1266,6 +1328,8 @@ Least privilege at the interface: give the agent a narrow read-only tool so the 
 
 _Why a tempting wrong answer misses:_ A prompt instruction to only read files (A) leaves the dangerous capability present, so a prompt injection or model error can still trigger deletion or exfiltration; the narrow tool makes that impossible.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
 </details>
 
 ---
@@ -1289,6 +1353,8 @@ An agent can trigger a bulk email to all customers — irreversible once sent. L
 Irreversible, high-impact actions warrant a human approval gate before execution; you can't undo a blast to all customers, so review must precede the action. Reversibility and impact drive the gate.
 
 _Why a tempting wrong answer misses:_ Logging the send afterward (B) documents the mistake but can't prevent it; for irreversible actions the control must come before execution, not after.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
@@ -1314,6 +1380,8 @@ Red-teaming — deliberately attacking your own system to find bypasses before a
 
 _Why a tempting wrong answer misses:_ Assuming built-in safety suffices (D) skips verification entirely; system-level controls and their configuration still need probing for gaps that model training alone won't cover.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
 </details>
 
 ---
@@ -1337,6 +1405,8 @@ An internal agent runs with broad permissions to be helpful. A prompt injection 
 The confused-deputy risk shrinks when the agent holds only minimal permissions and any high-impact action still requires human approval — least privilege plus a gate limits what a hijacked agent can do. Constrain capability and gate impact.
 
 _Why a tempting wrong answer misses:_ Broadening permissions (A) enlarges exactly the blast radius a confused deputy can cause; least privilege moves in the opposite, safer direction.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
@@ -1362,6 +1432,8 @@ Capturing blocked and flagged events with context turns your safety layer into t
 
 _Why a tempting wrong answer misses:_ Discarding blocked events (A) throws away the signal needed to detect and respond to evolving attacks; that history should be retained for review.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
 </details>
 
 ---
@@ -1385,6 +1457,8 @@ A model's responses feed an analytics store that many employees can query. Occas
 Redacting or screening the output before it is persisted to a broadly-readable store prevents PII from ever landing where many can see it. Place the control at the boundary where the data crosses into the wider system.
 
 _Why a tempting wrong answer misses:_ Only restricting readers of the store (B) still writes PII into a widely-accessible system and depends entirely on perfect access control; screening before the write removes the sensitive data itself.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
@@ -1410,6 +1484,8 @@ In a high-stakes context where the cost of an unsafe answer is severe, the gate 
 
 _Why a tempting wrong answer misses:_ Failing open (A) keeps availability but lets potentially unsafe medical advice through exactly when the safety check isn't working — the wrong trade in a high-stakes setting.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
 </details>
 
 ---
@@ -1433,6 +1509,8 @@ An agent concatenates its system instructions and untrusted user-supplied text i
 Maintaining a clear structural boundary — privileged instructions separate from clearly-marked untrusted data — reduces the model's tendency to obey injected commands hidden in the data. Separate the trust levels explicitly.
 
 _Why a tempting wrong answer misses:_ Putting user text first and emphasizing it (B) makes the injected content more influential, increasing the odds the model follows it — the opposite of what's needed.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
@@ -1458,6 +1536,8 @@ Per-request authorization checks the caller's identity and role before executing
 
 _Why a tempting wrong answer misses:_ Telling the model who is read-only in the prompt (D) makes enforcement depend on the model honoring an instruction that a clever request or injection can subvert; the check must be system-enforced against identity.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
 </details>
 
 ---
@@ -1481,6 +1561,8 @@ An agent has access to configuration that includes secrets. You must ensure it n
 The strongest posture is to not give the model the secret in the first place where avoidable, plus output screening that catches secret-shaped strings before they leave. Minimize exposure and add an independent egress check.
 
 _Why a tempting wrong answer misses:_ Placing secrets in the system prompt and asking the model to hide them (B) still exposes them to extraction attempts; the durable fix is to not expose them and to screen outputs.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
@@ -1506,6 +1588,8 @@ Evals are the acceptance gate: a model swap ships only if it holds or improves t
 
 _Why a tempting wrong answer misses:_ A few eyeballed spot-checks (C) don't cover the failure modes the eval set does, so they can pass while real regressions slip through; gate on the suite, not vibes.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1529,6 +1613,8 @@ Before building an extraction feature, the team wants an objective definition of
 Acceptance criteria should be an eval set with representative inputs, graded expectations, and a pass threshold — an objective, testable definition of done built before the system. Evals define 'good enough' up front.
 
 _Why a tempting wrong answer misses:_ Choosing the largest model up front (C) doesn't define success or let you measure it; without an eval set you can't tell whether any model actually meets the bar.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1554,6 +1640,8 @@ Human-in-the-loop routing is governed by confidence, reversibility, and cost of 
 
 _Why a tempting wrong answer misses:_ Sending everything to a human (B) wastes reviewer capacity on trivial reversible actions and doesn't scale; the point of routing is to reserve humans for the consequential cases.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1577,6 +1665,8 @@ A compliance officer asks how each regulatory obligation is satisfied in your sy
 Each obligation maps to a specific named control, an accountable owner, and an evidence artifact (log, eval report, sign-off) — that triple is what makes compliance auditable. Anything vaguer can't be verified.
 
 _Why a tempting wrong answer misses:_ A general 'the system is secure' claim (A) names no control, owner, or evidence, so an auditor can't verify the obligation is actually met; specificity is the point.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1602,6 +1692,8 @@ An eval set earns trust by covering representative and edge cases and the actual
 
 _Why a tempting wrong answer misses:_ Keeping only examples the system already passes (C) guarantees a green board that tells you nothing about the failures users actually hit; you must include the hard, failing cases.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1625,6 +1717,8 @@ After many prompt tweaks, your eval score is near perfect, but production qualit
 Tuning against the same examples you score on overfits the prompt to them; a held-out set the prompt was never tuned on reveals real generalization. Separate the tuning set from the acceptance set.
 
 _Why a tempting wrong answer misses:_ Upgrading the model (A) doesn't address the measurement flaw — an inflated score from overfitting will still mislead you on any model until you evaluate on unseen data.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1650,6 +1744,8 @@ For open-ended quality, an LLM judge guided by an explicit rubric — run indepe
 
 _Why a tempting wrong answer misses:_ Letting the generating prompt grade its own output (B) invites confirmation bias — it tends to approve its own work; the judge should be independent of the generator.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1673,6 +1769,8 @@ A team runs a thorough pre-deployment eval and considers quality assured forever
 Offline evals validate before deploy, but live inputs drift and dependencies change, so you also need online monitoring to catch post-launch regressions. Both offline gates and online telemetry are required.
 
 _Why a tempting wrong answer misses:_ Treating a one-time offline eval as sufficient forever (A) ignores drift in inputs, data, and model versions that only production monitoring will reveal.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1698,6 +1796,8 @@ Routing weighs reversibility and cost of error, not confidence alone: a cheap re
 
 _Why a tempting wrong answer misses:_ Auto-executing both because confidence is equal (A) ignores that the credit's higher cost and lower reversibility change the risk profile entirely.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1721,6 +1821,8 @@ A prompt change raises the overall eval score, but a critical safety-related sli
 Aggregate improvement can mask a regression on a critical subset; when a safety-critical slice worsens, block the change until it's fixed. Don't average away failures that matter most.
 
 _Why a tempting wrong answer misses:_ Shipping because the aggregate rose (B) lets a safety-critical regression through under cover of the mean — exactly the failure a per-slice view is meant to catch.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1746,6 +1848,8 @@ Wiring the eval suite into CI so it runs on every prompt/model change and blocks
 
 _Why a tempting wrong answer misses:_ Relying on engineers to remember manual runs (A) makes the gate optional in practice, so a rushed change ships unevaluated; automation removes the human-memory failure mode.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1769,6 +1873,8 @@ The model is highly confident about an action, but the action is irreversible an
 In the routing policy, irreversibility and high cost of error dominate: a confident-but-irreversible, high-cost action still goes to a human, because the downside of a rare miss is severe and permanent. Confidence alone can't authorize it.
 
 _Why a tempting wrong answer misses:_ Auto-executing on high confidence (A) ignores that even a small error rate on an irreversible, high-cost action produces unacceptable outcomes you can't undo.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1794,6 +1900,8 @@ Thresholds should be set from measured outcomes at each confidence level on eval
 
 _Why a tempting wrong answer misses:_ Taking self-reported confidence at face value (B) can auto-execute wrong actions the model was overconfident about; you need the empirical relationship between stated confidence and actual correctness.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1817,6 +1925,8 @@ An auditor asks you to demonstrate that your model met its acceptance criteria a
 A retained, versioned eval report with results and a documented sign-off is the evidence artifact that proves the acceptance criteria were met at release. Evidence must be concrete, versioned, and attributable.
 
 _Why a tempting wrong answer misses:_ The current production dashboard alone (C) shows present-day metrics, not that the specific past release passed its acceptance criteria; auditors need the retained record for that version.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1842,6 +1952,8 @@ Turning discovered production failures into new eval cases prevents regressions 
 
 _Why a tempting wrong answer misses:_ Only patching the prompt (A) fixes today's instance but leaves the suite blind to the failure class, so a future change can silently reintroduce it.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1865,6 +1977,8 @@ You have a promising new architecture that passed offline evals. How do you roll
 A staged or shadow rollout compares the new system against the baseline on real traffic and limits blast radius, so problems surface small. Offline evals gate entry; graduated rollout with monitoring de-risks the rest.
 
 _Why a tempting wrong answer misses:_ Replacing everything at once (A) maximizes blast radius if the new architecture misbehaves on live inputs the offline evals didn't capture; graduated rollout contains that risk.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1890,6 +2004,8 @@ An unowned control drifts, breaks, or goes unverified because no one is accounta
 
 _Why a tempting wrong answer misses:_ Assuming existing control code is enough (B) ignores that controls need someone to operate, monitor, and produce evidence for them; code alone doesn't stay healthy on its own.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1913,6 +2029,8 @@ An eval rewards shorter answers, and the system learns to give terse, less-helpf
 When a system optimizes a proxy metric at the expense of the real goal, the eval is measuring the wrong thing; align the metric with the true objective so improving the score means improving what you care about. Guard against proxy-gaming.
 
 _Why a tempting wrong answer misses:_ Concluding shorter is always better (A) mistakes the flawed proxy for the goal — brevity was a surrogate for clarity, and optimizing it directly produced worse, terser answers.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1938,6 +2056,8 @@ The threshold is a risk/throughput trade-off best set from eval data — accept 
 
 _Why a tempting wrong answer misses:_ Clearing the queue fastest regardless of risk (A) optimizes throughput while letting risky cases auto-approve — it ignores the cost-of-error side of the trade the threshold is meant to balance.
 
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
 </details>
 
 ---
@@ -1961,6 +2081,8 @@ A regulator may later ask why the system made a specific automated decision abou
 Explainability after the fact requires per-decision traceability: the inputs, the model/prompt version, and the routing outcome recorded so any decision can be reconstructed and justified. Governance depends on this trail.
 
 _Why a tempting wrong answer misses:_ Regenerating a fresh answer on demand (A) doesn't reproduce the original decision's basis — inputs, versions, and context may differ — so it can't explain what actually happened at the time.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
@@ -1986,6 +2108,8 @@ Effective discovery starts with the business outcome, how success is measured, c
 
 _Why a tempting wrong answer misses:_ Leading with model and context-window choices (A) is premature — without the outcome and constraints you can't tell which model, architecture, or guardrails the problem even needs.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -2010,6 +2134,8 @@ Decision-makers need the trade-offs expressed in terms they act on — cost, lat
 
 _Why a tempting wrong answer misses:_ A deep dive on token counts and parameters (B) is unintelligible to non-technical executives and doesn't help them weigh the decision; frame it in business impact instead.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -2033,6 +2159,8 @@ You are the only person who knows how the deployed system is configured and oper
 A survivable handoff means the operating knowledge lives in versioned docs, runbooks, and shared config the team can find and use — not in one person's memory or a stale artifact. Institutionalize the knowledge.
 
 _Why a tempting wrong answer misses:_ A one-time email (A) is quickly lost, unversioned, and can't be maintained as the system changes; durable runbooks and shared config in the repo stay current and discoverable.
+
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
 
 </details>
 
@@ -2084,6 +2212,8 @@ A phased rollout with a pilot surfaces real issues and builds advocates before s
 
 _Why a tempting wrong answer misses:_ A day-one mandatory switch for everyone (B) exposes the whole org to undiscovered issues at once and can sour adoption if early experiences are rough; piloting de-risks the expansion.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -2107,6 +2237,8 @@ You are writing the operational runbook for the team that will support the syste
 An operational runbook is most useful when it maps symptoms to causes and gives concrete remediation, rollback, and escalation steps — what an on-call responder needs under pressure. Make it actionable for incidents.
 
 _Why a tempting wrong answer misses:_ A full history of design decisions (B) is useful background but doesn't help someone resolve a live incident quickly; the runbook needs symptom-to-fix guidance.
+
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
 
 </details>
 
@@ -2132,6 +2264,8 @@ Responsible stakeholder communication states value and limits honestly, includin
 
 _Why a tempting wrong answer misses:_ Claiming near-perfection to keep enthusiasm (A) sets stakeholders up for broken trust the first time the system is confidently wrong; honesty about limits is what sustains support.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -2156,6 +2290,8 @@ Architecture Decision Records preserve the significant choices, the alternatives
 
 _Why a tempting wrong answer misses:_ Trusting team memory (A) fails as people rotate off and details fade; ADRs make the rationale durable and discoverable independent of who's still around.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -2179,6 +2315,8 @@ A business unit brings ten possible AI use cases and wants them all now. How do 
 Prioritizing on value versus effort/feasibility and risk focuses limited capacity on the cases most likely to pay off soon and build momentum. Sequence by impact and feasibility, not by volume of requests or opinions.
 
 _Why a tempting wrong answer misses:_ Building all ten in parallel (C) spreads the team thin and delays every outcome; disciplined prioritization delivers early wins that fund the rest.
+
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
 
 </details>
 
@@ -2256,6 +2394,8 @@ A team can only safely evolve a system if they can measure it: the eval suite le
 
 _Why a tempting wrong answer misses:_ Repository access alone (A) lets them change code but not tell whether a change is safe or whether production is healthy; the evals and monitoring are what make evolution safe.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -2279,6 +2419,8 @@ An update will change how end users interact with an existing internal tool. Wha
 Adoption goes smoothly when users know what's changing, why, and how to use it, with support available — change management is communication, not just deployment. Prepare the people, not only the system.
 
 _Why a tempting wrong answer misses:_ Deploying silently (A) leaves users confused and frustrated, driving support load and resistance; proactive communication and support smooth the transition.
+
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
 
 </details>
 
@@ -2304,6 +2446,8 @@ Vague goals must be converted into measurable acceptance criteria and explicit d
 
 _Why a tempting wrong answer misses:_ Starting to build on 'accurate' and 'nothing risky' (B) guarantees misalignment because neither term is defined or testable; you must operationalize them first.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -2328,6 +2472,8 @@ Post-launch value is shown by adoption and outcome metrics tied to the success c
 
 _Why a tempting wrong answer misses:_ Treating launch as the finish line (A) forgoes the measurement and feedback needed to prove value and guide improvement; delivery continues after go-live.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -2351,6 +2497,8 @@ A stakeholder worries the assistant might occasionally produce a confident but w
 The constructive response names the real risk in plain terms and pairs it with concrete mitigations — output screening, human review where stakes are high, verifiable citations — so stakeholders see it's managed. Address limits with mitigations, honestly.
 
 _Why a tempting wrong answer misses:_ Denying the risk (A) is dishonest and collapses when a confident error inevitably appears; naming it and showing the mitigations builds durable trust.
+
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
 
 </details>
 
@@ -2402,6 +2550,8 @@ Lagging adoption from a skills gap is closed by enablement: hands-on training, c
 
 _Why a tempting wrong answer misses:_ Mandating usage with penalties (A) breeds resentment and workarounds without teaching anyone how to get value; enablement addresses the actual cause, which is know-how.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -2426,6 +2576,8 @@ Confirming delivery means reviewing the solution against the previously-agreed a
 
 _Why a tempting wrong answer misses:_ Asking only the engineering team (B) confirms it was built, not that it meets the stakeholders' agreed criteria; acceptance must involve the stakeholders and their criteria.
 
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
+
 </details>
 
 ---
@@ -2449,6 +2601,8 @@ A client asks you to help them decide between building on the API versus adoptin
 Clients are best served by a clear recommendation tied to their goals and constraints, the trade-offs behind it, and the conditions that would change it — decision-enabling, not just a menu. Advise, don't just enumerate.
 
 _Why a tempting wrong answer misses:_ A neutral list with no guidance (A) leaves the client exactly where they started; your value as an architect is turning options into a defensible recommendation for their situation.
+
+Reference: https://platform.claude.com/docs/en/agent-sdk/overview
 
 </details>
 

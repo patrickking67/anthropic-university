@@ -6,6 +6,8 @@ This guide covers the five domains of the Architect – Foundations exam. The ex
 
 Latest models to assume in examples: **Claude Opus 4.8** (`claude-opus-4-8`) as the default, with **Sonnet 5** (balanced/high-volume) and **Haiku 4.5** (simple/fast). Answer keys never hinge on exact prices.
 
+**Decision hierarchy the exam rewards:** (1) make misuse impossible at the interface or in code, (2) add structured context the model must see, (3) improve prompts/examples, (4) only then add process workarounds. Prefer the earliest step that actually removes the failure mode.
+
 ## Multi-Agent Orchestration
 
 The reference design is the **orchestrator–workers** pattern. A coordinator decomposes a task, delegates subtasks to specialized workers, and routes their results into a **synthesis/aggregation** step. The coordinator is a **hub**: workers do not talk to each other. The hub's value is **centralized visibility, consistent error handling, and control over what each worker receives** — *not* batching or latency reduction. Watch for distractors that justify the hub with a latency argument.
@@ -117,3 +119,12 @@ This domain is about **where guidance lives** so the right context loads at the 
 2. Apply **least privilege** to tools and context.
 3. Make failures **observable and structured** so a coordinator (or CI, or a human) can recover.
 4. Use a **second independent instance** for review — it beats self-review by avoiding confirmation bias.
+
+## How to study with this bank
+
+1. Master Multi-Agent and Claude Code CI first; they carry the heaviest scenario weight.
+2. Practice with the domain filter until you can name the *mechanism* (hub, gate, hook, cache, batch) before you pick a letter.
+3. Drill flashcards for `stop_reason`, Batches vs. sync, skill frontmatter, and MCP primitives.
+4. Run a Half mock (40), fix the two weakest domains, then a Full mock aiming above 720.
+
+Docs: [code.claude.com/docs](https://code.claude.com/docs) · [platform.claude.com/docs](https://platform.claude.com/docs).

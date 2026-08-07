@@ -101,3 +101,12 @@ This domain is about turning a working prototype into **reusable, maintainable, 
 **Make it defensible.** For sign-off and handoff, provide **evals as gates**, docs and runbooks, and shared version-controlled config so the team can operate the system without you. Add production hardening — retries/backoff, observability/logging, eval gates. For review, produce **small, focused changes with clear diffs and explanations**. And for the highest-confidence review of Claude's own output, use a **second, independent Claude instance** (no access to the generator's reasoning) to avoid confirmation bias.
 
 **Traps:** hoarding a useful workflow locally; committing secrets instead of using `${ENV}`; hand-editing generated files; over-engineering an accelerator; leaving shared config to rot after launch.
+
+## How to study with this bank
+
+1. Memorize the `stop_reason` table and the tool-result rules (parallel results in one user message; `is_error: true` on failures).
+2. Practice Model Foundations and Production Prompting until wrong keys are rare, then Claude Code / MCP.
+3. Drill flashcards for caching, Batches (~50% / up to 24h), `.claude/rules/` vs. Skills, and `${ENV}` in `.mcp.json`.
+4. Take a Quick mock, review misses by domain, then a Full mock above the approximate 720 pass mark.
+
+Docs: [platform.claude.com/docs](https://platform.claude.com/docs) · [code.claude.com/docs](https://code.claude.com/docs).
