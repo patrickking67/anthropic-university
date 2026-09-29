@@ -20,23 +20,23 @@
       "provider": "Claude Partner Network"
     },
     {
-      "title": "AI Fluency: Framework & Foundations",
-      "url": "https://anthropic.skilljar.com/ai-fluency-framework-foundations",
+      "title": "AI Fluency: Framework and foundations",
+      "url": "https://academy.claude.com/courses/ai-fluency-framework-foundations",
       "provider": "Anthropic Academy"
     },
     {
       "title": "Claude 101",
-      "url": "https://anthropic.skilljar.com/claude-101",
+      "url": "https://academy.claude.com/courses/claude-101",
       "provider": "Anthropic Academy"
     },
     {
       "title": "Introduction to agent skills",
-      "url": "https://anthropic.skilljar.com/introduction-to-agent-skills",
+      "url": "https://academy.claude.com/courses/introduction-to-agent-skills",
       "provider": "Anthropic Academy"
     },
     {
-      "title": "Claude Code in Action",
-      "url": "https://anthropic.skilljar.com/claude-code-in-action",
+      "title": "Claude Code in action",
+      "url": "https://academy.claude.com/courses/claude-code-in-action",
       "provider": "Anthropic Academy"
     },
     {
@@ -166,11 +166,11 @@
       "docs": [
         {
           "title": "AI Fluency: Framework & Foundations",
-          "url": "https://anthropic.skilljar.com/ai-fluency-framework-foundations"
+          "url": "https://academy.claude.com/courses/ai-fluency-framework-foundations"
         },
         {
           "title": "Claude 101",
-          "url": "https://anthropic.skilljar.com/claude-101"
+          "url": "https://academy.claude.com/courses/claude-101"
         }
       ]
     },
@@ -647,7 +647,7 @@
       "answer": "D",
       "explanationCorrect": "The diagnosed cause is missing relevance. A champion inside finance who demonstrates close-process examples fixes that specific cause.",
       "explanationDistractor": "Usage quotas (B) drive logins without usefulness and tend to create resentment rather than lasting adoption.",
-      "reference": "https://anthropic.skilljar.com/ai-fluency-framework-foundations",
+      "reference": "https://academy.claude.com/courses/ai-fluency-framework-foundations",
       "module": "m4"
     },
     {
@@ -666,7 +666,7 @@
       "answer": "A",
       "explanationCorrect": "Practicing on real recurring tasks, with explicit coaching on reviewing outputs, gives people something useful they can reuse the next day.",
       "explanationDistractor": "A feature tour (B) is easy to produce but rarely connects to a person's actual week, so behavior does not change.",
-      "reference": "https://anthropic.skilljar.com/claude-101",
+      "reference": "https://academy.claude.com/courses/claude-101",
       "module": "m4"
     },
     {

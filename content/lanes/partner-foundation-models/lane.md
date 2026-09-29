@@ -12,9 +12,9 @@ Group: partner · Level: beginner · ~4 h · For: Consultants, solution architec
 
 - [Claude Partner Network learning path (partner login required)](https://anthropic-partners.skilljar.com/page/claude-partner-network-learning-path) — Claude Partner Network
 - [CPN Connect on-demand library (partner login required)](https://anthropic-partners.skilljar.com/page/cpnc-on-demand-library) — Claude Partner Network
-- [AI Capabilities and Limitations](https://anthropic.skilljar.com/ai-capabilities-and-limitations) — Anthropic Academy
-- [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) — Anthropic Academy
-- [Claude Platform 101](https://anthropic.skilljar.com/claude-platform-101) — Anthropic Academy
+- [AI capabilities and limitations](https://academy.claude.com/courses/ai-capabilities-and-limitations) — Anthropic Academy
+- [AI Fluency: Framework and foundations](https://academy.claude.com/courses/ai-fluency-framework-foundations) — Anthropic Academy
+- [Claude Platform 101](https://academy.claude.com/courses/claude-platform-101) — Anthropic Academy
 
 ## Tokens: the unit clients pay for
 

@@ -10,10 +10,11 @@ Group: build · Level: intermediate · ~6 h · For: Developers and architects co
 
 ## Take alongside
 
-- [Introduction to Model Context Protocol](https://anthropic.skilljar.com/introduction-to-model-context-protocol) — Anthropic Academy
+- [Introduction to Model Context Protocol](https://academy.claude.com/courses/introduction-to-model-context-protocol) — Anthropic Academy
 - [Model Context Protocol documentation](https://modelcontextprotocol.io/docs/learn/architecture) — Model Context Protocol
 - [MCP connector (Claude API)](https://platform.claude.com/docs/en/agents-and-tools/mcp-connector) — Anthropic
 - [Writing effective tools for agents](https://www.anthropic.com/engineering/writing-tools-for-agents) — Anthropic
+- [Model Context Protocol: Advanced topics](https://academy.claude.com/courses/model-context-protocol-advanced-topics) — Anthropic Academy
 
 ## MCP concepts: hosts, clients, servers, and primitives
 

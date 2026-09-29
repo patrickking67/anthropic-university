@@ -11,9 +11,9 @@ Group: partner · Level: intermediate · ~6 h · For: Partner solution architect
 ## Take alongside
 
 - [Claude Partner Network learning path](https://anthropic-partners.skilljar.com/page/claude-partner-network-learning-path) — Claude Partner Network
-- [Claude 101](https://anthropic.skilljar.com/claude-101) — Anthropic Academy
-- [Introduction to agent skills](https://anthropic.skilljar.com/introduction-to-agent-skills) — Anthropic Academy
-- [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) — Anthropic Academy
+- [Claude 101](https://academy.claude.com/courses/claude-101) — Anthropic Academy
+- [Introduction to agent skills](https://academy.claude.com/courses/introduction-to-agent-skills) — Anthropic Academy
+- [AI Fluency: Framework and foundations](https://academy.claude.com/courses/ai-fluency-framework-foundations) — Anthropic Academy
 - [Claude for Legal](https://claude.com/solutions/legal) — Anthropic
 - [Claude for Financial Services](https://claude.com/solutions/financial-services) — Anthropic
 - [Knowledge-work plugins (open source)](https://github.com/anthropics/knowledge-work-plugins) — Anthropic

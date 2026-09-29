@@ -7,15 +7,44 @@
   "audience": "Partner consultants, delivery leads, and customer success managers who deploy Claude Team or Enterprise (and Claude Code) for client organizations.",
   "estimatedHours": 6,
   "prefix": "pda",
-  "prerequisites": ["partner-enterprise-solutioning"],
-  "relatedCertifications": ["associate-foundations", "architect-foundations"],
+  "prerequisites": [
+    "partner-enterprise-solutioning"
+  ],
+  "relatedCertifications": [
+    "associate-foundations",
+    "architect-foundations"
+  ],
   "officialResources": [
-    { "title": "Claude Partner Network learning path", "url": "https://anthropic-partners.skilljar.com/page/claude-partner-network-learning-path", "provider": "Claude Partner Network" },
-    { "title": "AI Fluency: Framework & Foundations", "url": "https://anthropic.skilljar.com/ai-fluency-framework-foundations", "provider": "Anthropic Academy" },
-    { "title": "Claude 101", "url": "https://anthropic.skilljar.com/claude-101", "provider": "Anthropic Academy" },
-    { "title": "Introduction to agent skills", "url": "https://anthropic.skilljar.com/introduction-to-agent-skills", "provider": "Anthropic Academy" },
-    { "title": "Claude Code in Action", "url": "https://anthropic.skilljar.com/claude-code-in-action", "provider": "Anthropic Academy" },
-    { "title": "Claude Enterprise Administrator Guide", "url": "https://claude.com/resources/tutorials/claude-enterprise-administrator-guide", "provider": "Anthropic" }
+    {
+      "title": "Claude Partner Network learning path",
+      "url": "https://anthropic-partners.skilljar.com/page/claude-partner-network-learning-path",
+      "provider": "Claude Partner Network"
+    },
+    {
+      "title": "AI Fluency: Framework and foundations",
+      "url": "https://academy.claude.com/courses/ai-fluency-framework-foundations",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Claude 101",
+      "url": "https://academy.claude.com/courses/claude-101",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Introduction to agent skills",
+      "url": "https://academy.claude.com/courses/introduction-to-agent-skills",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Claude Code in action",
+      "url": "https://academy.claude.com/courses/claude-code-in-action",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Claude Enterprise Administrator Guide",
+      "url": "https://claude.com/resources/tutorials/claude-enterprise-administrator-guide",
+      "provider": "Anthropic"
+    }
   ],
   "modules": [
     {
@@ -38,8 +67,14 @@
       ],
       "practice": "Run a 20-minute mock workshop with a colleague playing a department head. Collect at least eight tasks, score each on value and feasibility from 1 to 5, and write a one-page shortlist with owner, SME, data sensitivity, and a baseline estimate for the top three.",
       "docs": [
-        { "title": "Use Claude on Team and Enterprise plans (Help Center collection)", "url": "https://support.claude.com/en" },
-        { "title": "Define your success criteria", "url": "https://platform.claude.com/docs/en/test-and-evaluate/define-success" }
+        {
+          "title": "Use Claude on Team and Enterprise plans (Help Center collection)",
+          "url": "https://support.claude.com/en"
+        },
+        {
+          "title": "Define your success criteria",
+          "url": "https://platform.claude.com/docs/en/test-and-evaluate/define-success"
+        }
       ]
     },
     {
@@ -62,8 +97,14 @@
       ],
       "practice": "For one shortlisted workflow, write three success criteria with numeric targets, then assemble ten sample inputs (two of them deliberately hard) with a one-line rubric for each. Note which criteria an SME must grade and which a script could check.",
       "docs": [
-        { "title": "Define your success criteria", "url": "https://platform.claude.com/docs/en/test-and-evaluate/define-success" },
-        { "title": "Create strong empirical evaluations", "url": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests" }
+        {
+          "title": "Define your success criteria",
+          "url": "https://platform.claude.com/docs/en/test-and-evaluate/define-success"
+        },
+        {
+          "title": "Create strong empirical evaluations",
+          "url": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+        }
       ]
     },
     {
@@ -86,10 +127,22 @@
       ],
       "practice": "Draft a one-page rollout runbook for a 600-person client on Enterprise: the order of identity steps, the provisioning mode and why, the launch connector list with an approver for each, the MDM delivery plan for Desktop, and three waves with dates.",
       "docs": [
-        { "title": "Set up single sign-on (SSO)", "url": "https://support.claude.com/en/articles/13132885-set-up-single-sign-on-sso" },
-        { "title": "Set up JIT or SCIM provisioning", "url": "https://support.claude.com/en/articles/13133195-set-up-jit-or-scim-provisioning" },
-        { "title": "Enterprise configuration for Claude Desktop", "url": "https://support.claude.com/en/articles/12622667-enterprise-configuration-for-claude-desktop" },
-        { "title": "Use Claude Cowork on Team and Enterprise plans", "url": "https://support.claude.com/en/articles/13455879-use-claude-cowork-on-team-and-enterprise-plans" }
+        {
+          "title": "Set up single sign-on (SSO)",
+          "url": "https://support.claude.com/en/articles/13132885-set-up-single-sign-on-sso"
+        },
+        {
+          "title": "Set up JIT or SCIM provisioning",
+          "url": "https://support.claude.com/en/articles/13133195-set-up-jit-or-scim-provisioning"
+        },
+        {
+          "title": "Enterprise configuration for Claude Desktop",
+          "url": "https://support.claude.com/en/articles/12622667-enterprise-configuration-for-claude-desktop"
+        },
+        {
+          "title": "Use Claude Cowork on Team and Enterprise plans",
+          "url": "https://support.claude.com/en/articles/13455879-use-claude-cowork-on-team-and-enterprise-plans"
+        }
       ]
     },
     {
@@ -112,8 +165,14 @@
       ],
       "practice": "Write a 45-minute session plan for one department: two of their real tasks as exercises, a five-minute segment on checking outputs, and a closing ask. Then list three people you would invite as champions and what you would give them.",
       "docs": [
-        { "title": "AI Fluency: Framework & Foundations", "url": "https://anthropic.skilljar.com/ai-fluency-framework-foundations" },
-        { "title": "Claude 101", "url": "https://anthropic.skilljar.com/claude-101" }
+        {
+          "title": "AI Fluency: Framework & Foundations",
+          "url": "https://academy.claude.com/courses/ai-fluency-framework-foundations"
+        },
+        {
+          "title": "Claude 101",
+          "url": "https://academy.claude.com/courses/claude-101"
+        }
       ]
     },
     {
@@ -136,9 +195,18 @@
       ],
       "practice": "Take one proposed use case from your shortlist and write a half-page risk review: data involved, who is affected, whether it is a high-risk use under the Usage Policy, the human checkpoint, the disclosure needed, and what evidence the client will keep.",
       "docs": [
-        { "title": "Anthropic Usage Policy", "url": "https://www.anthropic.com/legal/aup" },
-        { "title": "Access audit logs", "url": "https://support.claude.com/en/articles/9970975-access-audit-logs" },
-        { "title": "Compliance API FAQ", "url": "https://platform.claude.com/docs/en/manage-claude/compliance-faq" }
+        {
+          "title": "Anthropic Usage Policy",
+          "url": "https://www.anthropic.com/legal/aup"
+        },
+        {
+          "title": "Access audit logs",
+          "url": "https://support.claude.com/en/articles/9970975-access-audit-logs"
+        },
+        {
+          "title": "Compliance API FAQ",
+          "url": "https://platform.claude.com/docs/en/manage-claude/compliance-faq"
+        }
       ]
     },
     {
@@ -161,8 +229,14 @@
       ],
       "practice": "Sketch a one-page monthly value report for a sponsor: two activity metrics from the analytics dashboard, two outcome metrics per piloted workflow compared to baseline, one qualitative story, and one decision you are asking them to make.",
       "docs": [
-        { "title": "View usage analytics for Team and Enterprise plans", "url": "https://support.claude.com/en/articles/12883420-view-usage-analytics-for-team-and-enterprise-plans" },
-        { "title": "Admin API: Analytics", "url": "https://platform.claude.com/docs/en/api/admin/analytics" }
+        {
+          "title": "View usage analytics for Team and Enterprise plans",
+          "url": "https://support.claude.com/en/articles/12883420-view-usage-analytics-for-team-and-enterprise-plans"
+        },
+        {
+          "title": "Admin API: Analytics",
+          "url": "https://platform.claude.com/docs/en/api/admin/analytics"
+        }
       ]
     },
     {
@@ -185,9 +259,18 @@
       ],
       "practice": "Draft a RACI for the client's skills library: who proposes, builds, reviews, approves, releases, and retires a skill. Add the repository and marketplace path a new skill travels through.",
       "docs": [
-        { "title": "Provision and manage skills for your organization", "url": "https://support.claude.com/en/articles/13119606-provision-and-manage-skills-for-your-organization" },
-        { "title": "Manage Claude Cowork plugins for your organization", "url": "https://support.claude.com/en/articles/13837433-manage-cowork-plugins-for-your-organization" },
-        { "title": "Use plugins in Claude", "url": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude" }
+        {
+          "title": "Provision and manage skills for your organization",
+          "url": "https://support.claude.com/en/articles/13119606-provision-and-manage-skills-for-your-organization"
+        },
+        {
+          "title": "Manage Claude Cowork plugins for your organization",
+          "url": "https://support.claude.com/en/articles/13837433-manage-cowork-plugins-for-your-organization"
+        },
+        {
+          "title": "Use plugins in Claude",
+          "url": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude"
+        }
       ]
     },
     {
@@ -210,37 +293,142 @@
       ],
       "practice": "Write a managed-settings plan for a client's platform team: three things you would restrict, one you would allow by default, the delivery channel you would use and why, and the two analytics views you would review after the first month.",
       "docs": [
-        { "title": "Set up Claude Code for your organization", "url": "https://code.claude.com/docs/en/admin-setup" },
-        { "title": "Claude Code settings", "url": "https://code.claude.com/docs/en/settings" },
-        { "title": "Track team usage with analytics", "url": "https://code.claude.com/docs/en/analytics" }
+        {
+          "title": "Set up Claude Code for your organization",
+          "url": "https://code.claude.com/docs/en/admin-setup"
+        },
+        {
+          "title": "Claude Code settings",
+          "url": "https://code.claude.com/docs/en/settings"
+        },
+        {
+          "title": "Track team usage with analytics",
+          "url": "https://code.claude.com/docs/en/analytics"
+        }
       ]
     }
   ],
   "cards": [
-    { "front": "Two axes for prioritizing discovered use cases", "back": "Business value (time, quality, risk, revenue) and delivery feasibility (reachable inputs, easy-to-judge quality, manageable stakes). Pilot the high-high quadrant first.", "module": "m1" },
-    { "front": "Three things every shortlisted workflow needs before a pilot", "back": "A business owner, a subject-matter expert who can judge output quality, and a measured baseline of today's effort or cycle time.", "module": "m1" },
-    { "front": "Where do high-value but low-feasibility ideas go?", "back": "On the roadmap with the specific blocker named (for example a missing connector or an unowned process), not into the first pilot.", "module": "m1" },
-    { "front": "What makes a pilot success criterion usable?", "back": "It is specific and measurable, agreed before launch, and tied to a target, such as edits per draft dropping from 45 to under 15 minutes.", "module": "m2" },
-    { "front": "Why keep the evaluation set fixed?", "back": "So you can rerun it after every prompt, skill, or model change and compare scores directly. A shifting test set hides regressions.", "module": "m2" },
-    { "front": "Three ways to grade an eval", "back": "Code-based checks, human SME grading against a rubric, and model-based grading where Claude scores against a rubric.", "module": "m2" },
-    { "front": "Provisioning modes and plan availability", "back": "Invite only (default), JIT on first sign-in (Team and Enterprise), and SCIM directory sync with automatic deprovisioning (Enterprise only).", "module": "m3" },
-    { "front": "Prerequisites for configuring SSO", "back": "Owner or Primary Owner role, access to the company DNS to verify the email domain, and admin access to the identity provider.", "module": "m3" },
-    { "front": "How is Claude Desktop managed across a fleet?", "back": "System policies: MDM configuration profiles on macOS (domain com.anthropic.claudefordesktop) and registry policies on Windows. Machine policy overrides the in-app allowlist.", "module": "m3" },
-    { "front": "What does a champion do?", "back": "A practitioner inside a team who shares working examples, runs office hours, and relays friction back to the program team.", "module": "m4" },
-    { "front": "Best raw material for training", "back": "The learner's own recurring tasks, practiced hands-on, with a worked example they can reuse the next day.", "module": "m4" },
-    { "front": "First move when one department's adoption stalls", "back": "Find the specific cause (no relevant use case, missing connector, unclear policy, skeptical manager) and fix that, rather than rerunning generic training.", "module": "m4" },
-    { "front": "Two Usage Policy requirements for high-risk uses that affect individuals", "back": "Human-in-the-loop review by a qualified professional before finalization, and disclosure that AI helped produce the output.", "module": "m5" },
-    { "front": "Disclosure rule for consumer-facing chatbots", "back": "They must tell users they are interacting with AI, at least at the start of each session.", "module": "m5" },
-    { "front": "What Enterprise audit log exports contain", "back": "Up to the past 180 days of events with identifiers for chats and projects, not their titles or content. The Compliance API gives programmatic access.", "module": "m5" },
-    { "front": "Who can see Spend in Team/Enterprise analytics?", "back": "Owners and Primary Owners. Enterprise Admins can view all analytics except Spend.", "module": "m6" },
-    { "front": "Activity metrics versus outcome metrics", "back": "Activity (active users, sessions, feature use) shows reach. Outcome (cycle time, rework, quality) shows value. ROI needs both.", "module": "m6" },
-    { "front": "How far back does the usage analytics view go?", "back": "Up to 90 days, with data through the previous day. Export regularly for longer trends.", "module": "m6" },
-    { "front": "How do you give skills to only one team?", "back": "Bundle them in a plugin and assign the plugin to that group. Organization-level skill provisioning reaches everyone.", "module": "m7" },
-    { "front": "Two ways to add plugins to an org marketplace", "back": "Manual ZIP upload in the admin UI, or syncing a private GitHub repository.", "module": "m7" },
-    { "front": "Prerequisite for organization skills", "back": "Code execution and file creation, and Skills, must be turned on in organization settings.", "module": "m7" },
-    { "front": "Precedence of Claude Code managed settings", "back": "They take precedence over a developer's local configuration.", "module": "m8" },
-    { "front": "Delivery channels for Claude Code managed settings", "back": "The Claude admin console (Team/Enterprise), MDM, or a file on disk. Server-managed settings refresh hourly.", "module": "m8" },
-    { "front": "What contribution metrics add to Claude Code analytics", "back": "With GitHub Cloud connected, PRs and lines shipped with Claude Code assistance. Public beta; a GitHub admin installs the app.", "module": "m8" }
+    {
+      "front": "Two axes for prioritizing discovered use cases",
+      "back": "Business value (time, quality, risk, revenue) and delivery feasibility (reachable inputs, easy-to-judge quality, manageable stakes). Pilot the high-high quadrant first.",
+      "module": "m1"
+    },
+    {
+      "front": "Three things every shortlisted workflow needs before a pilot",
+      "back": "A business owner, a subject-matter expert who can judge output quality, and a measured baseline of today's effort or cycle time.",
+      "module": "m1"
+    },
+    {
+      "front": "Where do high-value but low-feasibility ideas go?",
+      "back": "On the roadmap with the specific blocker named (for example a missing connector or an unowned process), not into the first pilot.",
+      "module": "m1"
+    },
+    {
+      "front": "What makes a pilot success criterion usable?",
+      "back": "It is specific and measurable, agreed before launch, and tied to a target, such as edits per draft dropping from 45 to under 15 minutes.",
+      "module": "m2"
+    },
+    {
+      "front": "Why keep the evaluation set fixed?",
+      "back": "So you can rerun it after every prompt, skill, or model change and compare scores directly. A shifting test set hides regressions.",
+      "module": "m2"
+    },
+    {
+      "front": "Three ways to grade an eval",
+      "back": "Code-based checks, human SME grading against a rubric, and model-based grading where Claude scores against a rubric.",
+      "module": "m2"
+    },
+    {
+      "front": "Provisioning modes and plan availability",
+      "back": "Invite only (default), JIT on first sign-in (Team and Enterprise), and SCIM directory sync with automatic deprovisioning (Enterprise only).",
+      "module": "m3"
+    },
+    {
+      "front": "Prerequisites for configuring SSO",
+      "back": "Owner or Primary Owner role, access to the company DNS to verify the email domain, and admin access to the identity provider.",
+      "module": "m3"
+    },
+    {
+      "front": "How is Claude Desktop managed across a fleet?",
+      "back": "System policies: MDM configuration profiles on macOS (domain com.anthropic.claudefordesktop) and registry policies on Windows. Machine policy overrides the in-app allowlist.",
+      "module": "m3"
+    },
+    {
+      "front": "What does a champion do?",
+      "back": "A practitioner inside a team who shares working examples, runs office hours, and relays friction back to the program team.",
+      "module": "m4"
+    },
+    {
+      "front": "Best raw material for training",
+      "back": "The learner's own recurring tasks, practiced hands-on, with a worked example they can reuse the next day.",
+      "module": "m4"
+    },
+    {
+      "front": "First move when one department's adoption stalls",
+      "back": "Find the specific cause (no relevant use case, missing connector, unclear policy, skeptical manager) and fix that, rather than rerunning generic training.",
+      "module": "m4"
+    },
+    {
+      "front": "Two Usage Policy requirements for high-risk uses that affect individuals",
+      "back": "Human-in-the-loop review by a qualified professional before finalization, and disclosure that AI helped produce the output.",
+      "module": "m5"
+    },
+    {
+      "front": "Disclosure rule for consumer-facing chatbots",
+      "back": "They must tell users they are interacting with AI, at least at the start of each session.",
+      "module": "m5"
+    },
+    {
+      "front": "What Enterprise audit log exports contain",
+      "back": "Up to the past 180 days of events with identifiers for chats and projects, not their titles or content. The Compliance API gives programmatic access.",
+      "module": "m5"
+    },
+    {
+      "front": "Who can see Spend in Team/Enterprise analytics?",
+      "back": "Owners and Primary Owners. Enterprise Admins can view all analytics except Spend.",
+      "module": "m6"
+    },
+    {
+      "front": "Activity metrics versus outcome metrics",
+      "back": "Activity (active users, sessions, feature use) shows reach. Outcome (cycle time, rework, quality) shows value. ROI needs both.",
+      "module": "m6"
+    },
+    {
+      "front": "How far back does the usage analytics view go?",
+      "back": "Up to 90 days, with data through the previous day. Export regularly for longer trends.",
+      "module": "m6"
+    },
+    {
+      "front": "How do you give skills to only one team?",
+      "back": "Bundle them in a plugin and assign the plugin to that group. Organization-level skill provisioning reaches everyone.",
+      "module": "m7"
+    },
+    {
+      "front": "Two ways to add plugins to an org marketplace",
+      "back": "Manual ZIP upload in the admin UI, or syncing a private GitHub repository.",
+      "module": "m7"
+    },
+    {
+      "front": "Prerequisite for organization skills",
+      "back": "Code execution and file creation, and Skills, must be turned on in organization settings.",
+      "module": "m7"
+    },
+    {
+      "front": "Precedence of Claude Code managed settings",
+      "back": "They take precedence over a developer's local configuration.",
+      "module": "m8"
+    },
+    {
+      "front": "Delivery channels for Claude Code managed settings",
+      "back": "The Claude admin console (Team/Enterprise), MDM, or a file on disk. Server-managed settings refresh hourly.",
+      "module": "m8"
+    },
+    {
+      "front": "What contribution metrics add to Claude Code analytics",
+      "back": "With GitHub Cloud connected, PRs and lines shipped with Claude Code assistance. Public beta; a GitHub admin installs the app.",
+      "module": "m8"
+    }
   ],
   "questions": [
     {
@@ -293,7 +481,10 @@
         "D": "A completed security questionnaire for every connector in the directory",
         "E": "A fixed set of approved prompts that users must copy word for word"
       },
-      "answer": ["A", "B"],
+      "answer": [
+        "A",
+        "B"
+      ],
       "select": 2,
       "explanationCorrect": "A baseline makes later ROI claims credible, and an owner plus SME make the pilot accountable and evaluable. Both belong in discovery output.",
       "explanationDistractor": "Commercial terms (C) and a questionnaire for every connector (D) are out of scope for discovery; mandated verbatim prompts (E) block the learning a pilot is for.",
@@ -421,7 +612,10 @@
         "D": "Migration of all historical shared-drive documents into Claude projects",
         "E": "Permanently disabling Cowork so that no agentic features are ever available"
       },
-      "answer": ["A", "B"],
+      "answer": [
+        "A",
+        "B"
+      ],
       "select": 2,
       "explanationCorrect": "Identity must be in place for users to land in the governed workspace, and the launch connector decision sets data access from day one.",
       "explanationDistractor": "Company-wide advanced training (C) and bulk document migration (D) are not launch gates; permanently disabling Cowork (E) is a policy choice, not a prerequisite.",
@@ -443,7 +637,7 @@
       "answer": "D",
       "explanationCorrect": "The diagnosed cause is missing relevance. A champion inside finance who demonstrates close-process examples fixes that specific cause.",
       "explanationDistractor": "Usage quotas (B) drive logins without usefulness and tend to create resentment rather than lasting adoption.",
-      "reference": "https://anthropic.skilljar.com/ai-fluency-framework-foundations"
+      "reference": "https://academy.claude.com/courses/ai-fluency-framework-foundations"
     },
     {
       "id": "pda-012",
@@ -461,7 +655,7 @@
       "answer": "A",
       "explanationCorrect": "Practicing on real recurring tasks, with explicit coaching on reviewing outputs, gives people something useful they can reuse the next day.",
       "explanationDistractor": "A feature tour (B) is easy to produce but rarely connects to a person's actual week, so behavior does not change.",
-      "reference": "https://anthropic.skilljar.com/claude-101"
+      "reference": "https://academy.claude.com/courses/claude-101"
     },
     {
       "id": "pda-013",
@@ -513,7 +707,10 @@
         "D": "Anthropic must pre-approve each individual ranking before it is sent",
         "E": "All applicant data must be stored for seven years in the agency's archive"
       },
-      "answer": ["A", "B"],
+      "answer": [
+        "A",
+        "B"
+      ],
       "select": 2,
       "explanationCorrect": "Employment decisions are a named high-risk use case. The policy requires human-in-the-loop review by a qualified professional and disclosure of AI involvement to the individuals affected.",
       "explanationDistractor": "The policy does not mandate a model tier (C), per-decision Anthropic approval (D), or a specific retention period (E).",

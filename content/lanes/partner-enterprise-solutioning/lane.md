@@ -12,10 +12,10 @@ Group: partner · Level: intermediate · ~5 h · For: Partner account leads, sol
 
 - [Claude Partner Network learning path (partner login required)](https://anthropic-partners.skilljar.com/page/claude-partner-network-learning-path) — Claude Partner Network
 - [CPN Connect on-demand library (partner login required)](https://anthropic-partners.skilljar.com/page/cpnc-on-demand-library) — Claude Partner Network
-- [Deploying Claude Enterprise with Confidence](https://anthropic.skilljar.com/deploying-claude-enterprise-with-confidence) — Anthropic Academy
-- [Claude 101](https://anthropic.skilljar.com/claude-101) — Anthropic Academy
-- [Claude with Amazon Bedrock](https://anthropic.skilljar.com/claude-in-amazon-bedrock) — Anthropic Academy
-- [Claude on Google Cloud](https://anthropic.skilljar.com/claude-with-google-vertex) — Anthropic Academy
+- [Deploying Claude Enterprise with confidence: The five decisions that shape your rollout](https://academy.claude.com/courses/deploying-claude-enterprise-with-confidence) — Anthropic Academy
+- [Claude 101](https://academy.claude.com/courses/claude-101) — Anthropic Academy
+- [Claude with Amazon Bedrock](https://academy.claude.com/courses/claude-with-amazon-bedrock) — Anthropic Academy
+- [Claude with Google Cloud's Vertex AI](https://academy.claude.com/courses/claude-with-google-cloud-s-vertex-ai) — Anthropic Academy
 
 ## The Claude product map
 

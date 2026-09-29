@@ -10,8 +10,8 @@ Group: build · Level: intermediate · ~8 h · For: Developers who can write Pyt
 
 ## Take alongside
 
-- [Building with the Claude API](https://anthropic.skilljar.com/claude-with-the-anthropic-api) — Anthropic Academy
-- [Claude Platform 101](https://anthropic.skilljar.com/claude-platform-101) — Anthropic Academy
+- [Building with the Claude API](https://academy.claude.com/courses/building-with-the-claude-api) — Anthropic Academy
+- [Claude Platform 101](https://academy.claude.com/courses/claude-platform-101) — Anthropic Academy
 - [Claude Developer Platform docs](https://platform.claude.com/docs) — Anthropic
 
 ## Access: the Console, API keys, and workspaces

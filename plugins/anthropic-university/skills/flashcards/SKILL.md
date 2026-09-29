@@ -1,8 +1,8 @@
 ---
 name: flashcards
-description: Drill Claude Certification flashcards with a Leitner-style spaced-repetition loop — front first, self-graded recall, weak cards requeued. Works in Claude Code, the Claude desktop app, and Claude chat. Use when the user says "flashcards", "drill me", "quick review", "rapid recall", or wants to memorize terms and facts for a track or domain.
+description: Drill Anthropic University flashcards (any certification track or learning lane) with a Leitner-style spaced-repetition loop — front first, self-graded recall, weak cards requeued. Works in Claude Code, the Claude desktop app, and Claude chat. Use when the user says "flashcards", "drill me", "quick review", "rapid recall", or wants to memorize terms and facts for a track, domain, lane, or module. Not for exporting a deck to another app (use export-quizlet).
 argument-hint: "<exam-id | lane-id> [domain | module]"
-allowed-tools: Read, Grep, Glob, Write
+allowed-tools: Read, Grep, Glob, Write, Bash
 ---
 
 # Flashcards
@@ -14,6 +14,8 @@ and follow it — especially **Parsing replies** and **Grounding and freshness**
 
 - Cards are `data/<exam-id>.json` → `cards` (`front`, `back`, `domain`), or
   `data/lanes/<lane-id>.json` → `cards` (`module`). Filter by domain or module if one is given.
+- **With a shell**, `au.py cards <track-or-lane> [--domain <id>] --seed <any>` returns the
+  filtered, shuffled deck as JSON, so the whole file never has to be read.
 - Seed order: shuffle, then front-load cards from weak domains in saved progress.
 - Contract (one line): `Answer or say flip · grade g / a / m · shuffle · domain <id> · stats · stop`.
 
@@ -40,8 +42,8 @@ offer a final pass over anything ever missed.
 
 ## Stats
 
-Every 8 cards (or on `stats`): `Reviewed 16 · retired 9 · shaky 5 (m2 a3) · misses in prod-eng,
-claude-code-mcp`.
+Every 8 cards (or on `stats`): `Reviewed 16 · retired 9 · shaky 5 (m2 a3) · misses in tools-mcps,
+security-safety`.
 
 ## Wrap-up
 

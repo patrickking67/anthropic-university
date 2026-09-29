@@ -10,9 +10,9 @@ Group: build · Level: advanced · ~10 h · For: Developers and architects who a
 
 ## Take alongside
 
-- [Building with the Claude API](https://anthropic.skilljar.com/claude-with-the-anthropic-api) — Anthropic Academy
-- [Introduction to subagents](https://anthropic.skilljar.com/introduction-to-subagents) — Anthropic Academy
-- [Introduction to Model Context Protocol](https://anthropic.skilljar.com/introduction-to-model-context-protocol) — Anthropic Academy
+- [Building with the Claude API](https://academy.claude.com/courses/building-with-the-claude-api) — Anthropic Academy
+- [Introduction to subagents](https://academy.claude.com/courses/introduction-to-subagents) — Anthropic Academy
+- [Introduction to Model Context Protocol](https://academy.claude.com/courses/introduction-to-model-context-protocol) — Anthropic Academy
 - [Tool use with Claude](https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview) — Claude Docs
 - [Claude Managed Agents overview](https://platform.claude.com/docs/en/managed-agents/overview) — Claude Docs
 - [Agent SDK overview](https://code.claude.com/docs/en/agent-sdk/overview) — Claude Code Docs

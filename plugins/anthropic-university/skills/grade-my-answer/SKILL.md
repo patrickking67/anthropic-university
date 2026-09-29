@@ -2,7 +2,7 @@
 name: grade-my-answer
 description: Grade a certification-style question and the user's answer or free-form reasoning, name the misconception, and give a docs-grounded correction plus a follow-up question. Use when the user pastes a practice question with their answer and asks "is this right", "grade this", "check my reasoning", or "why is my answer wrong".
 argument-hint: "(paste the question and your answer)"
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, Bash
 ---
 
 # Grade my answer
@@ -18,7 +18,8 @@ the actual exam, a leaked dump, or a proctored session), do not grade or restate
 
 ## Grade
 
-1. **Find the key.** Grep the banks for a distinctive phrase from the stem; if it matches a bank
+1. **Find the key.** Search the banks for a distinctive phrase from the stem (with a shell:
+   `au.py find <track-or-lane> "<phrase>"`, then `au.py grade <track> <qid>=<their answer>`); if it matches a bank
    item, use its key and explanations. Otherwise decide the best answer yourself and verify the
    deciding fact via the right connector (sources.md).
 2. **Verdict** on the first line: **Correct**, **Partially correct** (right answer, flawed

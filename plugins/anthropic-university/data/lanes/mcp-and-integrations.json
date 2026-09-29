@@ -17,7 +17,7 @@
   "officialResources": [
     {
       "title": "Introduction to Model Context Protocol",
-      "url": "https://anthropic.skilljar.com/introduction-to-model-context-protocol",
+      "url": "https://academy.claude.com/courses/introduction-to-model-context-protocol",
       "provider": "Anthropic Academy"
     },
     {
@@ -34,6 +34,11 @@
       "title": "Writing effective tools for agents",
       "url": "https://www.anthropic.com/engineering/writing-tools-for-agents",
       "provider": "Anthropic"
+    },
+    {
+      "title": "Model Context Protocol: Advanced topics",
+      "url": "https://academy.claude.com/courses/model-context-protocol-advanced-topics",
+      "provider": "Anthropic Academy"
     }
   ],
   "modules": [

@@ -15,17 +15,17 @@
   "officialResources": [
     {
       "title": "Building with the Claude API",
-      "url": "https://anthropic.skilljar.com/claude-with-the-anthropic-api",
+      "url": "https://academy.claude.com/courses/building-with-the-claude-api",
       "provider": "Anthropic Academy"
     },
     {
       "title": "Introduction to subagents",
-      "url": "https://anthropic.skilljar.com/introduction-to-subagents",
+      "url": "https://academy.claude.com/courses/introduction-to-subagents",
       "provider": "Anthropic Academy"
     },
     {
       "title": "Introduction to Model Context Protocol",
-      "url": "https://anthropic.skilljar.com/introduction-to-model-context-protocol",
+      "url": "https://academy.claude.com/courses/introduction-to-model-context-protocol",
       "provider": "Anthropic Academy"
     },
     {

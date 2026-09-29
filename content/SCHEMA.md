@@ -115,7 +115,7 @@ official domain id.
   "prerequisites": ["claude-essentials"],   // optional laneIds
   "relatedCertifications": ["developer-foundations"],
   "officialResources": [              // official courses/docs to take alongside (links only)
-    { "title": "Building with the Claude API", "url": "https://anthropic.skilljar.com/…", "provider": "Anthropic Academy" }
+    { "title": "Building with the Claude API", "url": "https://academy.claude.com/…", "provider": "Anthropic Academy" }
   ],
   "modules": [
     {

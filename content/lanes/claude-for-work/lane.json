@@ -7,13 +7,33 @@
   "audience": "Knowledge workers and team leads who already use Claude and want to connect it to their tools, share workflows with colleagues, and use it responsibly on Team or Enterprise plans.",
   "estimatedHours": 5,
   "prefix": "wrk",
-  "prerequisites": ["claude-essentials"],
-  "relatedCertifications": ["associate-foundations"],
+  "prerequisites": [
+    "claude-essentials"
+  ],
+  "relatedCertifications": [
+    "associate-foundations"
+  ],
   "officialResources": [
-    { "title": "Claude 101", "url": "https://anthropic.skilljar.com/claude-101", "provider": "Anthropic Academy" },
-    { "title": "Introduction to Claude Cowork", "url": "https://anthropic.skilljar.com/introduction-to-claude-cowork", "provider": "Anthropic Academy" },
-    { "title": "AI Fluency: Framework & Foundations", "url": "https://anthropic.skilljar.com/ai-fluency-framework-foundations", "provider": "Anthropic Academy" },
-    { "title": "Claude use cases", "url": "https://claude.com/resources/use-cases", "provider": "Anthropic" }
+    {
+      "title": "Claude 101",
+      "url": "https://academy.claude.com/courses/claude-101",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Introduction to Claude Cowork",
+      "url": "https://academy.claude.com/courses/introduction-to-claude-cowork",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "AI Fluency: Framework and foundations",
+      "url": "https://academy.claude.com/courses/ai-fluency-framework-foundations",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Claude use cases",
+      "url": "https://claude.com/resources/use-cases",
+      "provider": "Anthropic"
+    }
   ],
   "modules": [
     {
@@ -37,9 +57,18 @@
       ],
       "practice": "Pick a task you repeat weekly, such as a status report format. Ask Claude to help you write it as a skill, check that the description says what it does and when to use it, upload it, and test it with three differently worded requests.",
       "docs": [
-        { "title": "What are skills?", "url": "https://support.claude.com/en/articles/12512176-what-are-skills" },
-        { "title": "Use skills in Claude", "url": "https://support.claude.com/en/articles/12512180-use-skills-in-claude" },
-        { "title": "How to create custom skills", "url": "https://support.claude.com/en/articles/12512198-how-to-create-custom-skills" }
+        {
+          "title": "What are skills?",
+          "url": "https://support.claude.com/en/articles/12512176-what-are-skills"
+        },
+        {
+          "title": "Use skills in Claude",
+          "url": "https://support.claude.com/en/articles/12512180-use-skills-in-claude"
+        },
+        {
+          "title": "How to create custom skills",
+          "url": "https://support.claude.com/en/articles/12512198-how-to-create-custom-skills"
+        }
       ]
     },
     {
@@ -63,9 +92,18 @@
       ],
       "practice": "Connect one work app you use daily. Ask Claude a question that needs data from it, then ask Claude to explain which tool calls it made. Review the connector's settings and note which actions it can take.",
       "docs": [
-        { "title": "Use connectors to extend Claude's capabilities", "url": "https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities" },
-        { "title": "Get started with custom connectors using remote MCP", "url": "https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp" },
-        { "title": "Browse skills, connectors, and plugins in one directory", "url": "https://support.claude.com/en/articles/14328846-browse-skills-connectors-and-plugins-in-one-directory" }
+        {
+          "title": "Use connectors to extend Claude's capabilities",
+          "url": "https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities"
+        },
+        {
+          "title": "Get started with custom connectors using remote MCP",
+          "url": "https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp"
+        },
+        {
+          "title": "Browse skills, connectors, and plugins in one directory",
+          "url": "https://support.claude.com/en/articles/14328846-browse-skills-connectors-and-plugins-in-one-directory"
+        }
       ]
     },
     {
@@ -87,9 +125,18 @@
       ],
       "practice": "Open Settings > Extensions in Claude Desktop and browse the directory. Pick one extension that would help you locally, read what it can access, and decide whether a web connector would serve you better.",
       "docs": [
-        { "title": "Getting started with local MCP servers on Claude Desktop", "url": "https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop" },
-        { "title": "When to use desktop and web connectors", "url": "https://support.claude.com/en/articles/11725091-when-to-use-desktop-and-web-connectors" },
-        { "title": "Enabling and using the desktop extension allowlist", "url": "https://support.claude.com/en/articles/12592343-enabling-and-using-the-desktop-extension-allowlist" }
+        {
+          "title": "Getting started with local MCP servers on Claude Desktop",
+          "url": "https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop"
+        },
+        {
+          "title": "When to use desktop and web connectors",
+          "url": "https://support.claude.com/en/articles/11725091-when-to-use-desktop-and-web-connectors"
+        },
+        {
+          "title": "Enabling and using the desktop extension allowlist",
+          "url": "https://support.claude.com/en/articles/12592343-enabling-and-using-the-desktop-extension-allowlist"
+        }
       ]
     },
     {
@@ -112,9 +159,18 @@
       ],
       "practice": "Open a copy of a spreadsheet you know well in Excel with the Claude add-in. Ask it to explain one formula chain with citations and to find any errors. Then ask Claude for PowerPoint to turn one table into a chart slide in your template.",
       "docs": [
-        { "title": "Get started with Claude in Chrome", "url": "https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome" },
-        { "title": "Use Claude for Excel", "url": "https://support.claude.com/en/articles/12650343-use-claude-for-excel" },
-        { "title": "Use Claude for PowerPoint", "url": "https://support.claude.com/en/articles/13521390-use-claude-for-powerpoint" }
+        {
+          "title": "Get started with Claude in Chrome",
+          "url": "https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome"
+        },
+        {
+          "title": "Use Claude for Excel",
+          "url": "https://support.claude.com/en/articles/12650343-use-claude-for-excel"
+        },
+        {
+          "title": "Use Claude for PowerPoint",
+          "url": "https://support.claude.com/en/articles/13521390-use-claude-for-powerpoint"
+        }
       ]
     },
     {
@@ -138,9 +194,18 @@
       ],
       "practice": "Install one plugin that matches your role and list what skills and connectors it includes. Give Cowork a small multi-step task in a dedicated test folder on Manual mode, and watch which steps ask for approval.",
       "docs": [
-        { "title": "Get started with Claude Cowork", "url": "https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork" },
-        { "title": "Use plugins in Claude", "url": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude" },
-        { "title": "Claude Cowork and chat are one Claude", "url": "https://support.claude.com/en/articles/16761823-claude-cowork-and-chat-are-one-claude" }
+        {
+          "title": "Get started with Claude Cowork",
+          "url": "https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork"
+        },
+        {
+          "title": "Use plugins in Claude",
+          "url": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude"
+        },
+        {
+          "title": "Claude Cowork and chat are one Claude",
+          "url": "https://support.claude.com/en/articles/16761823-claude-cowork-and-chat-are-one-claude"
+        }
       ]
     },
     {
@@ -163,9 +228,18 @@
       ],
       "practice": "Choose one workflow from your role. Write down its inputs, the Claude features it uses, the output, and the specific checks you will run. Run it once end to end and time it against your usual approach.",
       "docs": [
-        { "title": "Claude use cases", "url": "https://claude.com/resources/use-cases" },
-        { "title": "Using Research on Claude", "url": "https://support.claude.com/en/articles/11088861-using-research-on-claude-ai" },
-        { "title": "Create and edit files with Claude", "url": "https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude" }
+        {
+          "title": "Claude use cases",
+          "url": "https://claude.com/resources/use-cases"
+        },
+        {
+          "title": "Using Research on Claude",
+          "url": "https://support.claude.com/en/articles/11088861-using-research-on-claude-ai"
+        },
+        {
+          "title": "Create and edit files with Claude",
+          "url": "https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude"
+        }
       ]
     },
     {
@@ -189,10 +263,22 @@
       ],
       "practice": "List the three workflows your team repeats most. For each, decide whether it belongs in a shared project, an organization skill, or a plugin, and name who would own and review it.",
       "docs": [
-        { "title": "Provision and manage skills for your organization", "url": "https://support.claude.com/en/articles/13119606-provision-and-manage-skills-for-your-organization" },
-        { "title": "Use enterprise search", "url": "https://support.claude.com/en/articles/12489464-use-enterprise-search" },
-        { "title": "Set organization instructions", "url": "https://support.claude.com/en/articles/14546867-set-organization-preferences" },
-        { "title": "Manage plugins for your organization", "url": "https://support.claude.com/en/articles/13837433-manage-plugins-for-your-organization" }
+        {
+          "title": "Provision and manage skills for your organization",
+          "url": "https://support.claude.com/en/articles/13119606-provision-and-manage-skills-for-your-organization"
+        },
+        {
+          "title": "Use enterprise search",
+          "url": "https://support.claude.com/en/articles/12489464-use-enterprise-search"
+        },
+        {
+          "title": "Set organization instructions",
+          "url": "https://support.claude.com/en/articles/14546867-set-organization-preferences"
+        },
+        {
+          "title": "Manage plugins for your organization",
+          "url": "https://support.claude.com/en/articles/13837433-manage-plugins-for-your-organization"
+        }
       ]
     },
     {
@@ -215,38 +301,147 @@
       ],
       "practice": "Audit your own setup: list every connector, extension, and connected folder Claude can reach. Remove one you no longer need, narrow one folder, and write down which outputs you always check before they leave your hands.",
       "docs": [
-        { "title": "Use Claude Cowork safely", "url": "https://support.claude.com/en/articles/13364135-use-claude-cowork-safely" },
-        { "title": "Create and edit files with Claude (network access and security)", "url": "https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude" },
-        { "title": "Use incognito chats", "url": "https://support.claude.com/en/articles/12260368-use-incognito-chats" }
+        {
+          "title": "Use Claude Cowork safely",
+          "url": "https://support.claude.com/en/articles/13364135-use-claude-cowork-safely"
+        },
+        {
+          "title": "Create and edit files with Claude (network access and security)",
+          "url": "https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude"
+        },
+        {
+          "title": "Use incognito chats",
+          "url": "https://support.claude.com/en/articles/12260368-use-incognito-chats"
+        }
       ]
     }
   ],
   "cards": [
-    { "front": "What decides whether Claude loads a skill?", "back": "The skill's description. Claude reads name and description first and loads the full instructions only when the skill fits the request.", "module": "m1" },
-    { "front": "Minimum contents of a custom skill", "back": "A folder whose name matches the skill, containing skill.md with frontmatter giving a name (up to 64 characters) and a description (up to 200).", "module": "m1" },
-    { "front": "Where to toggle and upload skills", "back": "Customize > Skills. Upload with + Create skill > Upload a skill, using a zipped skill folder.", "module": "m1" },
-    { "front": "Capability skills depend on", "back": "Code execution and file creation.", "module": "m1" },
-    { "front": "Can a connector see files your account cannot?", "back": "No. Connectors inherit your permissions in the connected service.", "module": "m2" },
-    { "front": "Network requirement for a custom connector", "back": "The remote MCP server must be reachable over the public internet, because Anthropic's cloud makes the connection.", "module": "m2" },
-    { "front": "Where Team and Enterprise owners enable connectors", "back": "Organization settings > Connectors. Members still sign in to each service themselves.", "module": "m2" },
-    { "front": "What is a desktop extension?", "back": "A one-click .mcpb package that installs a local MCP server in Claude Desktop.", "module": "m3" },
-    { "front": "Where to browse reviewed desktop extensions", "back": "Claude Desktop, Settings > Extensions > Browse extensions.", "module": "m3" },
-    { "front": "Desktop extension vs web connector", "back": "Extensions run on your computer and suit local files and apps. Web connectors run from Anthropic's cloud and suit hosted services.", "module": "m3" },
-    { "front": "Claude in Chrome plan availability", "back": "All paid plans: Pro, Max, Team, and Enterprise, with Enterprise requiring admin enablement.", "module": "m4" },
-    { "front": "Two safe habits with Claude for Excel", "back": "Start from a trusted copy of the workbook and review changes before finalizing.", "module": "m4" },
-    { "front": "What context do the Office add-ins share?", "back": "Claude for Excel shares context with PowerPoint, Word, and Outlook, so one conversation can span them.", "module": "m4" },
-    { "front": "Three Cowork permission modes", "back": "Manual asks before acting, Auto lets Claude decide with safety checks, and Skip runs without automatic checks.", "module": "m5" },
-    { "front": "What a plugin bundles", "back": "Skills, connectors, and sub-agents packaged for a role or team.", "module": "m5" },
-    { "front": "Why are a plugin's hooks grayed out in chat?", "back": "Hooks and sub-agents run only in Cowork and Claude Code.", "module": "m5" },
-    { "front": "Command to automate recurring Cowork work", "back": "/schedule, which runs a task on demand or on a cadence without your device online.", "module": "m5" },
-    { "front": "Analysis workflow check", "back": "Have Claude show its method, then reconcile key totals against the source data before sharing.", "module": "m6" },
-    { "front": "Meeting-prep building blocks", "back": "A project with account notes, calendar and email connectors, and optionally a scheduled task to produce the brief.", "module": "m6" },
-    { "front": "Owner-provisioned skill defaults", "back": "Provisioned to everyone and enabled by default; each user can toggle it off.", "module": "m7" },
-    { "front": "How Enterprise targets skills to one group", "back": "Bundle the skills in a plugin and assign the plugin to that group.", "module": "m7" },
-    { "front": "Ask Your Org", "back": "The project enterprise search adds for searching company sources. An owner sets it up with Documents and Chat connectors.", "module": "m7" },
-    { "front": "Safer folder access for Cowork", "back": "A dedicated working folder, not broad access to sensitive files.", "module": "m8" },
-    { "front": "Enterprise default for code execution network access", "back": "Disabled. Other options: package managers only, package managers plus allowlisted domains, or all domains.", "module": "m8" },
-    { "front": "Who is responsible for actions Claude takes for you?", "back": "You are, including messages, published content, and data changes.", "module": "m8" }
+    {
+      "front": "What decides whether Claude loads a skill?",
+      "back": "The skill's description. Claude reads name and description first and loads the full instructions only when the skill fits the request.",
+      "module": "m1"
+    },
+    {
+      "front": "Minimum contents of a custom skill",
+      "back": "A folder whose name matches the skill, containing skill.md with frontmatter giving a name (up to 64 characters) and a description (up to 200).",
+      "module": "m1"
+    },
+    {
+      "front": "Where to toggle and upload skills",
+      "back": "Customize > Skills. Upload with + Create skill > Upload a skill, using a zipped skill folder.",
+      "module": "m1"
+    },
+    {
+      "front": "Capability skills depend on",
+      "back": "Code execution and file creation.",
+      "module": "m1"
+    },
+    {
+      "front": "Can a connector see files your account cannot?",
+      "back": "No. Connectors inherit your permissions in the connected service.",
+      "module": "m2"
+    },
+    {
+      "front": "Network requirement for a custom connector",
+      "back": "The remote MCP server must be reachable over the public internet, because Anthropic's cloud makes the connection.",
+      "module": "m2"
+    },
+    {
+      "front": "Where Team and Enterprise owners enable connectors",
+      "back": "Organization settings > Connectors. Members still sign in to each service themselves.",
+      "module": "m2"
+    },
+    {
+      "front": "What is a desktop extension?",
+      "back": "A one-click .mcpb package that installs a local MCP server in Claude Desktop.",
+      "module": "m3"
+    },
+    {
+      "front": "Where to browse reviewed desktop extensions",
+      "back": "Claude Desktop, Settings > Extensions > Browse extensions.",
+      "module": "m3"
+    },
+    {
+      "front": "Desktop extension vs web connector",
+      "back": "Extensions run on your computer and suit local files and apps. Web connectors run from Anthropic's cloud and suit hosted services.",
+      "module": "m3"
+    },
+    {
+      "front": "Claude in Chrome plan availability",
+      "back": "All paid plans: Pro, Max, Team, and Enterprise, with Enterprise requiring admin enablement.",
+      "module": "m4"
+    },
+    {
+      "front": "Two safe habits with Claude for Excel",
+      "back": "Start from a trusted copy of the workbook and review changes before finalizing.",
+      "module": "m4"
+    },
+    {
+      "front": "What context do the Office add-ins share?",
+      "back": "Claude for Excel shares context with PowerPoint, Word, and Outlook, so one conversation can span them.",
+      "module": "m4"
+    },
+    {
+      "front": "Three Cowork permission modes",
+      "back": "Manual asks before acting, Auto lets Claude decide with safety checks, and Skip runs without automatic checks.",
+      "module": "m5"
+    },
+    {
+      "front": "What a plugin bundles",
+      "back": "Skills, connectors, and sub-agents packaged for a role or team.",
+      "module": "m5"
+    },
+    {
+      "front": "Why are a plugin's hooks grayed out in chat?",
+      "back": "Hooks and sub-agents run only in Cowork and Claude Code.",
+      "module": "m5"
+    },
+    {
+      "front": "Command to automate recurring Cowork work",
+      "back": "/schedule, which runs a task on demand or on a cadence without your device online.",
+      "module": "m5"
+    },
+    {
+      "front": "Analysis workflow check",
+      "back": "Have Claude show its method, then reconcile key totals against the source data before sharing.",
+      "module": "m6"
+    },
+    {
+      "front": "Meeting-prep building blocks",
+      "back": "A project with account notes, calendar and email connectors, and optionally a scheduled task to produce the brief.",
+      "module": "m6"
+    },
+    {
+      "front": "Owner-provisioned skill defaults",
+      "back": "Provisioned to everyone and enabled by default; each user can toggle it off.",
+      "module": "m7"
+    },
+    {
+      "front": "How Enterprise targets skills to one group",
+      "back": "Bundle the skills in a plugin and assign the plugin to that group.",
+      "module": "m7"
+    },
+    {
+      "front": "Ask Your Org",
+      "back": "The project enterprise search adds for searching company sources. An owner sets it up with Documents and Chat connectors.",
+      "module": "m7"
+    },
+    {
+      "front": "Safer folder access for Cowork",
+      "back": "A dedicated working folder, not broad access to sensitive files.",
+      "module": "m8"
+    },
+    {
+      "front": "Enterprise default for code execution network access",
+      "back": "Disabled. Other options: package managers only, package managers plus allowlisted domains, or all domains.",
+      "module": "m8"
+    },
+    {
+      "front": "Who is responsible for actions Claude takes for you?",
+      "back": "You are, including messages, published content, and data changes.",
+      "module": "m8"
+    }
   ],
   "questions": [
     {
@@ -432,7 +627,10 @@
         "D": "Claude for PowerPoint needs Claude Code installed before it can open a deck",
         "E": "Claude for Excel answers questions about a workbook without citing any cells"
       },
-      "answer": ["A", "B"],
+      "answer": [
+        "A",
+        "B"
+      ],
       "select": 2,
       "explanationCorrect": "The Excel add-in shares context across the Office add-ins so one conversation can span files, and the PowerPoint add-in edits targeted slides while keeping template compliance.",
       "explanationDistractor": "Claude for Excel is for Pro, Max, Team, and Enterprise and answers with cell-level citations; neither add-in depends on Claude Code.",
@@ -536,7 +734,10 @@
         "D": "Turn web search off so that Claude relies only on its training data",
         "E": "Publish the draft as a public artifact before any review takes place"
       },
-      "answer": ["A", "B"],
+      "answer": [
+        "A",
+        "B"
+      ],
       "select": 2,
       "explanationCorrect": "Research is designed for multi-source questions, and checking the underlying sources is what makes the findings safe to rely on.",
       "explanationDistractor": "A citation shows where a claim came from but does not prove the source supports it, and Research needs web search turned on.",
@@ -606,7 +807,10 @@
         "D": "Use Skip mode on banking sites so tasks are not interrupted",
         "E": "Install any extension that promises faster receipt scanning"
       },
-      "answer": ["A", "B"],
+      "answer": [
+        "A",
+        "B"
+      ],
       "select": 2,
       "explanationCorrect": "Limiting access to a dedicated folder and requiring approval on sensitive accounts both reduce the damage a mistake or prompt injection could cause.",
       "explanationDistractor": "Broad folder access, Skip mode on banking sites, and unverified extensions all widen the paths for harm that the guidance warns against.",

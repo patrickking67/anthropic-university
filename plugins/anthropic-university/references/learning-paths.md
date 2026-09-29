@@ -20,7 +20,7 @@ Partner practice: pair each partner lane with `/anthropic-university:client-role
 
 Official learning to take alongside (links only; sign-in may be required):
 
-- Anthropic Academy: https://anthropic.skilljar.com/
+- Anthropic Academy: https://academy.claude.com/
 - Claude Partner Network learning path (partners):
   https://anthropic-partners.skilljar.com/page/claude-partner-network-learning-path
 - Certification registration and exam guides: the Certifications page on the partner learning site.

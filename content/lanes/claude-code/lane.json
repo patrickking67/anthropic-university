@@ -7,11 +7,26 @@
   "audience": "Developers and technical leads who already use Claude Code for small tasks and want to set it up properly for a repository, a team, and CI.",
   "estimatedHours": 6,
   "prefix": "cc",
-  "relatedCertifications": ["developer-foundations", "architect-foundations"],
+  "relatedCertifications": [
+    "developer-foundations",
+    "architect-foundations"
+  ],
   "officialResources": [
-    { "title": "Claude Code in Action", "url": "https://anthropic.skilljar.com/claude-code-in-action", "provider": "Anthropic Academy" },
-    { "title": "Claude Code documentation", "url": "https://code.claude.com/docs/en/overview", "provider": "Anthropic" },
-    { "title": "Best practices for Claude Code", "url": "https://code.claude.com/docs/en/best-practices", "provider": "Anthropic" }
+    {
+      "title": "Claude Code in action",
+      "url": "https://academy.claude.com/courses/claude-code-in-action",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Claude Code documentation",
+      "url": "https://code.claude.com/docs/en/overview",
+      "provider": "Anthropic"
+    },
+    {
+      "title": "Best practices for Claude Code",
+      "url": "https://code.claude.com/docs/en/best-practices",
+      "provider": "Anthropic"
+    }
   ],
   "modules": [
     {
@@ -33,9 +48,18 @@
       ],
       "practice": "Install the CLI, run `claude` in a small repository, and ask it to explain the project layout. Then open the same repository in the VS Code extension or the desktop Code tab and compare what each surface shows you.",
       "docs": [
-        { "title": "Claude Code overview", "url": "https://code.claude.com/docs/en/overview" },
-        { "title": "Claude Code on the web", "url": "https://code.claude.com/docs/en/claude-code-on-the-web" },
-        { "title": "VS Code extension", "url": "https://code.claude.com/docs/en/vs-code" }
+        {
+          "title": "Claude Code overview",
+          "url": "https://code.claude.com/docs/en/overview"
+        },
+        {
+          "title": "Claude Code on the web",
+          "url": "https://code.claude.com/docs/en/claude-code-on-the-web"
+        },
+        {
+          "title": "VS Code extension",
+          "url": "https://code.claude.com/docs/en/vs-code"
+        }
       ]
     },
     {
@@ -58,9 +82,18 @@
       ],
       "practice": "Pick a change that touches three files. Start in plan mode, ask Claude to read the relevant code and propose a plan, edit the plan, then approve it and let Claude implement and run the tests.",
       "docs": [
-        { "title": "How Claude Code works", "url": "https://code.claude.com/docs/en/how-claude-code-works" },
-        { "title": "Choose a permission mode", "url": "https://code.claude.com/docs/en/permission-modes" },
-        { "title": "Best practices", "url": "https://code.claude.com/docs/en/best-practices" }
+        {
+          "title": "How Claude Code works",
+          "url": "https://code.claude.com/docs/en/how-claude-code-works"
+        },
+        {
+          "title": "Choose a permission mode",
+          "url": "https://code.claude.com/docs/en/permission-modes"
+        },
+        {
+          "title": "Best practices",
+          "url": "https://code.claude.com/docs/en/best-practices"
+        }
       ]
     },
     {
@@ -84,9 +117,18 @@
       ],
       "practice": "Create .claude/settings.json that allows your lint and test commands and denies reads of .env and a secrets/ folder. Add a personal override in .claude/settings.local.json, then confirm both with /status.",
       "docs": [
-        { "title": "Settings files and precedence", "url": "https://code.claude.com/docs/en/settings" },
-        { "title": "Configure permissions", "url": "https://code.claude.com/docs/en/permissions" },
-        { "title": "Managed settings", "url": "https://code.claude.com/docs/en/managed-settings" }
+        {
+          "title": "Settings files and precedence",
+          "url": "https://code.claude.com/docs/en/settings"
+        },
+        {
+          "title": "Configure permissions",
+          "url": "https://code.claude.com/docs/en/permissions"
+        },
+        {
+          "title": "Managed settings",
+          "url": "https://code.claude.com/docs/en/managed-settings"
+        }
       ]
     },
     {
@@ -109,8 +151,14 @@
       ],
       "practice": "Trim your project CLAUDE.md to build, test, and convention essentials. Move API-specific guidance into .claude/rules/api.md with a paths field for src/api/**, then open an API file and confirm the rule loads.",
       "docs": [
-        { "title": "How Claude remembers your project", "url": "https://code.claude.com/docs/en/memory" },
-        { "title": "Extend Claude Code", "url": "https://code.claude.com/docs/en/features-overview" }
+        {
+          "title": "How Claude remembers your project",
+          "url": "https://code.claude.com/docs/en/memory"
+        },
+        {
+          "title": "Extend Claude Code",
+          "url": "https://code.claude.com/docs/en/features-overview"
+        }
       ]
     },
     {
@@ -133,8 +181,14 @@
       ],
       "practice": "Write a /fix-issue skill that takes an issue number through $ARGUMENTS, set disable-model-invocation: true, and pre-approve only the read and test tools it needs. Then add a read-only reviewer subagent with tools: Read, Grep, Glob.",
       "docs": [
-        { "title": "Extend Claude with skills", "url": "https://code.claude.com/docs/en/skills" },
-        { "title": "Create custom subagents", "url": "https://code.claude.com/docs/en/sub-agents" }
+        {
+          "title": "Extend Claude with skills",
+          "url": "https://code.claude.com/docs/en/skills"
+        },
+        {
+          "title": "Create custom subagents",
+          "url": "https://code.claude.com/docs/en/sub-agents"
+        }
       ]
     },
     {
@@ -157,8 +211,14 @@
       ],
       "practice": "Add a PostToolUse hook with matcher Edit|Write that runs your formatter, and a PreToolUse hook with matcher Bash that exits 2 on any command touching a production config path. Trigger both and read the transcript notices.",
       "docs": [
-        { "title": "Hooks reference", "url": "https://code.claude.com/docs/en/hooks" },
-        { "title": "Get started with hooks", "url": "https://code.claude.com/docs/en/hooks-guide" }
+        {
+          "title": "Hooks reference",
+          "url": "https://code.claude.com/docs/en/hooks"
+        },
+        {
+          "title": "Get started with hooks",
+          "url": "https://code.claude.com/docs/en/hooks-guide"
+        }
       ]
     },
     {
@@ -181,9 +241,18 @@
       ],
       "practice": "Add a remote MCP server at project scope with its token read from ${API_TOKEN}. Then bundle one skill and one hook into a plugin, load it with --plugin-dir, and run its namespaced skill.",
       "docs": [
-        { "title": "Connect Claude Code to tools via MCP", "url": "https://code.claude.com/docs/en/mcp" },
-        { "title": "Plugins overview", "url": "https://code.claude.com/docs/en/plugins/overview" },
-        { "title": "Create a plugin", "url": "https://code.claude.com/docs/en/plugins/create" }
+        {
+          "title": "Connect Claude Code to tools via MCP",
+          "url": "https://code.claude.com/docs/en/mcp"
+        },
+        {
+          "title": "Plugins overview",
+          "url": "https://code.claude.com/docs/en/plugins/overview"
+        },
+        {
+          "title": "Create a plugin",
+          "url": "https://code.claude.com/docs/en/plugins/create"
+        }
       ]
     },
     {
@@ -206,41 +275,161 @@
       ],
       "practice": "Write a CI step that runs claude -p to summarize a diff with --output-format json and a --json-schema for {risk, summary}, using dontAsk and a Read-only allowlist. Parse structured_output with jq.",
       "docs": [
-        { "title": "Run Claude Code programmatically", "url": "https://code.claude.com/docs/en/headless" },
-        { "title": "Claude Code GitHub Actions", "url": "https://code.claude.com/docs/en/github-actions" },
-        { "title": "Checkpointing", "url": "https://code.claude.com/docs/en/checkpointing" },
-        { "title": "Explore the context window", "url": "https://code.claude.com/docs/en/context-window" }
+        {
+          "title": "Run Claude Code programmatically",
+          "url": "https://code.claude.com/docs/en/headless"
+        },
+        {
+          "title": "Claude Code GitHub Actions",
+          "url": "https://code.claude.com/docs/en/github-actions"
+        },
+        {
+          "title": "Checkpointing",
+          "url": "https://code.claude.com/docs/en/checkpointing"
+        },
+        {
+          "title": "Explore the context window",
+          "url": "https://code.claude.com/docs/en/context-window"
+        }
       ]
     }
   ],
   "cards": [
-    { "front": "Which Claude Code surface runs sessions in the cloud against a cloned repository?", "back": "Claude Code on the web (claude.ai/code). It cannot see files that exist only on your laptop, and it does not read your ~/.claude/skills.", "module": "m1" },
-    { "front": "Do Homebrew and WinGet installs of Claude Code auto-update?", "back": "No. Upgrade them yourself (brew upgrade, winget upgrade). The native installer script is the auto-updating option.", "module": "m1" },
-    { "front": "What does the JetBrains plugin need besides the plugin itself?", "back": "The Claude Code CLI, installed separately.", "module": "m1" },
-    { "front": "The three phases of Claude Code's agent loop", "back": "Gather context, take action, verify results. They blend together and repeat until the task is done.", "module": "m2" },
-    { "front": "When is plan mode worth the overhead?", "back": "When the approach is uncertain, the change spans several files, or you are unfamiliar with the code. Skip it for a one-sentence diff.", "module": "m2" },
-    { "front": "dontAsk vs bypassPermissions", "back": "dontAsk denies anything not pre-approved (good for locked-down CI). bypassPermissions skips checks entirely and belongs only in isolated containers or VMs.", "module": "m2" },
-    { "front": "Does a deny rule apply in bypassPermissions mode?", "back": "Yes. Deny rules block in every mode. Allow rules have no effect in bypassPermissions.", "module": "m2" },
-    { "front": "Settings precedence, highest first", "back": "Managed, command-line flags, project local (.claude/settings.local.json), shared project (.claude/settings.json), user (~/.claude/settings.json).", "module": "m3" },
-    { "front": "Order in which permission rules are evaluated", "back": "Deny, then ask, then allow. The first match wins, and specificity does not change the order.", "module": "m3" },
-    { "front": "Rule that blocks Claude's file tools from reading .env", "back": "\"deny\": [\"Read(./.env)\"] in permissions. Add Read(./secrets/**) for a folder.", "module": "m3" },
-    { "front": "Where does \"Yes, and don't ask again\" save a Bash approval?", "back": "As an allow rule in .claude/settings.local.json, which Claude Code keeps out of git.", "module": "m3" },
-    { "front": "CLAUDE.local.md", "back": "Personal, project-specific instructions at the project root. It loads after CLAUDE.md at that level and should stay out of version control.", "module": "m4" },
-    { "front": "How deep can CLAUDE.md @imports nest?", "back": "Up to four hops. Relative paths resolve from the file that contains the import.", "module": "m4" },
-    { "front": "What makes a .claude/rules file load only for certain files?", "back": "A paths list in its YAML frontmatter, such as \"src/api/**/*.ts\". It loads when Claude reads a matching file.", "module": "m4" },
-    { "front": "disable-model-invocation: true", "back": "Skill frontmatter that stops Claude from loading the skill on its own. You run it manually with /name, and it costs no context until then.", "module": "m5" },
-    { "front": "allowed-tools in a skill", "back": "Tools Claude can use without asking during the turn that invokes the skill. The grant clears when you send your next message.", "module": "m5" },
-    { "front": "$ARGUMENTS vs $0", "back": "$ARGUMENTS is the full argument string. $0 (same as $ARGUMENTS[0]) is the first argument by position.", "module": "m5" },
-    { "front": "Why delegate to a subagent?", "back": "It works in its own context window and returns only a summary, so logs and search results do not fill the main conversation.", "module": "m5" },
-    { "front": "Hook exit code that blocks a PreToolUse call", "back": "Exit 2. Exit 1 is a non-blocking error and the action proceeds.", "module": "m6" },
-    { "front": "What does exit 2 do on a Stop hook?", "back": "Prevents Claude from stopping, so the conversation continues. Useful for \"keep going until the tests pass\" checks.", "module": "m6" },
-    { "front": "Matcher for every tool from an MCP server named github", "back": "mcp__github__.* (the .* is required; a bare mcp__github is compared as an exact string and matches nothing).", "module": "m6" },
-    { "front": "Default scope for claude mcp add", "back": "Local: stored in ~/.claude.json for the current project only. Use --scope project for .mcp.json or --scope user for all your projects.", "module": "m7" },
-    { "front": "Environment variable syntax in .mcp.json", "back": "${VAR} or ${VAR:-default}, in command, args, env, url, and headers.", "module": "m7" },
-    { "front": "File that makes a directory a plugin", "back": ".claude-plugin/plugin.json. Components such as skills/ and agents/ sit at the plugin root, not inside .claude-plugin/.", "module": "m7" },
-    { "front": "Flag that makes claude -p return a schema-shaped result", "back": "--output-format json with --json-schema '<schema>'. The answer arrives in structured_output.", "module": "m8" },
-    { "front": "/clear vs /compact", "back": "/clear resets context for an unrelated task. /compact summarizes the current conversation, optionally with focus instructions, so you can keep going.", "module": "m8" },
-    { "front": "What do checkpoints not capture?", "back": "Changes made by Bash commands and edits made outside Claude Code. Use git for those.", "module": "m8" }
+    {
+      "front": "Which Claude Code surface runs sessions in the cloud against a cloned repository?",
+      "back": "Claude Code on the web (claude.ai/code). It cannot see files that exist only on your laptop, and it does not read your ~/.claude/skills.",
+      "module": "m1"
+    },
+    {
+      "front": "Do Homebrew and WinGet installs of Claude Code auto-update?",
+      "back": "No. Upgrade them yourself (brew upgrade, winget upgrade). The native installer script is the auto-updating option.",
+      "module": "m1"
+    },
+    {
+      "front": "What does the JetBrains plugin need besides the plugin itself?",
+      "back": "The Claude Code CLI, installed separately.",
+      "module": "m1"
+    },
+    {
+      "front": "The three phases of Claude Code's agent loop",
+      "back": "Gather context, take action, verify results. They blend together and repeat until the task is done.",
+      "module": "m2"
+    },
+    {
+      "front": "When is plan mode worth the overhead?",
+      "back": "When the approach is uncertain, the change spans several files, or you are unfamiliar with the code. Skip it for a one-sentence diff.",
+      "module": "m2"
+    },
+    {
+      "front": "dontAsk vs bypassPermissions",
+      "back": "dontAsk denies anything not pre-approved (good for locked-down CI). bypassPermissions skips checks entirely and belongs only in isolated containers or VMs.",
+      "module": "m2"
+    },
+    {
+      "front": "Does a deny rule apply in bypassPermissions mode?",
+      "back": "Yes. Deny rules block in every mode. Allow rules have no effect in bypassPermissions.",
+      "module": "m2"
+    },
+    {
+      "front": "Settings precedence, highest first",
+      "back": "Managed, command-line flags, project local (.claude/settings.local.json), shared project (.claude/settings.json), user (~/.claude/settings.json).",
+      "module": "m3"
+    },
+    {
+      "front": "Order in which permission rules are evaluated",
+      "back": "Deny, then ask, then allow. The first match wins, and specificity does not change the order.",
+      "module": "m3"
+    },
+    {
+      "front": "Rule that blocks Claude's file tools from reading .env",
+      "back": "\"deny\": [\"Read(./.env)\"] in permissions. Add Read(./secrets/**) for a folder.",
+      "module": "m3"
+    },
+    {
+      "front": "Where does \"Yes, and don't ask again\" save a Bash approval?",
+      "back": "As an allow rule in .claude/settings.local.json, which Claude Code keeps out of git.",
+      "module": "m3"
+    },
+    {
+      "front": "CLAUDE.local.md",
+      "back": "Personal, project-specific instructions at the project root. It loads after CLAUDE.md at that level and should stay out of version control.",
+      "module": "m4"
+    },
+    {
+      "front": "How deep can CLAUDE.md @imports nest?",
+      "back": "Up to four hops. Relative paths resolve from the file that contains the import.",
+      "module": "m4"
+    },
+    {
+      "front": "What makes a .claude/rules file load only for certain files?",
+      "back": "A paths list in its YAML frontmatter, such as \"src/api/**/*.ts\". It loads when Claude reads a matching file.",
+      "module": "m4"
+    },
+    {
+      "front": "disable-model-invocation: true",
+      "back": "Skill frontmatter that stops Claude from loading the skill on its own. You run it manually with /name, and it costs no context until then.",
+      "module": "m5"
+    },
+    {
+      "front": "allowed-tools in a skill",
+      "back": "Tools Claude can use without asking during the turn that invokes the skill. The grant clears when you send your next message.",
+      "module": "m5"
+    },
+    {
+      "front": "$ARGUMENTS vs $0",
+      "back": "$ARGUMENTS is the full argument string. $0 (same as $ARGUMENTS[0]) is the first argument by position.",
+      "module": "m5"
+    },
+    {
+      "front": "Why delegate to a subagent?",
+      "back": "It works in its own context window and returns only a summary, so logs and search results do not fill the main conversation.",
+      "module": "m5"
+    },
+    {
+      "front": "Hook exit code that blocks a PreToolUse call",
+      "back": "Exit 2. Exit 1 is a non-blocking error and the action proceeds.",
+      "module": "m6"
+    },
+    {
+      "front": "What does exit 2 do on a Stop hook?",
+      "back": "Prevents Claude from stopping, so the conversation continues. Useful for \"keep going until the tests pass\" checks.",
+      "module": "m6"
+    },
+    {
+      "front": "Matcher for every tool from an MCP server named github",
+      "back": "mcp__github__.* (the .* is required; a bare mcp__github is compared as an exact string and matches nothing).",
+      "module": "m6"
+    },
+    {
+      "front": "Default scope for claude mcp add",
+      "back": "Local: stored in ~/.claude.json for the current project only. Use --scope project for .mcp.json or --scope user for all your projects.",
+      "module": "m7"
+    },
+    {
+      "front": "Environment variable syntax in .mcp.json",
+      "back": "${VAR} or ${VAR:-default}, in command, args, env, url, and headers.",
+      "module": "m7"
+    },
+    {
+      "front": "File that makes a directory a plugin",
+      "back": ".claude-plugin/plugin.json. Components such as skills/ and agents/ sit at the plugin root, not inside .claude-plugin/.",
+      "module": "m7"
+    },
+    {
+      "front": "Flag that makes claude -p return a schema-shaped result",
+      "back": "--output-format json with --json-schema '<schema>'. The answer arrives in structured_output.",
+      "module": "m8"
+    },
+    {
+      "front": "/clear vs /compact",
+      "back": "/clear resets context for an unrelated task. /compact summarizes the current conversation, optionally with focus instructions, so you can keep going.",
+      "module": "m8"
+    },
+    {
+      "front": "What do checkpoints not capture?",
+      "back": "Changes made by Bash commands and edits made outside Claude Code. Use git for those.",
+      "module": "m8"
+    }
   ],
   "questions": [
     {
@@ -324,7 +513,10 @@
         "D": "Allow rules are the only way to grant tools once a session is in bypassPermissions mode",
         "E": "dontAsk prompts once per tool and then remembers the answer for the rest of the session"
       },
-      "answer": ["A", "B"],
+      "answer": [
+        "A",
+        "B"
+      ],
       "select": 2,
       "explanationCorrect": "Deny rules block in every mode, including bypassPermissions. acceptEdits auto-approves reads, file edits, and common filesystem commands.",
       "explanationDistractor": "Plan mode blocks edits until you approve a plan, not the reverse. Allow rules have no effect in bypassPermissions, and dontAsk never prompts: it denies anything not pre-approved.",
@@ -479,7 +671,10 @@
         "D": "context: fork runs the skill in a forked subagent context instead of inline",
         "E": "The argument-hint field validates arguments and rejects calls that do not match"
       },
-      "answer": ["B", "D"],
+      "answer": [
+        "B",
+        "D"
+      ],
       "select": 2,
       "explanationCorrect": "Custom commands merged into skills, so .claude/commands/deploy.md and .claude/skills/deploy/SKILL.md both create /deploy. context: fork runs the skill in its own subagent context.",
       "explanationDistractor": "The allowed-tools grant clears at your next message, cloud sessions do not read ~/.claude/skills, and argument-hint only shows a hint in autocomplete.",
@@ -583,7 +778,10 @@
         "D": "Fields from same-named servers in each scope are merged together",
         "E": "User-scoped servers load only in the project where they were added"
       },
-      "answer": ["A", "C"],
+      "answer": [
+        "A",
+        "C"
+      ],
       "select": 2,
       "explanationCorrect": "Local is the default scope for claude mcp add. When the same server name appears in several places, Claude Code uses the highest-precedence definition, and local beats project, which beats user.",
       "explanationDistractor": "Project servers live in .mcp.json, not ~/.claude.json. Entries are not merged across scopes, and user scope applies to all your projects.",

@@ -10,9 +10,9 @@ Group: use · Level: intermediate · ~5 h · For: Knowledge workers and team lea
 
 ## Take alongside
 
-- [Claude 101](https://anthropic.skilljar.com/claude-101) — Anthropic Academy
-- [Introduction to Claude Cowork](https://anthropic.skilljar.com/introduction-to-claude-cowork) — Anthropic Academy
-- [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) — Anthropic Academy
+- [Claude 101](https://academy.claude.com/courses/claude-101) — Anthropic Academy
+- [Introduction to Claude Cowork](https://academy.claude.com/courses/introduction-to-claude-cowork) — Anthropic Academy
+- [AI Fluency: Framework and foundations](https://academy.claude.com/courses/ai-fluency-framework-foundations) — Anthropic Academy
 - [Claude use cases](https://claude.com/resources/use-cases) — Anthropic
 
 ## Skills: using and creating them

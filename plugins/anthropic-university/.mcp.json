@@ -7,6 +7,18 @@
     "microsoft-learn": {
       "type": "http",
       "url": "https://learn.microsoft.com/api/mcp"
+    },
+    "agent-skills": {
+      "type": "http",
+      "url": "https://agentskills.io/mcp"
+    },
+    "econ-index": {
+      "type": "http",
+      "url": "https://econ-index.mcp.claude.com/mcp"
+    },
+    "claude-docs": {
+      "type": "http",
+      "url": "https://api.anthropic.com/v1/pages/mcp"
     }
   }
 }
