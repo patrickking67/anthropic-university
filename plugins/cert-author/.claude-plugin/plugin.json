@@ -1,8 +1,0 @@
-{
-  "name": "cert-author",
-  "description": "Contributor tools for Anthropic University: author original docs-grounded questions, adversarially review a bank, and rebuild generated content. Unofficial project tooling.",
-  "version": "1.1.0",
-  "author": { "name": "Patrick King", "url": "https://github.com/patrickking67" },
-  "homepage": "https://github.com/patrickking67/anthropic-university",
-  "keywords": ["claude", "certification", "authoring", "content", "maintainer"]
-}

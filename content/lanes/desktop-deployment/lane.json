@@ -1,0 +1,776 @@
+{
+  "laneId": "desktop-deployment",
+  "title": "Claude Desktop Deployment",
+  "group": "administer",
+  "level": "intermediate",
+  "summary": "Package, configure, and verify Claude Desktop and Claude Code across macOS and Windows fleets with MDM, Group Policy, and Intune.",
+  "audience": "Endpoint, MDM, and desktop engineering administrators who deploy Claude Desktop and Claude Code to managed Macs and Windows PCs.",
+  "estimatedHours": 5,
+  "prefix": "dsk",
+  "prerequisites": [
+    "enterprise-administration"
+  ],
+  "relatedCertifications": [
+    "associate-foundations",
+    "architect-professional"
+  ],
+  "officialResources": [
+    {
+      "title": "Enterprise configuration for Claude Desktop",
+      "url": "https://support.claude.com/en/articles/12622667-enterprise-configuration",
+      "provider": "Claude Help Center"
+    },
+    {
+      "title": "Claude Desktop collection",
+      "url": "https://support.claude.com/en/collections/16163169-claude-desktop",
+      "provider": "Claude Help Center"
+    },
+    {
+      "title": "Claude Desktop configuration reference",
+      "url": "https://claude.com/docs/cowork/3p/configuration",
+      "provider": "Claude Docs"
+    },
+    {
+      "title": "Deploy managed settings for Claude Code",
+      "url": "https://code.claude.com/docs/en/managed-settings",
+      "provider": "Claude Code Docs"
+    }
+  ],
+  "modules": [
+    {
+      "id": "m1",
+      "title": "Installers and platform requirements",
+      "summary": "Pick the right package for each platform and install it so every feature, including Cowork, works for standard users.",
+      "objectives": [
+        "Choose between the macOS .pkg and .dmg and the Windows MSIX packages",
+        "Provision the Windows MSIX machine-wide for standard users",
+        "Prepare Windows devices for Cowork with the Virtual Machine Platform",
+        "Install Claude Desktop on Linux from the apt repository"
+      ],
+      "keyPoints": [
+        "macOS ships as a Universal .pkg (recommended for enterprise) and a drag-and-drop .dmg; the app installs to /Applications and self-updates unless policy disables it.",
+        "Windows ships as MSIX packages for x64 and arm64. The MSIX is packaged per user: Add-AppxPackage registers it for the current user only, and Add-AppxProvisionedPackage stages it for every user on the device.",
+        "An Intune line-of-business upload of the MSIX installs in user context and fails for standard users. Wrap Add-AppxProvisionedPackage in a Win32 app or PowerShell script, or pre-stage it, for machine-wide installs.",
+        "Cowork on Windows needs the Virtual Machine Platform optional feature and a restart; enable it with Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -All -NoRestart and schedule the reboot.",
+        "The third-party deployment docs note that fleets on the legacy .exe installer get Claude Desktop without Cowork; moving them to the MSIX enables it.",
+        "On Linux (beta), install from Anthropic's apt repository so updates arrive with normal package updates; the app does not update itself there."
+      ],
+      "practice": "On a test Windows VM, provision the MSIX with Add-AppxProvisionedPackage, enable the Virtual Machine Platform, restart, and sign in as a standard user. Confirm Cowork starts. Repeat with Add-AppxPackage and note what breaks.",
+      "docs": [
+        {
+          "title": "Deploy Claude Desktop for Windows",
+          "url": "https://support.claude.com/en/articles/12622703-deploy-claude-desktop-for-windows"
+        },
+        {
+          "title": "Deploy Claude Desktop for macOS",
+          "url": "https://support.claude.com/en/articles/12611117-deploy-claude-desktop-for-macos"
+        },
+        {
+          "title": "Install Claude Desktop",
+          "url": "https://support.claude.com/en/articles/10065433-install-claude-desktop"
+        }
+      ]
+    },
+    {
+      "id": "m2",
+      "title": "Silent deployment and update ownership",
+      "summary": "Decide whether your MDM or the app owns versions, and set the update keys so the two never fight.",
+      "objectives": [
+        "Choose a single update owner for the fleet",
+        "Configure disableAutoUpdates and autoUpdaterEnforcementHours",
+        "Write an Intune detection rule that tolerates self-updates",
+        "Keep updates working when api.anthropic.com is blocked"
+      ],
+      "keyPoints": [
+        "By default the app checks for updates about every four hours and applies them regardless of the version your MDM assigned.",
+        "Option 1: the MDM owns versions. Set disableAutoUpdates to true (1) and push new builds on your schedule.",
+        "Option 2: the app owns versions. Leave disableAutoUpdates unset, provision once, and use a detection script that checks Get-AppxPackage -Name Claude for a version at or above the one you deployed.",
+        "autoUpdaterEnforcementHours is the number of hours before a downloaded update forces a restart, from 1 to 72, defaulting to 72. It has no effect while disableAutoUpdates is in place.",
+        "A \"parameter is incorrect\" error after MDM deployment usually means both the updater and the MDM registered the package; pick one owner.",
+        "updateViaUpdatesHost reads the update feed from releases.claude.com so api.anthropic.com can stay blocked (documented for third-party deployments)."
+      ],
+      "practice": "Write the two update policies side by side for your fleet: the registry values or profile keys for each option, the detection logic, and who approves new versions. Choose one and document why.",
+      "docs": [
+        {
+          "title": "Deploy Claude Desktop for Windows (auto-updates)",
+          "url": "https://support.claude.com/en/articles/12622703-deploy-claude-desktop-for-windows"
+        },
+        {
+          "title": "Enterprise configuration for Claude Desktop",
+          "url": "https://support.claude.com/en/articles/12622667-enterprise-configuration"
+        }
+      ]
+    },
+    {
+      "id": "m3",
+      "title": "macOS configuration profiles",
+      "summary": "Deliver managed preferences for com.anthropic.claudefordesktop with any Apple MDM and know how the app reads them.",
+      "objectives": [
+        "Build a .mobileconfig payload for the com.anthropic.claudefordesktop domain",
+        "Encode booleans, integers, and JSON-typed keys correctly",
+        "Explain per-user versus machine managed preferences",
+        "Use a profile manifest in Jamf, Kandji, or ProfileCreator"
+      ],
+      "keyPoints": [
+        "Claude Desktop reads managed preferences from the domain com.anthropic.claudefordesktop, delivered as a configuration profile by Jamf Pro, Kandji, Intune, or any Apple MDM.",
+        "An MDM profile lands in /Library/Managed Preferences. Both the per-user and machine files are read, and the per-user value wins where a key appears in both.",
+        "Array- and object-typed keys such as managedMcpServers or allowedWorkspaceFolders are single keys whose value is a whole JSON document; the portable encoding is a JSON string.",
+        "The third-party configuration reference says to write every value as a string (\"true\", \"3600\"), while the profile manifest declares native boolean and integer types. Confirm either choice with the diagnostic report.",
+        "The profile manifest (claudefordesktop.plist) lets profile editors show every key with its type, default, and allowed values instead of hand-writing XML.",
+        "Configuration is read at launch, so users must fully quit and reopen the app after a profile changes; newer builds also re-check about every 10 minutes and prompt a restart."
+      ],
+      "practice": "Build a minimal profile that sets forceLoginOrgUUID and disableAutoUpdates, install it on a test Mac, fully quit and reopen Claude, and generate a diagnostic report to confirm both keys were read.",
+      "docs": [
+        {
+          "title": "Enterprise configuration for Claude Desktop",
+          "url": "https://support.claude.com/en/articles/12622667-enterprise-configuration"
+        },
+        {
+          "title": "Deploy with MDM (profile precedence)",
+          "url": "https://claude.com/docs/third-party/claude-desktop/mdm"
+        },
+        {
+          "title": "Configuration reference: value types",
+          "url": "https://claude.com/docs/cowork/3p/configuration"
+        }
+      ]
+    },
+    {
+      "id": "m4",
+      "title": "Windows Group Policy and Intune",
+      "summary": "Write Claude policy to the registry through GPO, ADMX, or Intune without falling into the hive and value-type traps.",
+      "objectives": [
+        "Import the Claude ADMX and ADML into the Central Store or Intune",
+        "Choose HKLM or HKCU and keep the whole configuration in one hive",
+        "Use supported registry value types directly under the policy key",
+        "Deliver keys the ADMX does not define"
+      ],
+      "keyPoints": [
+        "Policy lives under HKLM\\SOFTWARE\\Policies\\Claude (machine) or HKCU\\SOFTWARE\\Policies\\Claude (user). Machine-level settings take priority, and HKLM is the recommended location.",
+        "The hives are not merged in current builds: when any readable machine value is present under HKLM, the app ignores HKCU entirely, so deploy the full configuration to one hive.",
+        "Values must sit directly under the Claude key as REG_SZ or REG_DWORD. The app never reads subkeys, cannot see REG_QWORD, REG_MULTI_SZ, or REG_BINARY, and treats REG_EXPAND_SZ as present but unreadable.",
+        "The supplied Claude.admx defines one category, Claude Desktop, with every policy set to class Both, so each appears under both Computer and User Configuration. Use Computer Configuration to land in HKLM.",
+        "Intune can import the ADMX and its en-US ADML under Devices > Configuration > Import ADMX, then build a profile from Imported Administrative templates.",
+        "Keys documented in the support article but absent from the supplied ADMX, such as forceLoginOrgUUID, need a Group Policy Preferences registry item, a PowerShell script, or an Intune remediation."
+      ],
+      "practice": "Import the ADMX into a test OU's Central Store, set three policies under Computer Configuration, run gpupdate /force, and inspect HKLM\\SOFTWARE\\Policies\\Claude with reg query. Confirm nothing landed in a subkey.",
+      "docs": [
+        {
+          "title": "Enterprise configuration for Claude Desktop",
+          "url": "https://support.claude.com/en/articles/12622667-enterprise-configuration"
+        },
+        {
+          "title": "Deploy with MDM (Windows hives)",
+          "url": "https://claude.com/docs/third-party/claude-desktop/mdm"
+        },
+        {
+          "title": "Import custom ADMX into Intune",
+          "url": "https://learn.microsoft.com/intune/device-configuration/settings-catalog/import-custom-admx-templates"
+        }
+      ]
+    },
+    {
+      "id": "m5",
+      "title": "Sign-in, feature, telemetry, and network policies",
+      "summary": "Lock sign-in to your organization, switch surfaces on or off, control what the app sends to Anthropic, and route traffic through your proxy.",
+      "objectives": [
+        "Restrict sign-in to one or more organizations with forceLoginOrgUUID",
+        "Toggle Cowork, Code, and Chat with the documented keys",
+        "Choose the right telemetry keys",
+        "Route app and agent traffic through a proxy or PAC file"
+      ],
+      "keyPoints": [
+        "forceLoginOrgUUID accepts one UUID (which also pre-selects that organization) or an array of UUIDs (any listed organization accepted); login fails for accounts outside the list. It has no effect in third-party deployments.",
+        "The support article documents isClaudeCodeForDesktopEnabled for Code and secureVmFeaturesEnabled for Cowork, both defaulting to true. The ADMX and third-party reference use coworkTabEnabled for Cowork and add chatTabEnabled.",
+        "effortLevel sets the default effort for Claude Code sessions in Claude Desktop, reapplied at every session start, and needs version 1.25927.0 or later; the ADMX's equivalent key is defaultModelEffort.",
+        "Telemetry keys: disableEssentialTelemetry blocks crash and performance reports, disableNonessentialTelemetry blocks product analytics, and disableNonessentialServices blocks connector favicons and artifact-preview origins, so artifacts stop rendering.",
+        "egressProxyUrl sends app and agent traffic through an HTTP proxy instead of OS proxy settings, and egressProxyPacUrl wins when both are set. Both are MDM-only keys.",
+        "allowedWorkspaceFolders limits the folders users can mount into Cowork; leaving it unset means unrestricted."
+      ],
+      "practice": "Find your organization UUID, write a profile that restricts sign-in to it, and test signing in with a personal account. Then decide which of the three telemetry keys, if any, your security policy actually requires.",
+      "docs": [
+        {
+          "title": "Enterprise configuration for Claude Desktop",
+          "url": "https://support.claude.com/en/articles/12622667-enterprise-configuration"
+        },
+        {
+          "title": "Configuration reference",
+          "url": "https://claude.com/docs/cowork/3p/configuration"
+        }
+      ]
+    },
+    {
+      "id": "m6",
+      "title": "Extensions and MCP controls",
+      "summary": "Control desktop extensions and local MCP servers with policy, and know how policy interacts with the in-app allowlist.",
+      "objectives": [
+        "Set isDesktopExtensionEnabled and isDesktopExtensionDirectoryEnabled",
+        "Explain how policy overrides the in-app extension allowlist",
+        "Block or allow user-added local MCP servers",
+        "Push organization MCP servers with managedMcpServers"
+      ],
+      "keyPoints": [
+        "isDesktopExtensionEnabled turns desktop extensions on or off, and isDesktopExtensionDirectoryEnabled controls access to the extension directory; the support article lists both as defaulting to true.",
+        "Machine-level policy overrides the in-app allowlist. To use the allowlist, leave both extension keys unset or true so the allowlist can populate the registry.",
+        "The in-app allowlist is off by default. Turning it on force-deletes existing extension installs and limits users to the sanctioned registry, with no drag-to-install of .mcpb files.",
+        "isLocalDevMcpEnabled (default true) controls local MCP servers users add through Developer settings; set it to false to allow only organization-provided servers.",
+        "The ADMX adds isDesktopExtensionSignatureRequired to reject unsigned extensions and managedMcpServers to push remote or local servers as one JSON value.",
+        "Custom extensions uploaded in Organization settings > Connectors > Desktop are scoped to your organization; a new version must keep the manifest name and increment the version."
+      ],
+      "practice": "Turn on the desktop extension allowlist in a test organization, add one approved extension, set isLocalDevMcpEnabled to false by policy, and confirm on a device that only the approved extension installs.",
+      "docs": [
+        {
+          "title": "Enabling and using the desktop extension allowlist",
+          "url": "https://support.claude.com/en/articles/12592343-enabling-and-using-the-desktop-extension-allowlist"
+        },
+        {
+          "title": "Deploying enterprise-grade MCP servers with desktop extensions",
+          "url": "https://support.claude.com/en/articles/12702546-deploying-enterprise-grade-mcp-servers-with-desktop-extensions"
+        },
+        {
+          "title": "Enterprise configuration for Claude Desktop",
+          "url": "https://support.claude.com/en/articles/12622667-enterprise-configuration"
+        }
+      ]
+    },
+    {
+      "id": "m7",
+      "title": "Claude Code managed settings on endpoints",
+      "summary": "Place Claude Code policy where the CLI reads it, and understand how multiple managed sources combine.",
+      "objectives": [
+        "Place managed-settings.json in the correct system directory per OS",
+        "Deliver the same policy through a macOS profile or the HKLM registry",
+        "Explain the managed-source order and first-wins behavior",
+        "Confirm the active source with /status"
+      ],
+      "keyPoints": [
+        "managed-settings.json lives in /Library/Application Support/ClaudeCode/ on macOS, /etc/claude-code/ on Linux and WSL, and C:\\Program Files\\ClaudeCode\\ on Windows. The legacy C:\\ProgramData path is no longer read.",
+        "As an MDM policy, use the com.anthropic.claudecode preferences domain on macOS, or a REG_SZ value named Settings holding the JSON under HKLM\\SOFTWARE\\Policies\\ClaudeCode on Windows.",
+        "Managed sources rank: server-managed (remote), then MDM or HKLM, then managed-settings.json with managed-settings.d/ drop-ins, then the user-writable HKCU value as a last resort.",
+        "By default the first source that delivers a policy key wins and the rest are skipped; managedSourcesBehavior set to merge combines admin sources.",
+        "A managed file, plist, or HKLM value that is not a valid JSON object stops Claude Code from starting, while a malformed HKCU value only produces a notice.",
+        "Managed settings sit above command-line flags, local project, shared project, and user settings."
+      ],
+      "practice": "Deploy a managed-settings.json that sets permissions.disableBypassPermissionsMode on a test machine, run /status, and confirm the Setting sources line reads Enterprise managed settings (file).",
+      "docs": [
+        {
+          "title": "Deploy managed settings",
+          "url": "https://code.claude.com/docs/en/managed-settings"
+        },
+        {
+          "title": "Claude Code settings",
+          "url": "https://code.claude.com/docs/en/settings"
+        }
+      ]
+    },
+    {
+      "id": "m8",
+      "title": "Verifying policy and troubleshooting",
+      "summary": "Prove a device received the policy you intended and fix the common installation, Cowork, and security-software failures.",
+      "objectives": [
+        "Read managed-config.txt from a diagnostic report",
+        "Recognize the signs of a misspelled or unread key",
+        "Fix Cowork virtualization errors on Windows",
+        "Allowlist the agent helper in EDR and AppLocker by signer"
+      ],
+      "keyPoints": [
+        "Help > Troubleshooting > Generate Diagnostic Report exports a .zip whose managed-config.txt shows where configuration was read from, every key applied (secrets redacted), and any parse errors.",
+        "The app silently ignores misspelled keys. On macOS an editable configuration window means no recognized key arrived; on Windows any value under HKLM locks the window, so always check managed-config.txt.",
+        "\"Missing HCS services\" errors mean the Virtual Machine Platform stack isn't registered: check it with Get-WindowsOptionalFeature and Get-Service vmcompute, hns, re-enable it, and use Restart rather than shutdown when Fast Startup is on.",
+        "If Cowork won't start after an Add-AppxPackage install, redeploy with Add-AppxProvisionedPackage so the Cowork virtualization service registers machine-wide.",
+        "AppLocker can block packaged apps; allow MSIX packages or add Claude Desktop to your allowed list.",
+        "EDR or binary-authorization rules can block the signed agent helper that runs Chat, Cowork, and Code sessions. Allowlist it by signer, for example Team ID Q6L2SF6YDW on macOS or publisher Anthropic, PBC on Windows, not by versioned path."
+      ],
+      "practice": "Deliberately misspell one key in a test profile, deploy it, and use the diagnostic report to find it. Then write a one-page runbook your service desk can follow for the three most common failures.",
+      "docs": [
+        {
+          "title": "Installation and setup: verifying the deployment",
+          "url": "https://claude.com/docs/third-party/claude-desktop/installation"
+        },
+        {
+          "title": "Deploy Claude Desktop for Windows: troubleshooting",
+          "url": "https://support.claude.com/en/articles/12622703-deploy-claude-desktop-for-windows"
+        }
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "front": "Add-AppxPackage vs. Add-AppxProvisionedPackage for Claude MSIX?",
+      "back": "Add-AppxPackage registers for the current user only. Add-AppxProvisionedPackage stages it machine-wide for every user, including standard users.",
+      "module": "m1"
+    },
+    {
+      "front": "What Windows feature does Cowork require?",
+      "back": "The Virtual Machine Platform optional feature, followed by a restart.",
+      "module": "m1"
+    },
+    {
+      "front": "Why does an Intune LOB upload of the Claude MSIX fail for standard users?",
+      "back": "LOB installs the per-user MSIX in user context. Use a Win32 or script wrapper that runs Add-AppxProvisionedPackage instead.",
+      "module": "m1"
+    },
+    {
+      "front": "What are the two update-ownership options?",
+      "back": "MDM owns versions (disableAutoUpdates = 1) or the app owns versions (leave it unset and detect version >= deployed).",
+      "module": "m2"
+    },
+    {
+      "front": "What does autoUpdaterEnforcementHours control?",
+      "back": "Hours (1–72, default 72) before a downloaded update forces a restart. Ignored when auto-updates are disabled.",
+      "module": "m2"
+    },
+    {
+      "front": "What usually causes \"The parameter is incorrect\" after MDM deployment?",
+      "back": "Both the in-app updater and the MDM registered the package, leaving duplicate entries. Pick one update owner.",
+      "module": "m2"
+    },
+    {
+      "front": "Which preference domain does Claude Desktop read on macOS?",
+      "back": "com.anthropic.claudefordesktop",
+      "module": "m3"
+    },
+    {
+      "front": "Per-user vs. machine managed preferences on macOS: which wins?",
+      "back": "Both are read; for a key in both, the per-user value in /Library/Managed Preferences/<user>/ wins.",
+      "module": "m3"
+    },
+    {
+      "front": "How do you encode an array key like allowedWorkspaceFolders in a profile?",
+      "back": "As one key whose value is the whole JSON document, most portably as a JSON string.",
+      "module": "m3"
+    },
+    {
+      "front": "Which registry paths hold Claude Desktop policy?",
+      "back": "HKLM\\SOFTWARE\\Policies\\Claude (machine, recommended) and HKCU\\SOFTWARE\\Policies\\Claude (user).",
+      "module": "m4"
+    },
+    {
+      "front": "Are HKLM and HKCU Claude policies merged?",
+      "back": "No. If readable machine policy exists under HKLM, the app ignores HKCU entirely.",
+      "module": "m4"
+    },
+    {
+      "front": "Which registry value types can Claude Desktop read?",
+      "back": "REG_SZ, and REG_DWORD for boolean and integer keys. Not subkeys, REG_QWORD, REG_MULTI_SZ, or REG_BINARY.",
+      "module": "m4"
+    },
+    {
+      "front": "What does forceLoginOrgUUID do with a single UUID vs. an array?",
+      "back": "A single UUID restricts login and pre-selects that org; an array accepts any listed org without pre-selection.",
+      "module": "m5"
+    },
+    {
+      "front": "Which key does the support article use to toggle Cowork?",
+      "back": "secureVmFeaturesEnabled (default true). The ADMX and 3P reference use coworkTabEnabled.",
+      "module": "m5"
+    },
+    {
+      "front": "What breaks when disableNonessentialServices is true?",
+      "back": "Connector favicons and the artifact-preview and MCP Apps origins, so artifacts don't render.",
+      "module": "m5"
+    },
+    {
+      "front": "How do extension policy keys interact with the in-app allowlist?",
+      "back": "Machine policy overrides it. Leave isDesktopExtensionEnabled and isDesktopExtensionDirectoryEnabled unset or true so the allowlist can populate.",
+      "module": "m6"
+    },
+    {
+      "front": "What happens to installed extensions when the allowlist is turned on?",
+      "back": "Existing installs are force-deleted and users can install only allowlisted extensions from the in-app registry.",
+      "module": "m6"
+    },
+    {
+      "front": "What does isLocalDevMcpEnabled = false block?",
+      "back": "Local MCP servers users add through Developer settings. Organization-provided servers still load.",
+      "module": "m6"
+    },
+    {
+      "front": "Where does managed-settings.json go on Windows?",
+      "back": "C:\\Program Files\\ClaudeCode\\managed-settings.json (the legacy ProgramData path isn't read).",
+      "module": "m7"
+    },
+    {
+      "front": "How is Claude Code policy stored in the Windows registry?",
+      "back": "As a REG_SZ value named Settings holding JSON under HKLM\\SOFTWARE\\Policies\\ClaudeCode.",
+      "module": "m7"
+    },
+    {
+      "front": "What is the default behavior with several Claude Code managed sources?",
+      "back": "first-wins: the highest-ranked source with a policy key applies and the rest are skipped.",
+      "module": "m7"
+    },
+    {
+      "front": "Which file in the diagnostic report shows applied policy?",
+      "back": "managed-config.txt: the source read, every key applied (secrets redacted), and parse errors.",
+      "module": "m8"
+    },
+    {
+      "front": "What does \"Missing HCS services: HNS, vmcompute, vfpext\" mean?",
+      "back": "The Virtual Machine Platform stack isn't registered. Re-enable the feature and use Restart, not shutdown.",
+      "module": "m8"
+    },
+    {
+      "front": "How should EDR allowlist the Claude agent helper?",
+      "back": "By signing identity, such as Team ID Q6L2SF6YDW on macOS or publisher Anthropic, PBC on Windows, so the rule survives updates.",
+      "module": "m8"
+    }
+  ],
+  "questions": [
+    {
+      "id": "dsk-001",
+      "module": "m1",
+      "studyArea": "Windows installation",
+      "difficulty": "medium",
+      "stem": "Standard users on shared Windows laptops need Claude Desktop with Cowork. The package is deployed through Intune. Which method works?",
+      "options": {
+        "A": "Upload the MSIX as an Intune line-of-business app",
+        "B": "Run Add-AppxPackage from a logon script for each user",
+        "C": "Wrap Add-AppxProvisionedPackage in a Win32 app or script",
+        "D": "Publish the MSIX in the Microsoft Store for Business"
+      },
+      "answer": "C",
+      "explanationCorrect": "The MSIX is per-user; provisioning it machine-wide with Add-AppxProvisionedPackage makes it available to standard users and registers the Cowork service.",
+      "explanationDistractor": "An LOB upload installs in user context and fails for standard users; per-user Add-AppxPackage can leave Cowork unregistered.",
+      "reference": "https://support.claude.com/en/articles/12622703-deploy-claude-desktop-for-windows"
+    },
+    {
+      "id": "dsk-002",
+      "module": "m1",
+      "studyArea": "Windows installation",
+      "difficulty": "easy",
+      "stem": "A pilot device shows Claude installed, but Cowork reports it cannot start. The Virtual Machine Platform was enabled with -NoRestart yesterday. What is the most likely fix?",
+      "options": {
+        "A": "Reinstall Claude with the .exe installer",
+        "B": "Restart the device so the feature takes effect",
+        "C": "Set coworkTabEnabled to true under HKCU",
+        "D": "Sign in with a different organization account"
+      },
+      "answer": "B",
+      "explanationCorrect": "The Virtual Machine Platform feature takes effect only after a restart; -NoRestart defers it for silent deployment.",
+      "explanationDistractor": "The legacy .exe path doesn't provide Cowork, and Cowork is on by default, so a policy key isn't the blocker.",
+      "reference": "https://support.claude.com/en/articles/12622703-deploy-claude-desktop-for-windows"
+    },
+    {
+      "id": "dsk-003",
+      "module": "m1",
+      "studyArea": "Platform packages",
+      "difficulty": "medium",
+      "stem": "Which TWO statements about Claude Desktop packages are accurate? (Select 2.)",
+      "options": {
+        "A": "The macOS Universal .pkg supports Intel and Apple silicon Macs",
+        "B": "The Windows MSIX ships only for x64 machines",
+        "C": "On Linux the app updates through the apt repository, not in-app",
+        "D": "The macOS .dmg is the recommended format for MDM deployment",
+        "E": "Linux Claude Desktop supports computer use and dictation"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanationCorrect": "The Universal .pkg covers both Mac architectures, and on Linux updates arrive with normal apt package updates.",
+      "explanationDistractor": "MSIX ships for x64 and arm64, the .pkg (not the .dmg) is recommended for enterprise, and computer use and dictation aren't available on Linux.",
+      "reference": "https://support.claude.com/en/articles/10065433-install-claude-desktop",
+      "select": 2
+    },
+    {
+      "id": "dsk-004",
+      "module": "m2",
+      "studyArea": "Update control",
+      "difficulty": "medium",
+      "stem": "Your MDM pins Claude Desktop versions and pushes new builds monthly. Devices keep jumping ahead of the approved version. What should you set?",
+      "options": {
+        "A": "autoUpdaterEnforcementHours to 1",
+        "B": "disableAutoUpdates to 1",
+        "C": "relaunchEnforcementHours to 0",
+        "D": "updateViaUpdatesHost to 1"
+      },
+      "answer": "B",
+      "explanationCorrect": "When the MDM owns versions, disableAutoUpdates stops the in-app updater so only MDM-pushed builds land.",
+      "explanationDistractor": "autoUpdaterEnforcementHours only shortens the restart window for updates the app has already downloaded.",
+      "reference": "https://support.claude.com/en/articles/12622703-deploy-claude-desktop-for-windows"
+    },
+    {
+      "id": "dsk-005",
+      "module": "m2",
+      "studyArea": "Update control",
+      "difficulty": "hard",
+      "stem": "You leave auto-updates on and deploy the MSIX once through Intune. After a week, Intune reports the app as not installed on many devices. What fixes the reporting without disabling updates?",
+      "options": {
+        "A": "Redeploy the MSIX nightly to reset the installed version",
+        "B": "Switch to an Intune line-of-business app assignment",
+        "C": "Detect Get-AppxPackage -Name Claude at or above the deployed version",
+        "D": "Set autoUpdaterEnforcementHours to 72 to slow updates"
+      },
+      "answer": "C",
+      "explanationCorrect": "When the app owns versions, a custom detection script that accepts any version at or above the provisioned one keeps Intune reporting Installed after self-updates.",
+      "explanationDistractor": "Redeploying fights the updater and can leave duplicate package registrations.",
+      "reference": "https://support.claude.com/en/articles/12622703-deploy-claude-desktop-for-windows"
+    },
+    {
+      "id": "dsk-006",
+      "module": "m3",
+      "studyArea": "macOS profiles",
+      "difficulty": "medium",
+      "stem": "A Mac receives a machine-level profile setting disableAutoUpdates to false and a per-user profile setting it to true for the same user. Which value applies, per the deployment docs?",
+      "options": {
+        "A": "The per-user value, true",
+        "B": "The machine value, false",
+        "C": "Neither, because conflicting keys are rejected",
+        "D": "Whichever profile was installed most recently"
+      },
+      "answer": "A",
+      "explanationCorrect": "Both Managed Preferences files are read, and the per-user value wins where a key appears in both.",
+      "explanationDistractor": "Conflicts aren't rejected or resolved by install order.",
+      "reference": "https://claude.com/docs/third-party/claude-desktop/mdm"
+    },
+    {
+      "id": "dsk-007",
+      "module": "m3",
+      "studyArea": "macOS profiles",
+      "difficulty": "medium",
+      "stem": "An admin needs to push allowedWorkspaceFolders, which the docs type as a JSON array, in a .mobileconfig. What is the portable way to encode it?",
+      "options": {
+        "A": "One dotted key per entry, such as allowedWorkspaceFolders.0",
+        "B": "A separate plist file referenced by path in the profile",
+        "C": "One key whose value is the whole JSON document as a string",
+        "D": "A comma-separated string of folder paths without brackets"
+      },
+      "answer": "C",
+      "explanationCorrect": "Array- and object-typed keys are single keys holding the entire JSON document; a JSON string is the portable encoding.",
+      "explanationDistractor": "Dotted key names are never read.",
+      "reference": "https://claude.com/docs/cowork/3p/configuration"
+    },
+    {
+      "id": "dsk-008",
+      "module": "m4",
+      "studyArea": "Registry policy",
+      "difficulty": "hard",
+      "stem": "Help desk reports that user-scoped Claude settings pushed to HKCU\\SOFTWARE\\Policies\\Claude are ignored on some PCs. Those PCs also have one value, disableAutoUpdates, under HKLM\\SOFTWARE\\Policies\\Claude. Why?",
+      "options": {
+        "A": "HKCU values must be REG_EXPAND_SZ to be read",
+        "B": "User policy applies only after a gpupdate /force",
+        "C": "HKCU is read only when the user is a local admin",
+        "D": "Any machine value under HKLM makes the app ignore HKCU"
+      },
+      "answer": "D",
+      "explanationCorrect": "The hives aren't merged: when readable machine policy exists, the app ignores user policy entirely, so deploy the full configuration to one hive.",
+      "explanationDistractor": "REG_EXPAND_SZ is worse, not better: it counts as machine policy present but can't be read.",
+      "reference": "https://claude.com/docs/third-party/claude-desktop/mdm"
+    },
+    {
+      "id": "dsk-009",
+      "module": "m4",
+      "studyArea": "Group Policy and Intune",
+      "difficulty": "medium",
+      "stem": "An admin imports the Claude ADMX and wants policies to land in HKLM. Where in the Group Policy editor should they configure them?",
+      "options": {
+        "A": "User Configuration > Preferences > Control Panel Settings",
+        "B": "Computer Configuration > Administrative Templates > Claude Desktop",
+        "C": "User Configuration > Administrative Templates > Claude Desktop",
+        "D": "Computer Configuration > Windows Settings > Security Settings"
+      },
+      "answer": "B",
+      "explanationCorrect": "The ADMX marks every policy class Both; configuring under Computer Configuration writes to HKLM, the recommended hive.",
+      "explanationDistractor": "The same policies under User Configuration write to HKCU, which is ignored when machine policy exists.",
+      "reference": "https://support.claude.com/en/articles/12622667-enterprise-configuration"
+    },
+    {
+      "id": "dsk-010",
+      "module": "m4",
+      "studyArea": "Registry policy",
+      "difficulty": "medium",
+      "stem": "Which TWO registry practices does Claude Desktop require for policy to be read? (Select 2.)",
+      "options": {
+        "A": "Values sit directly under the Claude policy key, not in subkeys",
+        "B": "Boolean keys are written as REG_MULTI_SZ values",
+        "C": "Values are REG_SZ, or REG_DWORD for boolean and integer keys",
+        "D": "JSON-typed keys are split across numbered subkeys",
+        "E": "Values are written as REG_QWORD for 64-bit systems"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanationCorrect": "The app reads only values directly under the key, as REG_SZ or REG_DWORD.",
+      "explanationDistractor": "It never reads subkeys and can't see REG_MULTI_SZ or REG_QWORD values at all.",
+      "reference": "https://claude.com/docs/third-party/claude-desktop/mdm",
+      "select": 2
+    },
+    {
+      "id": "dsk-011",
+      "module": "m5",
+      "studyArea": "Sign-in restriction",
+      "difficulty": "medium",
+      "stem": "A company runs two Claude Enterprise organizations and wants employees to sign in to either one, but never to personal accounts. How should forceLoginOrgUUID be set?",
+      "options": {
+        "A": "As an array containing both organization UUIDs",
+        "B": "As the parent organization's UUID only",
+        "C": "As a single UUID for the larger organization",
+        "D": "As a comma-separated list inside one string"
+      },
+      "answer": "A",
+      "explanationCorrect": "An array accepts any listed organization, and login fails for accounts outside the list.",
+      "explanationDistractor": "A single UUID accepts only that one organization (and pre-selects it).",
+      "reference": "https://support.claude.com/en/articles/12622667-enterprise-configuration"
+    },
+    {
+      "id": "dsk-012",
+      "module": "m5",
+      "studyArea": "Feature toggles",
+      "difficulty": "medium",
+      "stem": "Using the keys documented in the enterprise configuration support article, how would you disable Cowork but keep Code on standard Claude Desktop?",
+      "options": {
+        "A": "Set chatTabEnabled to false and leave the rest unset",
+        "B": "Set isClaudeCodeForDesktopEnabled to false",
+        "C": "Set secureVmFeaturesEnabled to false and leave the Code key unset",
+        "D": "Set allowedWorkspaceFolders to an empty array"
+      },
+      "answer": "C",
+      "explanationCorrect": "The support article documents secureVmFeaturesEnabled for Cowork access; isClaudeCodeForDesktopEnabled defaults to true, so Code stays on.",
+      "explanationDistractor": "isClaudeCodeForDesktopEnabled controls Code, not Cowork.",
+      "reference": "https://support.claude.com/en/articles/12622667-enterprise-configuration"
+    },
+    {
+      "id": "dsk-013",
+      "module": "m5",
+      "studyArea": "Telemetry and network",
+      "difficulty": "hard",
+      "stem": "Security asks you to stop product-usage analytics from Claude Desktop without breaking artifact previews. Which key should you set?",
+      "options": {
+        "A": "disableNonessentialServices to true",
+        "B": "disableEssentialTelemetry to true",
+        "C": "disableFeatureDiscovery to true",
+        "D": "disableNonessentialTelemetry to true"
+      },
+      "answer": "D",
+      "explanationCorrect": "disableNonessentialTelemetry blocks product-usage analytics and diagnostic uploads without affecting rendering.",
+      "explanationDistractor": "disableNonessentialServices also blocks artifact-preview origins, so artifacts stop rendering.",
+      "reference": "https://claude.com/docs/cowork/3p/configuration"
+    },
+    {
+      "id": "dsk-014",
+      "module": "m6",
+      "studyArea": "Extension policy",
+      "difficulty": "hard",
+      "stem": "An Owner turned on the desktop extension allowlist, but users still see no extensions at all. A GPO sets isDesktopExtensionDirectoryEnabled to 0. What is the cause?",
+      "options": {
+        "A": "The allowlist takes 24 hours to reach clients",
+        "B": "Machine policy disabling the directory overrides the allowlist",
+        "C": "The allowlist requires isLocalDevMcpEnabled set to false",
+        "D": "Custom extensions must be signed before they appear"
+      },
+      "answer": "B",
+      "explanationCorrect": "Policy at the machine level overrides the in-app allowlist; leave both extension keys unset or true so the allowlist can populate.",
+      "explanationDistractor": "isLocalDevMcpEnabled governs user-added local MCP servers, not the extension allowlist.",
+      "reference": "https://support.claude.com/en/articles/12592343-enabling-and-using-the-desktop-extension-allowlist"
+    },
+    {
+      "id": "dsk-015",
+      "module": "m6",
+      "studyArea": "MCP policy",
+      "difficulty": "medium",
+      "stem": "You want users to run only organization-approved MCP servers in Claude Desktop, not servers they add in Developer settings. Which key should you set?",
+      "options": {
+        "A": "isDesktopExtensionEnabled to false",
+        "B": "isDesktopExtensionSignatureRequired to true",
+        "C": "disableDeepLinkRegistration to true",
+        "D": "isLocalDevMcpEnabled to false"
+      },
+      "answer": "D",
+      "explanationCorrect": "isLocalDevMcpEnabled controls local servers users add through Developer settings; organization-provided servers still load.",
+      "explanationDistractor": "Disabling extensions blocks .mcpb installs but not servers added by hand in Developer settings.",
+      "reference": "https://support.claude.com/en/articles/12622667-enterprise-configuration"
+    },
+    {
+      "id": "dsk-016",
+      "module": "m7",
+      "studyArea": "Claude Code managed settings",
+      "difficulty": "medium",
+      "stem": "Where should an admin place managed-settings.json for Claude Code on a Windows workstation?",
+      "options": {
+        "A": "C:\\ProgramData\\ClaudeCode\\managed-settings.json",
+        "B": "%APPDATA%\\Claude\\managed-settings.json",
+        "C": "C:\\Program Files\\ClaudeCode\\managed-settings.json",
+        "D": "%USERPROFILE%\\.claude\\managed-settings.json"
+      },
+      "answer": "C",
+      "explanationCorrect": "Claude Code reads the Windows managed file from C:\\Program Files\\ClaudeCode\\.",
+      "explanationDistractor": "The legacy ProgramData path is no longer read, and user-profile paths aren't managed locations.",
+      "reference": "https://code.claude.com/docs/en/managed-settings"
+    },
+    {
+      "id": "dsk-017",
+      "module": "m7",
+      "studyArea": "Claude Code managed settings",
+      "difficulty": "hard",
+      "stem": "A machine has both an HKLM Settings value under SOFTWARE\\Policies\\ClaudeCode and a managed-settings.json file, each with policy keys. managedSourcesBehavior isn't set. What does Claude Code apply?",
+      "options": {
+        "A": "The HKLM policy, skipping the file",
+        "B": "The file, because files outrank the registry",
+        "C": "A key-by-key merge of both sources",
+        "D": "Neither, because conflicting sources block startup"
+      },
+      "answer": "A",
+      "explanationCorrect": "Under the default first-wins behavior, the highest-ranked source with a policy key applies; MDM and HKLM rank above managed settings files.",
+      "explanationDistractor": "Merging happens only when managedSourcesBehavior is set to merge.",
+      "reference": "https://code.claude.com/docs/en/managed-settings"
+    },
+    {
+      "id": "dsk-018",
+      "module": "m8",
+      "studyArea": "Verifying policy",
+      "difficulty": "medium",
+      "stem": "On a third-party deployment, your MDM shows the Claude profile as delivered to a Mac, but the Configure Third-Party Inference window is still editable. What does that most likely mean?",
+      "options": {
+        "A": "The profile applies only after the next macOS update",
+        "B": "No recognized key reached the app, likely a misspelled key",
+        "C": "The per-user profile is overriding the machine profile",
+        "D": "The profile must be countersigned by Anthropic first"
+      },
+      "answer": "B",
+      "explanationCorrect": "The app silently ignores misspelled keys; on macOS an editable window means no recognized key arrived. Check managed-config.txt in the diagnostic report.",
+      "explanationDistractor": "Precedence between per-user and machine profiles changes values, not whether the window locks.",
+      "reference": "https://claude.com/docs/third-party/claude-desktop/installation"
+    },
+    {
+      "id": "dsk-019",
+      "module": "m8",
+      "studyArea": "Troubleshooting",
+      "difficulty": "medium",
+      "stem": "Cowork fails with \"Missing HCS services: HNS, vmcompute, vfpext\" on a laptop where Claude installed cleanly. Which TWO steps are recommended? (Select 2.)",
+      "options": {
+        "A": "Re-enable the Virtual Machine Platform feature",
+        "B": "Reinstall Claude with the legacy .exe installer",
+        "C": "Restart with Restart rather than shut down and power on",
+        "D": "Set isClaudeCodeForDesktopEnabled to false",
+        "E": "Delete the HKLM\\SOFTWARE\\Policies\\Claude key"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanationCorrect": "The error means the virtualization stack isn't registered; re-enable the feature and use Restart, because Fast Startup can leave services uninitialized after a shutdown.",
+      "explanationDistractor": "Policy keys and the .exe installer don't register the Virtual Machine Platform services.",
+      "reference": "https://support.claude.com/en/articles/12622703-deploy-claude-desktop-for-windows",
+      "select": 2
+    },
+    {
+      "id": "dsk-020",
+      "module": "m8",
+      "studyArea": "Troubleshooting",
+      "difficulty": "hard",
+      "stem": "After an EDR rollout, Claude Desktop opens and reads its managed configuration, but every Chat, Cowork, and Code session fails to start. What is the best fix?",
+      "options": {
+        "A": "Allowlist the agent helper by its signing identity",
+        "B": "Allowlist the helper's current versioned file path",
+        "C": "Turn off the managed configuration and retest",
+        "D": "Reinstall Claude Desktop into ~/Applications"
+      },
+      "answer": "A",
+      "explanationCorrect": "Sessions run through a signed agent helper that path-based deny rules can block; a signer-based rule (Team ID or publisher) survives version updates.",
+      "explanationDistractor": "A versioned path changes with each update, so the rule breaks again.",
+      "reference": "https://claude.com/docs/third-party/claude-desktop/installation"
+    }
+  ]
+}

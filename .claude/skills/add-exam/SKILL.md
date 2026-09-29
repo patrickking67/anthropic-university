@@ -7,6 +7,10 @@ allowed-tools: Read, Write, Edit, Bash(node scripts/build.mjs*)
 
 # Add a new exam track
 
+
+> **Schema v2:** read `content/SCHEMA.md` (select-N items, official domains/weights, `official`
+> block, scenarios) and `content/FACTS.md` (verified current facts) before editing content.
+
 Scaffold a new track so it flows through the build pipeline and shows up in the web app automatically.
 
 ## Steps

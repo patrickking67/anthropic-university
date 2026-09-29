@@ -6,54 +6,118 @@
   "level": "Foundations",
   "unofficial": true,
   "meta": {
-    "questionCount": 100,
+    "questionCount": 121,
     "passScaled": 720,
     "scaleMin": 100,
     "scaleMax": 1000,
     "timeMinutes": 120
   },
+  "official": {
+    "examCode": "CCAO-F",
+    "guideVersion": "1.0",
+    "effective": "2026-07",
+    "items": 60,
+    "fee": "$99 USD",
+    "formats": [
+      "multiple-choice",
+      "multiple-response"
+    ],
+    "delivery": "Pearson VUE (online proctored or test center)",
+    "validityMonths": 12
+  },
   "domains": [
     {
-      "id": "platform-models",
-      "name": "Platform & Model Foundations",
-      "weight": 0.15
+      "id": "prompting-task-execution",
+      "number": 1,
+      "name": "Prompting and Task Execution",
+      "weight": 0.14,
+      "skills": [
+        "Effective Prompts",
+        "Task Decomposition",
+        "Prompt Iteration",
+        "Adapting to Task Type"
+      ]
     },
     {
-      "id": "prompting",
-      "name": "Prompting & Task Execution",
-      "weight": 0.15
+      "id": "output-evaluation",
+      "number": 2,
+      "name": "Output Evaluation and Validation",
+      "weight": 0.21,
+      "skills": [
+        "Accuracy and Completeness",
+        "Hallucinations and Bias",
+        "Fact-Checking",
+        "Human Review",
+        "Refining for Audience",
+        "Output Formats"
+      ]
     },
     {
-      "id": "evaluating",
-      "name": "Evaluating & Validating Output",
-      "weight": 0.15
+      "id": "product-model-selection",
+      "number": 3,
+      "name": "Product and Model Selection",
+      "weight": 0.12,
+      "skills": [
+        "Product Features",
+        "Model Types",
+        "Model-Task Fit",
+        "Context and Memory"
+      ]
     },
     {
-      "id": "workflow",
-      "name": "Workflow Integration & Solution Design",
-      "weight": 0.14
+      "id": "workflow-solution-design",
+      "number": 4,
+      "name": "Workflow Integration and Solution Design",
+      "weight": 0.16,
+      "skills": [
+        "Requirements and Use Cases",
+        "Research and Planning",
+        "Solution Design",
+        "Workflow Integration",
+        "Stakeholder Communication"
+      ]
     },
     {
-      "id": "configuration",
-      "name": "Configuration & Knowledge Management",
-      "weight": 0.14
+      "id": "configuration-knowledge",
+      "number": 5,
+      "name": "Configuration and Knowledge Management",
+      "weight": 0.12,
+      "skills": [
+        "Project Setup",
+        "Knowledge and Connectors",
+        "System-Level Instructions",
+        "Configuration Maintenance"
+      ]
     },
     {
-      "id": "governance",
-      "name": "Governance, Risk & Responsible Use",
-      "weight": 0.14
+      "id": "governance-risk",
+      "number": 6,
+      "name": "Governance, Risk, and Responsible Use",
+      "weight": 0.15,
+      "skills": [
+        "Appropriate Use Cases",
+        "Data Sensitivity and Privacy",
+        "Organizational Policy",
+        "Ethical Implications"
+      ]
     },
     {
-      "id": "troubleshooting",
-      "name": "Troubleshooting & Optimization",
-      "weight": 0.13
+      "id": "troubleshooting-optimization",
+      "number": 7,
+      "name": "Troubleshooting and Optimization",
+      "weight": 0.1,
+      "skills": [
+        "Diagnosing Poor Outputs",
+        "Adjusting from Feedback",
+        "Workflow Optimization"
+      ]
     }
   ],
   "questions": [
     {
       "id": "as-001",
-      "domain": "platform-models",
-      "studyArea": "Entry Points",
+      "domain": "product-model-selection",
+      "studyArea": "Product Features",
       "difficulty": "easy",
       "stem": "A developer wants Claude to read, edit, and run tests across the files of a local Git repository from the terminal. Which entry point is the best fit?",
       "options": {
@@ -69,8 +133,8 @@
     },
     {
       "id": "as-002",
-      "domain": "platform-models",
-      "studyArea": "Entry Points",
+      "domain": "product-model-selection",
+      "studyArea": "Product Features",
       "difficulty": "easy",
       "stem": "Your team answers customer questions using the same product FAQ, tone guidelines, and policy documents every day, and you want every chat to start with that context without pasting it each time. Which entry point best fits?",
       "options": {
@@ -83,12 +147,12 @@
       "explanationCorrect": "Projects let you set durable custom instructions and attach knowledge sources, so every chat in the Project inherits that context automatically. That is ideal for a repeated workflow with shared reference material.",
       "explanationDistractor": "Re-pasting the documents into a fresh chat each time is exactly the manual repetition Projects eliminate; it is error-prone and easy to forget.",
       "scenario": "Customer Support Team",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://support.claude.com/en/articles/9517075-what-are-projects"
     },
     {
       "id": "as-003",
-      "domain": "platform-models",
-      "studyArea": "Entry Points",
+      "domain": "workflow-solution-design",
+      "studyArea": "Solution Design",
       "difficulty": "medium",
       "stem": "An engineer needs Claude to classify incoming support tickets automatically inside the company's own application, with no person in the loop. Which entry point is most appropriate?",
       "options": {
@@ -100,12 +164,12 @@
       "answer": "A",
       "explanationCorrect": "Programmatic, automated classification inside your own software is what the API is for: the application sends each ticket to Claude and acts on the response with no manual steps.",
       "explanationDistractor": "claude.ai chat requires a person to paste each ticket and read each answer, which defeats the goal of automatic, in-app classification.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://platform.claude.com/docs/en/intro"
     },
     {
       "id": "as-004",
-      "domain": "platform-models",
-      "studyArea": "Entry Points",
+      "domain": "product-model-selection",
+      "studyArea": "Product Features",
       "difficulty": "easy",
       "stem": "A marketer wants to brainstorm ten taglines for a campaign and refine the best few in a quick back-and-forth. There is no code, no repeated workflow, and nothing confidential. Which entry point is the simplest appropriate choice?",
       "options": {
@@ -117,63 +181,63 @@
       "answer": "D",
       "explanationCorrect": "For a quick, one-off, conversational task with no code or reusable context, a plain claude.ai chat is the simplest fit; no extra setup is warranted.",
       "explanationDistractor": "Creating a Project with knowledge sources is unnecessary overhead for a single throwaway brainstorm that will not be repeated.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://support.claude.com/en/articles/9517075-what-are-projects"
     },
     {
       "id": "as-005",
-      "domain": "platform-models",
-      "studyArea": "Model Selection",
+      "domain": "product-model-selection",
+      "studyArea": "Model Types",
       "difficulty": "easy",
       "stem": "You need Claude to work through a complex, multi-step financial analysis that requires careful reasoning, and where subtle mistakes are costly. Speed and cost are secondary. Which model is the best default?",
       "options": {
         "A": "Claude Haiku 4.5, for the fastest possible response",
-        "B": "Claude Opus 4.8, for the strongest reasoning",
+        "B": "Claude Opus 5.5, a high-capability model for hard reasoning",
         "C": "Whichever model happens to be cheapest that day",
-        "D": "Claude Sonnet 5, chosen mainly to minimize latency"
+        "D": "Claude Sonnet 5.5, chosen mainly to minimize latency"
       },
       "answer": "B",
-      "explanationCorrect": "Opus 4.8 is the most capable model for the hardest, multi-step reasoning. When accuracy on a complex task outweighs speed and cost, it is the right default.",
-      "explanationDistractor": "Haiku 4.5 is optimized for speed and simple tasks; using it for costly, subtle multi-step reasoning trades away the capability the task demands.",
+      "explanationCorrect": "Opus 5.5 is Anthropic's recommended starting point for demanding work, built for careful multi-step reasoning. When accuracy on a complex task outweighs speed and cost, a high-capability model is the right default; Fable 5.1 is the step up if Opus 5.5 still falls short.",
+      "explanationDistractor": "Haiku 4.5 is optimized for speed and simple, high-volume tasks; using it for costly, subtle multi-step reasoning trades away the capability the task demands.",
       "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
     },
     {
       "id": "as-006",
-      "domain": "platform-models",
-      "studyArea": "Model Selection",
+      "domain": "product-model-selection",
+      "studyArea": "Model-Task Fit",
       "difficulty": "medium",
       "stem": "A product feature will summarize thousands of documents per day. Each summary is moderately complex, and you need a strong balance of quality, speed, and cost at scale. Which model is the most appropriate default?",
       "options": {
-        "A": "Claude Opus 4.8 for every request, regardless of the cost",
+        "A": "Claude Opus 5.5 for every request, regardless of the cost",
         "B": "Claude Haiku 4.5, accepting weaker quality on harder documents",
-        "C": "Claude Sonnet 5, balancing quality and cost at volume",
+        "C": "Claude Sonnet 5.5, balancing quality and cost at volume",
         "D": "A model chosen at random per request"
       },
       "answer": "C",
-      "explanationCorrect": "Sonnet 5 is designed for the balanced, high-volume middle ground: strong quality at a cost and speed that scale to thousands of requests. It fits moderately complex work at volume.",
-      "explanationDistractor": "Running Opus 4.8 on every request maximizes quality, but its cost and latency are hard to justify across thousands of moderately complex summaries per day.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "explanationCorrect": "Sonnet 5.5 offers the best combination of speed and intelligence: strong quality at a cost and latency that scale to thousands of requests. It fits moderately complex work at volume.",
+      "explanationDistractor": "Running Opus 5.5 on every request pays roughly twice Sonnet 5.5's per-token price, and adds latency, for summaries that do not need its extra depth.",
+      "reference": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
     },
     {
       "id": "as-007",
-      "domain": "platform-models",
-      "studyArea": "Model Selection",
+      "domain": "product-model-selection",
+      "studyArea": "Model-Task Fit",
       "difficulty": "easy",
       "stem": "You need to detect whether each incoming message is written in English or Spanish: a simple, high-volume, latency-sensitive classification. Which model is the best fit?",
       "options": {
         "A": "Claude Haiku 4.5, the fastest and most economical option",
-        "B": "Claude Opus 4.8, reached for just to be extra safe on accuracy",
+        "B": "Claude Opus 5.5, reached for just to be extra safe on accuracy",
         "C": "Whichever model happens to have the largest available context window",
         "D": "A separate Opus call per language, then compared side by side"
       },
       "answer": "A",
-      "explanationCorrect": "Haiku 4.5 is built for simple, fast, high-volume tasks like language detection, delivering low latency and low cost where heavier reasoning is not needed.",
-      "explanationDistractor": "Reaching for Opus 4.8 \"to be safe\" on a trivial classification wastes cost and latency without meaningfully improving a task Haiku handles well.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "explanationCorrect": "Haiku 4.5 is the fastest, lowest-cost current model, built for simple, high-volume tasks like language detection where heavier reasoning is not needed.",
+      "explanationDistractor": "Reaching for Opus 5.5 \"to be safe\" on a trivial classification wastes cost and latency without meaningfully improving a task Haiku handles well.",
+      "reference": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
     },
     {
       "id": "as-008",
-      "domain": "platform-models",
-      "studyArea": "Features",
+      "domain": "product-model-selection",
+      "studyArea": "Product Features",
       "difficulty": "medium",
       "stem": "A logic puzzle keeps tripping Claude up because it involves several dependent reasoning steps. Which built-in capability is most directly aimed at improving multi-step reasoning like this?",
       "options": {
@@ -183,14 +247,14 @@
         "D": "Artifacts, to render the finished answer neatly in its own dedicated side panel for later review"
       },
       "answer": "B",
-      "explanationCorrect": "Extended (adaptive) thinking gives Claude room to reason through intermediate steps before committing to an answer, which directly helps on multi-step problems.",
+      "explanationCorrect": "Extended (adaptive) thinking gives Claude room to reason through intermediate steps before committing to an answer. Anthropic recommends it for complex reasoning that does not need recent information from the web.",
       "explanationDistractor": "Artifacts only change how output is displayed in a side panel; they do nothing to improve the underlying reasoning on a multi-step problem.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://support.claude.com/en/articles/11095361-when-should-i-use-web-search-extended-thinking-and-research"
     },
     {
       "id": "as-009",
-      "domain": "platform-models",
-      "studyArea": "Features",
+      "domain": "product-model-selection",
+      "studyArea": "Product Features",
       "difficulty": "easy",
       "stem": "You ask Claude about a regulation that changed last week, after the model's training cutoff. Which feature should you enable to get an accurate, current answer?",
       "options": {
@@ -202,12 +266,12 @@
       "answer": "C",
       "explanationCorrect": "Web search lets Claude retrieve current information from the internet, which is essential for facts that changed after its training cutoff. Reasoning alone cannot recover knowledge the model never had.",
       "explanationDistractor": "Extended thinking helps Claude reason about what it already knows; it cannot conjure facts about an event that postdates its training data.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://support.claude.com/en/articles/10684626-enable-and-use-web-search"
     },
     {
       "id": "as-010",
-      "domain": "platform-models",
-      "studyArea": "Features",
+      "domain": "product-model-selection",
+      "studyArea": "Product Features",
       "difficulty": "medium",
       "stem": "You are drafting a policy document with Claude and want to see it in a dedicated panel, edit it across turns, and keep a stable version as you refine it. Which feature is designed for this?",
       "options": {
@@ -217,14 +281,14 @@
         "D": "Token counting, to measure the document's overall size"
       },
       "answer": "A",
-      "explanationCorrect": "Artifacts render substantial, self-contained content (like a document or code) in a dedicated, editable side panel you can iterate on across turns, which is exactly this use case.",
+      "explanationCorrect": "Artifacts hold substantial, self-contained content, like a document or code, that you are likely to edit, iterate on, or reuse. Claude updates the artifact across turns, which is exactly this use case.",
       "explanationDistractor": "Web search retrieves information; it has nothing to do with displaying and iterating on a document you are co-writing.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them"
     },
     {
       "id": "as-011",
-      "domain": "platform-models",
-      "studyArea": "Features",
+      "domain": "product-model-selection",
+      "studyArea": "Product Features",
       "difficulty": "easy",
       "stem": "A colleague sends you a 40-page PDF contract and asks for a plain-language summary of its key obligations. In claude.ai, what is the most direct way to have Claude work from the actual document?",
       "options": {
@@ -236,12 +300,12 @@
       "answer": "B",
       "explanationCorrect": "claude.ai supports file uploads, including PDFs, so Claude can read the actual document and summarize it accurately rather than working from a paraphrase.",
       "explanationDistractor": "Describing the contract from memory strips out the exact terms Claude needs and invites an inaccurate summary of a document Claude never actually saw.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://support.claude.com/en/articles/8241126-uploading-files-to-claude"
     },
     {
       "id": "as-012",
-      "domain": "platform-models",
-      "studyArea": "Context Management",
+      "domain": "product-model-selection",
+      "studyArea": "Context and Memory",
       "difficulty": "medium",
       "stem": "After a long chat that drifted across several unrelated topics, Claude's answers start pulling in irrelevant details from earlier in the conversation. What is the best way to manage this?",
       "options": {
@@ -251,14 +315,14 @@
         "D": "Switch to a smaller and faster model midway through the long chat"
       },
       "answer": "C",
-      "explanationCorrect": "Everything earlier in a conversation is context Claude may draw on. When accumulated, unrelated history starts to interfere, a fresh conversation gives Claude a clean, focused context.",
+      "explanationCorrect": "Everything earlier in a conversation is context Claude may draw on. When unrelated history starts to interfere, a fresh conversation gives Claude a clean, focused context. Automatic summarization of long chats keeps the earlier material; it does not remove it.",
       "explanationDistractor": "Switching to a smaller model does not remove the irrelevant conversation history that is actually causing the interference.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-claude-plans"
     },
     {
       "id": "as-013",
-      "domain": "platform-models",
-      "studyArea": "Context Management",
+      "domain": "product-model-selection",
+      "studyArea": "Context and Memory",
       "difficulty": "medium",
       "stem": "You want Claude to answer a specific question about one section of a large report. Which approach gives Claude the most useful context to work with?",
       "options": {
@@ -270,12 +334,12 @@
       "answer": "B",
       "explanationCorrect": "Giving Claude the relevant section plus a clear, specific question focuses its attention on what matters. Focused, on-point context generally produces better answers than dumping everything or nothing.",
       "explanationDistractor": "Dumping hundreds of irrelevant pages buries the pertinent section and can dilute Claude's attention, making a precise answer harder rather than easier.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
     },
     {
       "id": "as-014",
-      "domain": "platform-models",
-      "studyArea": "Entry Points",
+      "domain": "product-model-selection",
+      "studyArea": "Product Features",
       "difficulty": "medium",
       "stem": "You find yourself pasting the same brand style guide into a new chat several times a week to keep Claude's writing on-brand. What is the better long-term setup?",
       "options": {
@@ -287,12 +351,12 @@
       "answer": "C",
       "explanationCorrect": "When the same reference is reused repeatedly, moving it into a Project (knowledge source plus custom instructions) means every chat inherits it automatically: durable, consistent, and no re-pasting.",
       "explanationDistractor": "Continuing to paste the guide every time is the manual, error-prone repetition that a Project is designed to eliminate.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://support.claude.com/en/articles/9517075-what-are-projects"
     },
     {
       "id": "as-015",
-      "domain": "platform-models",
-      "studyArea": "Model Selection",
+      "domain": "product-model-selection",
+      "studyArea": "Model-Task Fit",
       "difficulty": "medium",
       "stem": "A teammate runs every task, even trivial reformatting, on the largest, most expensive model \"to be safe.\" What is the most sensible guidance?",
       "options": {
@@ -302,14 +366,14 @@
         "D": "Rotate between the models at random each time so usage is spread evenly across them"
       },
       "answer": "B",
-      "explanationCorrect": "Model selection is about fit: simple, high-volume tasks run well on Haiku or Sonnet, while Opus is reserved for the hardest reasoning. Matching model to task controls cost and latency without sacrificing needed quality.",
+      "explanationCorrect": "Model selection is about fit: simple, high-volume tasks run well on Haiku 4.5 or Sonnet 5.5, while Opus 5.5 (or Fable 5.1) is reserved for the hardest reasoning. Matching model to task controls cost and latency without sacrificing needed quality.",
       "explanationDistractor": "\"Always use the largest model\" pays premium cost and latency for trivial work that a smaller model handles just as correctly.",
-      "reference": "https://platform.claude.com/docs/en/about-claude/models/overview"
+      "reference": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
     },
     {
       "id": "as-016",
-      "domain": "prompting",
-      "studyArea": "Prompt Structure",
+      "domain": "prompting-task-execution",
+      "studyArea": "Effective Prompts",
       "difficulty": "easy",
       "stem": "You want Claude to review a draft email the way an experienced communications editor would. Which addition to your prompt most directly sets that up?",
       "options": {
@@ -325,8 +389,8 @@
     },
     {
       "id": "as-017",
-      "domain": "prompting",
-      "studyArea": "Output Format",
+      "domain": "prompting-task-execution",
+      "studyArea": "Effective Prompts",
       "difficulty": "easy",
       "stem": "Claude keeps returning its answer as flowing paragraphs, but you need a table with three named columns to drop into a report. What is the most effective fix?",
       "options": {
@@ -342,8 +406,8 @@
     },
     {
       "id": "as-018",
-      "domain": "prompting",
-      "studyArea": "Providing Context",
+      "domain": "prompting-task-execution",
+      "studyArea": "Effective Prompts",
       "difficulty": "easy",
       "stem": "You ask Claude to \"write a follow-up message to the client,\" but its draft misses that the client is upset about a missed deadline. What would most improve the result?",
       "options": {
@@ -359,7 +423,7 @@
     },
     {
       "id": "as-019",
-      "domain": "prompting",
+      "domain": "prompting-task-execution",
       "studyArea": "Task Decomposition",
       "difficulty": "medium",
       "stem": "You need Claude to (1) analyze survey data, (2) draft an executive summary, and (3) create a slide outline. A single prompt asking for all three at once yields shallow results on each. What is the better approach?",
@@ -377,8 +441,8 @@
     },
     {
       "id": "as-020",
-      "domain": "prompting",
-      "studyArea": "Diagnostic Iteration",
+      "domain": "prompting-task-execution",
+      "studyArea": "Prompt Iteration",
       "difficulty": "medium",
       "stem": "An output is not quite right, so in one new attempt you rewrite the role, add three examples, change the format, and swap models all at once. It improves, but you have a problem. What is it?",
       "options": {
@@ -394,8 +458,8 @@
     },
     {
       "id": "as-021",
-      "domain": "prompting",
-      "studyArea": "Being Specific",
+      "domain": "prompting-task-execution",
+      "studyArea": "Effective Prompts",
       "difficulty": "easy",
       "stem": "Your prompts often produce vague, off-target answers. Which single change tends to help the most?",
       "options": {
@@ -411,8 +475,8 @@
     },
     {
       "id": "as-022",
-      "domain": "prompting",
-      "studyArea": "Few-Shot Examples",
+      "domain": "prompting-task-execution",
+      "studyArea": "Effective Prompts",
       "difficulty": "medium",
       "stem": "You need every product description formatted in a very specific pattern, and written instructions keep producing near-misses. What most reliably locks in the exact format?",
       "options": {
@@ -428,8 +492,8 @@
     },
     {
       "id": "as-023",
-      "domain": "prompting",
-      "studyArea": "Examples vs Instructions",
+      "domain": "prompting-task-execution",
+      "studyArea": "Prompt Iteration",
       "difficulty": "medium",
       "stem": "Claude keeps misinterpreting how you want a data field transformed, even after you reworded the instruction twice. What is the most effective next move?",
       "options": {
@@ -445,8 +509,8 @@
     },
     {
       "id": "as-024",
-      "domain": "prompting",
-      "studyArea": "Prompt Structure",
+      "domain": "prompting-task-execution",
+      "studyArea": "Effective Prompts",
       "difficulty": "medium",
       "stem": "A colleague's prompts are just a one-line task with no other detail, and results are inconsistent. Which set of additions best reflects good prompt structure?",
       "options": {
@@ -462,8 +526,8 @@
     },
     {
       "id": "as-025",
-      "domain": "prompting",
-      "studyArea": "Positive Instructions",
+      "domain": "prompting-task-execution",
+      "studyArea": "Effective Prompts",
       "difficulty": "medium",
       "stem": "You keep telling Claude \"don't be so formal,\" but the tone still misses. Which instruction is likely to work better?",
       "options": {
@@ -479,8 +543,8 @@
     },
     {
       "id": "as-026",
-      "domain": "prompting",
-      "studyArea": "Providing Context",
+      "domain": "prompting-task-execution",
+      "studyArea": "Effective Prompts",
       "difficulty": "easy",
       "stem": "You want Claude to answer questions using your company's internal policy, which it was never trained on. What is the essential step?",
       "options": {
@@ -496,8 +560,8 @@
     },
     {
       "id": "as-027",
-      "domain": "prompting",
-      "studyArea": "Being Specific",
+      "domain": "prompting-task-execution",
+      "studyArea": "Effective Prompts",
       "difficulty": "medium",
       "stem": "A teammate asks Claude to \"make this report better\" and is frustrated by the results. What advice best addresses the root problem?",
       "options": {
@@ -513,8 +577,8 @@
     },
     {
       "id": "as-028",
-      "domain": "prompting",
-      "studyArea": "Few-Shot Examples",
+      "domain": "prompting-task-execution",
+      "studyArea": "Adapting to Task Type",
       "difficulty": "hard",
       "stem": "For a straightforward task like \"summarize this paragraph in one sentence,\" Claude already does exactly what you want. When is adding few-shot examples actually worth the effort?",
       "options": {
@@ -530,8 +594,8 @@
     },
     {
       "id": "as-029",
-      "domain": "prompting",
-      "studyArea": "Diagnostic Iteration",
+      "domain": "prompting-task-execution",
+      "studyArea": "Prompt Iteration",
       "difficulty": "medium",
       "stem": "Your first prompt gives a decent but too-technical answer for a general audience. What is the most efficient single adjustment to try next?",
       "options": {
@@ -547,8 +611,8 @@
     },
     {
       "id": "as-030",
-      "domain": "prompting",
-      "studyArea": "Prompt Structure",
+      "domain": "prompting-task-execution",
+      "studyArea": "Effective Prompts",
       "difficulty": "medium",
       "stem": "A prompt reads simply \"Write a job description,\" and the drafts come back generic and unusable. Which elements are most important to add?",
       "options": {
@@ -564,8 +628,8 @@
     },
     {
       "id": "as-031",
-      "domain": "evaluating",
-      "studyArea": "Verifying Citations",
+      "domain": "output-evaluation",
+      "studyArea": "Fact-Checking",
       "difficulty": "medium",
       "stem": "Claude's answer includes three specific statistics attributed to named studies. Before you use them in a published report, what should you do?",
       "options": {
@@ -577,12 +641,12 @@
       "answer": "A",
       "explanationCorrect": "Claude can produce fluent, specific-looking citations that are inaccurate or fabricated. For anything you publish, verify each factual claim and citation against the primary source before relying on it.",
       "explanationDistractor": "A confident, specific citation is not evidence of accuracy; Claude can state a fabricated source just as fluently as a real one, so trusting it unverified is risky.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-032",
-      "domain": "evaluating",
-      "studyArea": "Confident but Wrong",
+      "domain": "output-evaluation",
+      "studyArea": "Accuracy and Completeness",
       "difficulty": "easy",
       "stem": "An answer is written with total confidence and reads smoothly, with no hedging. What can you conclude about its accuracy?",
       "options": {
@@ -594,12 +658,12 @@
       "answer": "B",
       "explanationCorrect": "The tone and fluency of an answer are independent of its correctness. Claude can be confidently and articulately wrong, so confidence is not a reliability signal.",
       "explanationDistractor": "Absence of hedging is a stylistic feature, not a fact-check; it does not mean the claims were verified against any source.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-033",
-      "domain": "evaluating",
-      "studyArea": "Hallucinations",
+      "domain": "output-evaluation",
+      "studyArea": "Hallucinations and Bias",
       "difficulty": "medium",
       "stem": "You ask Claude for case law supporting an argument, and it returns a citation with a court, year, and quote that looks authoritative, but you cannot find the case anywhere. What is the most likely explanation?",
       "options": {
@@ -611,12 +675,12 @@
       "answer": "C",
       "explanationCorrect": "Models can generate citations that look authoritative but do not exist, a hallucination. If a specific, checkable source cannot be found, treat it as unverified rather than assuming it is merely obscure.",
       "explanationDistractor": "Assuming the citation must be valid and blaming your search ignores a well-known failure mode: confidently formatted citations that were never real.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-034",
-      "domain": "evaluating",
-      "studyArea": "Human Verification",
+      "domain": "output-evaluation",
+      "studyArea": "Human Review",
       "difficulty": "medium",
       "stem": "Claude drafts what looks like sound guidance on adjusting a patient's medication dosage. What is the responsible way to use this output?",
       "options": {
@@ -629,12 +693,12 @@
       "explanationCorrect": "Medical dosing is high-stakes and potentially irreversible, so it requires human expert verification. Claude's output should be treated as a draft for a qualified professional to review, never a final clinical decision.",
       "explanationDistractor": "Following detailed-looking reasoning directly skips the professional judgment that high-stakes medical decisions require; detail is not the same as clinical validation.",
       "scenario": "Clinical Guidance",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-035",
-      "domain": "evaluating",
-      "studyArea": "Irreversible Actions",
+      "domain": "output-evaluation",
+      "studyArea": "Human Review",
       "difficulty": "easy",
       "stem": "Claude generates a database command that will permanently delete every record matching a filter. What should you do before running it?",
       "options": {
@@ -646,12 +710,12 @@
       "answer": "A",
       "explanationCorrect": "Irreversible actions demand human verification first. Reviewing precisely what the command affects before executing catches mistakes while they are still reversible.",
       "explanationDistractor": "Assuming the command is safe because Claude produced it skips the check that matters most, exactly when the consequences cannot be undone.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-036",
-      "domain": "evaluating",
-      "studyArea": "Bias",
+      "domain": "output-evaluation",
+      "studyArea": "Hallucinations and Bias",
       "difficulty": "medium",
       "stem": "You use Claude to screen resumes and notice its shortlist skews heavily toward one demographic. What is the appropriate response?",
       "options": {
@@ -663,12 +727,12 @@
       "answer": "B",
       "explanationCorrect": "AI outputs can reflect and amplify bias. A skewed result is a signal to scrutinize the criteria and keep human oversight, especially for consequential decisions about people.",
       "explanationDistractor": "Treating the model as inherently objective ignores that it can reproduce bias; a skewed shortlist warrants investigation, not blind trust.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-037",
-      "domain": "evaluating",
-      "studyArea": "Verifying Against Source",
+      "domain": "output-evaluation",
+      "studyArea": "Fact-Checking",
       "difficulty": "medium",
       "stem": "Claude summarizes a long report and includes a striking claim you do not remember reading. Before quoting that claim, what is the right step?",
       "options": {
@@ -680,12 +744,12 @@
       "answer": "C",
       "explanationCorrect": "Summaries can introduce claims that are not in the source. Verifying a surprising claim against the original document guards against repeating something Claude inferred or fabricated.",
       "explanationDistractor": "Rephrasing a claim to sound less striking does nothing to establish whether it is actually supported by the source.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-038",
-      "domain": "evaluating",
-      "studyArea": "Scaling Verification",
+      "domain": "output-evaluation",
+      "studyArea": "Human Review",
       "difficulty": "medium",
       "stem": "For which task is it most reasonable to accept Claude's output with only a light check?",
       "options": {
@@ -697,12 +761,12 @@
       "answer": "D",
       "explanationCorrect": "Verification effort should scale with stakes. A low-stakes, easily reversible, non-factual task like brainstorming internal names carries little risk if a suggestion is imperfect.",
       "explanationDistractor": "A binding legal contract is high-stakes and hard to reverse; its wording needs careful human review, not a light check.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-039",
-      "domain": "evaluating",
-      "studyArea": "Accountability",
+      "domain": "output-evaluation",
+      "studyArea": "Human Review",
       "difficulty": "easy",
       "stem": "You are about to send a client-facing analysis that Claude largely wrote, under your own name. What is the guiding principle?",
       "options": {
@@ -714,12 +778,12 @@
       "answer": "A",
       "explanationCorrect": "When you put your name on Claude's output, you own its accuracy. Validating the facts and reasoning before it goes out is the core responsibility of using AI in real work.",
       "explanationDistractor": "Disclaiming responsibility because \"Claude wrote it\" does not hold up; the person who sends the work is accountable for it.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-040",
-      "domain": "evaluating",
-      "studyArea": "Fabricated Precision",
+      "domain": "output-evaluation",
+      "studyArea": "Hallucinations and Bias",
       "difficulty": "medium",
       "stem": "Asked for market-size figures, Claude returns very precise numbers such as \"$4.37B in 2023\" with no source. How should you treat them?",
       "options": {
@@ -731,12 +795,12 @@
       "answer": "B",
       "explanationCorrect": "Oddly precise figures with no source are a classic hallucination pattern. Precision is not provenance; confirm the numbers against an authoritative source before relying on them.",
       "explanationDistractor": "Precision does not signal reliability; a fabricated figure can be stated to the cent just as easily as a rounded one.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-041",
-      "domain": "evaluating",
-      "studyArea": "Checking Accuracy",
+      "domain": "output-evaluation",
+      "studyArea": "Fact-Checking",
       "difficulty": "medium",
       "stem": "A quick way to gauge whether a long Claude answer is trustworthy on a topic you do not know well is to:",
       "options": {
@@ -748,12 +812,12 @@
       "answer": "C",
       "explanationCorrect": "Spot-checking verifiable claims gives real evidence about accuracy. If the checkable parts are wrong, that is a strong signal to distrust the parts you cannot immediately verify.",
       "explanationDistractor": "The number of sources mentioned says nothing about whether those sources are real or support the claims; it is easy to list citations that do not check out.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-042",
-      "domain": "evaluating",
-      "studyArea": "Human Verification",
+      "domain": "output-evaluation",
+      "studyArea": "Human Review",
       "difficulty": "medium",
       "stem": "Claude reviews a vendor contract and flags no issues, and your company is about to sign. What is the responsible next step?",
       "options": {
@@ -766,12 +830,12 @@
       "explanationCorrect": "A binding contract is high-stakes and hard to reverse. Claude's review can assist, but a qualified legal professional must verify before you commit; \"no flags\" is not legal clearance.",
       "explanationDistractor": "Treating \"Claude found nothing\" as proof of no legal risk over-trusts a tool that can miss issues and is not a substitute for professional legal judgment.",
       "scenario": "Vendor Contract Review",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-043",
-      "domain": "evaluating",
-      "studyArea": "Over-Trust",
+      "domain": "output-evaluation",
+      "studyArea": "Human Review",
       "difficulty": "hard",
       "stem": "A team has used Claude for months with good results and now approves its outputs without any review. What is the main risk?",
       "options": {
@@ -783,12 +847,12 @@
       "answer": "A",
       "explanationCorrect": "A good track record does not make outputs infallible. Dropping verification entirely means the inevitable errors reach production with nothing to catch them; appropriate review should remain.",
       "explanationDistractor": "Concluding review was never necessary misreads past success; the good results likely depended in part on the very checking now being removed.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-044",
-      "domain": "evaluating",
-      "studyArea": "Verifying Citations",
+      "domain": "output-evaluation",
+      "studyArea": "Fact-Checking",
       "difficulty": "hard",
       "stem": "Claude provides a real, working URL as a citation for a claim. What still needs checking?",
       "options": {
@@ -800,12 +864,12 @@
       "answer": "B",
       "explanationCorrect": "A valid link is necessary but not sufficient. Claude may cite a real page that does not actually support the specific claim, so you must confirm the source says what is attributed to it.",
       "explanationDistractor": "A link merely loading proves the page exists, not that its content backs the claim it was attached to.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-045",
-      "domain": "evaluating",
-      "studyArea": "Scaling Verification",
+      "domain": "output-evaluation",
+      "studyArea": "Human Review",
       "difficulty": "easy",
       "stem": "Which output most clearly demands independent human verification before you act on it?",
       "options": {
@@ -817,12 +881,12 @@
       "answer": "D",
       "explanationCorrect": "Verification scales with stakes and reversibility. A tax figure you will formally submit is high-stakes, factual, and consequential if wrong, so it demands independent verification, unlike creative, low-risk outputs.",
       "explanationDistractor": "A haiku for a birthday card is low-stakes and subjective; an error carries no real consequence, so it does not require the same scrutiny.",
-      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/develop-tests"
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
     },
     {
       "id": "as-046",
-      "domain": "workflow",
-      "studyArea": "Delegation Boundaries",
+      "domain": "workflow-solution-design",
+      "studyArea": "Workflow Integration",
       "difficulty": "medium",
       "stem": "You are deciding which parts of a monthly reporting process to hand to Claude. Which step is the best candidate to delegate?",
       "options": {
@@ -839,8 +903,8 @@
     },
     {
       "id": "as-047",
-      "domain": "workflow",
-      "studyArea": "Human Judgment",
+      "domain": "workflow-solution-design",
+      "studyArea": "Workflow Integration",
       "difficulty": "easy",
       "stem": "Which task should stay with a human rather than being fully delegated to Claude?",
       "options": {
@@ -856,8 +920,8 @@
     },
     {
       "id": "as-048",
-      "domain": "workflow",
-      "studyArea": "Communicating Limits",
+      "domain": "workflow-solution-design",
+      "studyArea": "Stakeholder Communication",
       "difficulty": "medium",
       "stem": "You are presenting a new Claude-assisted workflow to leadership. How should you describe its capabilities?",
       "options": {
@@ -873,8 +937,8 @@
     },
     {
       "id": "as-049",
-      "domain": "workflow",
-      "studyArea": "Team Adoption",
+      "domain": "workflow-solution-design",
+      "studyArea": "Workflow Integration",
       "difficulty": "medium",
       "stem": "You personally get great results from Claude, but your teammates get inconsistent ones on the same tasks. What best moves the team from \"I use Claude\" to \"our workflow uses Claude\"?",
       "options": {
@@ -891,8 +955,8 @@
     },
     {
       "id": "as-050",
-      "domain": "workflow",
-      "studyArea": "First Candidates",
+      "domain": "workflow-solution-design",
+      "studyArea": "Requirements and Use Cases",
       "difficulty": "medium",
       "stem": "A team wants a first win with Claude. Which process is the best starting candidate?",
       "options": {
@@ -908,8 +972,8 @@
     },
     {
       "id": "as-051",
-      "domain": "workflow",
-      "studyArea": "Communicating Value",
+      "domain": "workflow-solution-design",
+      "studyArea": "Stakeholder Communication",
       "difficulty": "medium",
       "stem": "How should you frame the value of a Claude-assisted drafting workflow to stakeholders?",
       "options": {
@@ -925,8 +989,8 @@
     },
     {
       "id": "as-052",
-      "domain": "workflow",
-      "studyArea": "Accountability",
+      "domain": "workflow-solution-design",
+      "studyArea": "Workflow Integration",
       "difficulty": "easy",
       "stem": "In a Claude-assisted approval workflow, who should hold accountability for the final decision?",
       "options": {
@@ -942,8 +1006,8 @@
     },
     {
       "id": "as-053",
-      "domain": "workflow",
-      "studyArea": "Mixed Workflows",
+      "domain": "workflow-solution-design",
+      "studyArea": "Workflow Integration",
       "difficulty": "hard",
       "stem": "A hiring workflow has four steps: (1) format incoming resumes, (2) draft interview questions, (3) decide who advances, and (4) send templated scheduling emails. Which split is most appropriate?",
       "options": {
@@ -960,8 +1024,8 @@
     },
     {
       "id": "as-054",
-      "domain": "workflow",
-      "studyArea": "Durability",
+      "domain": "workflow-solution-design",
+      "studyArea": "Workflow Integration",
       "difficulty": "medium",
       "stem": "Your Claude-assisted workflow works well, but only you know how to run it. What most improves its long-term resilience?",
       "options": {
@@ -977,8 +1041,8 @@
     },
     {
       "id": "as-055",
-      "domain": "workflow",
-      "studyArea": "Managing Expectations",
+      "domain": "workflow-solution-design",
+      "studyArea": "Stakeholder Communication",
       "difficulty": "medium",
       "stem": "A stakeholder expects the new Claude workflow to be \"100% accurate with no oversight.\" What is the best response?",
       "options": {
@@ -994,8 +1058,8 @@
     },
     {
       "id": "as-056",
-      "domain": "workflow",
-      "studyArea": "Communicating Value",
+      "domain": "workflow-solution-design",
+      "studyArea": "Stakeholder Communication",
       "difficulty": "hard",
       "stem": "You want to show that adopting Claude improved a workflow. What is the most credible way to communicate the value?",
       "options": {
@@ -1011,8 +1075,8 @@
     },
     {
       "id": "as-057",
-      "domain": "workflow",
-      "studyArea": "Delegation Boundaries",
+      "domain": "workflow-solution-design",
+      "studyArea": "Solution Design",
       "difficulty": "medium",
       "stem": "When deciding whether Claude can take an action automatically or a human must approve it first, which factor matters most?",
       "options": {
@@ -1028,8 +1092,8 @@
     },
     {
       "id": "as-058",
-      "domain": "workflow",
-      "studyArea": "Solution Fit",
+      "domain": "workflow-solution-design",
+      "studyArea": "Solution Design",
       "difficulty": "medium",
       "stem": "A colleague proposes building an elaborate automated system for a task the team does twice a year by hand in ten minutes. What is the most sensible guidance?",
       "options": {
@@ -1045,8 +1109,8 @@
     },
     {
       "id": "as-059",
-      "domain": "workflow",
-      "studyArea": "Human-in-the-Loop",
+      "domain": "workflow-solution-design",
+      "studyArea": "Solution Design",
       "difficulty": "medium",
       "stem": "You are integrating Claude into a customer-refund process. Refunds under $20 are routine; refunds over $500 are sensitive. How should you place the human checkpoint?",
       "options": {
@@ -1063,8 +1127,8 @@
     },
     {
       "id": "as-060",
-      "domain": "configuration",
-      "studyArea": "Custom Instructions",
+      "domain": "configuration-knowledge",
+      "studyArea": "System-Level Instructions",
       "difficulty": "easy",
       "stem": "In a Claude Project, you set custom instructions that say \"always write in British English and cite the source section.\" What is the effect?",
       "options": {
@@ -1076,12 +1140,12 @@
       "answer": "A",
       "explanationCorrect": "A Project's custom instructions persist and apply to every conversation started within that Project, so shared preferences are enforced automatically without re-stating them.",
       "explanationDistractor": "Custom instructions are not limited to a single message; the whole point is that they persist across every chat in the Project.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-061",
-      "domain": "configuration",
-      "studyArea": "Knowledge Sources",
+      "domain": "configuration-knowledge",
+      "studyArea": "Knowledge and Connectors",
       "difficulty": "easy",
       "stem": "Your team keeps asking Claude questions about a 60-page internal handbook. What is the durable way to make that handbook available in every relevant chat?",
       "options": {
@@ -1092,13 +1156,13 @@
       },
       "answer": "B",
       "explanationCorrect": "Attaching the handbook as a Project knowledge source makes it available to every chat in the Project, so Claude can ground answers in it without anyone re-pasting the document.",
-      "explanationDistractor": "Asking Claude to \"memorize\" a document once does not work; it has no persistent memory of pasted text across separate conversations.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "explanationDistractor": "Claude's memory saves short topics about you and your work, not a faithful copy of a 60-page document. A knowledge source is the reliable way to give every chat the full handbook.",
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-062",
-      "domain": "configuration",
-      "studyArea": "Keeping Config Current",
+      "domain": "configuration-knowledge",
+      "studyArea": "Configuration Maintenance",
       "difficulty": "medium",
       "stem": "A Project's knowledge base still contains last year's pricing, and Claude keeps quoting the old prices. What is the root-cause fix?",
       "options": {
@@ -1111,12 +1175,12 @@
       "explanationCorrect": "Stale configuration is a leading cause of wrong output. Updating the Project's knowledge source to current pricing fixes the problem at its root for every future chat, rather than patching each conversation.",
       "explanationDistractor": "Correcting the price by hand in each chat treats the symptom repeatedly while the outdated source keeps producing the same error.",
       "scenario": "Pricing Knowledge Base",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-063",
-      "domain": "configuration",
-      "studyArea": "Project Context",
+      "domain": "configuration-knowledge",
+      "studyArea": "Project Setup",
       "difficulty": "medium",
       "stem": "What is the main advantage of putting durable context into a Project rather than into individual prompts?",
       "options": {
@@ -1128,12 +1192,12 @@
       "answer": "D",
       "explanationCorrect": "Project context is shared by every conversation in the Project. Investing in good instructions and knowledge once raises the baseline quality and consistency of all chats that follow.",
       "explanationDistractor": "Project context is not limited to the first chat; its value is precisely that it carries into every conversation in the Project.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-064",
-      "domain": "configuration",
-      "studyArea": "Instructions vs Prompt",
+      "domain": "configuration-knowledge",
+      "studyArea": "System-Level Instructions",
       "difficulty": "medium",
       "stem": "Which item is best placed in a Project's custom instructions rather than typed into a single prompt?",
       "options": {
@@ -1145,12 +1209,12 @@
       "answer": "A",
       "explanationCorrect": "Durable, always-apply rules, like a standard report structure every output should follow, belong in custom instructions so they take effect automatically in every chat.",
       "explanationDistractor": "A one-time weather question is transient and specific to one conversation; putting it in standing instructions would wrongly apply it to every future chat.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-065",
-      "domain": "configuration",
-      "studyArea": "Knowledge vs Instructions",
+      "domain": "configuration-knowledge",
+      "studyArea": "Project Setup",
       "difficulty": "medium",
       "stem": "You have (1) reference documents Claude should consult and (2) rules about tone and format. In a Project, where does each belong?",
       "options": {
@@ -1162,12 +1226,12 @@
       "answer": "B",
       "explanationCorrect": "Knowledge sources hold reference material Claude draws on; custom instructions hold standing behavioral rules like tone and format. Matching each to its slot keeps the Project organized and effective.",
       "explanationDistractor": "Pasting large reference documents into the instructions field misuses it; bulky reference material belongs in knowledge sources, with instructions reserved for rules.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-066",
-      "domain": "configuration",
-      "studyArea": "Keeping Config Current",
+      "domain": "configuration-knowledge",
+      "studyArea": "Configuration Maintenance",
       "difficulty": "medium",
       "stem": "Your company just changed its refund policy, and several Projects rely on the old policy document. What should you do?",
       "options": {
@@ -1179,12 +1243,12 @@
       "answer": "C",
       "explanationCorrect": "Configuration must be kept current as facts change. Proactively updating the policy document in the affected Projects prevents Claude from confidently applying outdated rules.",
       "explanationDistractor": "Waiting for a complaint means Claude keeps giving wrong, outdated answers in the meantime; keeping config current is a proactive maintenance task.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-067",
-      "domain": "configuration",
-      "studyArea": "Project Scoping",
+      "domain": "configuration-knowledge",
+      "studyArea": "Project Setup",
       "difficulty": "medium",
       "stem": "You do two very different kinds of work: legal contract review and social-media copywriting. How should you organize Projects for the best context in each?",
       "options": {
@@ -1196,12 +1260,12 @@
       "answer": "D",
       "explanationCorrect": "Separate Projects keep each body of instructions and knowledge focused and relevant. Tailored context per Project prevents the legal rules and the copywriting rules from bleeding into the wrong chats.",
       "explanationDistractor": "Cramming both kinds of work into one Project mixes unrelated instructions and knowledge, diluting the context and risking cross-contamination of guidance.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-068",
-      "domain": "configuration",
-      "studyArea": "Team Consistency",
+      "domain": "workflow-solution-design",
+      "studyArea": "Workflow Integration",
       "difficulty": "medium",
       "stem": "A new hire's Claude outputs do not match the team's house style, while veterans' outputs do. What is the most scalable fix?",
       "options": {
@@ -1214,12 +1278,12 @@
       "explanationCorrect": "Encoding the house style once in a shared Project gives every team member, new or veteran, the same durable context, making consistent output the default rather than something each person recreates.",
       "explanationDistractor": "Having the new hire guess the style from old documents is slow and unreliable, and it leaves the knowledge uncaptured for the next new hire.",
       "scenario": "Team Onboarding",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-069",
-      "domain": "configuration",
-      "studyArea": "Config Hygiene",
+      "domain": "configuration-knowledge",
+      "studyArea": "Configuration Maintenance",
       "difficulty": "easy",
       "stem": "What is a good practice for Project knowledge that references facts, policies, or data that change over time?",
       "options": {
@@ -1231,12 +1295,12 @@
       "answer": "B",
       "explanationCorrect": "Knowledge that references changeable facts drifts out of date. Reviewing and refreshing it on a regular cadence keeps every chat grounded in current information.",
       "explanationDistractor": "Claude does not automatically update your uploaded knowledge sources; keeping them current is the owner's responsibility.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-070",
-      "domain": "configuration",
-      "studyArea": "Grounding",
+      "domain": "configuration-knowledge",
+      "studyArea": "Knowledge and Connectors",
       "difficulty": "medium",
       "stem": "Without any reference material, Claude sometimes guesses at your product's specifications. How does a well-configured Project reduce this?",
       "options": {
@@ -1248,12 +1312,12 @@
       "answer": "C",
       "explanationCorrect": "Providing the actual specifications as Project knowledge grounds Claude's answers in your real data, reducing the guessing that leads to inaccurate claims about your product.",
       "explanationDistractor": "A Project does not make guessing more confident; it replaces guessing with grounded answers by giving Claude the real reference material.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-071",
-      "domain": "configuration",
-      "studyArea": "Instruction Specificity",
+      "domain": "configuration-knowledge",
+      "studyArea": "System-Level Instructions",
       "difficulty": "medium",
       "stem": "A Project's custom instruction reads only \"be professional,\" yet outputs vary widely in structure and length. What would most improve consistency?",
       "options": {
@@ -1265,12 +1329,12 @@
       "answer": "D",
       "explanationCorrect": "Vague instructions produce varied results. Specifying the concrete structure, length, and tone gives every chat a precise target, which is what drives consistency.",
       "explanationDistractor": "Adding more vague adjectives compounds the ambiguity; \"good\" and \"nice\" give Claude no more concrete direction than \"professional\" did.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-072",
-      "domain": "configuration",
-      "studyArea": "Single Source of Truth",
+      "domain": "configuration-knowledge",
+      "studyArea": "Configuration Maintenance",
       "difficulty": "hard",
       "stem": "Different team members keep their own slightly different copies of the prompt instructions, and outputs have drifted apart. What is the best remedy?",
       "options": {
@@ -1282,12 +1346,12 @@
       "answer": "B",
       "explanationCorrect": "Divergent private copies cause drift. A single shared Project configuration acts as the source of truth so everyone works from the same, maintained instructions and knowledge.",
       "explanationDistractor": "Letting each person refine a private version is what produced the drift; it guarantees the copies keep diverging.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-073",
-      "domain": "configuration",
-      "studyArea": "Knowledge Currency",
+      "domain": "configuration-knowledge",
+      "studyArea": "Configuration Maintenance",
       "difficulty": "medium",
       "stem": "A Project's knowledge contains three versions of the same policy: last year's, a draft, and the current one. Claude sometimes cites the wrong version. What should you do?",
       "options": {
@@ -1299,12 +1363,12 @@
       "answer": "D",
       "explanationCorrect": "Conflicting documents let Claude cite the wrong one. Keeping only the current, authoritative version removes the ambiguity at the source so every chat references the right policy.",
       "explanationDistractor": "\"More documents is always better\" is false when they conflict; extra outdated versions are exactly what causes Claude to cite the wrong policy.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-074",
-      "domain": "governance",
-      "studyArea": "Secrets",
+      "domain": "governance-risk",
+      "studyArea": "Data Sensitivity and Privacy",
       "difficulty": "easy",
       "stem": "While debugging, you are about to paste a configuration file that includes a live production API key into a chat. What should you do?",
       "options": {
@@ -1320,8 +1384,8 @@
     },
     {
       "id": "as-075",
-      "domain": "governance",
-      "studyArea": "Regulated Data",
+      "domain": "governance-risk",
+      "studyArea": "Data Sensitivity and Privacy",
       "difficulty": "medium",
       "stem": "You want to analyze a spreadsheet of customers' names, addresses, and health conditions. What is the responsible first step?",
       "options": {
@@ -1338,8 +1402,8 @@
     },
     {
       "id": "as-076",
-      "domain": "governance",
-      "studyArea": "Confidential Data",
+      "domain": "governance-risk",
+      "studyArea": "Organizational Policy",
       "difficulty": "medium",
       "stem": "A teammate suggests pasting an unreleased, confidential product roadmap into a tool that is not approved for confidential data. What is the right response?",
       "options": {
@@ -1355,8 +1419,8 @@
     },
     {
       "id": "as-077",
-      "domain": "governance",
-      "studyArea": "Where Data Goes",
+      "domain": "governance-risk",
+      "studyArea": "Data Sensitivity and Privacy",
       "difficulty": "medium",
       "stem": "Before entering any sensitive business data into an AI tool, the most important thing to understand is:",
       "options": {
@@ -1372,8 +1436,8 @@
     },
     {
       "id": "as-078",
-      "domain": "governance",
-      "studyArea": "What Not to Paste",
+      "domain": "governance-risk",
+      "studyArea": "Data Sensitivity and Privacy",
       "difficulty": "easy",
       "stem": "Which of the following is clearly inappropriate to paste into a general AI chat tool?",
       "options": {
@@ -1389,8 +1453,8 @@
     },
     {
       "id": "as-079",
-      "domain": "governance",
-      "studyArea": "Data Minimization",
+      "domain": "governance-risk",
+      "studyArea": "Data Sensitivity and Privacy",
       "difficulty": "medium",
       "stem": "You need Claude to help spot trends in support tickets, but the tickets contain customer names and emails you do not need for the analysis. What is the best practice?",
       "options": {
@@ -1406,8 +1470,8 @@
     },
     {
       "id": "as-080",
-      "domain": "governance",
-      "studyArea": "Responsible Use",
+      "domain": "governance-risk",
+      "studyArea": "Appropriate Use Cases",
       "difficulty": "medium",
       "stem": "A user asks Claude to help them access an ex-partner's private accounts without permission. As a responsible operator, what is the right stance?",
       "options": {
@@ -1419,12 +1483,12 @@
       "answer": "C",
       "explanationCorrect": "Responsible use includes refusing tasks that facilitate harm or unauthorized access to others' private data. Neither politeness nor technical feasibility makes the request acceptable.",
       "explanationDistractor": "Adding a disclaimer does not change the nature of the act; assisting unauthorized access to someone's private accounts is inappropriate regardless of a caveat.",
-      "reference": "https://privacy.anthropic.com"
+      "reference": "https://www.anthropic.com/legal/aup"
     },
     {
       "id": "as-081",
-      "domain": "governance",
-      "studyArea": "Data Classification",
+      "domain": "governance-risk",
+      "studyArea": "Organizational Policy",
       "difficulty": "hard",
       "stem": "Your company classifies data as Public, Internal, Confidential, and Restricted. Before pasting a document into an AI tool, the classification matters because:",
       "options": {
@@ -1440,8 +1504,8 @@
     },
     {
       "id": "as-082",
-      "domain": "governance",
-      "studyArea": "Health Data",
+      "domain": "governance-risk",
+      "studyArea": "Data Sensitivity and Privacy",
       "difficulty": "medium",
       "stem": "A clinic wants to use a general consumer AI tool to summarize identifiable patient records. Before doing so, the key governance question is:",
       "options": {
@@ -1457,8 +1521,8 @@
     },
     {
       "id": "as-083",
-      "domain": "governance",
-      "studyArea": "Output Review",
+      "domain": "governance-risk",
+      "studyArea": "Data Sensitivity and Privacy",
       "difficulty": "medium",
       "stem": "Before forwarding a Claude-generated report to an external partner, you should:",
       "options": {
@@ -1474,8 +1538,8 @@
     },
     {
       "id": "as-084",
-      "domain": "governance",
-      "studyArea": "Approved Tools",
+      "domain": "governance-risk",
+      "studyArea": "Organizational Policy",
       "difficulty": "medium",
       "stem": "An employee starts using a personal, unvetted AI account for work involving company data because it is convenient. What is the governance concern?",
       "options": {
@@ -1492,8 +1556,8 @@
     },
     {
       "id": "as-085",
-      "domain": "governance",
-      "studyArea": "Data Minimization",
+      "domain": "governance-risk",
+      "studyArea": "Data Sensitivity and Privacy",
       "difficulty": "medium",
       "stem": "Which principle best guides how much data to include when prompting with real business information?",
       "options": {
@@ -1509,8 +1573,8 @@
     },
     {
       "id": "as-086",
-      "domain": "governance",
-      "studyArea": "Where Data Goes",
+      "domain": "governance-risk",
+      "studyArea": "Organizational Policy",
       "difficulty": "medium",
       "stem": "Two AI tools are available. Tool X is approved by your company with a data agreement in place; Tool Y is a random free site with unknown data practices. For confidential work, which should you use and why?",
       "options": {
@@ -1526,8 +1590,8 @@
     },
     {
       "id": "as-087",
-      "domain": "governance",
-      "studyArea": "Responsible-Use Policy",
+      "domain": "governance-risk",
+      "studyArea": "Organizational Policy",
       "difficulty": "hard",
       "stem": "An organization wants a simple rule for employees about sensitive data and AI tools. Which rule is soundest?",
       "options": {
@@ -1543,8 +1607,8 @@
     },
     {
       "id": "as-088",
-      "domain": "troubleshooting",
-      "studyArea": "Missing Context",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Diagnosing Poor Outputs",
       "difficulty": "easy",
       "stem": "Claude's answers to your question are consistently generic and could apply to any company. What is the most likely root cause and fix?",
       "options": {
@@ -1560,8 +1624,8 @@
     },
     {
       "id": "as-089",
-      "domain": "troubleshooting",
-      "studyArea": "Format Fixes",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Adjusting from Feedback",
       "difficulty": "medium",
       "stem": "You have clearly described the output format three times and Claude still gets the layout slightly wrong. What is the most effective durable fix?",
       "options": {
@@ -1577,8 +1641,8 @@
     },
     {
       "id": "as-090",
-      "domain": "troubleshooting",
-      "studyArea": "Wrong Model",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Workflow Optimization",
       "difficulty": "medium",
       "stem": "A high-volume, simple text-cleanup job is running slowly and costing more than expected on your largest model. What is the root-cause fix?",
       "options": {
@@ -1590,12 +1654,12 @@
       "answer": "C",
       "explanationCorrect": "Running a simple, high-volume task on the largest model wastes cost and latency. Matching the model to the task, a smaller, faster model, fixes the root cause.",
       "explanationDistractor": "Adding more instructions does not address the mismatch between a heavyweight model and a lightweight task; the model choice is the lever.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+      "reference": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
     },
     {
       "id": "as-091",
-      "domain": "troubleshooting",
-      "studyArea": "Wrong Model",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Diagnosing Poor Outputs",
       "difficulty": "medium",
       "stem": "A genuinely complex, multi-step analysis produces shallow, error-prone results on a small, fast model. What is the most appropriate fix?",
       "options": {
@@ -1607,12 +1671,12 @@
       "answer": "D",
       "explanationCorrect": "When a task genuinely exceeds a small model's reasoning, the fix is to match the task to a more capable model, and extended thinking, rather than retrying the same underpowered setup.",
       "explanationDistractor": "Repeating the prompt on the same small model does not add the reasoning capacity the complex task needs; the model is the constraint.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+      "reference": "https://platform.claude.com/docs/en/about-claude/models/choosing-a-model"
     },
     {
       "id": "as-092",
-      "domain": "troubleshooting",
-      "studyArea": "Durable Fixes",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Workflow Optimization",
       "difficulty": "medium",
       "stem": "Every day you correct Claude's tone the same way in a fresh chat. What is the durable fix?",
       "options": {
@@ -1624,12 +1688,12 @@
       "answer": "A",
       "explanationCorrect": "A repeated manual correction is a signal to fix the configuration. Putting the tone rule in the Project's custom instructions solves it once for every future chat.",
       "explanationDistractor": "Correcting the tone by hand each day is the endlessly repeated one-off patch that a durable configuration change is meant to replace.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
     },
     {
       "id": "as-093",
-      "domain": "troubleshooting",
-      "studyArea": "Wrong Entry Point",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Workflow Optimization",
       "difficulty": "medium",
       "stem": "A developer keeps pasting files from a large codebase into chat one at a time to get Claude to make coordinated edits, and it is painful and error-prone. What is the root-cause fix?",
       "options": {
@@ -1646,8 +1710,8 @@
     },
     {
       "id": "as-094",
-      "domain": "troubleshooting",
-      "studyArea": "Stale Knowledge",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Diagnosing Poor Outputs",
       "difficulty": "easy",
       "stem": "Claude's answer about a fast-moving topic is confidently out of date. What is the most direct fix?",
       "options": {
@@ -1659,12 +1723,12 @@
       "answer": "C",
       "explanationCorrect": "Out-of-date answers on recent topics stem from the training cutoff. Enabling web search lets Claude pull current information rather than relying on stale knowledge.",
       "explanationDistractor": "Asking Claude to \"be more current\" cannot conjure post-cutoff facts it never learned; it needs a retrieval tool like web search.",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+      "reference": "https://support.claude.com/en/articles/10684626-enable-and-use-web-search"
     },
     {
       "id": "as-095",
-      "domain": "troubleshooting",
-      "studyArea": "Ambiguous Prompt",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Diagnosing Poor Outputs",
       "difficulty": "medium",
       "stem": "Two people give Claude \"clean up this text\" and get very different results, and neither is what they wanted. What is the root cause and fix?",
       "options": {
@@ -1680,8 +1744,8 @@
     },
     {
       "id": "as-096",
-      "domain": "troubleshooting",
-      "studyArea": "Isolating Variables",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Adjusting from Feedback",
       "difficulty": "hard",
       "stem": "An output got worse after you edited your prompt, but you changed several things at once. What is the best troubleshooting move?",
       "options": {
@@ -1697,8 +1761,8 @@
     },
     {
       "id": "as-097",
-      "domain": "troubleshooting",
-      "studyArea": "Right Diagnosis",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Diagnosing Poor Outputs",
       "difficulty": "medium",
       "stem": "Claude gives wrong answers about your internal process. You are tempted to blame the model, but it was never given the process documentation. What is the real root cause?",
       "options": {
@@ -1714,8 +1778,8 @@
     },
     {
       "id": "as-098",
-      "domain": "troubleshooting",
-      "studyArea": "Constraining Output",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Adjusting from Feedback",
       "difficulty": "medium",
       "stem": "Claude's responses are far longer and more rambling than you need for a quick summary. What is the durable fix?",
       "options": {
@@ -1731,8 +1795,8 @@
     },
     {
       "id": "as-099",
-      "domain": "troubleshooting",
-      "studyArea": "Root-Cause Thinking",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Diagnosing Poor Outputs",
       "difficulty": "hard",
       "stem": "A prompt underperforms. Which sequence best reflects sound troubleshooting?",
       "options": {
@@ -1748,8 +1812,8 @@
     },
     {
       "id": "as-100",
-      "domain": "troubleshooting",
-      "studyArea": "Durable Fixes",
+      "domain": "troubleshooting-optimization",
+      "studyArea": "Workflow Optimization",
       "difficulty": "medium",
       "stem": "You discover a prompt tweak that reliably fixes a recurring problem across your team's chats. What is the best way to capture the win?",
       "options": {
@@ -1762,7 +1826,399 @@
       "explanationCorrect": "A durable fix belongs in shared configuration. Encoding the improvement in the team's Project makes every future chat benefit automatically, instead of depending on individuals remembering to apply it.",
       "explanationDistractor": "Applying the tweak manually whenever you remember is fragile and does not help teammates; building it into shared config makes the fix permanent and universal.",
       "scenario": "Team Standardization",
-      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview"
+      "reference": "https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects"
+    },
+    {
+      "id": "as-101",
+      "domain": "prompting-task-execution",
+      "studyArea": "Adapting to Task Type",
+      "difficulty": "medium",
+      "stem": "This week you use Claude for two tasks: generating 30 raw ideas for a team offsite, and explaining a dip in a quarterly sales export. Which prompting approach best fits the difference between them?",
+      "options": {
+        "A": "Ask for many varied ideas with judging deferred; for the analysis, give the data and ask for reasoning tied to figures",
+        "B": "Reuse one identical template for both tasks, since keeping prompts consistent matters more than task type",
+        "C": "Ask for one polished idea; for the analysis, ask for broad speculative explanations without sharing any data",
+        "D": "Ask for only the single best answer in both cases, so there is less output for you to review afterward"
+      },
+      "answer": "A",
+      "explanationCorrect": "Prompting should adapt to the task type. Brainstorming benefits from breadth and deferred judgment, while analysis needs the actual data and reasoning tied to specific evidence you can check.",
+      "explanationDistractor": "Option C inverts the two needs: it narrows the brainstorm to one idea and asks the analysis to speculate without the data that would ground it.",
+      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "as-102",
+      "domain": "prompting-task-execution",
+      "studyArea": "Task Decomposition",
+      "difficulty": "hard",
+      "stem": "You want Claude to turn 12 customer interview transcripts into a recommendations memo. Which TWO practices apply prompt chaining well? (Select 2.)",
+      "options": {
+        "A": "First have Claude extract themes with supporting quotes, review them, then feed the approved themes into the memo draft",
+        "B": "Give each step one clear objective so you can check its output before the next step builds on it",
+        "C": "Put extraction, drafting, and formatting into one long prompt so Claude can see the whole job at once",
+        "D": "Skip reviewing the intermediate outputs, since any problems will show up in the final memo anyway",
+        "E": "Start drafting the memo before themes are extracted so that the two steps can finish sooner"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "select": 2,
+      "explanationCorrect": "Prompt chaining splits a complex job into focused subtasks whose outputs feed the next step. Single-objective steps with a review point between them make errors easy to catch before they propagate.",
+      "explanationDistractor": "One long all-in-one prompt (C) is the pattern chaining replaces; it spreads attention across every subtask and hides where a problem was introduced.",
+      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/chain-prompts"
+    },
+    {
+      "id": "as-103",
+      "domain": "output-evaluation",
+      "studyArea": "Output Formats",
+      "difficulty": "easy",
+      "stem": "You need a three-page onboarding guide that you will revise with Claude several times and then share with new hires. Which output format fits best?",
+      "options": {
+        "A": "An artifact, so the guide lives as its own document you can iterate on and share",
+        "B": "An inline chat reply, with the full guide re-pasted after every revision you ask for",
+        "C": "A structured JSON object, since machine-readable data is the easiest format for people",
+        "D": "A single dense paragraph, so the whole guide fits in one message without any breaks"
+      },
+      "answer": "A",
+      "explanationCorrect": "Artifacts suit content that is substantial, self-contained, and likely to be edited, iterated on, or reused outside the conversation, which describes a multi-page guide you will revise and share.",
+      "explanationDistractor": "Re-pasting the guide inline after every revision buries each version in the chat and makes iteration and sharing harder than keeping it as one artifact.",
+      "reference": "https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them"
+    },
+    {
+      "id": "as-104",
+      "domain": "output-evaluation",
+      "studyArea": "Output Formats",
+      "difficulty": "medium",
+      "stem": "A colleague asks, \"Which of our three vendor contracts has the shortest term?\" The contracts are already in the chat. What is the best output?",
+      "options": {
+        "A": "A full artifact report covering every clause of all three contracts, with headings",
+        "B": "A short inline answer naming the vendor and its term, citing the relevant clause",
+        "C": "A JSON array listing every field extracted from all three of the vendor contracts",
+        "D": "A slide outline comparing the three vendors across a broad range of criteria"
+      },
+      "answer": "B",
+      "explanationCorrect": "Match the format to the need. A quick factual question is best answered inline and briefly, with the supporting clause cited so the colleague can check it.",
+      "explanationDistractor": "A full artifact report is built for substantial, reusable content; for a one-line factual question it adds reading time without adding value.",
+      "reference": "https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them"
+    },
+    {
+      "id": "as-105",
+      "domain": "output-evaluation",
+      "studyArea": "Output Formats",
+      "difficulty": "medium",
+      "stem": "You need Claude to pull the invoice number, date, and total from 200 invoices so the results can go straight into a spreadsheet. Which output format should you ask for?",
+      "options": {
+        "A": "Narrative paragraphs describing each invoice in turn, in the order they were provided",
+        "B": "A bulleted summary of the overall spending trends seen across all of the invoices",
+        "C": "Structured data, such as CSV or a table with one row per invoice and fixed columns",
+        "D": "A persuasive memo recommending which of the invoices should be paid off first"
+      },
+      "answer": "C",
+      "explanationCorrect": "When output feeds another tool, ask for structured data with a fixed schema. One row per invoice with named columns can be loaded and checked directly.",
+      "explanationDistractor": "Narrative paragraphs carry the same facts but in a shape a spreadsheet cannot ingest, forcing someone to re-extract every value by hand.",
+      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "as-106",
+      "domain": "output-evaluation",
+      "studyArea": "Refining for Audience",
+      "difficulty": "medium",
+      "stem": "Claude drafted a detailed incident summary for the engineering team. You now need a version for the executive team. Which request is best?",
+      "options": {
+        "A": "Send the engineering version unchanged, since the facts are the same for every audience",
+        "B": "Ask Claude to expand the draft so executives have every technical detail in front of them",
+        "C": "Ask Claude to add more technical terms so the summary sounds more authoritative to leaders",
+        "D": "Ask Claude to lead with business impact and next steps, cut jargon, and keep it to one page"
+      },
+      "answer": "D",
+      "explanationCorrect": "Adapting output for an audience means changing emphasis, vocabulary, and length to fit what that audience needs. Executives need impact and decisions first, in plain language and brief form.",
+      "explanationDistractor": "Sending the engineering version unchanged keeps the facts but ignores the audience; executives would have to dig through jargon to find the impact and next steps.",
+      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "as-107",
+      "domain": "output-evaluation",
+      "studyArea": "Refining for Audience",
+      "difficulty": "medium",
+      "stem": "You asked Claude for two versions of a customer announcement and must choose one to send. Which TWO comparison steps are most useful? (Select 2.)",
+      "options": {
+        "A": "Check each version's claims against the facts in your approved release notes",
+        "B": "Judge each version against the audience, tone, and length you asked for",
+        "C": "Choose whichever version is longer, since it probably covers more ground",
+        "D": "Choose the version that Claude says it feels more confident about",
+        "E": "Choose the version generated second, since later drafts are always better"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "select": 2,
+      "explanationCorrect": "Comparing outputs means scoring each against the same criteria: factual accuracy against an authoritative source, and fit to the stated audience and requirements.",
+      "explanationDistractor": "Length, self-reported confidence, and generation order are not quality signals; none of them tells you which version is accurate or right for the customers.",
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+    },
+    {
+      "id": "as-108",
+      "domain": "output-evaluation",
+      "studyArea": "Accuracy and Completeness",
+      "difficulty": "medium",
+      "stem": "You gave Claude a list of 10 requirements and asked for a project plan. The plan reads well. Which check most directly tests whether it is complete?",
+      "options": {
+        "A": "Count the words in the plan to confirm that it is long enough to cover everything",
+        "B": "Map each of the 10 requirements to where the plan addresses it, flagging any gaps",
+        "C": "Ask Claude whether the plan is complete and then accept whatever answer it gives",
+        "D": "Confirm that every heading in the plan uses the same consistent formatting style"
+      },
+      "answer": "B",
+      "explanationCorrect": "Completeness is checked against the original requirements. Tracing each requirement to the part of the plan that meets it exposes anything missing, however polished the plan reads.",
+      "explanationDistractor": "Asking Claude to grade its own completeness is not independent evidence; tracing requirements yourself is what reveals a gap.",
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+    },
+    {
+      "id": "as-109",
+      "domain": "output-evaluation",
+      "studyArea": "Fact-Checking",
+      "difficulty": "medium",
+      "stem": "You are about to ask Claude to summarize a 60-page policy and want every point to be easy to audit. Which instruction best supports verification?",
+      "options": {
+        "A": "Quote the exact passage supporting each point, and drop any point you cannot support",
+        "B": "Write in a confident tone so the summary reads as authoritative to the policy team",
+        "C": "Fill any gaps using your general knowledge of similar policies at other companies",
+        "D": "Keep the summary very short so that there are fewer individual claims to check"
+      },
+      "answer": "A",
+      "explanationCorrect": "Grounding claims in direct quotes, and retracting any claim without a supporting quote, makes each point auditable against the source and reduces invented content.",
+      "explanationDistractor": "Filling gaps from general knowledge (C) invites claims that are not in this policy at all, which is the opposite of an auditable summary.",
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+    },
+    {
+      "id": "as-110",
+      "domain": "output-evaluation",
+      "studyArea": "Hallucinations and Bias",
+      "difficulty": "medium",
+      "stem": "Claude will answer staff questions from a supplied benefits document. Which TWO instructions most reduce the chance that it invents details? (Select 2.)",
+      "options": {
+        "A": "\"If the document does not contain the answer, say you do not have enough information.\"",
+        "B": "\"Use only the attached document, not your general knowledge, to answer.\"",
+        "C": "\"Always give a specific number, even if you need to estimate one.\"",
+        "D": "\"Never say that you are unsure; staff want decisive answers.\"",
+        "E": "\"Answer as quickly as possible without re-reading the document.\""
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "select": 2,
+      "explanationCorrect": "Giving Claude explicit permission to say it does not know, and restricting it to the supplied document, are documented ways to reduce hallucinations.",
+      "explanationDistractor": "Demanding a specific number or forbidding uncertainty pressures Claude to produce an answer even when the document has none, which is how fabrication happens.",
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+    },
+    {
+      "id": "as-111",
+      "domain": "output-evaluation",
+      "studyArea": "Human Review",
+      "difficulty": "hard",
+      "stem": "Claude helps draft two items this week: a casual internal team newsletter and a quarterly earnings statement for public release. How should review effort be applied?",
+      "options": {
+        "A": "Apply the same rigorous review to both, since every output carries identical risk",
+        "B": "Skip review for both, since both drafts come from the same well-tested prompt",
+        "C": "Lightly review the newsletter; have experts verify every figure in the earnings statement",
+        "D": "Lightly review both, since Claude's financial summaries are usually quite accurate"
+      },
+      "answer": "C",
+      "explanationCorrect": "Review effort scales with stakes. A public earnings statement is high-stakes and hard to retract, so every figure needs expert verification; a casual internal newsletter needs only a light check.",
+      "explanationDistractor": "A light review of the earnings statement relies on \"usually accurate,\" but a single wrong figure in a public financial release is costly and cannot be quietly undone.",
+      "reference": "https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations"
+    },
+    {
+      "id": "as-112",
+      "domain": "product-model-selection",
+      "studyArea": "Product Features",
+      "difficulty": "medium",
+      "stem": "A marketing lead needs a competitor comparison that draws on about a dozen web sources and their connected Google Drive, with citations, and is happy to wait a few minutes. Which Claude feature fits best?",
+      "options": {
+        "A": "Extended thinking on its own, which reasons more deeply but does not search anything",
+        "B": "A single web search, which suits a quick factual question needing one or two lookups",
+        "C": "An artifact, which displays content in its own panel but does not gather any sources",
+        "D": "Research, which searches the web and connected apps and returns a cited report"
+      },
+      "answer": "D",
+      "explanationCorrect": "Research is built for comprehensive, multi-source gathering: it runs many searches across the web and connected sources such as Google Drive over a few minutes and produces a report with citations.",
+      "explanationDistractor": "A single web search suits quick factual lookups; it is not designed to synthesize a dozen sources plus internal documents into a cited comparison.",
+      "reference": "https://support.claude.com/en/articles/11088861-use-research-on-claude"
+    },
+    {
+      "id": "as-113",
+      "domain": "product-model-selection",
+      "studyArea": "Context and Memory",
+      "difficulty": "medium",
+      "stem": "You have worked for days in one very long chat on a launch plan and want to continue next week without losing key decisions. Which TWO approaches fit how Claude works today? (Select 2.)",
+      "options": {
+        "A": "Have Claude summarize the key decisions, then start a fresh chat in the launch Project with that summary",
+        "B": "Keep the plan's durable reference material in the Project's knowledge so every new chat can use it",
+        "C": "Move the work into an incognito chat so that Claude remembers the launch details next week",
+        "D": "Rely on every chat in a Project automatically seeing the full text of every other chat",
+        "E": "Paste the entire multi-day transcript into each new message you send from now on"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "select": 2,
+      "explanationCorrect": "Summarizing and restarting keeps the decisions while dropping noisy history, and Project knowledge persists reference material for every chat in the Project.",
+      "explanationDistractor": "Chats in a Project do not automatically share each other's context, and incognito chats are neither saved to history nor added to memory, so C and D would lose the work.",
+      "reference": "https://support.claude.com/en/articles/9517075-what-are-projects"
+    },
+    {
+      "id": "as-114",
+      "domain": "workflow-solution-design",
+      "studyArea": "Requirements and Use Cases",
+      "difficulty": "medium",
+      "stem": "An operations manager has messy notes from five stakeholder interviews about a new request-intake process. How can Claude best help at the requirements stage?",
+      "options": {
+        "A": "Finalize the requirements from the notes alone and send them straight to the build team",
+        "B": "Organize the notes into draft requirements and open questions for stakeholders to confirm",
+        "C": "Replace the interviews by asking Claude what stakeholders at similar firms usually want",
+        "D": "Skip requirements and ask Claude to design the complete solution from the raw notes"
+      },
+      "answer": "B",
+      "explanationCorrect": "Claude is strong at structuring messy input into draft requirements and surfacing open questions, while the manager keeps ownership by confirming them with the real stakeholders.",
+      "explanationDistractor": "Finalizing requirements from notes alone skips validation with the people who gave them, so gaps and misreadings go straight to the build team.",
+      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "as-115",
+      "domain": "workflow-solution-design",
+      "studyArea": "Solution Design",
+      "difficulty": "hard",
+      "stem": "A team wants a process that pulls data from three internal systems on a schedule and writes results back automatically. As an Associate, which TWO steps are most appropriate? (Select 2.)",
+      "options": {
+        "A": "Use Claude to document the requirements and a proposed workflow for the automation",
+        "B": "Escalate the integration build to a Claude Developer or Architect on the team",
+        "C": "Paste each system's admin password into a chat so Claude can connect to it directly",
+        "D": "Promise stakeholders the automation will run unattended with no errors at all",
+        "E": "Skip the documentation and start building by trial and error inside a chat"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "select": 2,
+      "explanationCorrect": "Associates add value by analyzing requirements and designing the workflow, and they escalate scheduled, multi-system integrations to Developers or Architects who build against APIs.",
+      "explanationDistractor": "Pasting admin passwords into a chat exposes secrets and still would not produce a governed, scheduled integration.",
+      "reference": "https://platform.claude.com/docs/en/intro"
+    },
+    {
+      "id": "as-116",
+      "domain": "workflow-solution-design",
+      "studyArea": "Research and Planning",
+      "difficulty": "medium",
+      "stem": "You are planning an improvement to invoice approvals, which currently take nine days end to end. How is Claude best used during planning?",
+      "options": {
+        "A": "Have Claude map current steps from your notes, flag likely bottlenecks, and propose options to weigh",
+        "B": "Have Claude invent an industry cycle-time benchmark and present it to leadership as fact",
+        "C": "Have Claude choose the final redesign and roll it out without input from the approvers",
+        "D": "Have Claude rewrite the invoice policy first and collect the current process details later"
+      },
+      "answer": "A",
+      "explanationCorrect": "Claude supports process optimization by structuring the current state, spotting likely bottlenecks, and proposing options, leaving evaluation and the decision with the people who own the process.",
+      "explanationDistractor": "An invented benchmark presented as fact is a fabrication risk; any external figure must come from a verified source before it reaches leadership.",
+      "reference": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices"
+    },
+    {
+      "id": "as-117",
+      "domain": "configuration-knowledge",
+      "studyArea": "Knowledge and Connectors",
+      "difficulty": "medium",
+      "stem": "Your Project relies on a pricing sheet that finance updates weekly in Google Docs. Uploading a fresh copy each week keeps going stale. What is the better setup?",
+      "options": {
+        "A": "Upload a new PDF copy every Monday and remember to delete last week's version",
+        "B": "Paste the pricing table into the Project instructions and edit it by hand weekly",
+        "C": "Add the Google Doc to Project knowledge through the Drive connector so it stays synced",
+        "D": "Ask Claude to remember last week's prices and adjust them itself as time goes by"
+      },
+      "answer": "C",
+      "explanationCorrect": "Google Docs added to a Project through Google Drive sync from Drive, so the Project always works from the latest version without manual re-uploads.",
+      "explanationDistractor": "Weekly manual uploads (A) are the fragile process causing staleness; one missed Monday and Claude quotes old prices.",
+      "reference": "https://support.claude.com/en/articles/10166901-use-google-workspace-connectors"
+    },
+    {
+      "id": "as-118",
+      "domain": "configuration-knowledge",
+      "studyArea": "Knowledge and Connectors",
+      "difficulty": "medium",
+      "stem": "Your organization on a Team plan is rolling out the Gmail and Google Drive connectors. Which TWO statements are accurate? (Select 2.)",
+      "options": {
+        "A": "An Owner or Primary Owner must enable the connectors for the organization before members can connect",
+        "B": "Claude can reach only the files and email that the connected user already has permission to access",
+        "C": "Connecting Drive gives Claude access to every file in the company's Google Workspace domain",
+        "D": "Once connected, Claude continuously reads each user's whole inbox in the background",
+        "E": "Enabling connectors removes the need for the organization's data-handling policy"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "select": 2,
+      "explanationCorrect": "On Team and Enterprise plans an Owner or Primary Owner enables Google Workspace connectors first, and Claude mirrors each user's existing permissions rather than granting new access.",
+      "explanationDistractor": "Connectors do not widen access (C) or run constantly (D); Claude retrieves data when you ask for something that needs it, within your own permissions.",
+      "reference": "https://support.claude.com/en/articles/10166901-use-google-workspace-connectors"
+    },
+    {
+      "id": "as-119",
+      "domain": "governance-risk",
+      "studyArea": "Ethical Implications",
+      "difficulty": "medium",
+      "stem": "A manager plans to have Claude draft performance reviews and send them without checking them against actual performance records. What is the most important concern?",
+      "options": {
+        "A": "The drafts might run longer than the company's usual review template allows",
+        "B": "Reviews affect careers, so the manager must verify them and own the judgment",
+        "C": "Claude might use a slightly different tone from the manager's usual writing",
+        "D": "The drafts might take a few extra minutes to format for the HR platform"
+      },
+      "answer": "B",
+      "explanationCorrect": "Decisions that affect people's livelihoods carry ethical weight. AI drafts can be wrong or biased, so the accountable human must verify them against real evidence and own the final judgment.",
+      "explanationDistractor": "Tone and formatting are cosmetic; the real risk is unverified, possibly unfair assessments reaching employees under the manager's name.",
+      "reference": "https://www.anthropic.com/legal/aup"
+    },
+    {
+      "id": "as-120",
+      "domain": "governance-risk",
+      "studyArea": "Appropriate Use Cases",
+      "difficulty": "medium",
+      "stem": "Which request is the most appropriate use of Claude for an Associate on a general business team?",
+      "options": {
+        "A": "Deciding alone which employees are laid off, using a spreadsheet of salaries",
+        "B": "Giving a customer a final medical diagnosis based on symptoms typed into chat",
+        "C": "Generating fake five-star customer reviews for the company's product listing",
+        "D": "Drafting a plain-language benefits FAQ from approved policy for HR to review"
+      },
+      "answer": "D",
+      "explanationCorrect": "Drafting from an approved source with human review is a well-bounded, low-risk use. The others hand consequential judgments to a tool or create deceptive content.",
+      "explanationDistractor": "Fabricated reviews (C) are deceptive regardless of how well written they are, and Anthropic's Usage Policy prohibits that kind of deception.",
+      "reference": "https://www.anthropic.com/legal/aup"
+    },
+    {
+      "id": "as-121",
+      "domain": "governance-risk",
+      "studyArea": "Data Sensitivity and Privacy",
+      "difficulty": "medium",
+      "stem": "Your organization's policy permits using Claude for a sensitive one-off question, and you would prefer it not be saved to your chat history. Which TWO statements about incognito chats are accurate? (Select 2.)",
+      "options": {
+        "A": "Incognito chats are not saved to chat history and are not added to Claude's memory",
+        "B": "Incognito mode is available only for chats started outside of Projects",
+        "C": "Incognito chats are erased instantly, so data-handling policies no longer apply",
+        "D": "Incognito chats can be started inside any Project to keep its work private",
+        "E": "Incognito chats make it safe to paste live passwords, since nothing is kept"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "select": 2,
+      "explanationCorrect": "Incognito chats are temporary: they skip chat history and memory, and they are currently available only outside Projects.",
+      "explanationDistractor": "Incognito chats are still retained for a period (30 days by default, longer under some Enterprise settings), so they never override data policy or make pasting secrets safe.",
+      "reference": "https://support.claude.com/en/articles/12260368-use-incognito-chats"
     }
   ]
 }

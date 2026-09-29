@@ -4,7 +4,7 @@
 
 *Generated from `flashcards.json` by `scripts/build.mjs`. Do not edit by hand.*
 
-## Platform & Model Foundations
+## Product and Model Selection
 
 **Q:** Which entry point works directly across the files of a local code repository?  
 **A:** Claude Code (the terminal tool) reads, edits, and runs code in your repo. Use claude.ai chat for quick Q&A, Projects for reusable context, and the API to build automation.
@@ -12,17 +12,14 @@
 **Q:** When should you use a Claude Project instead of a plain chat?  
 **A:** When you reuse the same instructions and reference material across many chats. A Project's custom instructions and knowledge sources apply to every conversation in it.
 
-**Q:** When is the API the right entry point?  
-**A:** When you need Claude embedded in your own software, running programmatically with no person in the loop.
-
-**Q:** Which model for the hardest, multi-step reasoning?  
-**A:** Claude Opus 4.8 — the most capable model. Reserve it for genuinely complex work where accuracy outweighs cost and speed.
+**Q:** Which model is the recommended starting point, and when do you step up?  
+**A:** Start with Claude Opus 5.5 for most demanding work. Step up to Claude Fable 5.1 for the hardest reasoning and long-horizon agentic work when Opus 5.5 still falls short.
 
 **Q:** Which model for high-volume, balanced work?  
-**A:** Claude Sonnet 5 — strong quality at a cost and speed that scale.
+**A:** Claude Sonnet 5.5, the best combination of speed and intelligence, with strong quality at a cost and latency that scale.
 
 **Q:** Which model for simple, fast, high-volume tasks?  
-**A:** Claude Haiku 4.5 — the lowest latency and cost for lightweight tasks like classification or language detection.
+**A:** Claude Haiku 4.5, the fastest and lowest-cost current model, for lightweight tasks like classification or language detection.
 
 **Q:** What feature helps Claude reason through multi-step problems?  
 **A:** Extended (adaptive) thinking — it lets Claude work through intermediate steps before answering.
@@ -31,12 +28,47 @@
 **A:** Enable web search so Claude can retrieve current information; reasoning alone cannot recover facts it never learned.
 
 **Q:** Your long chat is dragging in irrelevant earlier details. What is the fix?  
-**A:** Start a fresh conversation focused on the current topic; everything earlier is context Claude may draw on.
+**A:** Start a fresh conversation focused on the current topic, carrying over a short summary if needed. Everything earlier is context Claude may draw on, and automatic summarization of long chats keeps that history rather than removing it.
 
 **Q:** Why not run every task on the biggest model?  
-**A:** Match the model to the task. Simple/high-volume work runs well on Haiku or Sonnet; Opus is for the hardest reasoning. Oversizing wastes cost and latency.
+**A:** Match the model to the task. Simple, high-volume work runs well on Haiku 4.5 or Sonnet 5.5; Opus 5.5 (or Fable 5.1) is for the hardest reasoning. Oversizing wastes cost and latency.
 
-## Prompting & Task Execution
+**Q:** Web search vs. extended thinking vs. research?  
+**A:** Web search for quick factual lookups (one or two searches). Extended thinking for deep reasoning that needs no web data. Research for multi-source synthesis across the web and connected apps, returning a cited report over a few minutes.
+
+**Q:** What does Claude memory do, and how is it scoped?  
+**A:** It saves short topics from your chats so future chats can build on them. You can view, edit, pause, or reset it in Settings. Each Project has its own separate memory; incognito chats are never added to memory.
+
+**Q:** What are the tabs in the Claude desktop app?  
+**A:** Chat, Cowork, and Code. Cowork handles multi-step tasks such as reports, spreadsheets, and presentations delivered as files; on Pro and Max it is merging with chat into one Claude experience.
+
+## Workflow Integration and Solution Design
+
+**Q:** When is the API the right entry point?  
+**A:** When Claude must be embedded in your own software and run programmatically with no person in the loop. That build work belongs to Claude Developers and Architects; Associates scope the need and escalate.
+
+**Q:** Which steps are best to delegate to Claude?  
+**A:** Well-specified, repeatable, checkable, low-risk steps. Keep ambiguous, high-stakes, accountability-bearing judgment with a human.
+
+**Q:** What decides whether an action can be automated vs. needs human approval?  
+**A:** The cost and reversibility of an error. Cheap and reversible can auto-proceed; costly or irreversible needs human review.
+
+**Q:** How do you describe a Claude workflow's value to stakeholders?  
+**A:** Honestly — pair the real benefit with the limitations and where humans stay in the loop. Do not overpromise.
+
+**Q:** Moving from 'I use Claude' to 'our workflow uses Claude'?  
+**A:** Capture working prompts, context, and configuration in a shared, reusable setup so the whole team gets consistent results.
+
+**Q:** Best first process to automate with Claude?  
+**A:** A frequent, well-defined, low-risk task with clear inputs and checkable outputs.
+
+**Q:** Who should hold accountability for a final decision in an AI-assisted workflow?  
+**A:** A designated human owner who reviews and approves. A tool cannot be accountable.
+
+**Q:** Your workflow only lives in your head. What is the risk?  
+**A:** It is fragile. Document steps, prompts, and config so others can run it when you are away.
+
+## Prompting and Task Execution
 
 **Q:** What are the core elements of a well-structured prompt?  
 **A:** Role, a clear task, relevant context, the desired output format, and examples.
@@ -62,7 +94,7 @@
 **Q:** When are few-shot examples worth adding?  
 **A:** When a task has a specific format or edge cases that plain instructions keep getting wrong. For simple tasks Claude already handles, skip them.
 
-## Evaluating & Validating Output
+## Output Evaluation and Validation
 
 **Q:** Does confident, fluent writing mean the answer is correct?  
 **A:** No — Claude can be confidently and articulately wrong. Fluency is not a reliability signal.
@@ -88,30 +120,16 @@
 **Q:** Who is accountable for Claude's output you send under your name?  
 **A:** You are. Validate the facts and reasoning first.
 
-## Workflow Integration & Solution Design
+**Q:** Artifact, inline reply, or structured data?  
+**A:** Artifact for substantial, self-contained content you will edit, iterate on, or reuse. Inline for quick answers. Structured data (table, CSV, JSON) when the output feeds another tool.
 
-**Q:** Which steps are best to delegate to Claude?  
-**A:** Well-specified, repeatable, checkable, low-risk steps. Keep ambiguous, high-stakes, accountability-bearing judgment with a human.
+**Q:** Name three prompt techniques that reduce hallucinations.  
+**A:** Let Claude say "I don't know"; restrict it to the supplied documents; and ask for direct quotes or citations for each claim, retracting any it cannot support.
 
-**Q:** What decides whether an action can be automated vs. needs human approval?  
-**A:** The cost and reversibility of an error. Cheap and reversible can auto-proceed; costly or irreversible needs human review.
+**Q:** How do you adapt a draft for a new audience?  
+**A:** Say who the audience is and what they need: lead with what matters to them, adjust vocabulary and jargon, and set a length. Then check the facts survived the rewrite.
 
-**Q:** How do you describe a Claude workflow's value to stakeholders?  
-**A:** Honestly — pair the real benefit with the limitations and where humans stay in the loop. Do not overpromise.
-
-**Q:** Moving from 'I use Claude' to 'our workflow uses Claude'?  
-**A:** Capture working prompts, context, and configuration in a shared, reusable setup so the whole team gets consistent results.
-
-**Q:** Best first process to automate with Claude?  
-**A:** A frequent, well-defined, low-risk task with clear inputs and checkable outputs.
-
-**Q:** Who should hold accountability for a final decision in an AI-assisted workflow?  
-**A:** A designated human owner who reviews and approves. A tool cannot be accountable.
-
-**Q:** Your workflow only lives in your head. What is the risk?  
-**A:** It is fragile. Document steps, prompts, and config so others can run it when you are away.
-
-## Configuration & Knowledge Management
+## Configuration and Knowledge Management
 
 **Q:** What do a Project's custom instructions do?  
 **A:** They apply automatically to every chat in the Project — standing rules for tone, format, and behavior.
@@ -134,7 +152,13 @@
 **Q:** Conflicting policy versions in a Project's knowledge. Fix?  
 **A:** Keep only the current authoritative version; remove outdated and draft copies so Claude cites the right one.
 
-## Governance, Risk & Responsible Use
+**Q:** Why add a Google Doc through the Drive connector instead of uploading a copy?  
+**A:** Google Docs added from Drive sync to the latest version, so Project knowledge does not go stale. Claude only sees files the user already has permission to access.
+
+**Q:** Skills vs. Project instructions?  
+**A:** Project instructions and knowledge are always loaded for chats in that Project. Skills are folders of instructions and resources that Claude loads only when relevant to a specialized task; they require code execution.
+
+## Governance, Risk, and Responsible Use
 
 **Q:** About to paste a config with a live API key. What do you do?  
 **A:** Redact or remove the secret first. Never paste live credentials; asking Claude to 'ignore' it does not undo the exposure.
@@ -160,7 +184,10 @@
 **Q:** Before sending Claude output to an external partner?  
 **A:** Review it to ensure no confidential or personal internal data was carried into the output.
 
-## Troubleshooting & Optimization
+**Q:** Does an incognito chat make sensitive data safe to paste?  
+**A:** No. Incognito chats skip history and memory and are not used for training, but they are still retained for a period (30 days by default). Data policy still applies, and secrets never belong in any chat.
+
+## Troubleshooting and Optimization
 
 **Q:** Answers are generic and could fit any company. Root cause?  
 **A:** A context-poor prompt. Add the specific details of your situation.
@@ -182,3 +209,6 @@
 
 **Q:** What is a sound troubleshooting sequence?  
 **A:** Diagnose the root cause — ambiguous ask, missing context, wrong model, or wrong entry point — then fix that specific cause durably.
+
+**Q:** You retype the same context in every new chat. Optimization?  
+**A:** Move the reusable context into a Project (instructions plus knowledge) or a connector-synced document so every chat starts with it.

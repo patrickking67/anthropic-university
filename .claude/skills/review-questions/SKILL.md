@@ -7,6 +7,10 @@ allowed-tools: Read, Grep, Glob, Edit
 
 # Review a question bank
 
+
+> **Schema v2:** read `content/SCHEMA.md` (select-N items, official domains/weights, `official`
+> block, scenarios) and `content/FACTS.md` (verified current facts) before editing content.
+
 Audit the questions in `content/$ARGUMENTS/questions.json` (optionally scoped to one domain). Your
 job is to catch wrong keys, ambiguity, and unfair items **before** they reach a learner.
 

@@ -6,6 +6,10 @@ allowed-tools: Bash(node scripts/build.mjs*), Read
 
 # Build & validate content
 
+
+> **Schema v2:** read `content/SCHEMA.md` (select-N items, official domains/weights, `official`
+> block, scenarios) and `content/FACTS.md` (verified current facts) before editing content.
+
 Regenerate every derived artifact from the canonical `content/<exam>/questions.json` and
 `flashcards.json`.
 

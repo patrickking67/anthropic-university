@@ -1,0 +1,928 @@
+{
+  "laneId": "enterprise-administration",
+  "title": "Enterprise Administration",
+  "group": "administer",
+  "level": "intermediate",
+  "summary": "Run Claude for Team or Enterprise with confidence: identity, provisioning, governance, data controls, audit, and API organization administration.",
+  "audience": "IT administrators, security leads, and organization Owners who run Claude for Team or Enterprise, or who administer a Claude Console organization.",
+  "estimatedHours": 6,
+  "prerequisites": [],
+  "relatedCertifications": [
+    "associate-foundations",
+    "architect-professional"
+  ],
+  "officialResources": [
+    {
+      "title": "Identity management (SSO, JIT, SCIM)",
+      "url": "https://support.claude.com/en/collections/17270717-identity-management-sso-jit-scim",
+      "provider": "Claude Help Center"
+    },
+    {
+      "title": "Security and compliance",
+      "url": "https://support.claude.com/en/collections/10351014-security-and-compliance",
+      "provider": "Claude Help Center"
+    },
+    {
+      "title": "Admin API",
+      "url": "https://platform.claude.com/docs/en/manage-claude/admin-api",
+      "provider": "Claude Platform Docs"
+    },
+    {
+      "title": "Deploy managed settings for Claude Code",
+      "url": "https://code.claude.com/docs/en/managed-settings",
+      "provider": "Claude Code Docs"
+    }
+  ],
+  "modules": [
+    {
+      "id": "m1",
+      "title": "Plans, seats, and roles",
+      "summary": "Match the organization to the right plan and seat model, then understand who can do what before you touch a single setting.",
+      "objectives": [
+        "Compare the Team and Enterprise plans on identity, compliance, and billing",
+        "Identify the current Enterprise seat model and the legacy seat types still in the field",
+        "Assign the built-in roles (Primary Owner, Owner, Admin, User) to the right people",
+        "Explain what the Custom role does on Enterprise plans"
+      ],
+      "keyPoints": [
+        "Team plans use Standard and Premium seats, need at least two members, and cap at 150 seats; larger organizations move to Enterprise.",
+        "New Enterprise plans use a single Enterprise seat billed annually. The seat covers access to Claude on web, desktop, and mobile plus Claude Code and Cowork; all usage is billed separately at API rates with no per-seat usage cap.",
+        "Chat and Chat + Claude Code seats, and Standard and Premium Enterprise seats, are legacy models that move to the single Enterprise seat at the next renewal. HIPAA-ready Enterprise organizations are an exception and keep separate seat types.",
+        "Self-serve Enterprise requires at least 20 seats; sales-assisted requires 50 and adds invoicing and multi-currency billing.",
+        "An organization has exactly one Primary Owner. That seat consumes a license, and it can be a service account rather than a named person.",
+        "Owners and Primary Owners manage SSO, audit log requests, and data retention on Enterprise; Admins handle day-to-day membership but cannot invite or remove Owners.",
+        "Members set to the Custom role have no default permissions: their access comes entirely from the custom roles attached to their groups."
+      ],
+      "practice": "Draw a one-page access matrix for your organization: list who should be Primary Owner, which two or three people are Owners, who are Admins, and which teams would later move to the Custom role. Note which decisions need an Owner rather than an Admin.",
+      "docs": [
+        {
+          "title": "What is the Enterprise plan?",
+          "url": "https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan"
+        },
+        {
+          "title": "What is the Team plan?",
+          "url": "https://support.claude.com/en/articles/9266767-what-is-the-team-plan"
+        },
+        {
+          "title": "Roles and permissions",
+          "url": "https://support.claude.com/en/articles/9267276-roles-and-permissions"
+        },
+        {
+          "title": "Purchase and manage seats on Enterprise plans",
+          "url": "https://support.claude.com/en/articles/13393991-purchase-and-manage-seats-on-enterprise-plans"
+        }
+      ]
+    },
+    {
+      "id": "m2",
+      "title": "Organization setup, domains, and SSO",
+      "summary": "Verify domains, connect an identity provider through the parent organization, and decide when to require SSO.",
+      "objectives": [
+        "Verify a company domain with a DNS TXT record",
+        "Explain the parent organization and why it links to one IdP",
+        "Configure SSO and decide when to require it",
+        "Use Restrict organization creation to stop shadow organizations"
+      ],
+      "keyPoints": [
+        "SSO settings live in a parent organization. Enterprise plans get one automatically; Team plans get one the first time SSO is enabled; a Console organization needs one requested or must merge into a Team or Enterprise parent.",
+        "Each parent organization connects to a single identity provider, and every domain verified on it must be managed through that same IdP.",
+        "Domain verification uses a TXT record whose value starts with anthropic-domain-verification-. Copy the full value before leaving the screen, because the console does not show it again once the domain is Pending.",
+        "Verifying a domain changes nothing for users by itself. Access changes only when SSO is configured and Require SSO is switched on.",
+        "Once SSO is required, domain users who are not assigned to the Anthropic app in the IdP cannot reach their existing Free, Pro, or Max accounts. The accounts are not deleted, only inaccessible.",
+        "After verification, Owners can turn on Restrict organization creation so nobody can spin up new Claude or Console organizations, including personal accounts, on the verified domains.",
+        "Anthropic uses WorkOS for domain verification and SSO setup, and the flow ends with a Test Single Sign-on step."
+      ],
+      "practice": "Walk the SSO setup path in a sandbox or on paper: list the DNS record you would add, the IdP app assignment group, the test user, and the date you would switch on Require SSO. Write down who is not yet in the IdP and would be locked out.",
+      "docs": [
+        {
+          "title": "Important considerations before enabling SSO and JIT/SCIM",
+          "url": "https://support.claude.com/en/articles/10276682-important-considerations-before-enabling-single-sign-on-sso-and-jit-scim-provisioning"
+        },
+        {
+          "title": "Set up single sign-on (SSO)",
+          "url": "https://support.claude.com/en/articles/13132885-set-up-single-sign-on-sso"
+        }
+      ]
+    },
+    {
+      "id": "m3",
+      "title": "Provisioning: JIT, SCIM, and domain capture",
+      "summary": "Choose how accounts arrive and leave, map IdP groups to roles and seats, and consolidate personal accounts on your domain.",
+      "objectives": [
+        "Choose between Invite only, JIT, and SCIM directory sync",
+        "Use group mappings to set roles and seat tiers from the IdP",
+        "Avoid the removal traps in a SCIM resync",
+        "Plan a domain claim and its 30-day migration window"
+      ],
+      "keyPoints": [
+        "Invite only is the default. JIT adds users at their first SSO login with the User role; SCIM adds and removes users from IdP assignments without waiting for a login.",
+        "JIT is available on Team, Enterprise, and Console organizations. SCIM is available on Enterprise and on Console organizations under an Enterprise or their own parent, not on Team plans.",
+        "JIT never removes members automatically. Unassigning someone in the IdP blocks login, but they keep their seat until an admin removes them in Claude.",
+        "Switching the provisioning mode to SCIM removes any member who is not in the IdP directory, so confirm the directory is complete first.",
+        "With SCIM group mappings, any member not covered by a role mapping is removed on sync. Changing a member's email creates a new member record and removes the old one.",
+        "Domain capture (Migrate accounts using your domain) is Enterprise-only and one-way. It requires restricted organization creation, verified DNS, enforced SSO, and JIT or SCIM before you can turn it on.",
+        "A domain claim gives every affected personal account one shared 30-day deadline. Unmigrated accounts are deactivated at the deadline and paid personal plans are cancelled with a prorated refund."
+      ],
+      "practice": "Export your member list and your IdP group membership, then diff them. Count who would be removed if you switched to SCIM today and who would be locked out of a domain claim. Fix both lists before changing anything.",
+      "docs": [
+        {
+          "title": "Set up JIT or SCIM provisioning",
+          "url": "https://support.claude.com/en/articles/13133195-set-up-jit-or-scim-provisioning"
+        },
+        {
+          "title": "How SCIM sync works for Enterprise organizations",
+          "url": "https://support.claude.com/en/articles/14499648-how-scim-sync-works-for-enterprise-organizations"
+        },
+        {
+          "title": "Claim and migrate accounts on your domain",
+          "url": "https://support.claude.com/en/articles/14625619-claim-and-migrate-accounts-on-your-domain"
+        }
+      ]
+    },
+    {
+      "id": "m4",
+      "title": "Custom roles, groups, and spend governance",
+      "summary": "Use groups and custom roles to give each team the features it needs, and put spend limits where the money goes.",
+      "objectives": [
+        "Explain the four-level feature-access precedence chain",
+        "Build groups and attach custom roles to them",
+        "Set organization, group, and user spend limits",
+        "Decide how group settings resolve for members in several groups"
+      ],
+      "keyPoints": [
+        "Feature access resolves through four levels, and the most restrictive wins: platform overrides from your contract, the organization toggle, custom role permissions, then the member's own setting.",
+        "The organization toggle is the main switch. If a feature is off for the organization, no custom role can grant it.",
+        "Custom roles only affect members whose role is set to Custom. Owners, Admins, and Users keep the permissions of their built-in role.",
+        "Custom roles can also carry admin permissions, such as billing or identity management, without making someone an Owner.",
+        "Groups can be created by hand or synced from the IdP through SCIM. SCIM-synced groups cannot be renamed or deleted in Claude.",
+        "Enterprise spend limits can be set for the organization, per user, and per group, and usage-based Enterprise plans can also give a group a shared monthly budget (beta).",
+        "When a member belongs to groups with different plugin settings, the most permissive setting applies. That differs from spend limits, which follow the Multi-group spend limit setting."
+      ],
+      "practice": "Design three custom roles (for example Engineering, Legal, and Contractors). For each, list the capabilities it grants, the group it attaches to, and the per-user spend limit. Then check each capability against the organization toggles.",
+      "docs": [
+        {
+          "title": "Manage custom roles on Enterprise plans",
+          "url": "https://support.claude.com/en/articles/13930452-manage-custom-roles-on-enterprise-plans"
+        },
+        {
+          "title": "Manage groups and group spend limits on Enterprise plans",
+          "url": "https://support.claude.com/en/articles/13799932-manage-groups-and-group-spend-limits-on-enterprise-plans"
+        }
+      ]
+    },
+    {
+      "id": "m5",
+      "title": "Connectors, skills, and plugin governance",
+      "summary": "Decide which tools Claude can reach, distribute approved skills and plugins, and control what users can add themselves.",
+      "objectives": [
+        "Enable connectors and set up Enterprise-managed authorization",
+        "Provision organization skills and restrict user-created skills",
+        "Distribute plugins through organization marketplaces with the right default access",
+        "Choose a publishing policy for user-submitted skills and plugins"
+      ],
+      "keyPoints": [
+        "Enterprise-managed auth lets an admin authorize a connector once through the IdP. Chosen roles inherit it at first login, and deprovisioning in the IdP removes connector access too.",
+        "Skills need Cloud code execution and file creation plus Skills to be on in Organization settings > Plugins & skills. Provisioned skills reach everyone and also load in Claude Code for users signed in with their Claude account.",
+        "Turning off User-created skills stops users creating or uploading their own, while provisioned and Anthropic built-in skills stay available.",
+        "Plugin marketplaces need Cowork and Skills enabled. Plugins can be uploaded as ZIP files or synced from a private GitHub or GitLab repository.",
+        "Each plugin has an organization-wide install preference: Required, Installed by default, Available to install, or Not available. Required plugins cannot be turned off by members.",
+        "Required and Installed-by-default plugins also install in Claude Code, where their hooks, sub-agents, and MCP servers run on the user's computer, so review hooks before marking a plugin Required.",
+        "Publishing can be set to Requires review, Open, or Off; with review on, every later version of a submission goes through the same approval."
+      ],
+      "practice": "Pick one internal workflow and package it as a skill inside a plugin. Decide its default access, the group that should get it, and whether it belongs in a reviewed publishing flow. Write the rollback step if the plugin misbehaves.",
+      "docs": [
+        {
+          "title": "Authorize MCP connectors for your entire organization",
+          "url": "https://support.claude.com/en/articles/15537633-authorize-mcp-connectors-for-your-entire-organization"
+        },
+        {
+          "title": "Provision and manage skills for your organization",
+          "url": "https://support.claude.com/en/articles/13119606-provision-and-manage-skills-for-your-organization"
+        },
+        {
+          "title": "Manage plugins for your organization",
+          "url": "https://support.claude.com/en/articles/13837433-manage-plugins-for-your-organization"
+        }
+      ]
+    },
+    {
+      "id": "m6",
+      "title": "Data retention, ZDR, and data usage",
+      "summary": "Set how long chats and projects live, understand what zero data retention does and does not cover, and explain the training policy correctly.",
+      "objectives": [
+        "Configure custom retention for chats and projects",
+        "Explain how project retention overrides chat retention",
+        "Describe the scope of zero data retention on the Claude API",
+        "State the default training policy for commercial products"
+      ],
+      "keyPoints": [
+        "Custom data retention is an Enterprise feature managed by Owners in Organization settings > Data and Privacy. The minimum period is 30 days and each month counts as 30 days.",
+        "Retention counts from last activity: the last message for a chat and the last update for a project. Chats inside a project follow the project's period, and projects are kept indefinitely unless you set one.",
+        "Shortening a period schedules everything outside it for permanent deletion as soon as you save. Deletion runs at midnight UTC and cannot be undone.",
+        "Custom retention does not apply to Claude Design, Claude Tag, Claude Managed Agents, or other features built on Claude Code on the web.",
+        "ZDR is arranged per organization with Anthropic's sales team and covers eligible Messages and Token Counting API features. The Claude Team and Enterprise product interfaces are not ZDR-eligible, except Claude Code used through Enterprise with ZDR enabled.",
+        "Covered Models such as Claude Fable 5.1 require 30-day retention, so a ZDR organization turns retention on per Workspace to use them.",
+        "By default Anthropic does not train on inputs or outputs from commercial products. Feedback submitted with the thumbs buttons is an exception, and Owners can disable it with the Rate chats setting."
+      ],
+      "practice": "Write your organization's retention statement in three sentences: chat period, project period, and what happens to data older than that. Then list which Claude surfaces your policy does not cover and who owns those.",
+      "docs": [
+        {
+          "title": "Configure custom data retention controls",
+          "url": "https://support.claude.com/en/articles/10440198-configure-custom-data-retention-controls-for-enterprise-plans"
+        },
+        {
+          "title": "API and data retention (ZDR)",
+          "url": "https://platform.claude.com/docs/en/manage-claude/api-and-data-retention"
+        },
+        {
+          "title": "Is my data used for model training? (commercial)",
+          "url": "https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training"
+        },
+        {
+          "title": "Restrict access to Claude with IP allowlisting",
+          "url": "https://support.claude.com/en/articles/13200993-restrict-access-to-claude-with-ip-allowlisting"
+        }
+      ]
+    },
+    {
+      "id": "m7",
+      "title": "Audit logs, the Compliance API, and analytics",
+      "summary": "Prove what happened, feed activity into your security tooling, and measure adoption and spend.",
+      "objectives": [
+        "Export audit logs and read their structure",
+        "Enable the Compliance API and scope its keys",
+        "Use the analytics dashboard and spend export",
+        "Choose between audit logs, the Compliance API, and the Analytics API"
+      ],
+      "keyPoints": [
+        "Audit logs are Enterprise-only. Owners export them from Organization settings > Data and Privacy, the export covers the past 180 days, and the emailed link is valid for 24 hours.",
+        "Audit logs record identifiers for chats and projects, not their titles or content. Chat content is exported separately by the Primary Owner through a data export.",
+        "Organizations using customer-managed encryption keys cannot use the Export logs button; audit events are available through the Compliance API instead.",
+        "Only the Primary Owner can turn on the Compliance API, in Organization settings > API. Owners can create keys limited to their own organization; Admins do not see the page.",
+        "The Compliance API covers chat, Cowork, and Claude Code activity, but not cloud sessions in Claude Code or sessions run on Amazon Bedrock or Google Vertex AI.",
+        "Enterprise analytics are open to Owners, Primary Owners, and Admins, though Admins cannot see Spend. The spend report exports per-user, per-model tokens and net and gross spend for up to 90 days, with a one-day delay."
+      ],
+      "practice": "Map three questions your security team asks (for example, who changed SSO settings, what did a departing user upload, and which team drives spend) to the tool that answers each: audit log export, Compliance API, or analytics.",
+      "docs": [
+        {
+          "title": "Access audit logs",
+          "url": "https://support.claude.com/en/articles/9970975-access-audit-logs"
+        },
+        {
+          "title": "Access the Compliance API",
+          "url": "https://support.claude.com/en/articles/13015708-access-the-compliance-api"
+        },
+        {
+          "title": "View usage analytics for Team and Enterprise plans",
+          "url": "https://support.claude.com/en/articles/12883420-view-usage-analytics-for-team-and-enterprise-plans"
+        }
+      ]
+    },
+    {
+      "id": "m8",
+      "title": "Claude Console and the Admin API",
+      "summary": "Govern API organizations with workspaces, roles, keys, limits, service accounts, and workload identity federation.",
+      "objectives": [
+        "Organize API usage with workspaces and workspace roles",
+        "Authenticate to the Admin API with the right credential",
+        "Explain what happens to each API key type when a user leaves",
+        "Replace static keys in CI with workload identity federation"
+      ],
+      "keyPoints": [
+        "Console organization roles are User, Claude Code User, Limited Developer, Developer, Billing, and Admin. Organization admins get Workspace Admin in every workspace automatically.",
+        "Every organization has a Default Workspace that cannot be renamed or archived, and up to 100 workspaces by default. Each workspace has its own rate limits and monthly spend limits with alerts.",
+        "Archiving a workspace archives every API key created for it and cannot be undone. Archiving the Claude Code workspace disables Claude Code sign-in through Console billing.",
+        "The Admin API accepts an Admin API key (sk-ant-admin...), an org:admin OAuth token, or an unscoped personal or service account key. It can read, rename, and deactivate keys but cannot create them.",
+        "Personal keys stop when their user leaves the organization; service account keys survive the creator's removal and stop only when the service account is archived.",
+        "Workload identity federation exchanges a short-lived OIDC token from your IdP for an Anthropic token bound to a service account, using a federation issuer and a federation rule. Service-account and federation endpoints accept only an org:admin OAuth token.",
+        "Claude Enterprise organizations use a scoped key created in claude.ai for the members and invites endpoints and for Enterprise-only endpoints such as spend limits."
+      ],
+      "practice": "Sketch a workspace layout for one product: a development and a production workspace, their spend limits and alerts, and a service account for CI that federates from GitHub Actions instead of storing an API key.",
+      "docs": [
+        {
+          "title": "Admin API",
+          "url": "https://platform.claude.com/docs/en/manage-claude/admin-api"
+        },
+        {
+          "title": "Workspaces",
+          "url": "https://platform.claude.com/docs/en/manage-claude/workspaces"
+        },
+        {
+          "title": "Workload Identity Federation",
+          "url": "https://platform.claude.com/docs/en/manage-claude/workload-identity-federation"
+        },
+        {
+          "title": "Claude Console roles and permissions",
+          "url": "https://support.claude.com/en/articles/10186004-claude-console-roles-and-permissions"
+        }
+      ]
+    },
+    {
+      "id": "m9",
+      "title": "Claude Code for teams",
+      "summary": "Connect developers to the organization's plan and enforce Claude Code policy from the admin console or the endpoint.",
+      "objectives": [
+        "Sign developers in to Claude Code with a Team or Enterprise account",
+        "Choose between server-managed and endpoint-managed settings",
+        "Explain where managed settings sit in the settings precedence",
+        "Confirm which managed source a developer's session is using"
+      ],
+      "keyPoints": [
+        "Developers sign in by choosing Claude account with subscription at the login prompt and authorizing the organization. Organization skills and plugins then load in Claude Code (v2.1.273 or later).",
+        "Server-managed settings are edited by Owners in Admin Settings > Claude Code > Managed settings and fetched at startup and hourly. They suit organizations without MDM or developers on unmanaged devices.",
+        "Endpoint-managed settings arrive through MDM, the registry, or a managed-settings.json file and can be protected from user edits by the OS, so they are the stronger choice on managed fleets.",
+        "Managed settings sit at the top of the precedence stack, above command-line flags, local project, shared project, and user settings.",
+        "A few security keys honor a stricter value from a lower scope, for example disableClaudeAiConnectors set to true in any scope.",
+        "Running /status shows the Setting sources line, which names the managed source in effect, such as (remote), (plist), (HKLM), or (file)."
+      ],
+      "practice": "Draft a starter managed policy that disables bypass permissions mode and restricts permission rules to managed ones. Decide whether to deliver it from the admin console or through MDM, and write the /status output you expect to see.",
+      "docs": [
+        {
+          "title": "Use Claude Code with your Team or Enterprise plan",
+          "url": "https://support.claude.com/en/articles/11845131-use-claude-code-with-your-team-or-enterprise-plan"
+        },
+        {
+          "title": "Configure server-managed settings",
+          "url": "https://code.claude.com/docs/en/server-managed-settings"
+        },
+        {
+          "title": "Deploy managed settings",
+          "url": "https://code.claude.com/docs/en/managed-settings"
+        }
+      ]
+    }
+  ],
+  "guide": "# Enterprise Administration: lesson guide\n\nThis guide follows the nine modules of the Enterprise Administration lane. It is written for the people who run a Claude Team or Enterprise organization day to day: IT administrators, identity engineers, security and compliance staff, and the Owners who sign off on their work. Each section explains the model behind a group of settings, the order to do things in, and the mistakes that are hard to undo. Plan names, menu paths, and limits were checked against the Claude Help Center and the Claude Developer Platform docs in September 2026. Admin features change often, so treat the linked docs in each module as the final word when a screen looks different.\n\nA useful way to read the lane is as one rollout. You pick a plan, stand up identity, decide how people arrive and leave, shape what each group can do, govern the tools Claude can reach, set how long data lives, prove what happened, manage the developer platform, and finally bring Claude Code under the same policy. The modules are in that order.\n\n## Module 1: Plans, seats, and roles\n\nStart by being precise about which plan you are administering, because several features in this lane exist only on Enterprise.\n\n**Team** is the self-serve business plan. It uses Standard and Premium seats, needs at least two members, and tops out at 150 seats. An organization that outgrows that ceiling, or that needs SCIM, audit logs, custom retention, or domain capture, moves to Enterprise.\n\n**Enterprise** now sells a single Enterprise seat, billed annually. The seat covers Claude on the web, desktop, and mobile, plus Claude Code and Cowork. Usage is billed separately at API rates, so there is no per-seat usage cap to manage; instead you manage spend (Module 4). Self-serve Enterprise starts at 20 seats. Sales-assisted Enterprise starts at 50 and adds invoicing and multi-currency billing. If your organization still has Chat and Chat + Claude Code seats, or Standard and Premium Enterprise seats, those are legacy models that convert to the single seat at the next renewal. HIPAA-ready organizations are the exception and keep separate seat types.\n\nRoles come next. Every organization has exactly one **Primary Owner**. That seat consumes a license, and it does not have to be a person: many organizations assign it to a service account so the most privileged role isn't tied to someone who might leave. **Owners** control the settings with the widest blast radius, such as SSO, retention, and audit log exports. **Admins** handle day-to-day membership but cannot invite or remove Owners. **Users** simply use Claude. On Enterprise there is also a **Custom** role, which starts with no permissions at all; everything a Custom member can do comes from the custom roles attached to their groups.\n\nPractical advice: write down who holds Primary Owner and Owner before you change anything else, keep the Owner list short, and give helpdesk staff Admin rather than Owner.\n\n## Module 2: Organization setup, domains, and SSO\n\nIdentity settings live in a **parent organization**, which sits above your Claude and Console organizations. Enterprise plans get one automatically. A Team plan gets one the first time someone enables SSO. A standalone Console organization either requests its own parent or merges into a Team or Enterprise parent. Each parent connects to one identity provider, and every domain verified on that parent is managed through the same IdP. If two business units use different IdPs, plan that split before you verify domains, not after.\n\nDomain verification uses a DNS TXT record whose value begins with `anthropic-domain-verification-`. Copy the whole value while the screen shows it, because once the domain moves to Pending the console won't display it again. Anthropic uses WorkOS behind the scenes for domain verification and SSO configuration, and the setup flow finishes with a Test Single Sign-on step. Run that test with an account you can afford to lock out.\n\nThe single most important thing to understand is that **verifying a domain changes nothing for users by itself**. Access only changes when SSO is configured and you switch on **Require SSO**. At that point anyone on your domains who isn't assigned to the Anthropic application in your IdP loses access to their existing Free, Pro, or Max accounts. Those accounts aren't deleted, but they become unreachable until IdP assignment is fixed. So assign the right IdP groups first, communicate the change, and only then require SSO.\n\nOnce domains are verified, Owners can also turn on **Restrict organization creation**. That stops anyone on those domains from creating new Claude or Console organizations, including personal accounts. It's a prerequisite for domain capture in Module 3, and it closes the \"shadow workspace\" gap where teams buy their own plans on a company email.\n\nA good order for this module: verify domains, configure SSO, test with a pilot group, assign production groups in the IdP, require SSO, then restrict organization creation.\n\n## Module 3: Provisioning with JIT, SCIM, and domain capture\n\nProvisioning decides how people arrive in the organization and, just as important, how they leave. There are three modes.\n\n- **Invite only** is the default. An admin invites each person.\n- **JIT (just-in-time)** creates a member with the User role the first time someone signs in through SSO. It's available on Team, Enterprise, and Console organizations.\n- **SCIM** lets the IdP add and remove members from its assignments without waiting for anyone to sign in. It's available on Enterprise and on Console organizations that sit under an Enterprise or their own parent. It is not available on Team.\n\nThe difference that matters most is removal. **JIT never removes anyone.** If you unassign a person in the IdP, they can no longer sign in, but they still hold a seat until an admin removes them in Claude. With SCIM, removal follows the IdP.\n\nSCIM is also less forgiving. Switching the provisioning mode to SCIM removes every member who isn't in the IdP directory, so reconcile the directory with your current member list first. With SCIM group mappings, members not covered by any role mapping are removed on the next sync. And because SCIM identifies people by email, changing someone's email creates a new member and removes the old record, along with its history in that seat. Coordinate email renames with the identity team.\n\n**Domain capture**, shown in the product as migrating accounts on your domain, is Enterprise-only and one-way. Before you can turn it on you need restricted organization creation, verified DNS, required SSO, and JIT or SCIM. When you claim a domain, every affected personal account gets one shared 30-day deadline. Accounts that haven't migrated by then are deactivated, and paid personal plans are cancelled with a prorated refund. Treat this as a change with a communications plan: announce it, tell people how to move their work, and pick a start date that isn't right before a holiday.\n\n## Module 4: Custom roles, groups, and spend governance\n\nEnterprise lets you shape feature access by group rather than giving everyone the same switches. The key is knowing how the layers combine. Access resolves through four levels, and **the most restrictive level wins**:\n\n1. Platform overrides from your contract.\n2. The organization-wide toggle.\n3. Custom role permissions.\n4. The member's own setting.\n\nThe organization toggle is the master switch. If a feature is off for the organization, no custom role can turn it back on for a group. Custom roles only affect members whose role is set to Custom; Owners, Admins, and Users keep their built-in permissions. Custom roles can also carry admin permissions, such as billing or identity management, which lets you delegate a narrow slice of administration without creating another Owner.\n\nGroups can be created by hand or synced from the IdP through SCIM. Synced groups are owned by the IdP, so you can't rename or delete them in Claude. If you plan to drive access from IdP groups, name them carefully at the source.\n\nSpend is the other half of this module. Because the Enterprise seat bills usage at API rates, you set spend limits for the organization, per user, and per group. Usage-based Enterprise plans can also give a group a shared monthly budget (in beta at the time of writing). One subtlety trips people up: when a member belongs to several groups, **plugin settings use the most permissive group**, while spend limits follow whatever you choose in the Multi-group spend limit setting. Don't assume both behave the same way.\n\n## Module 5: Connectors, skills, and plugin governance\n\nClaude becomes more useful as it reaches more tools, so this is where most governance time goes.\n\n**Connectors.** With enterprise-managed authentication, an admin authorizes a connector once through the IdP. Chosen roles inherit that authorization when they first sign in, and deprovisioning someone in the IdP also removes their connector access. That's a much cleaner story for auditors than every user holding a personal OAuth grant.\n\n**Skills.** Skills need Cloud code execution and file creation turned on, along with Skills itself, in Organization settings > Plugins & skills. Skills you provision reach everyone and also load in Claude Code for developers signed in with their Claude account. If you turn off User-created skills, people can't create or upload their own, but provisioned skills and Anthropic's built-in skills stay available. Many organizations start there: curated skills only, then open up later.\n\n**Plugins.** Plugin marketplaces need Cowork and Skills enabled. You can upload plugins as ZIP files or sync them from a private GitHub or GitLab repository, which gives you pull-request review for free. Each plugin gets an organization-wide install preference: Required, Installed by default, Available to install, or Not available. Members can't turn off a Required plugin.\n\nBe careful with Required and Installed-by-default plugins. They also install in Claude Code, where their hooks, sub-agents, and MCP servers run on the user's own computer. Review a plugin's hooks the way you would review a login script before marking it Required. Publishing can be set to Requires review, Open, or Off, and with review on, every later version of a submission goes through the same approval, so a plugin can't be swapped for something else after approval.\n\n## Module 6: Data retention, ZDR, and data usage\n\nRetention questions come from legal and security teams early, so it helps to have precise answers.\n\n**Custom retention** is an Enterprise feature managed by Owners under Organization settings > Data and Privacy. The minimum period is 30 days, and months are counted as 30 days each. The clock runs from last activity: the last message in a chat, or the last update to a project. Chats inside a project follow the project's period, and projects are kept indefinitely unless you set one.\n\nShortening a period is destructive. As soon as you save, everything outside the new window is scheduled for permanent deletion. Deletion runs at midnight UTC and can't be undone. Before you shorten a period, confirm there's no legal hold that needs the older data, and export anything you must keep. Also note the scope: custom retention doesn't apply to Claude Design, Claude Tag, Claude Managed Agents, or other features built on Claude Code on the web, so check those separately.\n\n**Zero data retention (ZDR)** is a different thing. It's arranged per organization with Anthropic's sales team and covers eligible Messages and Token Counting API features. The Claude Team and Enterprise apps aren't ZDR-eligible, with one exception: Claude Code used through Enterprise with ZDR enabled. Some models are designated Covered Models that require 30-day retention; Claude Fable 5.1 is one. A ZDR organization that wants those models turns retention on for a specific Workspace rather than for the whole organization.\n\nOn **training**: by default Anthropic doesn't train on inputs or outputs from commercial products. Feedback that users submit with the thumbs buttons is the exception, and Owners can disable it with the Rate chats setting if policy requires.\n\n## Module 7: Audit logs, the Compliance API, and analytics\n\nThree tools answer three different questions: what administrative and user actions happened, what content was created, and how much Claude is being used.\n\n**Audit logs** are Enterprise-only. Owners export them from Organization settings > Data and Privacy. An export covers the past 180 days and arrives as an emailed link that's valid for 24 hours, so download it promptly and store it in your own log platform. Audit logs record identifiers for chats and projects, not their titles or content. Content is exported separately, by the Primary Owner, through a data export. Organizations that use customer-managed encryption keys can't use the Export logs button at all and get audit events through the Compliance API instead.\n\nThe **Compliance API** is for continuous, programmatic access. Only the Primary Owner can turn it on, under Organization settings > API. Owners can then create keys limited to their own organization, and Admins don't see the page. It covers chat, Cowork, and Claude Code activity, but not Claude Code cloud sessions or sessions that run on Amazon Bedrock or Google Vertex AI. If your developers use those paths, you'll need the cloud provider's own logging for them.\n\n**Analytics** are for adoption and cost conversations. Owners, Primary Owners, and Admins can open them, but Admins can't see Spend. The spend report exports per-user, per-model tokens with net and gross spend for up to 90 days, with a one-day delay. Pair it with the spend limits from Module 4: analytics tell you where to set limits, and limits stop surprises.\n\n## Module 8: Claude Console and the Admin API\n\nDeveloper access runs through the Claude Console, which has its own role model. Organization roles are User, Claude Code User, Limited Developer, Developer, Billing, and Admin. Organization admins automatically get Workspace Admin in every workspace.\n\n**Workspaces** are how you separate projects, environments, or cost centers. Every organization has a Default Workspace that can't be renamed or archived, and you can have up to 100 workspaces by default. Each workspace has its own rate limits and monthly spend limits with alerts, which makes workspaces the natural unit for budgeting API use. Archiving is final: it archives every API key created for that workspace and can't be undone. Archiving the Claude Code workspace also disables Claude Code sign-in through Console billing, so check before tidying up.\n\nThe **Admin API** automates all of this. It accepts an Admin API key (they begin `sk-ant-admin`), an `org:admin` OAuth token, or an unscoped personal or service account key. It can list, rename, and deactivate API keys but can't create them; key creation stays in the Console. Think about key ownership early. Personal keys stop working when their user leaves the organization. Service account keys survive the creator's departure and stop only when the service account is archived, which makes them the right home for production workloads.\n\n**Workload identity federation** removes long-lived keys from your infrastructure entirely. Your workload presents a short-lived OIDC token from its own identity provider, and a federation issuer plus a federation rule exchange it for an Anthropic token bound to a service account. Note the credential rule: service-account and federation endpoints accept only an `org:admin` OAuth token, not an Admin API key.\n\nEnterprise organizations have one more wrinkle. The members and invites endpoints, and Enterprise-only endpoints such as spend limits, use a scoped key created in claude.ai rather than a Console Admin key.\n\n## Module 9: Claude Code for teams\n\nClaude Code is where governance meets developer laptops, so it deserves its own plan.\n\nDevelopers join by choosing the Claude account with subscription option at the login prompt and authorizing your organization. From Claude Code v2.1.273, organization skills and plugins load automatically after sign-in, which is how the governance from Module 5 reaches the terminal.\n\nYou have two ways to push policy. **Server-managed settings** are edited by Owners in Admin Settings > Claude Code > Managed settings, and Claude Code fetches them at startup and hourly. They need no device management, so they suit organizations without MDM or developers on unmanaged machines. **Endpoint-managed settings** arrive through MDM, the Windows registry, or a `managed-settings.json` file, and the operating system can protect them from user edits. On managed fleets they're the stronger choice. The Desktop Deployment lane covers the file paths and delivery methods in detail.\n\nEither way, managed settings sit at the top of the precedence stack, above command-line flags, local project, shared project, and user settings. A few security keys go further and honor a stricter value from any lower scope; for example, `disableClaudeAiConnectors` set to `true` anywhere wins. A minimal policy that many teams start with blocks the permission-bypass mode:\n\n```json\n{\n  \"permissions\": {\n    \"disableBypassPermissionsMode\": \"disable\"\n  }\n}\n```\n\nTo check what a developer is actually getting, have them run `/status`. The Setting sources line names the managed source in effect, such as `(remote)`, `(plist)`, `(HKLM)`, or `(file)`. If it doesn't show what you expect, the problem is delivery, not the policy itself.\n\n## Putting it together: a rollout checklist\n\n1. Confirm the plan, seat model, Primary Owner, and Owner list (Module 1).\n2. Verify domains, configure and test SSO, assign IdP groups, then require SSO (Module 2).\n3. Reconcile the directory, choose JIT or SCIM, and plan domain capture with a communications window (Module 3).\n4. Set organization toggles, then custom roles, groups, and spend limits (Module 4).\n5. Decide connector authentication, curate skills, and review plugins before marking any Required (Module 5).\n6. Agree retention periods with legal before saving, and confirm ZDR scope for API work (Module 6).\n7. Schedule audit log exports or connect the Compliance API, and review analytics monthly (Module 7).\n8. Organize workspaces, move production keys to service accounts, and plan federation (Module 8).\n9. Push Claude Code managed settings and verify them with `/status` (Module 9).\n\nWork through each module's practice exercise in a test organization or with a pilot group first. Most of the settings here are easy to turn on and some, like shortened retention and domain capture, can't be reversed.\n",
+  "cards": [
+    {
+      "front": "How is usage billed on a new Enterprise plan?",
+      "back": "The single Enterprise seat covers access only. All usage in Chat, Claude Code, and Cowork is billed separately at API rates, with no per-seat usage limit.",
+      "module": "m1"
+    },
+    {
+      "front": "What are the seat limits for a Team plan?",
+      "back": "At least two members and up to 150 seats, with Standard and Premium seat types. Beyond 150, move to Enterprise.",
+      "module": "m1"
+    },
+    {
+      "front": "What permissions does a member on the Custom role start with?",
+      "back": "None. Their access comes entirely from the custom roles assigned to their groups.",
+      "module": "m1"
+    },
+    {
+      "front": "What does a parent organization hold?",
+      "back": "Identity settings only: verified domains, the SSO connection, and provisioning. Billing and usage stay with each linked organization.",
+      "module": "m2"
+    },
+    {
+      "front": "Does verifying a domain lock anyone out?",
+      "back": "No. Access changes only after SSO is set up and Require SSO is switched on.",
+      "module": "m2"
+    },
+    {
+      "front": "What does Restrict organization creation do?",
+      "back": "Blocks anyone from creating new Claude or Console organizations, including personal accounts, on your verified domains.",
+      "module": "m2"
+    },
+    {
+      "front": "JIT vs. SCIM: which removes users automatically?",
+      "back": "SCIM. JIT adds users at first login but never removes them; an admin must remove them in Claude.",
+      "module": "m3"
+    },
+    {
+      "front": "What happens when you switch provisioning mode to SCIM?",
+      "back": "A full resync runs, and any member not in the IdP directory is removed from the organization.",
+      "module": "m3"
+    },
+    {
+      "front": "How long is the domain claim migration window?",
+      "back": "One shared 30-day deadline per claim. Unmigrated personal accounts are deactivated at the deadline.",
+      "module": "m3"
+    },
+    {
+      "front": "Which wins in the feature-access chain?",
+      "back": "The most restrictive level. A feature off at the organization level cannot be granted by any custom role.",
+      "module": "m4"
+    },
+    {
+      "front": "How do conflicting group plugin settings resolve?",
+      "back": "The most permissive wins: Required > Installed by default > Available to install > Not available.",
+      "module": "m4"
+    },
+    {
+      "front": "Can you rename a SCIM-synced group in Claude?",
+      "back": "No. SCIM groups are renamed, deleted, and populated in the identity provider.",
+      "module": "m4"
+    },
+    {
+      "front": "What does Enterprise-managed auth give you for connectors?",
+      "back": "Authorize once through the IdP; chosen roles inherit the connector at first login, and IdP deprovisioning removes it.",
+      "module": "m5"
+    },
+    {
+      "front": "What must be on before you can provision skills?",
+      "back": "Cloud code execution and file creation, plus Skills, in Organization settings > Plugins & skills > Policy.",
+      "module": "m5"
+    },
+    {
+      "front": "Why review hooks before marking a plugin Required?",
+      "back": "Required plugins also install in Claude Code, where hooks, sub-agents, and MCP servers run on the user's machine and cannot be disabled.",
+      "module": "m5"
+    },
+    {
+      "front": "What is the minimum custom retention period?",
+      "back": "30 days, with each month counted as 30 days.",
+      "module": "m6"
+    },
+    {
+      "front": "Do chats inside a project follow the chat retention period?",
+      "back": "No. They follow the project's period, and projects are kept indefinitely unless you set one.",
+      "module": "m6"
+    },
+    {
+      "front": "Are Team and Enterprise chat interfaces covered by ZDR?",
+      "back": "No. ZDR covers eligible Claude API features; the exception is Claude Code through Enterprise with ZDR enabled.",
+      "module": "m6"
+    },
+    {
+      "front": "How far back does an audit log export go?",
+      "back": "180 days. The download link is emailed to the requesting Owner and expires after 24 hours.",
+      "module": "m7"
+    },
+    {
+      "front": "Who can enable the Compliance API?",
+      "back": "Only the Primary Owner, from Organization settings > API. Owners can create org-scoped keys; Admins don't see the page.",
+      "module": "m7"
+    },
+    {
+      "front": "Which analytics can an Enterprise Admin not see?",
+      "back": "Spend. Admins see the rest of the analytics dashboard.",
+      "module": "m7"
+    },
+    {
+      "front": "Can the Admin API create API keys?",
+      "back": "No. Keys are created in the Console; the Admin API reads, renames, and deactivates them.",
+      "module": "m8"
+    },
+    {
+      "front": "What happens to a service account key when its creator leaves?",
+      "back": "It keeps working. It stops only when the service account is archived.",
+      "module": "m8"
+    },
+    {
+      "front": "What three resources does workload identity federation use?",
+      "back": "A federation issuer (the OIDC IdP), a federation rule (match conditions and scope), and a service account (the identity it acts as).",
+      "module": "m8"
+    },
+    {
+      "front": "Server-managed vs. endpoint-managed Claude Code settings?",
+      "back": "Server-managed come from the claude.ai admin console; endpoint-managed come from MDM, registry, or managed-settings.json and resist user edits.",
+      "module": "m9"
+    },
+    {
+      "front": "How do you confirm which managed source a Claude Code session uses?",
+      "back": "Run /status and read the Setting sources line, for example Enterprise managed settings (HKLM).",
+      "module": "m9"
+    },
+    {
+      "front": "Where do managed settings sit in Claude Code's precedence?",
+      "back": "At the top, above command-line flags, local project, shared project, and user settings.",
+      "module": "m9"
+    }
+  ],
+  "questions": [
+    {
+      "id": "adm-001",
+      "domain": null,
+      "studyArea": "Plans and seats",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "A 400-person company wants SCIM provisioning, audit logs, and custom data retention for Claude. Which plan meets all three requirements?",
+      "options": {
+        "A": "The Team plan with every member on a Premium seat",
+        "B": "The Enterprise plan with the single Enterprise seat",
+        "C": "The Team plan with SSO and JIT provisioning enabled",
+        "D": "Individual Max plans purchased for each employee"
+      },
+      "answer": "B",
+      "explanationCorrect": "SCIM, audit logs, and custom retention are Enterprise features, and Team plans stop at 150 seats, so Enterprise is the only fit.",
+      "explanationDistractor": "Premium seats add usage, not compliance features; Team plans support JIT but not SCIM or audit logs.",
+      "reference": "https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan",
+      "module": "m1"
+    },
+    {
+      "id": "adm-002",
+      "domain": null,
+      "studyArea": "Roles and permissions",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "An Enterprise organization moves its analysts to the Custom role before any custom roles or groups exist. What access do those analysts have on their next login?",
+      "options": {
+        "A": "The same access as the User role until a custom role is assigned",
+        "B": "Read-only access to chats and projects they already own",
+        "C": "No feature access, because Custom members have no default permissions",
+        "D": "Admin access, because Custom roles inherit the highest built-in role"
+      },
+      "answer": "C",
+      "explanationCorrect": "Members on the Custom role start with no permissions; everything comes from custom roles attached to their groups.",
+      "explanationDistractor": "Custom does not fall back to User. Assign groups with custom roles before switching people to Custom.",
+      "reference": "https://support.claude.com/en/articles/9267276-roles-and-permissions",
+      "module": "m1"
+    },
+    {
+      "id": "adm-003",
+      "domain": null,
+      "studyArea": "Domain verification and SSO",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "An Owner added the TXT record for a new domain yesterday, but the domain still shows Pending. The Owner also removed and re-added the domain this morning. What is the most likely cause?",
+      "options": {
+        "A": "DNS changes for verification always take a full 72 hours",
+        "B": "The domain must first be claimed with domain capture",
+        "C": "Re-adding the domain generated a new value the DNS record lacks",
+        "D": "SSO must be required before a domain can be verified"
+      },
+      "answer": "C",
+      "explanationCorrect": "Each time a domain is removed and re-added, a new anthropic-domain-verification- value is generated, so the published record no longer matches.",
+      "explanationDistractor": "Domain capture and Require SSO come after verification; neither is a prerequisite for it.",
+      "reference": "https://support.claude.com/en/articles/13132885-set-up-single-sign-on-sso",
+      "module": "m2"
+    },
+    {
+      "id": "adm-004",
+      "domain": null,
+      "studyArea": "Domain verification and SSO",
+      "scenario": null,
+      "difficulty": "hard",
+      "stem": "A company has a Team plan and a separate Console organization, and wants both to share one SSO connection. What must happen?",
+      "options": {
+        "A": "Configure SSO separately in each organization with two IdPs",
+        "B": "An Owner on the Team plan invites the Console organization to merge",
+        "C": "The Console organization invites the Team plan to join its parent",
+        "D": "Contact support to convert the Console organization into a workspace"
+      },
+      "answer": "B",
+      "explanationCorrect": "SSO lives in the parent organization, and merges are initiated from claude.ai by a Team or Enterprise organization; the Console side then approves.",
+      "explanationDistractor": "Console organizations cannot initiate a merge, and a parent organization links to only one IdP.",
+      "reference": "https://support.claude.com/en/articles/10276682-important-considerations-before-enabling-single-sign-on-sso-and-jit-scim-provisioning",
+      "module": "m2"
+    },
+    {
+      "id": "adm-005",
+      "domain": null,
+      "studyArea": "Domain verification and SSO",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "Which TWO statements about turning on Require SSO for Claude are accurate? (Select 2.)",
+      "options": {
+        "A": "Domain users not assigned to the Anthropic IdP app lose access to their personal accounts",
+        "B": "Personal accounts on the domain are deleted when SSO is required",
+        "C": "Users must sign in with the Continue with SSO option",
+        "D": "Domain verification is skipped when SSO is required",
+        "E": "Requiring SSO automatically enables SCIM provisioning"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanationCorrect": "Required SSO forces the SSO sign-in path, and domain users outside the IdP app can no longer reach their Free, Pro, or Max accounts.",
+      "explanationDistractor": "Those accounts become inaccessible but are not deleted, and provisioning mode is a separate choice.",
+      "reference": "https://support.claude.com/en/articles/10276682-important-considerations-before-enabling-single-sign-on-sso-and-jit-scim-provisioning",
+      "module": "m2",
+      "select": 2
+    },
+    {
+      "id": "adm-006",
+      "domain": null,
+      "studyArea": "JIT and SCIM provisioning",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "An organization uses JIT provisioning. A contractor's assignment is removed from the IdP app. What happens in Claude?",
+      "options": {
+        "A": "The contractor is removed and their seat freed within minutes",
+        "B": "The contractor is moved to No seat assigned at the next sync",
+        "C": "The contractor is converted to the Custom role with no permissions",
+        "D": "The contractor can't sign in but stays a member holding a seat"
+      },
+      "answer": "D",
+      "explanationCorrect": "JIT never removes members. Unassigning in the IdP blocks SSO login, but the member and seat remain until an admin removes them in Claude.",
+      "explanationDistractor": "Automatic removal on unassignment is SCIM behavior, not JIT.",
+      "reference": "https://support.claude.com/en/articles/13133195-set-up-jit-or-scim-provisioning",
+      "module": "m3"
+    },
+    {
+      "id": "adm-007",
+      "domain": null,
+      "studyArea": "JIT and SCIM provisioning",
+      "scenario": null,
+      "difficulty": "hard",
+      "stem": "An Enterprise admin is enabling SCIM group mappings. Which TWO actions could remove existing members from the organization? (Select 2.)",
+      "options": {
+        "A": "Saving role mappings before every group is assigned",
+        "B": "Adding a new seat tier mapping for power users",
+        "C": "Changing a member's email address in the IdP",
+        "D": "Turning off the welcome email for new SCIM members",
+        "E": "Running a group-only sync from the Groups page"
+      },
+      "answer": [
+        "A",
+        "C"
+      ],
+      "explanationCorrect": "Members outside every role mapping are removed on sync, and an email change creates a new member record while removing the old one.",
+      "explanationDistractor": "Seat tier mappings don't remove members; unmapped members keep their seat type or get none.",
+      "reference": "https://support.claude.com/en/articles/14499648-how-scim-sync-works-for-enterprise-organizations",
+      "module": "m3",
+      "select": 2
+    },
+    {
+      "id": "adm-008",
+      "domain": null,
+      "studyArea": "Domain capture",
+      "scenario": null,
+      "difficulty": "hard",
+      "stem": "An Enterprise Owner wants to turn on Migrate accounts using your domain next week. Which prerequisite list is complete?",
+      "options": {
+        "A": "Verified domain and SSO configured, with Require SSO still optional",
+        "B": "Verified domain, SCIM enabled, and a signed data processing addendum",
+        "C": "Restricted org creation, verified domain, enforced SSO, and JIT or SCIM",
+        "D": "Verified domain and restricted org creation, with provisioning optional"
+      },
+      "answer": "C",
+      "explanationCorrect": "Domain claiming requires restricted organization creation, DNS verification, SSO actively enforced, and JIT or SCIM, so everyone has a path to sign in after migration.",
+      "explanationDistractor": "SSO must be enforced, not just configured, and a provisioning method is mandatory.",
+      "reference": "https://support.claude.com/en/articles/14625619-claim-and-migrate-accounts-on-your-domain",
+      "module": "m3"
+    },
+    {
+      "id": "adm-009",
+      "domain": null,
+      "studyArea": "Custom roles and groups",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "Web search is turned off at the organization level. A custom role assigned to the Research group grants web search. Can Research members use web search?",
+      "options": {
+        "A": "Yes, because custom role permissions override organization toggles",
+        "B": "No, because the organization toggle is the main switch for features",
+        "C": "Yes, but only for members who also hold the Admin role",
+        "D": "No, unless each member enables it in their personal settings"
+      },
+      "answer": "B",
+      "explanationCorrect": "Feature access follows a most-restrictive chain; if a feature is off for the organization, no custom role can grant it.",
+      "explanationDistractor": "Personal settings sit below role permissions and can only turn a granted feature off, not on.",
+      "reference": "https://support.claude.com/en/articles/13930452-manage-custom-roles-on-enterprise-plans",
+      "module": "m4"
+    },
+    {
+      "id": "adm-010",
+      "domain": null,
+      "studyArea": "Plugin and group access",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "A plugin is set to Not available for the Contractors group and Installed by default for the Engineering group. A member belongs to both groups. What do they get?",
+      "options": {
+        "A": "The plugin is hidden, because the most restrictive setting wins",
+        "B": "The plugin is Available to install as a compromise setting",
+        "C": "The organization-wide setting applies and group settings are ignored",
+        "D": "The plugin is installed by default, because the most permissive wins"
+      },
+      "answer": "D",
+      "explanationCorrect": "For plugin access, the most permissive group setting applies. To hard-block a plugin, set it Not available organization-wide and grant only specific groups.",
+      "explanationDistractor": "Groups for plugin access are meant to enable tools, not act as a security boundary, so the restrictive setting does not win.",
+      "reference": "https://support.claude.com/en/articles/13837433-manage-plugins-for-your-organization",
+      "module": "m4"
+    },
+    {
+      "id": "adm-011",
+      "domain": null,
+      "studyArea": "Skills and plugins",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "An Owner marks a plugin that contains hooks and an MCP server as Required. What should the Owner understand about Claude Code users?",
+      "options": {
+        "A": "Required plugins only apply to chat and Cowork, never to Claude Code",
+        "B": "Claude Code users must approve each Required plugin before it loads",
+        "C": "It installs for signed-in Claude Code users, runs locally, and can't be disabled",
+        "D": "Required plugins run their hooks in Anthropic's cloud sandbox only"
+      },
+      "answer": "C",
+      "explanationCorrect": "Required and Installed-by-default plugins sync to Claude Code for users signed in with their Claude account; hooks, sub-agents, and MCP servers run on the user's computer.",
+      "explanationDistractor": "Nothing restricts Required plugins to chat, so review hooks before choosing Required.",
+      "reference": "https://support.claude.com/en/articles/13837433-manage-plugins-for-your-organization",
+      "module": "m5"
+    },
+    {
+      "id": "adm-012",
+      "domain": null,
+      "studyArea": "Skills and plugins",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "An Owner turns off User-created skills. What still works for members?",
+      "options": {
+        "A": "Provisioned and Anthropic built-in skills stay available",
+        "B": "Members can still upload skill ZIP files to their personal list",
+        "C": "All skills, including provisioned ones, are disabled",
+        "D": "Only skills created before the change keep working"
+      },
+      "answer": "A",
+      "explanationCorrect": "The setting stops users creating or uploading their own skills; organization-provisioned and built-in skills remain.",
+      "explanationDistractor": "Turning off the whole Skills capability is what disables every skill, not this setting.",
+      "reference": "https://support.claude.com/en/articles/13119606-provision-and-manage-skills-for-your-organization",
+      "module": "m5"
+    },
+    {
+      "id": "adm-013",
+      "domain": null,
+      "studyArea": "Connector governance",
+      "scenario": null,
+      "difficulty": "hard",
+      "stem": "A security team wants Slack access in Claude to follow IdP group membership and end automatically when someone is deprovisioned. What should the admin configure?",
+      "options": {
+        "A": "A desktop extension allowlist entry for the Slack connector",
+        "B": "Enterprise-managed authorization for the connector, scoped to roles",
+        "C": "A custom role that blocks connectors for every other group",
+        "D": "A Compliance API rule that revokes Slack tokens nightly"
+      },
+      "answer": "B",
+      "explanationCorrect": "Enterprise-managed auth authorizes the connector once through the IdP, assigns it by role, and removes access when the user is deprovisioned in the IdP.",
+      "explanationDistractor": "Desktop extension allowlists govern local MCP bundles in Claude Desktop, not remote connectors.",
+      "reference": "https://support.claude.com/en/articles/15537633-authorize-mcp-connectors-for-your-entire-organization",
+      "module": "m5"
+    },
+    {
+      "id": "adm-014",
+      "domain": null,
+      "studyArea": "Data retention",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "An organization sets chat retention to 90 days and leaves project retention unset. A chat inside a project had its last message 120 days ago. What happens to it?",
+      "options": {
+        "A": "It is kept, because chats in a project follow the project's retention",
+        "B": "It was deleted at midnight UTC on day 90 after the last message",
+        "C": "It is moved out of the project and then deleted on day 120",
+        "D": "It is archived to the audit log instead of being deleted"
+      },
+      "answer": "A",
+      "explanationCorrect": "Project retention always takes precedence for chats inside a project, and projects are kept indefinitely unless a project period is set.",
+      "explanationDistractor": "The 90-day chat period only applies to standalone chats.",
+      "reference": "https://support.claude.com/en/articles/10440198-configure-custom-data-retention-controls-for-enterprise-plans",
+      "module": "m6"
+    },
+    {
+      "id": "adm-015",
+      "domain": null,
+      "studyArea": "Zero data retention",
+      "scenario": null,
+      "difficulty": "hard",
+      "stem": "Which TWO statements about zero data retention (ZDR) are accurate? (Select 2.)",
+      "options": {
+        "A": "ZDR covers the Claude Enterprise chat interface once enabled",
+        "B": "ZDR is enabled per organization by the account team",
+        "C": "Covered Models such as Claude Fable 5.1 need 30-day retention",
+        "D": "ZDR automatically extends to every organization on an account",
+        "E": "ZDR covers usage in the Claude Console playground"
+      },
+      "answer": [
+        "B",
+        "C"
+      ],
+      "explanationCorrect": "ZDR is arranged per organization, and Covered Models require 30-day retention unless Anthropic expressly authorizes otherwise.",
+      "explanationDistractor": "Team and Enterprise interfaces and the Console are outside ZDR, and enablement does not carry over to other organizations.",
+      "reference": "https://platform.claude.com/docs/en/manage-claude/api-and-data-retention",
+      "module": "m6",
+      "select": 2
+    },
+    {
+      "id": "adm-016",
+      "domain": null,
+      "studyArea": "Data usage policy",
+      "scenario": null,
+      "difficulty": "easy",
+      "stem": "A legal reviewer asks whether Anthropic trains models on the organization's Enterprise chats. What is the accurate default answer?",
+      "options": {
+        "A": "Yes, unless the Primary Owner opts out in Data and Privacy",
+        "B": "Yes, but only on chats older than the retention period",
+        "C": "No, and nothing a member does can change that for any chat",
+        "D": "No, except conversations members submit as thumbs feedback"
+      },
+      "answer": "D",
+      "explanationCorrect": "Commercial inputs and outputs are not used for training by default; explicit feedback is the exception, and Owners can disable feedback with the Rate chats setting.",
+      "explanationDistractor": "There is no opt-out needed for commercial training because it is off by default.",
+      "reference": "https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training",
+      "module": "m6"
+    },
+    {
+      "id": "adm-017",
+      "domain": null,
+      "studyArea": "Audit logs",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "An Enterprise organization uses customer-managed encryption keys. The security team needs audit events. Where should they get them?",
+      "options": {
+        "A": "From the Export logs button in Data and Privacy",
+        "B": "From the Compliance API, which includes audit events",
+        "C": "From the usage analytics spend export CSV",
+        "D": "From a support ticket requesting a manual export"
+      },
+      "answer": "B",
+      "explanationCorrect": "With CMEK, the Export logs button is unavailable, and audit log events are delivered through the Compliance API.",
+      "explanationDistractor": "The spend export covers tokens and cost, not audit events.",
+      "reference": "https://support.claude.com/en/articles/9970975-access-audit-logs",
+      "module": "m7"
+    },
+    {
+      "id": "adm-018",
+      "domain": null,
+      "studyArea": "Compliance API",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "An Enterprise Owner cannot find the toggle to turn on the Compliance API. Why?",
+      "options": {
+        "A": "Only the Primary Owner can enable the Compliance API",
+        "B": "The Compliance API must be enabled from the Claude Console",
+        "C": "Owners must first request audit logs before enabling it",
+        "D": "The toggle only appears after SCIM provisioning is enabled"
+      },
+      "answer": "A",
+      "explanationCorrect": "Only the Primary Owner sees the Compliance API toggle in Organization settings > API; Owners can create keys limited to their organization.",
+      "explanationDistractor": "The setting lives in claude.ai organization settings, not the Console.",
+      "reference": "https://support.claude.com/en/articles/13015708-access-the-compliance-api",
+      "module": "m7"
+    },
+    {
+      "id": "adm-019",
+      "domain": null,
+      "studyArea": "Console and Admin API",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "A developer who created several API keys leaves the company and is removed from the Console organization. Which keys keep working?",
+      "options": {
+        "A": "Only the developer's personal keys, until they expire",
+        "B": "None; every key the developer created stops immediately",
+        "C": "Service account keys the developer created, until archived",
+        "D": "Keys in the Claude Code workspace, until rotated"
+      },
+      "answer": "C",
+      "explanationCorrect": "Service account keys act as the service account, so they survive the creator's removal; personal keys and Claude Code workspace keys stop when their user is removed.",
+      "explanationDistractor": "Personal keys are bound to the user and stop working when the user leaves.",
+      "reference": "https://platform.claude.com/docs/en/manage-claude/admin-api",
+      "module": "m8"
+    },
+    {
+      "id": "adm-020",
+      "domain": null,
+      "studyArea": "Workload identity federation",
+      "scenario": null,
+      "difficulty": "hard",
+      "stem": "A platform team wants GitHub Actions to call the Claude API without storing any long-lived secret. What should they set up?",
+      "options": {
+        "A": "An Admin API key stored as a GitHub encrypted secret",
+        "B": "A workspace API key with a 24-hour expiration date",
+        "C": "An org:admin OAuth token exported from an admin's CLI",
+        "D": "A federation issuer and rule mapping the OIDC token to a service account"
+      },
+      "answer": "D",
+      "explanationCorrect": "Workload identity federation exchanges the workflow's short-lived OIDC token for an Anthropic token bound to a service account, with no static secret.",
+      "explanationDistractor": "Expiring keys and exported tokens are still secrets that must be stored and rotated.",
+      "reference": "https://platform.claude.com/docs/en/manage-claude/workload-identity-federation",
+      "module": "m8"
+    },
+    {
+      "id": "adm-021",
+      "domain": null,
+      "studyArea": "Claude Code managed settings",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "An organization without MDM wants to enforce a Claude Code permission deny list on developer laptops. Which delivery method fits best?",
+      "options": {
+        "A": "Commit the deny list to each repository's shared settings file",
+        "B": "Ask developers to add the rules to their user settings file",
+        "C": "Server-managed settings in the claude.ai Claude Code admin page",
+        "D": "Pass the rules with a command-line flag in a shell alias"
+      },
+      "answer": "C",
+      "explanationCorrect": "Server-managed settings are built for organizations without MDM; Claude Code fetches them at startup and hourly, and managed settings outrank every other scope.",
+      "explanationDistractor": "Project, user, and command-line settings sit below managed settings and can be changed by the developer.",
+      "reference": "https://code.claude.com/docs/en/server-managed-settings",
+      "module": "m9"
+    },
+    {
+      "id": "adm-022",
+      "domain": null,
+      "studyArea": "Claude Code managed settings",
+      "scenario": null,
+      "difficulty": "medium",
+      "stem": "A developer says a managed policy isn't applying. What should the admin check first on that machine?",
+      "options": {
+        "A": "The Setting sources line in /status",
+        "B": "The developer's shell history file",
+        "C": "The organization's audit log export",
+        "D": "The Claude Code workspace spend limit"
+      },
+      "answer": "A",
+      "explanationCorrect": "The Setting sources line names the managed source in effect, and Skipped sources shows any source a higher-priority one overrode.",
+      "explanationDistractor": "Audit logs record organization events, not which settings file a local session loaded.",
+      "reference": "https://code.claude.com/docs/en/managed-settings",
+      "module": "m9"
+    }
+  ]
+}

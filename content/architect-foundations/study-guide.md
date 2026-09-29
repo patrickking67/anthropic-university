@@ -1,130 +1,115 @@
 # Claude Certified Architect – Foundations — Study Guide
 
-> **Unofficial, community-authored study material.** Not affiliated with, endorsed by, or produced by Anthropic. It teaches the publicly documented concepts the exam covers; the questions and examples here are original, not real exam items.
+> **Unofficial, community-authored study material.** Created by Patrick King for Anthropic University. Not affiliated with, endorsed by, or produced by Anthropic. It teaches the publicly documented concepts the exam covers; every question and example here is original, not a real exam item. Facts were checked against the live Claude docs on 2026-09-28.
 
-This guide covers the five domains of the Architect – Foundations exam. The exam is **scenario-heavy**: most items drop you into a running system ("Production logs reveal…", "You're designing…") and ask for the *most effective* fix. The recurring skill is **root-cause thinking** — choosing the change that removes a problem at its source over one that patches the symptom. Prefer deterministic mechanisms (interfaces, hooks, programmatic gates) over prompt-only guidance, and least-privilege designs over convenient broad ones.
+## Exam format at a glance
 
-Latest models to assume in examples: **Claude Opus 4.8** (`claude-opus-4-8`) as the default, with **Sonnet 5** (balanced/high-volume) and **Haiku 4.5** (simple/fast). Answer keys never hinge on exact prices.
+| | |
+| --- | --- |
+| Exam code | CCAR-F (exam guide v1.0, effective July 2026) |
+| Items | 60, multiple-choice and multiple-response (each item says how many to select) |
+| Structure | 4 scenarios, drawn at random from a bank of 6; each scenario frames a group of items |
+| Time | 120 minutes |
+| Scoring | Scaled 100–1,000, **720 to pass**; the score report shows percent-correct by domain |
+| Fee / delivery | $125 USD · Pearson VUE, online proctored or at a test center |
+| Validity | 12 months |
 
-**Decision hierarchy the exam rewards:** (1) make misuse impossible at the interface or in code, (2) add structured context the model must see, (3) improve prompts/examples, (4) only then add process workarounds. Prefer the earliest step that actually removes the failure mode.
+| # | Official domain | Weight | Bank items |
+| - | --- | --- | --- |
+| 1 | Agentic Architecture & Orchestration | 27% | 31 |
+| 2 | Tool Design & MCP Integration | 18% | 21 |
+| 3 | Claude Code Configuration & Workflows | 20% | 23 |
+| 4 | Prompt Engineering & Structured Output | 20% | 24 |
+| 5 | Context Management & Reliability | 15% | 18 |
 
-## Multi-Agent Orchestration
+The bank has 117 items, including 8 select-N items scored all-or-nothing. Current models to assume: **Claude Opus 5.5** as the default, **Fable 5.1** for the hardest long-horizon work, **Sonnet 5.5** for speed and intelligence balance, and **Haiku 4.5** for fast, cheap, high-volume tasks.
 
-The reference design is the **orchestrator–workers** pattern. A coordinator decomposes a task, delegates subtasks to specialized workers, and routes their results into a **synthesis/aggregation** step. The coordinator is a **hub**: workers do not talk to each other. The hub's value is **centralized visibility, consistent error handling, and control over what each worker receives** — *not* batching or latency reduction. Watch for distractors that justify the hub with a latency argument.
+**How items are written.** Most items describe a running system and ask for the most effective change. The recurring skill is root-cause thinking. A good rule of thumb for ranking answers: (1) make the failure impossible in code or at the interface, (2) give the model structured context it must see, (3) improve prompts and examples, (4) only then add process workarounds.
 
-**Decision rules:**
+## The six scenarios (in brief)
 
-- **Partition before delegating.** Assign distinct subtopics or source classes up front so parallel workers don't overlap. Reactive deduplication and shared "claimed work" lists add races and still waste effort.
-- **Coverage is bounded by decomposition.** If every worker "succeeds" yet a whole dimension is missing, the coordinator decomposed too narrowly — synthesis cannot recover what was never gathered. Enumerate required dimensions and confirm each is assigned.
-- **Sequential vs. parallel.** Parallelize only *independent* subtasks. A genuine data dependency (find the CEO, then find that person's statements) must run in sequence.
-- **Least privilege & tool distribution.** Give each worker only the tools its role needs. When a worker misuses a broad tool (a general `fetch_url` used for ad-hoc search), replace it with a **narrower, validated tool** (`load_document` that only accepts an allowlisted id) so the misuse is impossible *at the interface* — stronger than prompt rules or domain denylists. For a hot path, add a scoped tool (`verify_fact`) for the common case and route rare complex work back through the coordinator.
-- **Tool naming/description overlap** causes misrouting; fix by disambiguating both tools' names and descriptions, not by prompt patches.
-- **Composite tools** (`get_company_profile`) or batching independent calls in one turn cut round-trips.
+You will see four of these. Each one leans on particular domains.
 
-**Error propagation:**
+1. **Customer Support Resolution Agent** (domains 1, 2, 5). An Agent SDK agent resolves returns, billing, and account issues through backend tools, and has to know when to hand off to a person. Expect loop control, hooks and gates, tool errors, case facts, and escalation judgment.
+2. **Code Generation with Claude Code** (domains 3, 5). A team uses Claude Code day to day. Expect CLAUDE.md layering, skills and commands, path rules, plan mode, iteration techniques, and session management.
+3. **Multi-Agent Research System** (domains 1, 2, 5). A coordinator delegates to search, analysis, synthesis, and reporting subagents and must produce cited output. Expect delegation, context passing, tool scoping, error propagation, and provenance.
+4. **Developer Productivity with Claude** (domains 2, 3, 1). An agent helps engineers explore and change unfamiliar code with built-in tools and MCP servers. Expect Grep/Glob/Edit choices, MCP integration, and exploration strategy.
+5. **Claude Code for Continuous Integration** (domains 3, 4). Claude Code runs in pipelines to review PRs and generate tests. Expect headless flags, structured output, review precision, and batch vs. synchronous trade-offs.
+6. **Structured Data Extraction** (domains 4, 5). Claude turns messy documents into schema-valid records for downstream systems. Expect schema design, validation and retry loops, batch strategy, and human review calibration.
 
-- Workers **return structured error context** (failure type, attempted input, partial results, alternatives) so the coordinator can recover — never swallow an error as success, never crash the whole run.
-- **Handle errors at the lowest level that can resolve them.** Workers retry transient failures locally and escalate only what they can't fix.
-- **Distinguish a valid empty result ("0 matches") from an access failure (timeout).** They demand different responses; collapsing both into "no results" produces misleading coverage.
-- **Degrade gracefully with transparency.** When some sources fail under a firm deadline, proceed and **annotate coverage** (well-supported vs. gapped). Fabricating to fill a gap is worse than an honest gap.
+## Domain 1 — Agentic Architecture & Orchestration (27%)
 
-**Long-context effects:** Models attend most reliably to the **start and end** of long inputs ("lost in the middle"). Lead a synthesis input with a **key-findings summary** and add **section headers**; rotating order or summarizing away detail is inferior. Cut token bloat **at the source** — have workers emit structured findings (facts, citations, relevance scores) instead of raw page dumps. For **conflicting sources**, surface the disagreement with provenance rather than averaging or silently picking one.
+**Agentic loops.** Send the request, read `stop_reason`, run tools on `tool_use`, return each result as a `tool_result` block (keyed by `tool_use_id`, first in the next user message, all results for a turn together), and stop on `end_turn`. A response can contain text *and* a tool call, so never end the loop because text appeared. Handle the other stop reasons too: `max_tokens`, `stop_sequence`, `pause_turn`, `refusal`, and `model_context_window_exceeded`. A max-iterations cap is a backstop, not the main control. The Agent SDK provides this harness for you; with the raw Messages API you write it yourself.
 
-## Claude Code for Continuous Integration
+**Coordinator–subagent orchestration.** Hub and spoke: the coordinator decomposes the task, picks which subagents a query actually needs (don't run the full pipeline for a one-line lookup), receives every result and error, and aggregates. Subagents don't talk to each other directly. For coverage, have the coordinator check the synthesis against the request, send targeted follow-ups for gaps, and synthesize again.
 
-The theme is running Claude Code **headlessly** and turning its output into automation.
+**Subagent context and spawning.** Subagents are launched with the **Agent** tool (called Task before Claude Code v2.1.63; `Task` still works as an alias), so it must be in the coordinator's allowed tools. Subagents do **not** inherit the parent's conversation: put findings, user constraints, and metadata in the delegation prompt, in structured form that keeps each claim tied to its source. The coordinator picks a subagent by its `description`, so make it specific. Emit several Agent calls in one response to run independent subagents in parallel. Write delegation prompts as goals plus quality criteria, not step-by-step scripts.
 
-- **Headless mode:** `claude -p "…"` (a.k.a. `--print`) runs once, prints to stdout, and exits — the shape a CI step needs. Pre-authorize the tools the job needs so an unattended run never blocks on an interactive approval prompt.
-- **Structured output:** `--output-format json` with a schema yields parseable findings (file, line, severity, message, rationale) you can post as **inline PR comments** via the API. Gate the build by reading a field and exiting non-zero — never by grepping prose.
-- **Second independent reviewer:** a fresh instance that sees only the diff (not the author's or first reviewer's reasoning) catches blind spots that self-review rationalizes past. Re-running the same prompt reproduces the same blind spots — independence, not repetition, is the win.
+**Workflow enforcement and handoffs.** Prompt instructions are probabilistic. When a skipped step causes harm (identity verification before a SIM swap or refund), enforce the order in code with a gate or hook. When escalating, hand the human a structured summary: customer ID, amounts, findings, likely root cause, and a recommended action. The specialist usually can't see the transcript or tool results.
 
-**Batch vs. synchronous** is a favorite decision:
+**Agent SDK hooks.** `PreToolUse` can allow, deny, ask, or rewrite input. Include `permissionDecisionReason` on a deny so the model redirects instead of retrying. `PostToolUse` can add context or replace a tool's output (`updatedToolOutput`) before Claude sees it, which is how you normalize formats or redact data from tools you can't modify. Use hooks for guarantees and prompts for style and judgment.
 
-| Need | Choice | Why |
-| --- | --- | --- |
-| Blocking pre-merge gate | **Synchronous** (`claude -p`) | Needs a result *now*; batch is async (≤24h) |
-| Overnight/scheduled scan | **Message Batches API** | ~50% cheaper, latency-tolerant |
-| Iterative tool-calling review | **Not batch** | Batch is fire-and-forget; it can't execute a tool mid-request and continue |
+**Task decomposition.** Use prompt chaining for predictable, fixed-step work (classify → extract → validate). Use dynamic decomposition for open-ended work (map the codebase, pick high-impact areas, adapt the plan). Parallelize only independent subtasks; a real data dependency must run in sequence.
 
-Prompt caching is a **separate, compatible** cost lever for a synchronous review — cache the stable prefix; it is not a substitute for batch savings.
+**Session resume and fork.** Name sessions and resume them by name (`claude --resume <name>`). Resume when prior context is still valid, and tell the session which files changed. Fork (`--fork-session`, or `fork_session` / `forkSession` in the SDK) to explore two approaches from one baseline. Start fresh with a summary when earlier tool results are stale.
 
-**Quality tuning:**
+## Domain 2 — Tool Design & MCP Integration (18%)
 
-- **Noisy category erodes trust in all findings** → temporarily disable low-precision categories (style/naming), keep high-precision ones, improve prompts, re-enable.
-- **Vague instruction** ("check comments are accurate") → give **explicit criteria** (flag only when a comment contradicts actual code behavior).
-- **Vague/unactionable findings** → **few-shot** the exact desired finding format.
-- **Duplicate feedback across commits** → include **prior findings** in context; report only new/unaddressed issues.
-- **Duplicate test suggestions** → include the **existing test file** in context.
-- **False positives from missing context** → include enough **surrounding code**, not just the isolated diff hunk, so the reviewer sees guards and invariants.
-- **Uneven depth on a big PR** → **per-file passes** for depth plus a separate **integration pass** for cross-file data flow.
-- **Expensive triage you can't filter** → have Claude include **reasoning + confidence** inline with each finding.
-- **Inconsistent severity** → explicit severity definitions with concrete examples.
+**Tool interface design.** The description is the most important factor in tool selection: what the tool does, when to use it and when not to, what each parameter means, formats with examples, and what it doesn't return. Split vague multipurpose tools into purpose-specific tools with clear contracts. Namespace names by service (`repo_list_pull_requests`, `tracker_list_issues`). A composite tool can cut round trips when calls always go together.
 
-## Customer Support Resolution Agent
+**Structured tool errors.** Return `is_error: true` (MCP: `isError`) with structured metadata: a category (transient, validation, business, permission), a retryable flag, and a plain-language explanation the agent can pass on. "Operation failed" leads to retrying policy violations and giving up on timeouts that would have worked. A permission error isn't retryable, and a failure must never be reported as an empty success.
 
-Design for **reliability and safety**, using deterministic mechanisms where prompt-following is not enough.
+**Tool distribution and `tool_choice`.** Giving an agent too many tools hurts selection. Scope each agent to its role. Replace risky general tools (`run_sql`, `fetch_url`) with constrained ones. `tool_choice` is `auto` (default), `any`, `tool`, or `none`. **Current-model catch:** Claude Opus 5.5, Sonnet 5.5, and Fable 5.1 return a 400 for `any` and named `tool`, and manual extended thinking blocks them too. On those models, use `auto` with `strict: true` for schema-valid tool inputs, or structured outputs for a fixed JSON response.
 
-- **Tool interface first.** When the agent selects the wrong tool (schemas valid), the first fix is **better tool descriptions** — purpose, formats, examples, when-to-use vs. a similar tool. Descriptions are the primary selection signal. Malformed arguments? Put the exact format and an example **in the tool description** and constrain the `input_schema`.
-- **Keyword-routing bias.** If a keyword reliably fires one tool *despite* good descriptions, suspect **keyword-sensitive routing instructions in the system prompt**.
-- **Ambiguity → ask.** Multiple name matches, or a request missing an order reference, means **ask for a disambiguating identifier** before acting — never silently guess an account.
-- **Enforce workflows in code.** A must-run-first step (verify identity) belongs in a **programmatic prerequisite** that blocks downstream tools until `get_customer` returns a verified id. Hard limits (a $100 auto-refund cap) belong in **code at the tool boundary**, not a bolded prompt line.
-- **Escalation.** Escalate on a **genuine policy gap** (policy silent on the case, e.g. competitor price match) where the agent would otherwise **fabricate policy**. Do *not* escalate routine evidentiary conflicts a documented process already covers, or multi-topic messages it can handle. Improve calibration with **explicit criteria + few-shot examples**; **self-reported confidence scores are poorly calibrated**.
-- **Formats & hooks.** Normalize inconsistent tool output (Unix vs. ISO timestamps), including from **third-party MCP servers you can't modify**, with a **PostToolUse hook** — deterministic and maintainable.
-- **Latency.** Run independent lookups **in parallel in one turn** or via a **composite tool**, returning results together.
-- **Context.** Keep a **persistent "case facts" block** (order #s, amounts, dates, region) verbatim *outside* the summarized history, so summarization can't corrupt precise details or durable constraints.
-- **Completeness.** Add a **self-critique/evaluator step** against explicit criteria before sending. For a multi-concern message, **decompose, investigate in parallel over shared customer context, then synthesize**.
-- **Loop control.** Drive the agentic loop off **`stop_reason`** (`tool_use` → continue, `end_turn` → stop); a max-iteration cap is a backstop, not the primary signal. Surface a failed tool as a `tool_result` with `is_error: true` so the agent can recover.
+**MCP server integration.** Primitives: tools, resources, prompts. Transports: stdio (local) and Streamable HTTP (remote); the older SSE transport is deprecated. In Claude Code, project scope is `.mcp.json` (committed, shared; use `${VAR}` expansion so secrets stay out of git), while user and local scopes live in `~/.claude.json` and stay private. Tools from all connected servers are available together. Use resources to expose catalogs such as schemas and doc trees, so the agent doesn't have to probe for them. Prefer a maintained community server for standard integrations and build custom servers for team-specific workflows. If the agent keeps using Grep instead of a better MCP tool, improve the MCP tool's description.
 
-## Code Generation with Claude Code
+**Built-in tool selection.** Glob matches file paths (`**/*.stories.tsx`). Grep searches file contents. Read and Write handle whole files. Edit replaces an exact, unique string: add surrounding context, use `replace_all` when every occurrence should change, or fall back to Read + Write. Explore step by step (Grep for an entry point, then Read along the imports) instead of reading everything. To trace a function through wrapper modules, find every exported alias first. Note: on macOS, Linux, and WSL, Claude Code leaves Glob and Grep out of its default tool set and searches through Bash, but you get them back when you name them in `--tools`/`--allowedTools` or the SDK's options.
 
-This domain is about **where guidance lives** so the right context loads at the right time.
+## Domain 3 — Claude Code Configuration & Workflows (20%)
 
-| Mechanism | Scope | Use for |
-| --- | --- | --- |
-| **CLAUDE.md** (project) | Always-on, team-wide | Universal standards everyone needs every session |
-| **`~/.claude/CLAUDE.md`** | Always-on, personal, cross-project | Your own preferences, without affecting teammates |
-| **`.claude/rules/`** | File path via **glob** frontmatter | Conventions scoped to file types (e.g. `**/*.test.ts`) |
-| **Skills** (`.claude/skills/<name>/SKILL.md`) | On-demand by trigger keywords | Task/workflow guidance and reusable exemplar context |
+**CLAUDE.md hierarchy.** `~/.claude/CLAUDE.md` applies to you in every project. `./CLAUDE.md` or `./.claude/CLAUDE.md` is shared with the team through git. `./CLAUDE.local.md` holds your personal settings for this project (gitignore it). Files above the working directory load at launch and are concatenated, not overridden. Subdirectory CLAUDE.md files load when Claude reads files in that directory. Use `@path` imports to pull in only the standards each package needs, and keep each file under about 200 lines. Check what loaded with `/context`.
 
-**Skill frontmatter:** `name`, `description`, optional `argument-hint` (prompt for parameters), `allowed-tools` (deterministic capability guardrail — e.g. read-only), `context: fork` (run in an isolated subagent so verbose output doesn't pollute the main conversation), `model`.
+**Slash commands and skills.** Project skills and commands live in `.claude/skills/` and `.claude/commands/`; personal ones live in `~/.claude/`. When names collide, **enterprise beats personal and personal beats project**. Frontmatter: `disable-model-invocation: true` (only you can trigger it, which is right for deploys), `user-invocable: false` (only Claude), `context: fork` (run in a subagent), `allowed-tools` (pre-approves the listed tools for that turn; it does **not** restrict anything), `disallowed-tools` (removes tools while the skill runs), `argument-hint` (autocomplete hint). Reference arguments with `$ARGUMENTS` or `$0`. Put always-on standards in CLAUDE.md and on-demand workflows in skills.
 
-**Key rules:**
+**Path-scoped rules.** Files in `.claude/rules/` with a `paths:` glob list load when Claude reads a matching file, wherever it sits in the tree, which is better than per-directory CLAUDE.md for conventions such as test files. `paths` is the only field Claude Code reads. Because a triggered rule lives in message history, `/compact` can summarize it away. If a rule must persist, remove `paths` or move it to the root CLAUDE.md. Rules scope by file path, not by task: multi-step workflows belong in skills.
 
-- **Project skills beat same-named personal skills.** To customize personally without conflict, give your personal skill a **different name** in `~/.claude/skills/`.
-- **Team commands/skills live in the project** (`.claude/commands/` or `.claude/skills/`) so they're version-controlled and available on clone/pull. There is **no** `.claude/config.json` "commands array."
-- **Rules are for file-path scoping, not workflow scoping.** A multi-step release workflow belongs in a keyword-triggered Skill.
-- **Plan mode vs. direct execution:** plan mode to explore and design when the change is architecturally significant or ambiguous (monolith→microservices); direct execution for well-specified, low-ambiguity changes (a mechanical rename).
-- **Explore subagent** isolates verbose discovery and returns a summary, preserving the main context window — better than lossy `/compact`. **Plan** designs the approach.
-- **Concrete input→output examples** beat more prose when Claude misreads a transform; few-shot examples beat instructions for output format.
-- **MCP config sharing:** commit `.mcp.json` with **`${ENV}` expansion** (`${GITHUB_TOKEN}`) so each developer supplies their own secret — never commit tokens. Project scope (`.mcp.json`) is shared; user and local scopes are private.
+**Plan mode vs. direct execution.** Plan mode suits large, multi-file, or architecturally open changes. Direct execution suits clear, well-scoped ones. A common combination: plan the migration, then execute the approved plan. The built-in Explore and Plan subagents keep verbose research out of the main context, and they skip CLAUDE.md, so conventions stay with the main agent.
 
-## Core API, SDK & MCP Fundamentals
+**Iterative refinement.** Give 2–3 concrete input/output examples when prose descriptions keep being misread. Write tests first and share the failures. Use the interview pattern in unfamiliar domains. Send all interacting problems in one message, and fix independent ones one at a time.
 
-- **Messages API.** Everything goes through `POST /v1/messages` — chat, tool use, vision, and PDFs are all content within that one request. Tools are `name` + `description` + `input_schema`; **descriptions are the primary selection mechanism**.
-- **`tool_choice`:** `auto` (default), `any` (must use some tool), `tool` (force a specific named tool), `none`.
-- **Agentic loop.** Drive it off **`stop_reason`**: `tool_use` → run tools and continue, `end_turn` → done. Others: `max_tokens`, `stop_sequence`, `pause_turn` (server-tool loop paused — resume by resending), `refusal`.
-- **Parallel tool use** is on by default. Execute all requested tools and return **all `tool_result` blocks in a single user message**; splitting them across messages trains Claude to stop calling in parallel. A failed tool returns a `tool_result` with `is_error: true` — don't drop it.
-- **Structured outputs.** Constrain the response with `output_config.format` + a JSON schema; `strict: true` on a tool guarantees valid tool arguments. This replaces the old assistant-prefill trick (prefills **400** on current models).
-- **Prompt caching.** Prefix match — any change in the cached prefix invalidates everything after it. Put stable content (frozen system prompt, deterministic tool order) first and volatile content last. Mark blocks with `cache_control: {type: "ephemeral"}`; **5-minute** default TTL or **1-hour**. Changing the **model, tools, or system prompt** invalidates the cache. Silent invalidators: `datetime.now()`/UUIDs in the prefix, unsorted JSON, per-user tool sets. Verify with `usage.cache_read_input_tokens`.
-- **Message Batches API.** Asynchronous, **~50% cheaper**, up to **24h** (most finish sooner), correlate results by **`custom_id`** (any order). Fire-and-forget: **no mid-request tool execution**, so not for interactive loops or blocking work.
-- **Streaming.** Use for long inputs/outputs or high `max_tokens` to avoid HTTP timeouts; assemble the result with `get_final_message()` / `finalMessage()`.
-- **MCP.** Primitives: **tools, resources, prompts**. Transports: **stdio** (local) and **streamable HTTP/SSE** (remote). A server exposes capabilities; a client (Claude Code, the API MCP connector) consumes them.
-- **Agent SDK vs. API.** The **Claude Agent SDK** provides the harness — the agent loop, tool execution, context and permission handling — on top of the API. The raw Messages API gives you the primitives to build that yourself.
-- **Token counting** uses the `count_tokens` endpoint, not a third-party tokenizer like tiktoken. **PDF and vision** inputs are supported as content blocks.
-- **Models & thinking.** Default `claude-opus-4-8`; Sonnet 5 balanced/high-volume; Haiku 4.5 simple/fast. **Adaptive thinking** (`thinking: {type: "adaptive"}`) replaces fixed `budget_tokens`; steer depth with `output_config.effort` (low/medium/high/xhigh/max). Sampling params like `temperature` are removed on the newest models — steer via prompting.
+**CI/CD integration.** `claude -p` runs non-interactively. `--output-format json` plus `--json-schema` gives validated, parseable findings to post as inline comments or to gate the build on a field. Pre-approve tools with `--allowedTools` so the job never waits on a prompt. Bound runs with `--max-turns` and `--max-budget-usd`. `--bare` skips CLAUDE.md, skills, hooks, and MCP discovery, which is fast but drops project context. Document review criteria, testing standards, and fixtures in CLAUDE.md. Pass prior findings and existing tests into context to avoid duplicate output, and include enough surrounding code for the reviewer to see guards.
 
-### Cross-cutting exam habits
+## Domain 4 — Prompt Engineering & Structured Output (20%)
 
-1. Prefer the fix that removes the problem at the **interface, hook, or code gate** over one that relies on the model following a prompt.
-2. Apply **least privilege** to tools and context.
-3. Make failures **observable and structured** so a coordinator (or CI, or a human) can recover.
-4. Use a **second independent instance** for review — it beats self-review by avoiding confirmation bias.
+**Explicit criteria.** "Be conservative" doesn't change precision. List which categories to report (correctness, security) and which to skip (style, local conventions), with concrete examples for each severity level. If one noisy category is costing developer trust, disable it temporarily while you fix its prompt.
+
+**Few-shot prompting.** Examples are the most reliable way to get a consistent format and correct handling of ambiguous cases. Contrast an acceptable pattern with a real issue and explain why. For extraction, cover different document layouts (bibliographies and inline citations) so required fields don't come back empty.
+
+**Schema-enforced output.** `output_config.format` with a JSON schema, or `strict: true` on tools, guarantees valid JSON, types, and required fields. It does **not** guarantee semantic correctness: values can land in the wrong field, or totals may not reconcile. Make fields nullable when documents may not contain them, add `unclear` and `other` + detail to enums, and state normalization rules for messy source formats. Assistant prefill returns a 400 on current models, so don't rely on it.
+
+**Validation and retry loops.** Retry with the original document, the failed output, and the specific errors. Retries fix format and structure problems, but they can't produce information that isn't in the input. Extract `calculated_total` next to `stated_total` (or add a `conflict_detected` flag) to surface inconsistencies. Add a `detected_pattern` field so you can analyze which findings developers dismiss.
+
+**Batch processing.** The Message Batches API costs 50% less, runs asynchronously, and can take up to 24 hours, though most batches finish within an hour. Results come back in any order, so match them by `custom_id`; they stay available for 29 days. Each request is one Messages call, so your code can't run a tool partway through and continue. Use synchronous calls for blocking checks. Submission cadence = SLA − 24 hours (for a 36-hour SLA, submit at least every 12 hours). Resubmit only the failed `custom_id`s, fixing the cause first (for example, chunking oversized documents). Refine the prompt on a sample before batching large volumes. Prompt caching is a separate cost lever: keep volatile content out of the prefix and check `cache_read_input_tokens`.
+
+**Multi-pass review.** A session that generated code is biased toward its own reasoning, so use an independent instance to review. Split large reviews into per-file passes plus an integration pass. Have the model report confidence for each finding so reviewers can be routed where they're needed.
+
+## Domain 5 — Context Management & Reliability (15%)
+
+**Context preservation.** The API is stateless, so send the history (or a maintained summary plus key facts) with every request. Keep a persistent case-facts block of amounts, dates, IDs, and constraints outside summarized history. Trim tool results to the fields you need before they pile up. Put a key-findings summary first and use section headers to counter "lost in the middle." Use `count_tokens` for accurate sizing.
+
+**Escalation and ambiguity.** Escalate right away when the customer explicitly asks for a person. For a frustrated customer with a problem the agent can fix, acknowledge the frustration and offer the fix, and escalate if they ask again. Escalate for policy gaps rather than inventing policy. Sentiment and self-reported confidence are poor proxies for how complex a case is. Ask for an extra identifier when a lookup returns several matches or when information is missing.
+
+**Error propagation.** Subagents retry transient failures locally, then report the failure type, what they tried, partial results, and alternatives. Anti-patterns: returning an empty success when a source failed, and aborting the whole run over one failure. Keep "no matches" separate from "couldn't reach the source," and annotate coverage gaps in the output. For crash recovery, have each agent export state and give the coordinator a manifest to load on resume.
+
+**Large-codebase context.** Long sessions degrade, and answers drift toward generic patterns. Delegate verbose discovery to subagents, keep findings in scratchpad files, summarize at phase boundaries and pass the summary to the next phase, and use `/compact` when discovery output fills the context.
+
+**Human review and confidence.** A 97% average can hide weak document types or fields, so validate each segment before reducing review. Calibrate confidence thresholds against labeled data, keep stratified random sampling of high-confidence output, and send ambiguous or contradictory sources to people first.
+
+**Provenance and uncertainty.** Carry structured claim-source mappings (claim, URL, excerpt, date) through every summarization step. When credible sources conflict, report both values with attribution instead of picking one. Dates stop change over time from looking like contradiction. Present each content type in a suitable form: tables for financials, prose for news, lists for technical findings.
 
 ## How to study with this bank
 
-1. Master Multi-Agent and Claude Code CI first; they carry the heaviest scenario weight.
-2. Practice with the domain filter until you can name the *mechanism* (hub, gate, hook, cache, batch) before you pick a letter.
-3. Drill flashcards for `stop_reason`, Batches vs. sync, skill frontmatter, and MCP primitives.
-4. Run a Half mock (40), fix the two weakest domains, then a Full mock aiming above 720.
-
-Docs: [code.claude.com/docs](https://code.claude.com/docs) · [platform.claude.com/docs](https://platform.claude.com/docs).
+- Study time should follow the **official** weights above. Domain 1 alone is more than a quarter of the exam.
+- Practice select-N items until "select exactly two" feels natural. They are scored all-or-nothing.
+- For each scenario, be able to explain the one mechanism that removes each failure at its source.
+- Get hands-on: build a small Agent SDK agent with a hook and a subagent, set up a repo with CLAUDE.md, a path-scoped rule, and a forked skill, and run `claude -p --output-format json --json-schema` in a CI job.

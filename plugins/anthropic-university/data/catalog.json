@@ -1,0 +1,452 @@
+{
+  "exams": [
+    {
+      "examId": "associate-foundations",
+      "title": "Claude Certified Associate – Foundations",
+      "shortTitle": "Associate – Foundations",
+      "track": "Associate",
+      "level": "Foundations",
+      "questionCount": 121,
+      "official": {
+        "examCode": "CCAO-F",
+        "guideVersion": "1.0",
+        "effective": "2026-07",
+        "items": 60,
+        "fee": "$99 USD",
+        "formats": [
+          "multiple-choice",
+          "multiple-response"
+        ],
+        "delivery": "Pearson VUE (online proctored or test center)",
+        "validityMonths": 12
+      },
+      "passScaled": 720,
+      "scaleMin": 100,
+      "scaleMax": 1000,
+      "timeMinutes": 120,
+      "domains": [
+        {
+          "id": "prompting-task-execution",
+          "name": "Prompting and Task Execution",
+          "weight": 0.14
+        },
+        {
+          "id": "output-evaluation",
+          "name": "Output Evaluation and Validation",
+          "weight": 0.21
+        },
+        {
+          "id": "product-model-selection",
+          "name": "Product and Model Selection",
+          "weight": 0.12
+        },
+        {
+          "id": "workflow-solution-design",
+          "name": "Workflow Integration and Solution Design",
+          "weight": 0.16
+        },
+        {
+          "id": "configuration-knowledge",
+          "name": "Configuration and Knowledge Management",
+          "weight": 0.12
+        },
+        {
+          "id": "governance-risk",
+          "name": "Governance, Risk, and Responsible Use",
+          "weight": 0.15
+        },
+        {
+          "id": "troubleshooting-optimization",
+          "name": "Troubleshooting and Optimization",
+          "weight": 0.1
+        }
+      ],
+      "flashcardCount": 65
+    },
+    {
+      "examId": "developer-foundations",
+      "title": "Claude Certified Developer – Foundations",
+      "shortTitle": "Developer – Foundations",
+      "track": "Developer",
+      "level": "Foundations",
+      "questionCount": 129,
+      "official": {
+        "examCode": "CCDV-F",
+        "guideVersion": "1.0",
+        "effective": "2026-07",
+        "items": 53,
+        "fee": "$125 USD",
+        "formats": [
+          "multiple-choice",
+          "multiple-response"
+        ],
+        "delivery": "Pearson VUE (online proctored or test center)",
+        "validityMonths": 12
+      },
+      "passScaled": 720,
+      "scaleMin": 100,
+      "scaleMax": 1000,
+      "timeMinutes": 120,
+      "domains": [
+        {
+          "id": "agents-workflows",
+          "name": "Agents and Workflows",
+          "weight": 0.147
+        },
+        {
+          "id": "applications-integration",
+          "name": "Applications and Integration",
+          "weight": 0.331
+        },
+        {
+          "id": "claude-code",
+          "name": "Claude Code",
+          "weight": 0.031
+        },
+        {
+          "id": "eval-testing-debugging",
+          "name": "Eval, Testing, and Debugging",
+          "weight": 0.026
+        },
+        {
+          "id": "model-selection-optimization",
+          "name": "Model Selection and Optimization",
+          "weight": 0.168
+        },
+        {
+          "id": "prompt-context-engineering",
+          "name": "Prompt and Context Engineering",
+          "weight": 0.11
+        },
+        {
+          "id": "security-safety",
+          "name": "Security and Safety",
+          "weight": 0.081
+        },
+        {
+          "id": "tools-mcps",
+          "name": "Tools and MCPs",
+          "weight": 0.106
+        }
+      ],
+      "flashcardCount": 76
+    },
+    {
+      "examId": "architect-foundations",
+      "title": "Claude Certified Architect – Foundations",
+      "shortTitle": "Architect – Foundations",
+      "track": "Architect",
+      "level": "Foundations",
+      "questionCount": 117,
+      "official": {
+        "examCode": "CCAR-F",
+        "guideVersion": "1.0",
+        "effective": "2026-07",
+        "items": 60,
+        "fee": "$125 USD",
+        "formats": [
+          "multiple-choice",
+          "multiple-response"
+        ],
+        "structure": "4 scenarios drawn at random from a bank of 6",
+        "delivery": "Pearson VUE (online proctored or test center)",
+        "timeMinutes": 120,
+        "passScaled": 720,
+        "validityMonths": 12
+      },
+      "passScaled": 720,
+      "scaleMin": 100,
+      "scaleMax": 1000,
+      "timeMinutes": 120,
+      "domains": [
+        {
+          "id": "agentic-architecture",
+          "name": "Agentic Architecture & Orchestration",
+          "weight": 0.27
+        },
+        {
+          "id": "tool-design-mcp",
+          "name": "Tool Design & MCP Integration",
+          "weight": 0.18
+        },
+        {
+          "id": "claude-code-config",
+          "name": "Claude Code Configuration & Workflows",
+          "weight": 0.2
+        },
+        {
+          "id": "prompt-structured-output",
+          "name": "Prompt Engineering & Structured Output",
+          "weight": 0.2
+        },
+        {
+          "id": "context-reliability",
+          "name": "Context Management & Reliability",
+          "weight": 0.15
+        }
+      ],
+      "flashcardCount": 42
+    },
+    {
+      "examId": "architect-professional",
+      "title": "Claude Certified Architect – Professional",
+      "shortTitle": "Architect – Professional",
+      "track": "Architect",
+      "level": "Professional",
+      "questionCount": 125,
+      "official": {
+        "examCode": "CCAR-P",
+        "guideVersion": "1.0",
+        "effective": "2026-07",
+        "items": 63,
+        "fee": "$175 USD",
+        "formats": [
+          "multiple-choice",
+          "multiple-response"
+        ],
+        "delivery": "Pearson VUE (online proctored or test center)",
+        "validityMonths": 12
+      },
+      "passScaled": 720,
+      "scaleMin": 100,
+      "scaleMax": 1000,
+      "timeMinutes": 120,
+      "domains": [
+        {
+          "id": "solution-design",
+          "name": "Solution Design & Architecture",
+          "weight": 0.17
+        },
+        {
+          "id": "models-prompting-context",
+          "name": "Claude Models, Prompting & Context Engineering",
+          "weight": 0.13
+        },
+        {
+          "id": "integration",
+          "name": "Integration",
+          "weight": 0.19
+        },
+        {
+          "id": "evaluation-optimization",
+          "name": "Evaluation, Testing & Optimization",
+          "weight": 0.16
+        },
+        {
+          "id": "governance-safety",
+          "name": "Governance, Safety & Risk Management",
+          "weight": 0.14
+        },
+        {
+          "id": "stakeholder-lifecycle",
+          "name": "Stakeholder Communication & Lifecycle Management",
+          "weight": 0.14
+        },
+        {
+          "id": "developer-productivity",
+          "name": "Developer Productivity & Operational Enablement",
+          "weight": 0.07
+        }
+      ],
+      "flashcardCount": 80
+    }
+  ],
+  "lanes": [
+    {
+      "laneId": "claude-essentials",
+      "title": "Claude Essentials",
+      "group": "use",
+      "level": "beginner",
+      "summary": "Use Claude well in the apps: write clear prompts, work with files, projects, research, and memory, and check what Claude gives you before you rely on it.",
+      "estimatedHours": 4,
+      "moduleCount": 8,
+      "cardCount": 25,
+      "questionCount": 21,
+      "relatedCertifications": [
+        "associate-foundations"
+      ]
+    },
+    {
+      "laneId": "claude-for-work",
+      "title": "Claude for Work",
+      "group": "use",
+      "level": "intermediate",
+      "summary": "Turn Claude into a daily work tool with skills, connectors, extensions, plugins, and Office and browser integrations, while keeping review and data handling sound.",
+      "estimatedHours": 5,
+      "moduleCount": 8,
+      "cardCount": 25,
+      "questionCount": 22,
+      "relatedCertifications": [
+        "associate-foundations"
+      ]
+    },
+    {
+      "laneId": "building-agents",
+      "title": "Building Agents with Claude",
+      "group": "build",
+      "level": "advanced",
+      "summary": "Design, wire, guard, and evaluate production Claude agents, from the tool-use loop to hosted Managed Agents.",
+      "estimatedHours": 10,
+      "moduleCount": 10,
+      "cardCount": 30,
+      "questionCount": 26,
+      "relatedCertifications": [
+        "developer-foundations",
+        "architect-foundations",
+        "architect-professional"
+      ]
+    },
+    {
+      "laneId": "claude-api-fundamentals",
+      "title": "Claude API Fundamentals",
+      "group": "build",
+      "level": "intermediate",
+      "summary": "Go from an API key to a production-ready Claude integration: requests, models, streaming, thinking, files, structured outputs, caching, batches, errors, and cost.",
+      "estimatedHours": 8,
+      "moduleCount": 9,
+      "cardCount": 27,
+      "questionCount": 21,
+      "relatedCertifications": [
+        "developer-foundations",
+        "architect-foundations"
+      ]
+    },
+    {
+      "laneId": "claude-code",
+      "title": "Claude Code in Practice",
+      "group": "build",
+      "level": "intermediate",
+      "summary": "Configure, extend, and automate Claude Code so long sessions stay safe, focused, and repeatable for a whole team.",
+      "estimatedHours": 6,
+      "moduleCount": 8,
+      "cardCount": 27,
+      "questionCount": 23,
+      "relatedCertifications": [
+        "developer-foundations",
+        "architect-foundations"
+      ]
+    },
+    {
+      "laneId": "mcp-and-integrations",
+      "title": "MCP and Integrations",
+      "group": "build",
+      "level": "intermediate",
+      "summary": "Design, build, secure, and connect Model Context Protocol servers, and choose when MCP is the right way to give Claude a capability.",
+      "estimatedHours": 6,
+      "moduleCount": 8,
+      "cardCount": 26,
+      "questionCount": 22,
+      "relatedCertifications": [
+        "developer-foundations",
+        "architect-foundations",
+        "architect-professional"
+      ]
+    },
+    {
+      "laneId": "prompt-engineering",
+      "title": "Prompt Engineering for Claude",
+      "group": "build",
+      "level": "intermediate",
+      "summary": "Write prompts for current Claude models that are clear, structured, grounded, and measured with evals, and drop the habits built for older models.",
+      "estimatedHours": 6,
+      "moduleCount": 9,
+      "cardCount": 27,
+      "questionCount": 21,
+      "relatedCertifications": [
+        "developer-foundations",
+        "associate-foundations",
+        "architect-professional"
+      ]
+    },
+    {
+      "laneId": "desktop-deployment",
+      "title": "Claude Desktop Deployment",
+      "group": "administer",
+      "level": "intermediate",
+      "summary": "Package, configure, and verify Claude Desktop and Claude Code across macOS and Windows fleets with MDM, Group Policy, and Intune.",
+      "estimatedHours": 5,
+      "moduleCount": 8,
+      "cardCount": 24,
+      "questionCount": 20,
+      "relatedCertifications": [
+        "associate-foundations",
+        "architect-professional"
+      ]
+    },
+    {
+      "laneId": "enterprise-administration",
+      "title": "Enterprise Administration",
+      "group": "administer",
+      "level": "intermediate",
+      "summary": "Run Claude for Team or Enterprise with confidence: identity, provisioning, governance, data controls, audit, and API organization administration.",
+      "estimatedHours": 6,
+      "moduleCount": 9,
+      "cardCount": 27,
+      "questionCount": 22,
+      "relatedCertifications": [
+        "associate-foundations",
+        "architect-professional"
+      ]
+    },
+    {
+      "laneId": "partner-enterprise-solutioning",
+      "title": "Enterprise Solutioning with Claude",
+      "group": "partner",
+      "level": "intermediate",
+      "summary": "Position, scope, and propose Claude offerings: map customer signals to the right product and plan, run structured discovery, frame value, answer objections with verified facts, and shape a statement of work.",
+      "estimatedHours": 5,
+      "moduleCount": 7,
+      "cardCount": 23,
+      "questionCount": 20,
+      "relatedCertifications": [
+        "architect-professional",
+        "associate-foundations"
+      ]
+    },
+    {
+      "laneId": "partner-foundation-models",
+      "title": "Foundation Models for Client Conversations",
+      "group": "partner",
+      "level": "beginner",
+      "summary": "Explain how large language models work, in plain language, so clients make sound decisions about cost, latency, accuracy, and model choice.",
+      "estimatedHours": 4,
+      "moduleCount": 8,
+      "cardCount": 24,
+      "questionCount": 20,
+      "relatedCertifications": [
+        "architect-professional",
+        "associate-foundations"
+      ]
+    },
+    {
+      "laneId": "industry-solutions",
+      "title": "Industry Solutions",
+      "group": "partner",
+      "level": "intermediate",
+      "summary": "Design Claude solutions for specific functions and regulated industries, from legal workflows to financial services, with the guardrails each one needs.",
+      "estimatedHours": 6,
+      "moduleCount": 8,
+      "cardCount": 24,
+      "questionCount": 21,
+      "relatedCertifications": [
+        "associate-foundations",
+        "architect-professional"
+      ]
+    },
+    {
+      "laneId": "partner-delivery-adoption",
+      "title": "Partner Delivery and Adoption",
+      "group": "partner",
+      "level": "intermediate",
+      "summary": "Run a Claude deployment for a client from discovery workshop to a governed, measured, self-sustaining operating model.",
+      "estimatedHours": 6,
+      "moduleCount": 8,
+      "cardCount": 24,
+      "questionCount": 21,
+      "relatedCertifications": [
+        "associate-foundations",
+        "architect-foundations"
+      ]
+    }
+  ]
+}

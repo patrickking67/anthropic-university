@@ -7,6 +7,10 @@ allowed-tools: Read, Grep, Glob, Edit, Write
 
 # Author practice questions
 
+
+> **Schema v2:** read `content/SCHEMA.md` (select-N items, official domains/weights, `official`
+> block, scenarios) and `content/FACTS.md` (verified current facts) before editing content.
+
 You are writing **original, unofficial** practice questions for Anthropic University. Target exam:
 `$ARGUMENTS` (an exam id like `architect-foundations`, optionally a domain id and how many to write).
 

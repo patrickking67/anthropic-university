@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "claude-code-docs": {
+      "type": "http",
+      "url": "https://code.claude.com/docs/mcp"
+    },
+    "microsoft-learn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
+    }
+  }
+}

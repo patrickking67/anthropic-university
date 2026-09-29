@@ -1,8 +1,0 @@
-{
-  "name": "flashcard-drill",
-  "description": "Terminal Leitner-style flashcard drilling for Claude Certification tracks, with domain filters and weak-card requeues. Unofficial; not affiliated with Anthropic.",
-  "version": "1.1.0",
-  "author": { "name": "Patrick King", "url": "https://github.com/patrickking67" },
-  "homepage": "https://github.com/patrickking67/anthropic-university",
-  "keywords": ["claude", "certification", "flashcards", "study", "spaced-repetition"]
-}
