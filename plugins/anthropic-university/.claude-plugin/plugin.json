@@ -1,0 +1,29 @@
+{
+  "name": "anthropic-university",
+  "displayName": "Anthropic University",
+  "version": "2.1.0",
+  "description": "Unofficial Anthropic University learning coach, created by Patrick King, for Claude Code, the Claude desktop app, and Claude chat. Covers certification prep for all four Claude exams (mapped to the official guides) and 13 learning lanes for using, building with, administering, and partnering on Claude. Includes study plans, lessons, adaptive quizzes, official-format mock exams, flashcards, cheat sheets, explainers, answer grading, client role-play, and Quizlet/Anki export. Grounded live in Claude Code Docs, Microsoft Learn, and Agent Skills, with Anthropic Economic Index context, Academy course picks, and optional saving to Claude Docs. Not affiliated with Anthropic.",
+  "author": {
+    "name": "Patrick King",
+    "url": "https://github.com/patrickking67"
+  },
+  "homepage": "https://github.com/patrickking67/anthropic-university",
+  "repository": "https://github.com/patrickking67/anthropic-university",
+  "license": "MIT",
+  "keywords": [
+    "claude",
+    "certification",
+    "learning",
+    "study",
+    "quiz",
+    "mock-exam",
+    "flashcards",
+    "partners",
+    "quizlet",
+    "anki",
+    "microsoft-learn",
+    "education",
+    "agent-skills",
+    "economic-index"
+  ]
+}

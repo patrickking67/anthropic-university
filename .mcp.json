@@ -3,6 +3,10 @@
     "claude-code-docs": {
       "type": "http",
       "url": "https://code.claude.com/docs/mcp"
+    },
+    "agent-skills": {
+      "type": "http",
+      "url": "https://agentskills.io/mcp"
     }
   }
 }

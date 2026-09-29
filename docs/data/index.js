@@ -7,49 +7,62 @@ window.AU.index = [
     "shortTitle": "Associate – Foundations",
     "track": "Associate",
     "level": "Foundations",
-    "questionCount": 100,
+    "questionCount": 121,
+    "official": {
+      "examCode": "CCAO-F",
+      "guideVersion": "1.0",
+      "effective": "2026-07",
+      "items": 60,
+      "fee": "$99 USD",
+      "formats": [
+        "multiple-choice",
+        "multiple-response"
+      ],
+      "delivery": "Pearson VUE (online proctored or test center)",
+      "validityMonths": 12
+    },
     "passScaled": 720,
     "scaleMin": 100,
     "scaleMax": 1000,
     "timeMinutes": 120,
     "domains": [
       {
-        "id": "platform-models",
-        "name": "Platform & Model Foundations",
-        "weight": 0.15
-      },
-      {
-        "id": "prompting",
-        "name": "Prompting & Task Execution",
-        "weight": 0.15
-      },
-      {
-        "id": "evaluating",
-        "name": "Evaluating & Validating Output",
-        "weight": 0.15
-      },
-      {
-        "id": "workflow",
-        "name": "Workflow Integration & Solution Design",
+        "id": "prompting-task-execution",
+        "name": "Prompting and Task Execution",
         "weight": 0.14
       },
       {
-        "id": "configuration",
-        "name": "Configuration & Knowledge Management",
-        "weight": 0.14
+        "id": "output-evaluation",
+        "name": "Output Evaluation and Validation",
+        "weight": 0.21
       },
       {
-        "id": "governance",
-        "name": "Governance, Risk & Responsible Use",
-        "weight": 0.14
+        "id": "product-model-selection",
+        "name": "Product and Model Selection",
+        "weight": 0.12
       },
       {
-        "id": "troubleshooting",
-        "name": "Troubleshooting & Optimization",
-        "weight": 0.13
+        "id": "workflow-solution-design",
+        "name": "Workflow Integration and Solution Design",
+        "weight": 0.16
+      },
+      {
+        "id": "configuration-knowledge",
+        "name": "Configuration and Knowledge Management",
+        "weight": 0.12
+      },
+      {
+        "id": "governance-risk",
+        "name": "Governance, Risk, and Responsible Use",
+        "weight": 0.15
+      },
+      {
+        "id": "troubleshooting-optimization",
+        "name": "Troubleshooting and Optimization",
+        "weight": 0.1
       }
     ],
-    "flashcardCount": 55
+    "flashcardCount": 65
   },
   {
     "examId": "developer-foundations",
@@ -57,39 +70,67 @@ window.AU.index = [
     "shortTitle": "Developer – Foundations",
     "track": "Developer",
     "level": "Foundations",
-    "questionCount": 100,
+    "questionCount": 129,
+    "official": {
+      "examCode": "CCDV-F",
+      "guideVersion": "1.0",
+      "effective": "2026-07",
+      "items": 53,
+      "fee": "$125 USD",
+      "formats": [
+        "multiple-choice",
+        "multiple-response"
+      ],
+      "delivery": "Pearson VUE (online proctored or test center)",
+      "validityMonths": 12
+    },
     "passScaled": 720,
     "scaleMin": 100,
     "scaleMax": 1000,
     "timeMinutes": 120,
     "domains": [
       {
-        "id": "model-foundations",
-        "name": "Model & Technical Foundations",
-        "weight": 0.2
+        "id": "agents-workflows",
+        "name": "Agents and Workflows",
+        "weight": 0.147
       },
       {
-        "id": "prod-prompting",
-        "name": "Production Prompting, Agents & Tool Use",
-        "weight": 0.2
+        "id": "applications-integration",
+        "name": "Applications and Integration",
+        "weight": 0.331
       },
       {
-        "id": "claude-code-mcp",
-        "name": "Claude Code, MCP & Integration",
-        "weight": 0.2
+        "id": "claude-code",
+        "name": "Claude Code",
+        "weight": 0.031
       },
       {
-        "id": "prod-eng",
-        "name": "Production Engineering, Evals & Security",
-        "weight": 0.2
+        "id": "eval-testing-debugging",
+        "name": "Eval, Testing, and Debugging",
+        "weight": 0.026
       },
       {
-        "id": "accelerators",
-        "name": "Accelerators & IP Contribution",
-        "weight": 0.2
+        "id": "model-selection-optimization",
+        "name": "Model Selection and Optimization",
+        "weight": 0.168
+      },
+      {
+        "id": "prompt-context-engineering",
+        "name": "Prompt and Context Engineering",
+        "weight": 0.11
+      },
+      {
+        "id": "security-safety",
+        "name": "Security and Safety",
+        "weight": 0.081
+      },
+      {
+        "id": "tools-mcps",
+        "name": "Tools and MCPs",
+        "weight": 0.106
       }
     ],
-    "flashcardCount": 58
+    "flashcardCount": 76
   },
   {
     "examId": "architect-foundations",
@@ -97,39 +138,55 @@ window.AU.index = [
     "shortTitle": "Architect – Foundations",
     "track": "Architect",
     "level": "Foundations",
-    "questionCount": 100,
+    "questionCount": 117,
+    "official": {
+      "examCode": "CCAR-F",
+      "guideVersion": "1.0",
+      "effective": "2026-07",
+      "items": 60,
+      "fee": "$125 USD",
+      "formats": [
+        "multiple-choice",
+        "multiple-response"
+      ],
+      "structure": "4 scenarios drawn at random from a bank of 6",
+      "delivery": "Pearson VUE (online proctored or test center)",
+      "timeMinutes": 120,
+      "passScaled": 720,
+      "validityMonths": 12
+    },
     "passScaled": 720,
     "scaleMin": 100,
     "scaleMax": 1000,
     "timeMinutes": 120,
     "domains": [
       {
-        "id": "multi-agent",
-        "name": "Multi-Agent Orchestration",
-        "weight": 0.22
+        "id": "agentic-architecture",
+        "name": "Agentic Architecture & Orchestration",
+        "weight": 0.27
       },
       {
-        "id": "claude-code-ci",
-        "name": "Claude Code for Continuous Integration",
-        "weight": 0.2
-      },
-      {
-        "id": "support-agent",
-        "name": "Customer Support Resolution Agent",
-        "weight": 0.2
-      },
-      {
-        "id": "code-generation",
-        "name": "Code Generation with Claude Code",
-        "weight": 0.2
-      },
-      {
-        "id": "api-sdk-mcp",
-        "name": "Core API, SDK & MCP Fundamentals",
+        "id": "tool-design-mcp",
+        "name": "Tool Design & MCP Integration",
         "weight": 0.18
+      },
+      {
+        "id": "claude-code-config",
+        "name": "Claude Code Configuration & Workflows",
+        "weight": 0.2
+      },
+      {
+        "id": "prompt-structured-output",
+        "name": "Prompt Engineering & Structured Output",
+        "weight": 0.2
+      },
+      {
+        "id": "context-reliability",
+        "name": "Context Management & Reliability",
+        "weight": 0.15
       }
     ],
-    "flashcardCount": 60
+    "flashcardCount": 42
   },
   {
     "examId": "architect-professional",
@@ -137,7 +194,20 @@ window.AU.index = [
     "shortTitle": "Architect – Professional",
     "track": "Architect",
     "level": "Professional",
-    "questionCount": 100,
+    "questionCount": 125,
+    "official": {
+      "examCode": "CCAR-P",
+      "guideVersion": "1.0",
+      "effective": "2026-07",
+      "items": 63,
+      "fee": "$175 USD",
+      "formats": [
+        "multiple-choice",
+        "multiple-response"
+      ],
+      "delivery": "Pearson VUE (online proctored or test center)",
+      "validityMonths": 12
+    },
     "passScaled": 720,
     "scaleMin": 100,
     "scaleMax": 1000,
@@ -145,30 +215,40 @@ window.AU.index = [
     "domains": [
       {
         "id": "solution-design",
-        "name": "Platform & Solution Design",
-        "weight": 0.2
+        "name": "Solution Design & Architecture",
+        "weight": 0.17
       },
       {
-        "id": "enterprise-prod",
-        "name": "Enterprise Integration & Production",
-        "weight": 0.2
+        "id": "models-prompting-context",
+        "name": "Claude Models, Prompting & Context Engineering",
+        "weight": 0.13
       },
       {
-        "id": "safety-risk",
-        "name": "Responsible AI, Safety & Risk",
-        "weight": 0.2
+        "id": "integration",
+        "name": "Integration",
+        "weight": 0.19
       },
       {
-        "id": "evals-governance",
-        "name": "Evals as Acceptance Criteria & Decision Routing",
-        "weight": 0.2
+        "id": "evaluation-optimization",
+        "name": "Evaluation, Testing & Optimization",
+        "weight": 0.16
+      },
+      {
+        "id": "governance-safety",
+        "name": "Governance, Safety & Risk Management",
+        "weight": 0.14
       },
       {
         "id": "stakeholder-lifecycle",
-        "name": "Stakeholder Engagement, Lifecycle & Enablement",
-        "weight": 0.2
+        "name": "Stakeholder Communication & Lifecycle Management",
+        "weight": 0.14
+      },
+      {
+        "id": "developer-productivity",
+        "name": "Developer Productivity & Operational Enablement",
+        "weight": 0.07
       }
     ],
-    "flashcardCount": 58
+    "flashcardCount": 80
   }
 ];

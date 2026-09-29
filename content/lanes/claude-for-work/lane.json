@@ -1,0 +1,837 @@
+{
+  "laneId": "claude-for-work",
+  "title": "Claude for Work",
+  "group": "use",
+  "level": "intermediate",
+  "summary": "Turn Claude into a daily work tool with skills, connectors, extensions, plugins, and Office and browser integrations, while keeping review and data handling sound.",
+  "audience": "Knowledge workers and team leads who already use Claude and want to connect it to their tools, share workflows with colleagues, and use it responsibly on Team or Enterprise plans.",
+  "estimatedHours": 5,
+  "prefix": "wrk",
+  "prerequisites": [
+    "claude-essentials"
+  ],
+  "relatedCertifications": [
+    "associate-foundations"
+  ],
+  "officialResources": [
+    {
+      "title": "Claude 101",
+      "url": "https://academy.claude.com/courses/claude-101",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Introduction to Claude Cowork",
+      "url": "https://academy.claude.com/courses/introduction-to-claude-cowork",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "AI Fluency: Framework and foundations",
+      "url": "https://academy.claude.com/courses/ai-fluency-framework-foundations",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Claude use cases",
+      "url": "https://claude.com/resources/use-cases",
+      "provider": "Anthropic"
+    }
+  ],
+  "modules": [
+    {
+      "id": "m1",
+      "title": "Skills: using and creating them",
+      "summary": "Use Anthropic's built-in skills, package your own repeatable workflows as skills, and understand how Claude decides when to load one.",
+      "objectives": [
+        "Enable and toggle skills from the Customize menu",
+        "Explain the difference between Anthropic, custom, and organization skills",
+        "Write a skill description that triggers at the right time",
+        "Package and upload a custom skill safely"
+      ],
+      "keyPoints": [
+        "A skill is a folder of instructions, and optionally scripts and reference files, that teaches Claude a repeatable way of working. Skills work on every plan; Enterprise needs an owner to enable them.",
+        "Skills depend on the Code execution and file creation capability. On Team and Enterprise, owners manage this under Organization settings > Plugins & skills.",
+        "Turn skills on or off in Customize > Skills. Anthropic's own skills, such as those for Excel, Word, PowerPoint, and PDF work, activate on their own when relevant.",
+        "Claude chooses a skill from its description, reading only the name and description first and loading the full instructions when the skill applies. A vague description means the skill rarely fires.",
+        "Every skill needs a skill.md file whose frontmatter includes a name (up to 64 characters) and a description (up to 200 characters). The folder name must match the skill name.",
+        "To upload, zip the skill folder and choose + Create skill > Upload a skill in Customize > Skills. You can also ask Claude to interview you and draft the skill for you.",
+        "Never hard-code passwords or API keys in a skill, and review any skill you download before enabling it."
+      ],
+      "practice": "Pick a task you repeat weekly, such as a status report format. Ask Claude to help you write it as a skill, check that the description says what it does and when to use it, upload it, and test it with three differently worded requests.",
+      "docs": [
+        {
+          "title": "What are skills?",
+          "url": "https://support.claude.com/en/articles/12512176-what-are-skills"
+        },
+        {
+          "title": "Use skills in Claude",
+          "url": "https://support.claude.com/en/articles/12512180-use-skills-in-claude"
+        },
+        {
+          "title": "How to create custom skills",
+          "url": "https://support.claude.com/en/articles/12512198-how-to-create-custom-skills"
+        }
+      ]
+    },
+    {
+      "id": "m2",
+      "title": "Connectors and the directory",
+      "summary": "Connect Claude to the apps where your work lives, find connectors in the directory, and understand what access they grant.",
+      "objectives": [
+        "Add a directory connector from chat or from Customize",
+        "Explain how connector permissions relate to your own account access",
+        "Add a custom connector and state its network requirement",
+        "Find skills, connectors, and plugins in one directory"
+      ],
+      "keyPoints": [
+        "Connectors let Claude read from and act in services such as Google Drive, Gmail, Slack, or Microsoft 365. They are built on the Model Context Protocol (MCP).",
+        "Add one from a chat with the + button or by typing /, then Connectors > Manage connectors, or go to Customize > Connectors and click +. You then sign in to the service and approve access.",
+        "A connector can only reach what your account in that service can reach. It inherits your permissions rather than granting new ones.",
+        "The directory lives under Customize, with Skills, Connectors, and Plugins tabs, each with a Discover view. Team and Enterprise members also see a Your organization tab.",
+        "Custom connectors point Claude at a remote MCP server by name and URL. Anthropic's cloud makes the connection, so the server must be reachable over the public internet. Free accounts can add one custom connector.",
+        "On Team and Enterprise, an owner must enable connectors in Organization settings > Connectors before members can use them, and Enterprise admins can restrict write actions.",
+        "Some connectors carry an Interactive badge and render live views, such as task boards or dashboards, inside the conversation."
+      ],
+      "practice": "Connect one work app you use daily. Ask Claude a question that needs data from it, then ask Claude to explain which tool calls it made. Review the connector's settings and note which actions it can take.",
+      "docs": [
+        {
+          "title": "Use connectors to extend Claude's capabilities",
+          "url": "https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities"
+        },
+        {
+          "title": "Get started with custom connectors using remote MCP",
+          "url": "https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp"
+        },
+        {
+          "title": "Browse skills, connectors, and plugins in one directory",
+          "url": "https://support.claude.com/en/articles/14328846-browse-skills-connectors-and-plugins-in-one-directory"
+        }
+      ]
+    },
+    {
+      "id": "m3",
+      "title": "Desktop extensions",
+      "summary": "Install local MCP servers in Claude Desktop with one click, and know when a local extension fits better than a web connector.",
+      "objectives": [
+        "Install a reviewed extension from Settings > Extensions",
+        "Install a custom .mcpb extension from a trusted source",
+        "Choose between a desktop extension and a web connector"
+      ],
+      "keyPoints": [
+        "Desktop extensions package local MCP servers as single-click installs, so you do not have to edit configuration files or manage dependencies by hand.",
+        "In Claude Desktop, go to Settings > Extensions and click Browse extensions to see tools Anthropic has reviewed, then Install and fill in any required settings.",
+        "Extensions use the .mcpb format. A custom one is installed from Settings > Extensions > Advanced settings, under Extension Developer, with Install Extension.",
+        "Extensions run on your computer, which suits tools that need local files or local apps. Web connectors run from Anthropic's cloud and suit hosted services.",
+        "Configuration fields marked sensitive are stored with the operating system's secure storage, such as the macOS Keychain or Windows Credential Manager.",
+        "Team and Enterprise owners can turn public extensions on or off, upload custom extensions for their team, and use an allowlist to control what can be installed."
+      ],
+      "practice": "Open Settings > Extensions in Claude Desktop and browse the directory. Pick one extension that would help you locally, read what it can access, and decide whether a web connector would serve you better.",
+      "docs": [
+        {
+          "title": "Getting started with local MCP servers on Claude Desktop",
+          "url": "https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop"
+        },
+        {
+          "title": "When to use desktop and web connectors",
+          "url": "https://support.claude.com/en/articles/11725091-when-to-use-desktop-and-web-connectors"
+        },
+        {
+          "title": "Enabling and using the desktop extension allowlist",
+          "url": "https://support.claude.com/en/articles/12592343-enabling-and-using-the-desktop-extension-allowlist"
+        }
+      ]
+    },
+    {
+      "id": "m4",
+      "title": "Claude in Chrome, Excel, and PowerPoint",
+      "summary": "Bring Claude into the browser and Microsoft Office, and use each integration with the right checks.",
+      "objectives": [
+        "Describe what Claude in Chrome can do and which plans include it",
+        "Use Claude for Excel to explain and change a workbook safely",
+        "Build or edit slides with Claude for PowerPoint",
+        "Adjust approval settings for browser actions on sensitive sites"
+      ],
+      "keyPoints": [
+        "Claude in Chrome is a browser extension that lets Claude read, click, and navigate websites alongside you. It works with all paid plans; on Enterprise an admin must enable it.",
+        "Claude in Chrome reviews each action and asks for approval on sensitive ones. You can change the approval mode, and the choice persists. Websites can contain prompt injection, so tighten approvals on sites that matter.",
+        "Claude for Excel is an add-in for Pro, Max, Team, and Enterprise. It answers questions about a workbook with cell-level citations, adjusts assumptions while keeping formulas intact, and traces errors to their cause.",
+        "On Windows the add-in is under Home > Add-ins, and on Mac under Tools > Add-ins. Start from a trusted copy of a workbook and review changes before you finalize.",
+        "Claude for PowerPoint is an add-in for Pro, Max, Team, and Enterprise. It can build a deck, edit specific slides without regenerating everything, and turn bullets into diagrams or native charts while respecting your template.",
+        "Claude for Excel shares context with the PowerPoint, Word, and Outlook add-ins, so one conversation can span a workbook and the deck built from it."
+      ],
+      "practice": "Open a copy of a spreadsheet you know well in Excel with the Claude add-in. Ask it to explain one formula chain with citations and to find any errors. Then ask Claude for PowerPoint to turn one table into a chart slide in your template.",
+      "docs": [
+        {
+          "title": "Get started with Claude in Chrome",
+          "url": "https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome"
+        },
+        {
+          "title": "Use Claude for Excel",
+          "url": "https://support.claude.com/en/articles/12650343-use-claude-for-excel"
+        },
+        {
+          "title": "Use Claude for PowerPoint",
+          "url": "https://support.claude.com/en/articles/13521390-use-claude-for-powerpoint"
+        }
+      ]
+    },
+    {
+      "id": "m5",
+      "title": "Cowork tasks and plugins",
+      "summary": "Hand Claude multi-step tasks, choose a safe permission mode, schedule recurring work, and install plugins that bundle skills and connectors for your role.",
+      "objectives": [
+        "Start a Cowork task that works with connected folders",
+        "Choose a permission mode that matches the stakes",
+        "Install a plugin from the directory and run its skills",
+        "Explain which plugin parts work in chat versus Cowork and Code"
+      ],
+      "keyPoints": [
+        "Cowork handles multi-step tasks for you: it plans, breaks work into subtasks, and can run parallel workstreams. Tasks run in isolated cloud environments and keep going when your device closes.",
+        "Cowork is on paid plans. The Claude Desktop app must be open for work that touches local files, your browser, or your computer.",
+        "Permission modes are Manual (asks before acting), Auto (Claude decides, with safety checks that use more of your limit), and Skip (no automatic checks). Pick Manual for sensitive accounts or sites.",
+        "Use /schedule to run a task on demand or on a recurring cadence, without your device needing to be online.",
+        "A plugin bundles skills, connectors, and sub-agents for a role or team. Add one from Customize > Plugins > Discover. Plugins need a paid plan and are saved to your account, so they also appear in Claude Code.",
+        "Hooks and sub-agents in a plugin work only in Cowork and Claude Code; in chat they appear grayed out. Plugins with local MCP servers need the desktop app.",
+        "Run plugin skills by typing / or using the + button. In Cowork, commands take the form /plugin-name:command."
+      ],
+      "practice": "Install one plugin that matches your role and list what skills and connectors it includes. Give Cowork a small multi-step task in a dedicated test folder on Manual mode, and watch which steps ask for approval.",
+      "docs": [
+        {
+          "title": "Get started with Claude Cowork",
+          "url": "https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork"
+        },
+        {
+          "title": "Use plugins in Claude",
+          "url": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude"
+        },
+        {
+          "title": "Claude Cowork and chat are one Claude",
+          "url": "https://support.claude.com/en/articles/16761823-claude-cowork-and-chat-are-one-claude"
+        }
+      ]
+    },
+    {
+      "id": "m6",
+      "title": "Role-based workflows",
+      "summary": "Combine projects, connectors, skills, and research into repeatable workflows for analysis, drafting, research, and meeting preparation.",
+      "objectives": [
+        "Design an analysis workflow that shows its method and can be checked",
+        "Set up a drafting workflow that keeps voice and format consistent",
+        "Run a research workflow with verified citations",
+        "Build a meeting-prep routine from calendar, email, and project context"
+      ],
+      "keyPoints": [
+        "Analysis: upload the data or connect its source, ask Claude to compute with code and show its steps, then reconcile key totals against the original before sharing.",
+        "Drafting: keep reference material and rules in a project, capture house formats in a skill, and give targeted feedback rather than regenerating whole drafts.",
+        "Research: use Research for multi-source questions, then open the citations behind any claim that will drive a decision.",
+        "Meeting prep: a project holding account notes plus calendar and email connectors lets Claude assemble a brief. Scheduled tasks can prepare it before each meeting.",
+        "Match the surface to the job: chat for thinking, Cowork for multi-step execution, and the Excel or PowerPoint add-ins when the work lives in those files.",
+        "Every workflow ends with a human check. Decide in advance what you will verify and who owns the final output."
+      ],
+      "practice": "Choose one workflow from your role. Write down its inputs, the Claude features it uses, the output, and the specific checks you will run. Run it once end to end and time it against your usual approach.",
+      "docs": [
+        {
+          "title": "Claude use cases",
+          "url": "https://claude.com/resources/use-cases"
+        },
+        {
+          "title": "Using Research on Claude",
+          "url": "https://support.claude.com/en/articles/11088861-using-research-on-claude-ai"
+        },
+        {
+          "title": "Create and edit files with Claude",
+          "url": "https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude"
+        }
+      ]
+    },
+    {
+      "id": "m7",
+      "title": "Organization features on Team and Enterprise",
+      "summary": "Share projects and skills across a company, set organization-wide instructions, and search company knowledge from one place.",
+      "objectives": [
+        "Share projects and publish skills to colleagues",
+        "Explain how owner-provisioned skills reach users",
+        "Set up and use enterprise search",
+        "Identify which features an owner must enable first"
+      ],
+      "keyPoints": [
+        "Projects can be private or shared with the organization, with Can view or Can edit access for members.",
+        "When an owner uploads a skill in organization settings, it is provisioned to everyone and enabled by default. Users can still switch it off for themselves in Customize > Skills.",
+        "Enterprise can give skills to only some people by bundling them into a plugin and assigning that plugin to a group.",
+        "Owners can let members publish skills to the organization by setting the Publishing policy to Open or Requires review.",
+        "Enterprise search adds an Ask Your Org project for searching across company sources such as Google Drive, Slack, and Microsoft 365. An owner completes setup, choosing a connector for Documents and for Chat, with Email optional.",
+        "Organization instructions let owners set standards Claude follows in every conversation across the organization.",
+        "Several features start off or need owner action on Team and Enterprise: memory, web search (Organization settings > Capabilities), connectors (Organization settings > Connectors), and code execution."
+      ],
+      "practice": "List the three workflows your team repeats most. For each, decide whether it belongs in a shared project, an organization skill, or a plugin, and name who would own and review it.",
+      "docs": [
+        {
+          "title": "Provision and manage skills for your organization",
+          "url": "https://support.claude.com/en/articles/13119606-provision-and-manage-skills-for-your-organization"
+        },
+        {
+          "title": "Use enterprise search",
+          "url": "https://support.claude.com/en/articles/12489464-use-enterprise-search"
+        },
+        {
+          "title": "Set organization instructions",
+          "url": "https://support.claude.com/en/articles/14546867-set-organization-preferences"
+        },
+        {
+          "title": "Manage plugins for your organization",
+          "url": "https://support.claude.com/en/articles/13837433-manage-plugins-for-your-organization"
+        }
+      ]
+    },
+    {
+      "id": "m8",
+      "title": "Review and data sensitivity",
+      "summary": "Keep humans accountable for Claude's work, limit what Claude can reach, and handle confidential data carefully.",
+      "objectives": [
+        "Scale review effort to the stakes of the output",
+        "Limit folder, connector, and network access to what a task needs",
+        "Recognize prompt injection in agentic work",
+        "Choose where sensitive work should and should not happen"
+      ],
+      "keyPoints": [
+        "You remain responsible for everything Claude does on your behalf, including sent messages, published content, and changed data.",
+        "Give Cowork a dedicated working folder rather than broad access to sensitive files such as financial records.",
+        "Each connector or extension is another path for malicious instructions to reach Claude. Use verified ones from official directories and review their permissions.",
+        "Avoid using agentic browsing or Cowork on banking, healthcare, or personal-record sites, and switch to Manual approval where stakes are high.",
+        "Code execution runs in a sandbox, but prompt injection can still try to send data out. Enterprise organizations default to network access disabled; options run from disabled, to package managers only, to allowlisted domains, to all domains.",
+        "Follow your organization's data rules. Use incognito for conversations that should not feed memory, and keep secrets and credentials out of prompts and skills."
+      ],
+      "practice": "Audit your own setup: list every connector, extension, and connected folder Claude can reach. Remove one you no longer need, narrow one folder, and write down which outputs you always check before they leave your hands.",
+      "docs": [
+        {
+          "title": "Use Claude Cowork safely",
+          "url": "https://support.claude.com/en/articles/13364135-use-claude-cowork-safely"
+        },
+        {
+          "title": "Create and edit files with Claude (network access and security)",
+          "url": "https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude"
+        },
+        {
+          "title": "Use incognito chats",
+          "url": "https://support.claude.com/en/articles/12260368-use-incognito-chats"
+        }
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "front": "What decides whether Claude loads a skill?",
+      "back": "The skill's description. Claude reads name and description first and loads the full instructions only when the skill fits the request.",
+      "module": "m1"
+    },
+    {
+      "front": "Minimum contents of a custom skill",
+      "back": "A folder whose name matches the skill, containing skill.md with frontmatter giving a name (up to 64 characters) and a description (up to 200).",
+      "module": "m1"
+    },
+    {
+      "front": "Where to toggle and upload skills",
+      "back": "Customize > Skills. Upload with + Create skill > Upload a skill, using a zipped skill folder.",
+      "module": "m1"
+    },
+    {
+      "front": "Capability skills depend on",
+      "back": "Code execution and file creation.",
+      "module": "m1"
+    },
+    {
+      "front": "Can a connector see files your account cannot?",
+      "back": "No. Connectors inherit your permissions in the connected service.",
+      "module": "m2"
+    },
+    {
+      "front": "Network requirement for a custom connector",
+      "back": "The remote MCP server must be reachable over the public internet, because Anthropic's cloud makes the connection.",
+      "module": "m2"
+    },
+    {
+      "front": "Where Team and Enterprise owners enable connectors",
+      "back": "Organization settings > Connectors. Members still sign in to each service themselves.",
+      "module": "m2"
+    },
+    {
+      "front": "What is a desktop extension?",
+      "back": "A one-click .mcpb package that installs a local MCP server in Claude Desktop.",
+      "module": "m3"
+    },
+    {
+      "front": "Where to browse reviewed desktop extensions",
+      "back": "Claude Desktop, Settings > Extensions > Browse extensions.",
+      "module": "m3"
+    },
+    {
+      "front": "Desktop extension vs web connector",
+      "back": "Extensions run on your computer and suit local files and apps. Web connectors run from Anthropic's cloud and suit hosted services.",
+      "module": "m3"
+    },
+    {
+      "front": "Claude in Chrome plan availability",
+      "back": "All paid plans: Pro, Max, Team, and Enterprise, with Enterprise requiring admin enablement.",
+      "module": "m4"
+    },
+    {
+      "front": "Two safe habits with Claude for Excel",
+      "back": "Start from a trusted copy of the workbook and review changes before finalizing.",
+      "module": "m4"
+    },
+    {
+      "front": "What context do the Office add-ins share?",
+      "back": "Claude for Excel shares context with PowerPoint, Word, and Outlook, so one conversation can span them.",
+      "module": "m4"
+    },
+    {
+      "front": "Three Cowork permission modes",
+      "back": "Manual asks before acting, Auto lets Claude decide with safety checks, and Skip runs without automatic checks.",
+      "module": "m5"
+    },
+    {
+      "front": "What a plugin bundles",
+      "back": "Skills, connectors, and sub-agents packaged for a role or team.",
+      "module": "m5"
+    },
+    {
+      "front": "Why are a plugin's hooks grayed out in chat?",
+      "back": "Hooks and sub-agents run only in Cowork and Claude Code.",
+      "module": "m5"
+    },
+    {
+      "front": "Command to automate recurring Cowork work",
+      "back": "/schedule, which runs a task on demand or on a cadence without your device online.",
+      "module": "m5"
+    },
+    {
+      "front": "Analysis workflow check",
+      "back": "Have Claude show its method, then reconcile key totals against the source data before sharing.",
+      "module": "m6"
+    },
+    {
+      "front": "Meeting-prep building blocks",
+      "back": "A project with account notes, calendar and email connectors, and optionally a scheduled task to produce the brief.",
+      "module": "m6"
+    },
+    {
+      "front": "Owner-provisioned skill defaults",
+      "back": "Provisioned to everyone and enabled by default; each user can toggle it off.",
+      "module": "m7"
+    },
+    {
+      "front": "How Enterprise targets skills to one group",
+      "back": "Bundle the skills in a plugin and assign the plugin to that group.",
+      "module": "m7"
+    },
+    {
+      "front": "Ask Your Org",
+      "back": "The project enterprise search adds for searching company sources. An owner sets it up with Documents and Chat connectors.",
+      "module": "m7"
+    },
+    {
+      "front": "Safer folder access for Cowork",
+      "back": "A dedicated working folder, not broad access to sensitive files.",
+      "module": "m8"
+    },
+    {
+      "front": "Enterprise default for code execution network access",
+      "back": "Disabled. Other options: package managers only, package managers plus allowlisted domains, or all domains.",
+      "module": "m8"
+    },
+    {
+      "front": "Who is responsible for actions Claude takes for you?",
+      "back": "You are, including messages, published content, and data changes.",
+      "module": "m8"
+    }
+  ],
+  "questions": [
+    {
+      "id": "wrk-001",
+      "module": "m1",
+      "studyArea": "Skills",
+      "difficulty": "medium",
+      "stem": "A user uploads a skill for writing quarterly reviews, but Claude almost never uses it unless the user names it. The skill's description reads 'Helpful writing skill.' What should they change first?",
+      "options": {
+        "A": "Move the skill's instructions into the account-wide Instructions for Claude",
+        "B": "Rewrite the description to say what the skill produces and when to use it",
+        "C": "Rename the skill folder so its name starts with a number for higher priority",
+        "D": "Raise the effort level to Max so that Claude checks more skills per request"
+      },
+      "answer": "B",
+      "explanationCorrect": "Claude decides whether to load a skill from its name and description. A specific description that names the output and the situations it fits makes the skill trigger reliably.",
+      "explanationDistractor": "Account-wide instructions load into every chat, which wastes context and loses the benefit of loading the workflow only when needed.",
+      "reference": "https://support.claude.com/en/articles/12512198-how-to-create-custom-skills"
+    },
+    {
+      "id": "wrk-002",
+      "module": "m1",
+      "studyArea": "Skills",
+      "difficulty": "easy",
+      "stem": "On a Team plan, a member cannot use any skills at all, including Anthropic's built-in ones. Which organization setting is the most likely cause?",
+      "options": {
+        "A": "Memory has not been turned on for the organization",
+        "B": "The member has not connected their Google Drive yet",
+        "C": "Code execution and file creation is switched off",
+        "D": "The member's projects are private rather than shared"
+      },
+      "answer": "C",
+      "explanationCorrect": "Skills depend on the Code execution and file creation capability, which Team and Enterprise owners manage in organization settings.",
+      "explanationDistractor": "Memory affects what Claude recalls across chats; it has no bearing on whether skills can run.",
+      "reference": "https://support.claude.com/en/articles/12512180-use-skills-in-claude"
+    },
+    {
+      "id": "wrk-003",
+      "module": "m1",
+      "studyArea": "Skills vs projects",
+      "difficulty": "medium",
+      "stem": "A marketing lead wants Claude to apply the same brand formatting rules to any document, in any chat, whenever branded material is being produced. Which feature fits best?",
+      "options": {
+        "A": "A skill that describes the brand rules and when they apply",
+        "B": "A project whose knowledge holds the brand guideline PDF",
+        "C": "An incognito chat with the rules pasted into every message",
+        "D": "An artifact that displays the brand rules as a web page"
+      },
+      "answer": "A",
+      "explanationCorrect": "Skills package a repeatable procedure that Claude loads whenever the request matches, across conversations, which suits formatting rules that apply everywhere.",
+      "explanationDistractor": "Project knowledge only applies to chats inside that project, so branded work done elsewhere would miss the rules.",
+      "reference": "https://support.claude.com/en/articles/12512176-what-are-skills"
+    },
+    {
+      "id": "wrk-004",
+      "module": "m2",
+      "studyArea": "Custom connectors",
+      "difficulty": "hard",
+      "stem": "An IT team adds a custom connector pointing at an MCP server that runs only inside the company's private network. Claude on the web cannot connect to it. What explains this?",
+      "options": {
+        "A": "Custom connectors work only after the server is listed in the directory",
+        "B": "Custom connectors are limited to the Free plan and blocked on Team",
+        "C": "The server needs an Interactive badge before Claude can connect to it",
+        "D": "Anthropic's cloud makes the connection, so the server must be public"
+      },
+      "answer": "D",
+      "explanationCorrect": "Custom connectors connect from Anthropic's cloud rather than your device, so the MCP server must be reachable over the public internet.",
+      "explanationDistractor": "Custom connectors do not need to be listed in the directory; you add them by name and URL.",
+      "reference": "https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp"
+    },
+    {
+      "id": "wrk-005",
+      "module": "m2",
+      "studyArea": "Connector permissions",
+      "difficulty": "easy",
+      "stem": "An employee hesitates to connect Google Drive because they fear Claude will read HR folders that they themselves cannot open. What is accurate?",
+      "options": {
+        "A": "Connectors grant read access to every shared drive in the company",
+        "B": "Connectors reach only what the employee's own account can access",
+        "C": "Connectors read all folders but hide restricted ones in the answers",
+        "D": "Connectors copy the entire drive into project knowledge on sign-in"
+      },
+      "answer": "B",
+      "explanationCorrect": "Connectors inherit the user's existing permissions in the connected service, so Claude cannot reach what the user cannot.",
+      "explanationDistractor": "Nothing in the connector model reads restricted content and then hides it; access is limited at the source.",
+      "reference": "https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities"
+    },
+    {
+      "id": "wrk-006",
+      "module": "m2",
+      "studyArea": "Connectors on Team",
+      "difficulty": "medium",
+      "stem": "A Team plan member opens Customize > Connectors but finds no option to connect Slack, even though a colleague at another company uses it. What is the most likely reason?",
+      "options": {
+        "A": "Their organization owner has not enabled it under Organization settings > Connectors",
+        "B": "Slack can only be connected from the mobile app on Team and Enterprise plans",
+        "C": "The member must first create a desktop extension that wraps the Slack service",
+        "D": "Slack becomes available only after the member turns on memory for their account"
+      },
+      "answer": "A",
+      "explanationCorrect": "On Team and Enterprise, owners must enable connectors for the organization before members can use them. Members then authenticate individually.",
+      "explanationDistractor": "Connectors are managed from the web and desktop apps, and nothing restricts Slack to mobile.",
+      "reference": "https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities"
+    },
+    {
+      "id": "wrk-007",
+      "module": "m3",
+      "studyArea": "Desktop extensions",
+      "difficulty": "medium",
+      "stem": "A trusted internal team gives you a .mcpb file for a local tool. Where do you install it in Claude Desktop?",
+      "options": {
+        "A": "Customize > Connectors, then add it as a custom connector by URL",
+        "B": "Customize > Skills, then upload it with + Create skill",
+        "C": "Settings > Extensions > Advanced settings, then Install Extension",
+        "D": "Settings > Memory, then import it as a new memory topic"
+      },
+      "answer": "C",
+      "explanationCorrect": ".mcpb files are desktop extensions. Custom ones are installed from the Extension Developer section under Settings > Extensions > Advanced settings.",
+      "explanationDistractor": "Custom connectors take a remote server URL; a .mcpb file packages a local server and is installed as an extension.",
+      "reference": "https://support.claude.com/en/articles/10949351-getting-started-with-local-mcp-servers-on-claude-desktop"
+    },
+    {
+      "id": "wrk-008",
+      "module": "m3",
+      "studyArea": "Extension governance",
+      "difficulty": "hard",
+      "stem": "An Enterprise security team wants employees to install only the desktop extensions it has approved. Which approach matches the documented controls?",
+      "options": {
+        "A": "Ask employees to remove Claude Desktop and use only the web app",
+        "B": "Turn off memory so extensions cannot store configuration values",
+        "C": "Require every extension to be converted into a custom skill file",
+        "D": "Disable public extensions, upload approved ones, use the allowlist"
+      },
+      "answer": "D",
+      "explanationCorrect": "Owners can disable public desktop extensions, upload custom extensions for one-click install, and use an allowlist so only approved extensions are available.",
+      "explanationDistractor": "Removing the desktop app gives up local capabilities entirely rather than governing them.",
+      "reference": "https://support.claude.com/en/articles/12592343-enabling-and-using-the-desktop-extension-allowlist"
+    },
+    {
+      "id": "wrk-009",
+      "module": "m4",
+      "studyArea": "Claude for Excel",
+      "difficulty": "medium",
+      "stem": "A financial analyst plans to ask Claude for Excel to rework assumptions across a large, business-critical model. What is the best way to begin?",
+      "options": {
+        "A": "Work on a trusted copy and review each change before finalizing it",
+        "B": "Paste the whole model into a web chat so Claude sees every value",
+        "C": "Ask for all changes at once, since formulas are always preserved",
+        "D": "Turn on Research so the add-in can verify the assumptions online"
+      },
+      "answer": "A",
+      "explanationCorrect": "The documented guidance is to start from a trusted copy before broad edits and to review changes before finalizing.",
+      "explanationDistractor": "Claude aims to keep formula relationships intact, but that does not remove the need to review a large set of changes.",
+      "reference": "https://support.claude.com/en/articles/12650343-use-claude-for-excel"
+    },
+    {
+      "id": "wrk-010",
+      "module": "m4",
+      "studyArea": "Claude in Chrome",
+      "difficulty": "hard",
+      "stem": "A user lets Claude in Chrome help with tasks on an internal admin portal where one wrong click could change live settings. What adjustment makes the most sense?",
+      "options": {
+        "A": "Keep automatic approval so Claude can finish without interruption",
+        "B": "Switch to an approval mode that asks before Claude takes actions",
+        "C": "Open the portal in an incognito chat so actions are not recorded",
+        "D": "Raise the effort to Max so Claude avoids mistakes on the portal"
+      },
+      "answer": "B",
+      "explanationCorrect": "Claude in Chrome lets you change how actions are approved. Requiring approval before acting keeps a human in the loop on a high-stakes site, and websites can carry prompt injection.",
+      "explanationDistractor": "Higher effort can improve reasoning, but it does not stop a manipulated or mistaken action from executing without your review.",
+      "reference": "https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome"
+    },
+    {
+      "id": "wrk-011",
+      "module": "m4",
+      "studyArea": "Office add-ins",
+      "difficulty": "medium",
+      "stem": "Which TWO statements about Claude's Microsoft Office add-ins are accurate? (Select 2.)",
+      "options": {
+        "A": "Claude for Excel shares context with the PowerPoint, Word, and Outlook add-ins",
+        "B": "Claude for PowerPoint can edit specific slides without regenerating the whole deck",
+        "C": "Claude for Excel is limited to the Free plan and is unavailable on paid plans",
+        "D": "Claude for PowerPoint needs Claude Code installed before it can open a deck",
+        "E": "Claude for Excel answers questions about a workbook without citing any cells"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "select": 2,
+      "explanationCorrect": "The Excel add-in shares context across the Office add-ins so one conversation can span files, and the PowerPoint add-in edits targeted slides while keeping template compliance.",
+      "explanationDistractor": "Claude for Excel is for Pro, Max, Team, and Enterprise and answers with cell-level citations; neither add-in depends on Claude Code.",
+      "reference": "https://support.claude.com/en/articles/13521390-use-claude-for-powerpoint"
+    },
+    {
+      "id": "wrk-012",
+      "module": "m5",
+      "studyArea": "Plugins",
+      "difficulty": "medium",
+      "stem": "A sales operations lead wants to give reps one installable package containing the team's proposal skills and its CRM connector. What should they build?",
+      "options": {
+        "A": "A shared project with the skills pasted into its instructions",
+        "B": "A desktop extension that bundles the skills as local files",
+        "C": "A plugin that bundles the skills and the CRM connector together",
+        "D": "An artifact that links to each skill and connector separately"
+      },
+      "answer": "C",
+      "explanationCorrect": "Plugins bundle skills, connectors, and sub-agents into a single package that people add once, and organizations can distribute them.",
+      "explanationDistractor": "Desktop extensions package local MCP servers, not skills together with connectors.",
+      "reference": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude"
+    },
+    {
+      "id": "wrk-013",
+      "module": "m5",
+      "studyArea": "Plugins",
+      "difficulty": "hard",
+      "stem": "After adding a plugin, a user sees its skills working in a web chat, but its hooks and sub-agents appear grayed out. What explains this?",
+      "options": {
+        "A": "The plugin was installed without its connectors being authenticated",
+        "B": "Hooks and sub-agents work only in Cowork and Claude Code, not chat",
+        "C": "Grayed-out components are waiting on an organization owner's review",
+        "D": "The free trial for the plugin's advanced features has already ended"
+      },
+      "answer": "B",
+      "explanationCorrect": "In chat, a plugin's hooks and sub-agents are shown grayed out because they run only in Cowork and Claude Code.",
+      "explanationDistractor": "Unauthenticated connectors would affect connector tools, not hooks and sub-agents specifically.",
+      "reference": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude"
+    },
+    {
+      "id": "wrk-014",
+      "module": "m5",
+      "studyArea": "Cowork permissions",
+      "difficulty": "medium",
+      "stem": "A user wants Cowork to update records in a customer portal where mistakes would be costly. Which permission mode should they choose?",
+      "options": {
+        "A": "Manual, so Claude asks for permission before it acts",
+        "B": "Skip, so the task finishes faster without extra checks",
+        "C": "Auto, because it uses the least of the usage limit",
+        "D": "Any mode, since Cowork never acts outside chat"
+      },
+      "answer": "A",
+      "explanationCorrect": "Manual mode asks before acting, which suits sensitive accounts and sites where each step deserves review.",
+      "explanationDistractor": "Auto mode adds safety checks but consumes more of the usage limit, and it still lets Claude decide when to proceed.",
+      "reference": "https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork"
+    },
+    {
+      "id": "wrk-015",
+      "module": "m6",
+      "studyArea": "Meeting prep workflow",
+      "difficulty": "medium",
+      "stem": "An account manager meets the same client every Monday and wants a brief covering recent emails, open items, and the agenda. Which setup fits best?",
+      "options": {
+        "A": "A new incognito chat each week with notes retyped from memory",
+        "B": "A project with account notes, plus email and calendar connectors",
+        "C": "A published artifact that the client edits before each meeting",
+        "D": "A desktop extension that stores the client's emails locally"
+      },
+      "answer": "B",
+      "explanationCorrect": "A project keeps durable account context, and connectors bring in current email and calendar data, so Claude can assemble each brief for the manager to review.",
+      "explanationDistractor": "Incognito chats keep no history and rely on retyped notes, which throws away the context the brief needs.",
+      "reference": "https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities"
+    },
+    {
+      "id": "wrk-016",
+      "module": "m6",
+      "studyArea": "Analysis workflow",
+      "difficulty": "medium",
+      "stem": "An operations analyst asks Claude to find the top five cost drivers in an exported CSV of expenses before a budget meeting. Which practice gives the most trustworthy result?",
+      "options": {
+        "A": "Accept the summary if the numbers look reasonable at a glance",
+        "B": "Ask Claude to rate how confident it is in each of the figures",
+        "C": "Paste only the top rows of the CSV to keep the request short",
+        "D": "Have Claude compute with code, show steps, and reconcile totals"
+      },
+      "answer": "D",
+      "explanationCorrect": "Code execution lets Claude calculate over the actual data, a visible method lets you follow the logic, and reconciling totals to the source catches errors before the meeting.",
+      "explanationDistractor": "A self-reported confidence rating is not independent evidence that the figures are correct.",
+      "reference": "https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude"
+    },
+    {
+      "id": "wrk-017",
+      "module": "m6",
+      "studyArea": "Research workflow",
+      "difficulty": "medium",
+      "stem": "A policy advisor is preparing a recommendation that depends on recent regulatory changes across several countries. Which TWO steps belong in the workflow? (Select 2.)",
+      "options": {
+        "A": "Use Research so Claude runs linked searches and returns a cited report",
+        "B": "Open the citations behind each claim the recommendation will rely on",
+        "C": "Treat every cited claim as verified because a source link is attached",
+        "D": "Turn web search off so that Claude relies only on its training data",
+        "E": "Publish the draft as a public artifact before any review takes place"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "select": 2,
+      "explanationCorrect": "Research is designed for multi-source questions, and checking the underlying sources is what makes the findings safe to rely on.",
+      "explanationDistractor": "A citation shows where a claim came from but does not prove the source supports it, and Research needs web search turned on.",
+      "reference": "https://support.claude.com/en/articles/11088861-using-research-on-claude-ai"
+    },
+    {
+      "id": "wrk-018",
+      "module": "m7",
+      "studyArea": "Enterprise search",
+      "difficulty": "medium",
+      "stem": "A company on a Team plan wants employees to ask one place questions that draw on documents in Google Drive and discussions in Slack. What should an owner set up?",
+      "options": {
+        "A": "A public artifact that indexes the company's shared files",
+        "B": "A personal skill for each employee that lists the sources",
+        "C": "Enterprise search, which adds an Ask Your Org project",
+        "D": "An incognito chat template shared through the directory"
+      },
+      "answer": "C",
+      "explanationCorrect": "Enterprise search adds a dedicated Ask Your Org project for searching across company sources, available to members once an owner completes setup with Documents and Chat connectors.",
+      "explanationDistractor": "A skill describes how to do a task; it does not give Claude access to company sources.",
+      "reference": "https://support.claude.com/en/articles/12489464-use-enterprise-search"
+    },
+    {
+      "id": "wrk-019",
+      "module": "m7",
+      "studyArea": "Organization skills",
+      "difficulty": "hard",
+      "stem": "An Enterprise admin wants a set of month-end close skills available only to the finance group, not to the whole company. How should they distribute them?",
+      "options": {
+        "A": "Upload the skills in organization settings so everyone receives them",
+        "B": "Ask each finance member to upload the skills to their own account",
+        "C": "Put the skills into the organization instructions for all members",
+        "D": "Bundle the skills in a plugin and assign that plugin to the group"
+      },
+      "answer": "D",
+      "explanationCorrect": "Enterprise plans can target skills by bundling them into a plugin and assigning it to a group, so only that group's members see them.",
+      "explanationDistractor": "Uploading skills in organization settings provisions them to every user, which is the opposite of what the admin wants.",
+      "reference": "https://support.claude.com/en/articles/13119606-provision-and-manage-skills-for-your-organization"
+    },
+    {
+      "id": "wrk-020",
+      "module": "m7",
+      "studyArea": "Organization instructions",
+      "difficulty": "easy",
+      "stem": "A company wants Claude to follow the same compliance disclaimer rule in every conversation across the organization. Which feature is designed for this?",
+      "options": {
+        "A": "Organization instructions set by an owner",
+        "B": "A project shared with view access to all",
+        "C": "Each member's personal memory settings",
+        "D": "A desktop extension installed by IT"
+      },
+      "answer": "A",
+      "explanationCorrect": "Organization instructions let owners set rules Claude follows in every conversation across the organization, such as compliance guidance.",
+      "explanationDistractor": "A shared project's instructions only apply to chats inside that project.",
+      "reference": "https://support.claude.com/en/articles/14546867-set-organization-preferences"
+    },
+    {
+      "id": "wrk-021",
+      "module": "m8",
+      "studyArea": "Safe agentic work",
+      "difficulty": "medium",
+      "stem": "A user is setting up Cowork to process expense receipts on their laptop. Which TWO practices follow the documented safety guidance? (Select 2.)",
+      "options": {
+        "A": "Connect a dedicated working folder that holds only the receipts",
+        "B": "Use Manual approval when the task touches financial accounts",
+        "C": "Grant access to the whole home directory to save setup time",
+        "D": "Use Skip mode on banking sites so tasks are not interrupted",
+        "E": "Install any extension that promises faster receipt scanning"
+      },
+      "answer": [
+        "A",
+        "B"
+      ],
+      "select": 2,
+      "explanationCorrect": "Limiting access to a dedicated folder and requiring approval on sensitive accounts both reduce the damage a mistake or prompt injection could cause.",
+      "explanationDistractor": "Broad folder access, Skip mode on banking sites, and unverified extensions all widen the paths for harm that the guidance warns against.",
+      "reference": "https://support.claude.com/en/articles/13364135-use-claude-cowork-safely"
+    },
+    {
+      "id": "wrk-022",
+      "module": "m8",
+      "studyArea": "Network access",
+      "difficulty": "hard",
+      "stem": "An Enterprise security team wants Claude's code execution to install common Python libraries while keeping other outbound traffic blocked. Which network access setting fits?",
+      "options": {
+        "A": "Network access disabled",
+        "B": "Package managers only",
+        "C": "All domains allowed",
+        "D": "Allowlist every site"
+      },
+      "answer": "B",
+      "explanationCorrect": "Package managers only allows package installation while blocking other domains, a balance between capability and exfiltration risk.",
+      "explanationDistractor": "Disabling network access is the most secure option but prevents installing packages, which the team needs.",
+      "reference": "https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude"
+    }
+  ]
+}

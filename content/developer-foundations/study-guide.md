@@ -1,112 +1,169 @@
 # Claude Certified Developer – Foundations — Study Guide
 
-> **Unofficial, community-authored study material.** Not affiliated with, endorsed by, or produced by Anthropic. This guide teaches the publicly documented concepts the certification covers; it does not reproduce real exam content.
+> **Unofficial, community-authored study material.** Not affiliated with, endorsed by, or produced by Anthropic. This guide teaches publicly documented concepts the certification covers. It does not reproduce real exam content. Facts were checked against the live docs on 2026-09-28; re-check anything load-bearing before you rely on it.
 
-This guide walks the five domains of the Developer – Foundations track. Each section explains the key concepts, the decision rules the exam rewards, and the traps it uses to separate a candidate who has *read* the docs from one who has *built* with them. Prefer the latest models in examples: **Claude Opus 4.8** (`claude-opus-4-8`) is the default, with **Sonnet 5** and **Haiku 4.5** also current. The exam is scenario-heavy — most questions ask you to find the *root cause* and pick the *most effective* fix, not to recite a definition.
+This guide follows the eight official domains of the CCDV-F v1.0 exam guide, in guide order, with each domain's weight shown. Most items are scenarios: you are asked for the *root cause* or the *most effective* change, not a definition. Current models in every example: **Claude Opus 5.5** (`claude-opus-5-5`, the default recommendation), **Fable 5.1**, **Sonnet 5.5**, and **Haiku 4.5**.
 
-## Model & Technical Foundations
+## Exam format
 
-Start every design by choosing a model. **Opus 4.8** is the default for the hardest reasoning where accuracy dominates cost and latency. **Sonnet 5** is the balanced choice for high-volume, moderate-complexity work. **Haiku 4.5** is for simple, latency-sensitive, high-volume tasks. A common production win is **model routing**: send a cheap, frequent step (language detection, classification) to Haiku and reserve Opus for the genuinely hard steps, rather than paying Opus latency on everything.
-
-Know the **context window**. Opus 4.8 and Sonnet 5 offer roughly a **1M-token** window; Haiku 4.5 is smaller (~200K). Crucially, **input and output share the same window** — a prompt that nearly fills the context leaves no room for a large `max_tokens`, and the request fails.
-
-`max_tokens` is the single most-confused parameter. It caps the **tokens Claude may generate** — the *output* — not the input and not the context window. If responses cut off mid-sentence and `stop_reason` is `max_tokens`, raise `max_tokens` (within the model's limit); do not shorten the prompt.
-
-Reasoning controls have modernized:
-
-- **Adaptive thinking** (`thinking` with type `adaptive`) replaces the old fixed `budget_tokens`; the model allocates reasoning dynamically. Enable it for multi-step math/logic/planning; skip it for trivial single-step tasks.
-- **Effort** (`output_config.effort`: `low`, `medium`, `high`, `xhigh`, `max`) tunes how much reasoning to spend. Lower it to cut latency and cost on simple, well-specified tasks.
-- **Sampling parameters** (`temperature`, `top_p`) are **removed on the newest models** — steer through prompting and effort instead.
-
-**Streaming** matters for long or high-`max_tokens` outputs: tokens arrive incrementally so you avoid single-response HTTP timeouts. Reassemble the complete result with `get_final_message()` / `finalMessage()`.
-
-Message structure: the **system prompt is a top-level `system` parameter**, not a `system` role in the messages array. The Messages API is **stateless** — resend the full alternating user/assistant history each turn. Count tokens with the **`count_tokens` endpoint** (Claude's tokenizer), not tiktoken. Remember tokens are **sub-word units**, so the same meaning costs different token counts across languages.
-
-Memorize the **`stop_reason`** values, the backbone of loop control:
-
-| stop_reason | Meaning |
+| | |
 | --- | --- |
-| `end_turn` | Finished normally |
-| `tool_use` | Wants tool results — run them and continue |
-| `max_tokens` | Hit the output cap (truncated) |
-| `stop_sequence` | Hit a configured stop sequence |
-| `pause_turn` | A server-tool turn paused — resend to resume |
-| `refusal` | Declined for safety |
+| Exam code | CCDV-F (guide v1.0, effective July 2026) |
+| Items | 53, multiple-choice and multiple-response |
+| Time | 120 minutes |
+| Scoring | Scaled 100–1,000; 720 to pass |
+| Delivery | Pearson VUE, online proctored or test center |
+| Fee / validity | $125 USD; 12 months |
 
-**Traps:** confusing `max_tokens` with input/context size; thinking the API remembers conversations; treating `pause_turn` as a refusal; reaching for `temperature` on models that dropped it.
+Multiple-response items tell you how many to select, and scoring is all-or-nothing. Each correct option must be true on its own, so check them one at a time.
 
-## Production Prompting, Agents & Tool Use
+## 1. Agents and Workflows (14.7%)
 
-Reliability comes from **specificity, structure, and examples**. When output format keeps drifting, **concrete few-shot input-to-output examples** beat more prose ("show, don't tell"). When a single prompt juggles four jobs and results are erratic, **decompose** it into focused steps. Iterate **diagnostically** — change one variable at a time so you can attribute the improvement.
+**Pick the least autonomy that works.** A *workflow* orchestrates LLM calls along code paths you define. An *agent* lets the model decide its next step and tool. When the steps are known and fixed, a workflow is cheaper, faster, and easier to test. Save agents for open-ended problems where the path depends on what the model finds, such as fixing failures in an unfamiliar repo or iterative research.
 
-**Tool definitions** have three parts: `name`, `description`, and `input_schema` (a JSON Schema for the arguments). The **description is the primary signal** Claude uses to choose a tool, so the first fix for misrouting is to sharpen each description — what it does, when to use it, how it differs from similar tools. `tool_choice` controls selection: `auto` (default), `any` (must use some tool), a specific `tool` (must use that one), or `none`.
+Know the common patterns and what each is for:
 
-**Parallel tool use** is on by default and is a frequent exam target. The rule: execute all requested tools and **return every `tool_result` block in a single user message**. Splitting them across messages trains Claude to stop calling in parallel. Each `tool_result` is matched to its request by **`tool_use_id`**, not by order. A failed tool must still return a `tool_result` with **`is_error: true`** — never drop it, or the `tool_use` is left dangling.
+| Pattern | Use it when |
+| --- | --- |
+| Prompt chaining | Fixed sequential steps, with code checks between them |
+| Routing | Inputs fall into types that each need their own prompt or tools |
+| Parallelization | Independent subtasks (sectioning) or several attempts compared (voting) |
+| Orchestrator-workers | A lead decides at runtime which subtasks to delegate |
+| Evaluator-optimizer | Clear criteria exist, and feedback measurably improves drafts |
 
-The **agentic loop** is driven off `stop_reason`: on `tool_use`, run the tools and call the API again; on `end_turn`, stop and present the answer. Do not parse the assistant's natural-language text to decide — that is brittle by design.
+**Constructing agents with Claude.** A hand-rolled loop keys off `stop_reason`: on `tool_use`, run the tools and call again; on `end_turn`, stop. Always bound the loop with a maximum iteration count or budget; the SDK tool runner exposes `max_iterations`. The **Claude Agent SDK** embeds Claude Code's loop (built-in tools, hooks, subagents, MCP, permissions, sessions) in a process you run. **Claude Managed Agents** (beta) hosts the harness and sandbox for you. Its sessions are stored server-side, so it is not currently eligible for ZDR or a HIPAA BAA.
 
-**Structured outputs** replace old prompt hacks:
+**Subagents** buy *context isolation*. Their tool calls and raw results stay in their own context, and only the final message returns to the parent. They start fresh unless explicitly forked, can be limited to specific tools, and can run in parallel.
 
-- `output_config.format` with a JSON schema constrains the whole response to valid, parseable JSON.
-- `strict: true` on a tool guarantees generated arguments match its `input_schema`.
-- Structured outputs are **incompatible with citations** in the same request.
-- The legacy assistant-message **prefill trick 400s** on current models.
+**Guarantees live in code, not prompts.** Claude only *requests* client tool calls, and your harness decides whether to execute them. That is where an unskippable human approval goes. Audit logging belongs in a hook such as PostToolUse, not in an instruction the model might skip. The **memory tool** (`memory_20250818`) is client-side: your code performs the file operations, so it must confine paths to `/memories` and reject traversal.
 
-**Context management** for long agent runs: **compaction** summarizes older history to reclaim window space; **context editing** clears stale tool results that are no longer needed. Both keep later requests lean without losing the thread.
+Frameworks can speed up common patterns, but learn the prompts and calls they make underneath before you trust them.
 
-**Traps:** returning parallel `tool_result`s in separate messages; dropping failed tools instead of marking `is_error`; forcing `tool_choice: any` to fix *which* tool is chosen (it only forces *some* tool); trying to combine structured outputs with citations.
+**Traps:** building an agent for a fixed pipeline; an unbounded loop; relying on a system-prompt instruction for a safety-critical approval; assuming Anthropic stores memory-tool files.
 
-## Claude Code, MCP & Integration
+## 2. Applications and Integration (33.1%)
 
-Configuration lives in a hierarchy, and the exam tests which mechanism fits which need.
+This is the largest domain. It covers requirements, API mechanics, engineering practice, application design, and configuration.
 
-- **CLAUDE.md** is loaded every session. Team-wide guidance goes in the **project** `CLAUDE.md` (committed) so everyone gets it; `~/.claude/CLAUDE.md` is **personal**. Project and user memory are **combined**, not mutually exclusive.
-- **`.claude/rules/`** files carry YAML frontmatter **glob patterns** and apply automatically based on the **file path** being edited — ideal for cross-cutting, path-scoped conventions (e.g., a `tests/**` rule).
-- **Skills** (`.claude/skills/<name>/SKILL.md`) load **on demand by trigger keywords** — ideal for **task/workflow** guidance (deploys, migrations, reviews) that shouldn't burden every session. Frontmatter you must know: `description` (its trigger keywords are what surface the skill), `argument-hint` (prompts for parameters), `allowed-tools` (a deterministic guardrail restricting tools), `context: fork` (runs in an isolated subagent context so verbose output stays out of the main conversation), and `model`.
+**Requirements first.** Before choosing a model or writing prompts, pin down the tasks, data sources, volume and latency targets, security constraints, and success measures. Model choice and architecture follow from those.
 
-A precedence rule appears often: **project skills beat same-named personal skills**. To keep a personal variant, give it a **different name** in `~/.claude/skills/`.
+**Messages API mechanics.**
 
-Shared **slash commands and skills** live in the project (`.claude/commands/`, `.claude/skills/`), version-controlled — there is **no `config.json` "commands" array**. Run Claude Code **headless** with `claude -p` / `--print` (runs once, prints, exits — for CI), and add **`--output-format json`** for parseable output you can post as inline PR comments.
+- The API is **stateless**: resend the full history every turn. The system prompt goes in the top-level `system` parameter.
+- Raw HTTP needs `x-api-key`, `anthropic-version` (for example `2023-06-01`), and `content-type: application/json`.
+- **Stream** long generations to avoid idle timeouts. The docs point to streaming or batches for anything expected to run long.
+- **Parallel tool calls** are on by default. Return every `tool_result` in one user message, matched by `tool_use_id`.
+- **Images** can come from base64, URL, or a Files API `file_id`. Upload once and reference the `file_id` rather than resending bytes each turn. JPEG, PNG, GIF, and WebP are supported; put images before the text that refers to them.
+- In Python services, use the async client (`AsyncAnthropic`) inside async handlers rather than blocking a thread per call.
+- On **Amazon Bedrock**, you authenticate with AWS credentials and use Bedrock model IDs such as `anthropic.claude-opus-5-5`.
 
-**MCP (Model Context Protocol)** standardizes three primitives — **tools, resources, prompts** — over two transports: **stdio** (local subprocess) and **streamable HTTP/SSE** (remote). A **server exposes** capabilities; a **client** (Claude Code, the API MCP connector) consumes them. Configure servers in **`.mcp.json`** with **`${ENV}` expansion** so each developer supplies their own secret — never commit tokens. Scopes are **project** (`.mcp.json`, shared), **user**, and **local**.
+**Message Batches API.** 50% of standard prices, asynchronous, up to 100,000 requests or 256 MB per batch. Most batches finish within an hour. A batch that isn't done after 24 hours expires, and unprocessed requests are not billed. Results can return in any order, so match them by `custom_id`, and results stay available for 29 days. Batches suit latency-tolerant bulk work. Live chat and interactive tool loops stay synchronous, because you can't feed a tool result back into a batched request.
 
-**Hooks** run deterministic logic around tool calls. A **PostToolUse** hook is the maintainable place to **normalize or transform tool output** (e.g., Unix timestamps → readable dates), even for third-party MCP servers you can't modify. A **PreToolUse** hook runs **before** execution and can **block** a call (e.g., a write to a protected path).
+**Application design across surfaces.** The same model behaves differently in claude.ai, Claude Code, and your own app because each surface wraps it with its own system prompt, tools, and context. On the API, your code owns all three. In long Claude Code sessions, `/clear` between unrelated tasks (project memory still loads), and `/compact` to keep going on the same task.
 
-**Traps:** putting team guidance in personal `~/.claude`; believing a same-named personal skill overrides the project one; inventing a `config.json` commands array; using PreToolUse to reformat output the tool hasn't produced yet.
+**Configuration management.**
 
-## Production Engineering, Evals & Security
+- Every current model ID is a pinned snapshot. Keep one exact ID in versioned config and change it only through an eval-gated review.
+- Treat prompts as versioned, reviewed artifacts, separate from application logic.
+- Commit `.claude/settings.json` and `.mcp.json` (with `${VAR}` expansion for secrets). Personal overrides go in `.claude/settings.local.json` and `CLAUDE.local.md`, which stay out of git.
+- Settings precedence: managed, then command line, then project local, then shared project, then user.
+- Skill precedence for the same name: enterprise, then personal, then **project last**. A personal skill shadows the team's, so give personal variants a distinct name.
+- Plugin dependencies can declare semver version constraints. Tag releases so dependents pin a range and adopt breaking changes deliberately.
 
-**Evals are the acceptance gate.** Before any model or prompt change, run a representative, labeled eval set with clear, automatable pass/fail criteria and **refuse changes that regress it**. A single always-passing example is not an eval.
+**Traps:** batching an interactive workload; hard-coding model names at every call site; committing personal settings; expecting a project skill to beat a same-named personal skill.
 
-The **Message Batches API** is a core lever: **~50% cheaper**, **asynchronous**, completes within **up to 24 hours** (most finish sooner), and you correlate results by **`custom_id`** because they arrive in any order. Its defining limitation: it is fire-and-forget, so you **cannot execute a tool mid-request** — an interactive tool-calling loop cannot run inside a batch. Use it for overnight, latency-tolerant, bulk jobs.
+## 3. Claude Code (3.1%)
 
-**Prompt caching** is a prefix match. Any change in the cached prefix invalidates everything after it, so put **stable content first, volatile content last**. Mark the boundary with **`cache_control` type `ephemeral`** (default 5-minute TTL, 1-hour option). Verify hits with **`usage.cache_read_input_tokens`**. Watch for **silent invalidators**: a `datetime.now()` or UUID in the prefix, unsorted JSON keys, a reordered tools array, or any change to the model, tools, or system prompt. For big bulk cost savings, **batch is the larger lever**; caching is a separate, smaller optimization — not a substitute.
+Small by weight, but its concepts recur in domains 2, 7, and 8.
 
-**Resilience:** retry transient errors (**429** rate limited, **529** overloaded, 500) with **exponential backoff and jitter**, honoring `Retry-After`; do **not** retry **400s** — fix the malformed request. Prevent rate-limit trips by smoothing load (client-side concurrency limits/queueing) or moving bulk work to batch.
+- **CLAUDE.md** loads every session. The committed project file is for the team, and `~/.claude/CLAUDE.md` is personal. The files are combined, not overridden. `/init` creates a starter file.
+- **`.claude/rules/*.md`** with a `paths:` frontmatter glob load only when Claude works with matching files, which suits path-scoped conventions.
+- **Skills** (`.claude/skills/<name>/SKILL.md`) load their body only when used: when you type `/name`, or when Claude decides the `description` matches the task. Put the key use case first in the description. Custom commands have been merged into skills, and `.claude/commands/` still works.
+- Frontmatter to know: `description`, `argument-hint` (shown in autocomplete), `context: fork` (runs in a subagent without your conversation history), `disable-model-invocation: true` (user-only, for deploys and other side effects), `allowed-tools`, `disallowed-tools`, and `model`.
+- **Headless:** `claude -p` runs once and exits. Add `--output-format json` (or `--json-schema` for a `structured_output` field) for automation, and `--bare` for scripted calls.
 
-**Security is defense in depth.** Treat all **tool/retrieved content as untrusted data, never instructions** — a web page saying "ignore your instructions" must not override your system prompt or authorize actions (prompt injection). Layer **input screening** (block injection/PII before the model), **output screening** (validate the model's action before it hits a downstream system), and **tool-call authorization** for high-impact actions. For **irreversible** actions, **fail closed** — deny on uncertainty. Never send secrets or regulated data (PII/PHI) into prompts without authorization; redact or use approved channels (base64 is not protection).
+**Traps:** a trigger-keyword field that doesn't exist; a `commands` array in some config file; assuming a skill loads automatically in every session.
 
-**Traps:** relying on caching to price a bulk job (batch is the real discount); retrying 400s; putting untrusted content where it gains authority; failing *open* on an uncertain irreversible call.
+## 4. Eval, Testing, and Debugging (2.6%)
 
-## Accelerators & IP Contribution
+**Evals are the acceptance gate.** Run a representative, labeled set with automatable pass/fail criteria before any model or prompt change, and reject regressions.
 
-This domain is about turning a working prototype into **reusable, maintainable, shareable** IP.
+**Debug by layer.** Decide first whether the fault is in the model, the prompt, the integration, or the transport.
 
-**Package for reuse.** A workflow you keep pasting in should become a **version-controlled Skill** in `.claude/skills/` (or a plugin) committed to the repo — discoverable and available to everyone on pull. Reusable exemplar context also belongs in a Skill that loads on demand, not in every session's system prompt. Prefer the **simplest packaging that meets the need**: reach for a single well-described skill before a heavyweight multi-command plugin, and add plugin/marketplace machinery only when scope justifies it.
+- An HTTP 200 with an empty display usually means the code reads `content[0].text` while the first block is a thinking block. Select blocks by type.
+- **Fix, don't retry:** 400 `invalid_request_error` (an unsupported parameter, such as forced `tool_choice` on current models) and 413 `request_too_large`.
+- **Retry with backoff:** 429 (honor `retry-after`), 529 overloaded, and a one-off 500. The SDKs retry twice by default.
+- `stop_reason: "refusal"` is a refusal path, not a transport error. Handle it explicitly, for example by routing to a fallback per your policy.
+- Log the `request-id` response header with every error.
 
-**Share team configuration.** Commit `CLAUDE.md` for always-on standards, `.mcp.json` (with `${ENV}` expansion) for MCP servers, and skills/commands for workflows. To distribute a bundle broadly, publish a **plugin to a marketplace** (catalog via `marketplace.json`); teammates add the marketplace and install in a versioned, repeatable step.
+## 5. Model Selection and Optimization (16.8%)
 
-**Version and maintain.** Version shared skills/plugins so consumers can **pin a known-good release** and adopt updates deliberately. Keep one **canonical source** and generate the rest via a build step — never hand-edit generated files. Pin and document versions for reproducibility. Treat shared config as **living documentation**: **stale config is a leading failure cause**, so keep `CLAUDE.md`, skills, and `.mcp.json` current as the system evolves.
+| Model | ID | Context / max output | Price in / out per MTok | Best for |
+| --- | --- | --- | --- | --- |
+| Fable 5.1 | `claude-fable-5-1` | 1M / 128K | $10 / $50 | Hardest reasoning, long-horizon agents |
+| Opus 5.5 | `claude-opus-5-5` | 1M / 128K | $4 / $20 | Default starting point |
+| Sonnet 5.5 | `claude-sonnet-5-5` | 1M / 128K | $2 / $10 | Best speed and intelligence balance |
+| Haiku 4.5 | `claude-haiku-4-5` | 200K / 64K | $1 / $5 | Fastest, bounded high-volume work |
 
-**Make it defensible.** For sign-off and handoff, provide **evals as gates**, docs and runbooks, and shared version-controlled config so the team can operate the system without you. Add production hardening — retries/backoff, observability/logging, eval gates. For review, produce **small, focused changes with clear diffs and explanations**. And for the highest-confidence review of Claude's own output, use a **second, independent Claude instance** (no access to the generator's reasoning) to avoid confirmation bias.
+**Route by step, not by app.** Send trivial, high-frequency steps (classification, language detection) to Haiku 4.5, and keep the big model for the hard parts.
 
-**Traps:** hoarding a useful workflow locally; committing secrets instead of using `${ENV}`; hand-editing generated files; over-engineering an accelerator; leaving shared config to rot after launch.
+**LLM fundamentals.**
+
+- The context window holds input *and* output. The 1M window is the default on the three 1M models, with no beta header.
+- `max_tokens` caps generated tokens, including thinking. When input plus `max_tokens` exceeds the window, current models accept the request and may stop with `model_context_window_exceeded`. Input alone over the window returns a 400.
+- Tokens are sub-word units. The tokenizer introduced with Opus 4.7 counts differently from older models, so measure with `POST /v1/messages/count_tokens`.
+- More context isn't automatically better: recall degrades as token count grows (context rot).
+
+**Thinking and effort.** Current models use **adaptive thinking**. Manual `budget_tokens` is rejected on Opus 4.7 and later (Haiku 4.5 still uses it), and thinking can't be disabled on Opus 5.5 or Fable 5.1. Tune spend with `output_config.effort` (`low` to `max`). Opus 5.5 defaults to `medium`, and most others default to `high`. Non-default `temperature`, `top_p`, or `top_k` returns a 400 on Opus 4.7 and later, so steer with prompting and effort.
+
+**Cost and token management.**
+
+- **Prompt caching** matches prefixes in the order tools, then system, then messages. Mark breakpoints with `cache_control: {type: "ephemeral"}` on up to 4 blocks, or once at the top level for automatic caching.
+- The cache TTL is 5 minutes by default (1 hour optional). Writes cost 1.25x (5m) or 2x (1h); reads cost 0.1x base (less on Fable 5.1 and Opus 5.5).
+- Confirm cache hits with `usage.cache_read_input_tokens`.
+- Silent invalidators: timestamps or UUIDs in the prefix, reordered tools, and changes to tools, `tool_choice`, thinking, or effort.
+- **Batches** take 50% off bulk work.
+- **Fast mode** (research preview, `speed: "fast"` plus a beta header, Claude API only) trades a higher price for faster output on select Opus models. It doesn't share the cache with standard speed and isn't available with batches.
+
+## 6. Prompt and Context Engineering (11.0%)
+
+**Prompt engineering.** Be specific about length, audience, and structure. When a format keeps drifting, add several concrete input-to-output examples; that works better than louder instructions. Use XML tags to separate instructions from inputs, place long documents above the instructions, and state that tagged content is data to analyze. Assistant prefill returns a 400 on the 4.6+ family. Raising effort changes how hard the model thinks, not what format it produces.
+
+**Output handling.** Structured outputs (`output_config.format` with type `json_schema`) guarantee valid JSON with the right fields and types. They don't support numeric bounds, string length limits, `pattern`, or recursive schemas, and a valid shape is not a true answer. Validate business rules in code, and check key claims before acting on them. Changing the output format invalidates the prompt cache.
+
+**Context engineering.** For long conversations and agent runs, use **compaction** (older turns replaced by a server-written summary; beta) and **context editing** (`clear_tool_uses` removes old tool results once input passes a trigger). Retrieve and include only what each request needs.
+
+## 7. Security and Safety (8.1%)
+
+**Everything the model reads is data.** Emails, web pages, tool results, and retrieved documents can contain injected instructions. Prompting alone can't guarantee they are ignored. Privileged actions (refunds, deletions, deploys) need authorization that doesn't depend on model output: policy code, a hook, or human approval.
+
+**Guardrails and safe deployment.**
+
+- Layer the defenses: input screening, output screening, and tool-call authorization, failing closed on uncertainty for irreversible actions.
+- `allowed-tools` in a skill **pre-approves** the listed tools for that turn; it does not restrict anything. To block tools, use `disallowed-tools` or permission deny rules.
+- Permission rules are evaluated deny, then ask, then allow.
+- `disable-model-invocation: true` keeps Claude from triggering a side-effecting skill on its own.
+
+**Claude hooks.** PreToolUse runs before a tool and can block it, by returning `permissionDecision: "deny"` or exiting with code 2, whatever the model decided. PostToolUse runs after, and can replace what Claude sees via `updatedToolOutput`, which is useful for normalizing output from third-party MCP servers.
+
+**Identity, secrets, and keys.** Keep API keys in environment variables or a secret manager, and share MCP config with `${VAR}` expansion rather than committed tokens. Don't send regulated data (PII, PHI) into prompts without authorization. Base64 encoding hides nothing.
+
+## 8. Tools and MCPs (10.6%)
+
+**Tool implementation.** A tool has a `name`, a `description`, and an `input_schema`. The description matters most: say what the tool does, when to use it (and when not to), and how it differs from similar tools. `input_examples` show valid calls, and `strict: true` guarantees generated inputs match the schema.
+
+**`tool_choice` on current models.** `auto` (the default) and `none` work. Forced `any` or `tool` returns a 400 on Opus 5.5, Sonnet 5.5, and Fable 5.1, so use `auto` with `strict: true` and prompt guidance, or structured outputs when the reply itself must be fixed JSON. Report a failed call with a `tool_result` that sets `is_error: true`; never leave a `tool_use` unanswered.
+
+**MCP server development.** MCP has three primitives: tools, resources, and prompts. A server exposes them and a client (such as Claude Code) consumes them. Use stdio for local subprocess servers and Streamable HTTP for remote ones; the older SSE transport is deprecated. Wrapping an internal API as an MCP server lets every MCP-capable app reuse it. Claude Code scopes are local (default), project (`.mcp.json`), and user.
+
+**Agentic customization.** Package a repeated workflow as a version-controlled skill before reaching for anything heavier. When a bundle of skills, hooks, and MCP config needs to reach many teams, ship it as a plugin through a marketplace, versioned so consumers can pin a release.
 
 ## How to study with this bank
 
-1. Memorize the `stop_reason` table and the tool-result rules (parallel results in one user message; `is_error: true` on failures).
-2. Practice Model Foundations and Production Prompting until wrong keys are rare, then Claude Code / MCP.
-3. Drill flashcards for caching, Batches (~50% / up to 24h), `.claude/rules/` vs. Skills, and `${ENV}` in `.mcp.json`.
-4. Take a Quick mock, review misses by domain, then a Full mock above the approximate 720 pass mark.
+1. Start with domain 2. At a third of the weight, it decides most results.
+2. Memorize the model table, the stop reasons, and the "fix vs retry" error list.
+3. Drill the current-model rejections: `budget_tokens`, sampling parameters, prefill, and forced `tool_choice` all return a 400.
+4. Practice multiple-response items until you can defend each selected option on its own.
+5. Take a Quick mock, review misses by domain, then a Full mock aiming well above the 720 mark.
 
 Docs: [platform.claude.com/docs](https://platform.claude.com/docs) · [code.claude.com/docs](https://code.claude.com/docs).

@@ -1,112 +1,121 @@
 # Claude Certified Architect – Professional — Study Guide
 
-> **Unofficial, community-authored study material.** Not affiliated with, endorsed by, or produced by Anthropic. It teaches the publicly documented concepts the exam covers; it is not a source of real exam questions.
+> **Unofficial, community-authored study material.** Not affiliated with, endorsed by, or produced by Anthropic. It teaches the publicly documented concepts the exam covers; it is not a source of real exam questions. Facts verified against the live docs on 2026-09-28.
 
-This is the most senior track in the program. It assumes you already know the API surface, Claude Code, MCP, and multi-agent mechanics, and it tests your **judgment**: turning a fuzzy business problem into the *simplest* architecture that meets it, defending trade-offs to stakeholders, taking a proof-of-concept to production, and governing the whole thing safely. The exam rewards restraint (don't build an agent when a workflow will do), defense in depth, and decisions grounded in evidence rather than vibes. The five domains below are weighted evenly at 20% each.
+This is the most senior track in the program. It assumes you already know the API, Claude Code, MCP, and multi-agent mechanics, and it tests your **judgment**: turning a fuzzy business problem into the *simplest* architecture that meets it, integrating it securely, proving it with evals, governing it, and handing it off so it survives you. The exam rewards restraint (don't build an agent when a workflow will do), defense in depth, and decisions grounded in evidence.
 
 A useful mental model for almost every question: **pick the simplest thing that meets the requirement, make it safe by design, prove it with evals, and hand it off so it survives you.**
 
-## Platform & Solution Design
+## Exam format (CCAR-P, guide v1.0, effective July 2026)
 
-The core skill is choosing the right altitude of solution. Escalate only when the previous rung genuinely can't do the job:
+| | |
+| --- | --- |
+| Items | 63, multiple-choice and multiple-response (each item says how many to select) |
+| Time | 120 minutes |
+| Scoring | Scaled 100–1,000; **720 to pass**; score report shows percent correct by domain |
+| Fee | $175 USD |
+| Delivery | Pearson VUE, online proctored or test center |
+| Validity | 12 months; renew with a free, non-proctored assessment before it lapses |
+| Prerequisites | None required. Recommended: 3+ years of systems architecture and 6+ months hands-on with Claude or similar LLM systems in production |
 
-1. **Single call** — one input, one output, no orchestration. High-volume classification, extraction, or summarization.
-2. **Workflow (code-controlled)** — deterministic control flow with model calls at defined steps: prompt chaining, routing, and parallelization. Use it when the **steps and their order are known**. It is testable, observable, and cheap where it can be.
-3. **Agent (open-ended)** — a model-driven loop over tools where the **next step depends on what the last step revealed** (e.g., incident triage). Reach for this only when the path can't be scripted.
-4. **Multi-agent** — a coordinator partitions a broad, separable problem across specialized subagents in parallel, then synthesizes. It earns its overhead only when the work overflows one context window and **parallel coverage matters more than token cost**.
+| # | Domain | Weight |
+| - | --- | --- |
+| 1 | Solution Design & Architecture | 17% |
+| 2 | Claude Models, Prompting & Context Engineering | 13% |
+| 3 | Integration | 19% |
+| 4 | Evaluation, Testing & Optimization | 16% |
+| 5 | Governance, Safety & Risk Management | 14% |
+| 6 | Stakeholder Communication & Lifecycle Management | 14% |
+| 7 | Developer Productivity & Operational Enablement | 7% |
 
-> The single most common trap in this domain is **over-engineering**: a multi-agent design for a narrow FAQ, or an autonomous agent for a fixed three-step pipeline. When the workflow is knowable, code it.
+Multiple-response items are all-or-nothing. Each correct option must stand on its own, so judge every option independently.
 
-Beyond the shape, you choose:
+## 1. Solution Design & Architecture (17%)
 
-- **Model** — Opus for the hardest, low-volume, high-stakes reasoning; Sonnet for balanced or high-volume work; Haiku for simple, fast, cheap tasks. Match capability to difficulty and stakes; don't default to the biggest model.
-- **Context strategy** — **RAG** when the corpus is large, changing, and only a few passages are relevant per query (true even with very large context windows — cost and attention still matter). **Prompt caching** for a large, stable prefix reused across many calls. **Compaction** (running summary) for long-lived sessions nearing the context limit.
-- **Entry point** — claude.ai chat for ad-hoc use; **Projects** for non-technical teams needing persistent instructions plus knowledge; **Claude Code** for repository work; the **API** to build a product.
-- **Structured output** — when a downstream system consumes the result, constrain it with a JSON schema (structured-output format or `strict` tool args) rather than hoping a prompt yields valid JSON.
+**Translate the business problem first.** An ask like "an AI for our customer emails" must become concrete outcomes, volume, an accuracy bar, data sensitivity, and the actions that stay human-approved before any architecture makes sense. Match the entry point to who runs it: a claude.ai Project for a non-technical team, Claude Code for repository work, the API to build a product.
 
-Decision rule: reach for a tool when the task needs **live or external data or actions**; reach for a workflow when steps are **known**; reach for an agent only when they are **not**.
+**Choose the lowest rung that works:**
 
-## Enterprise Integration & Production
+1. **Augmented LLM**: one call enhanced with retrieval, tools, and memory. This is the building block of everything else.
+2. **Workflow** (code-controlled): the steps are known. The patterns are *prompt chaining*, *routing* (classify, then hand off), *parallelization* (fixed, independent subtasks), *orchestrator-workers* (a lead model decides the subtasks at runtime), and *evaluator-optimizer* (generate, critique against clear criteria, repeat).
+3. **Agent**: the next step depends on what the last one revealed, as in incident triage.
+4. **Multi-agent**: broad, separable work that overflows one context window, where parallel coverage matters more than cost. Anthropic reports that agents use about 4× the tokens of chat and multi-agent systems about 15×. Give each subagent a clear objective, output format, and boundaries. Let each explore in its own context window and return condensed findings.
 
-This domain is about turning a POC into something an enterprise will actually run. A notebook with a hardcoded key and no error handling is not production — the blocking gaps are **secret management, error handling and retries, logging/observability, and an eval gate**.
+> The most common trap is **over-engineering**: a multi-agent FAQ bot, or an agent for a fixed three-step pipeline. Keep deterministic rules in code and call the model only where judgment is needed (the hybrid workflow).
 
-Map the three production pressures to concrete levers:
+**Design end to end**: input → processing → output → **feedback loop**. Capture user edits and ratings, turn them into eval cases, and gate changes on them. **Decompose** monoliths into steps you can test and rerun. **Align to value pillars**: keep an efficiency goal (such as handle time against a baseline) separate from a transformation goal. Tie performance SLAs to the design.
 
-- **Cost** — **Batches API** (~50% cheaper) for large, latency-tolerant, non-interactive jobs; **prompt caching** for repeated stable prefixes; **model routing** (cheap model for the easy majority, escalate the hard minority). Caching and batch are complementary; for an overnight job, batch is the bigger lever.
-- **Latency** — **stream** long or high-`max_tokens` outputs to avoid HTTP timeouts; **parallelize** independent calls; isolate optional model calls from critical paths with strict **timeouts and defaults**.
-- **Reliability** — **retry with exponential backoff and jitter** on 429/529; make side-effecting tool calls **idempotent**; add a **circuit breaker** for flaky dependencies; provide a **fallback model** when the primary is overloaded.
+## 2. Claude Models, Prompting & Context Engineering (13%)
 
-Know the **Batches API constraint** cold: it is asynchronous and fire-and-forget, correlating results by `custom_id`. You cannot execute a tool mid-request and continue, so batch does **not** fit interactive tool-calling loops or latency-sensitive work.
+**Current models** (verify on the models overview page before the exam):
 
-Integration patterns enterprises insist on:
+| Model | Use it for | Notes |
+| --- | --- | --- |
+| Claude Opus 5.5 | Default starting point for most workloads | 1M context, 128K output, $4/$20 per MTok, adaptive thinking always on, default effort `medium` |
+| Claude Fable 5.1 | Most demanding reasoning, long-horizon agentic work | 1M context, $10/$50 per MTok, default effort `high` |
+| Claude Sonnet 5.5 | Best speed and intelligence balance | 1M context, $2/$10 per MTok |
+| Claude Haiku 4.5 | Fast, cheap, high-volume, bounded tasks | 200K context, $1/$5 per MTok, still uses `budget_tokens` |
 
-- **Auth** — credentials in a secret manager or injected env vars, never in source control.
-- **Data residency** — the deployment/region must keep processing in-jurisdiction; encryption in transit is not the same thing.
-- **Audit logging** — a structured trail of inputs, prompt/model version, tool calls, and outputs per decision, so any decision can be reconstructed.
-- **Human-in-the-loop** — a gate before irreversible/high-impact actions; auto-approve the cheap, reversible majority.
-- **Observability** — instrument the *model layer*: token usage, latency percentiles, error/refusal rates, cache-hit rate, and live eval pass rate.
-- **Graceful degradation** — when a source fails, proceed with what you have and **annotate the gaps**; never silently omit or fabricate.
+- **Route by difficulty.** Send the easy majority to a small model and escalate the hard minority. Low-volume, high-stakes reasoning earns a top-tier model.
+- **Migration gotchas.** `temperature`, `top_p`, and `top_k` are removed on the newest models (they return a 400). Assistant prefill returns a 400 from the 4.6 family onward, so use structured outputs instead. `budget_tokens` is rejected on later models. Use adaptive thinking and **`output_config.effort`** (`low` to `max`) instead. Effort is the main control over latency and cost. Changing the top-level effort between requests invalidates the prompt cache, so use a per-message effort change to vary a single turn.
+- **Prompt templates.** Put the role and standing guardrails in the system prompt. Wrap instructions, reference data, and untrusted input in separate XML tags. Use **3–5 diverse few-shot examples** for consistent format and tone.
+- **Context and tokens.** Use RAG when a large corpus changes often and only a few passages matter. A 1M window is a capability, not a reason to skip retrieval. Use **compaction** for long sessions (server-side compaction is in beta). Use `count_tokens` to budget.
+- **Reuse.** **Prompt caching** is prefix-match, rendered as tools → system → messages. Keep stable content first and volatile content (such as timestamps) out of the prefix. The default TTL is 5 minutes, and a 1-hour TTL writes at 2× base input. Cache reads cost 10% of base input (5% on Opus 5.5, 2.5% on Fable 5.1). **Agent Skills** use progressive disclosure: about 100 tokens of metadata per Skill up front, full instructions when triggered.
 
-Manage model versions like any change: **pin** a version for reproducibility, and promote a new one only after it clears your eval suite against the baseline.
+## 3. Integration (19%): the heaviest domain
 
-## Responsible AI, Safety & Risk
+- **Capability bloat.** Give each role only the tools it needs. Consolidate overlapping low-level tools into a few task-level, namespaced tools. Replace a broad tool, such as a shell, with a narrow one that makes misuse impossible.
+- **Progressive discovery vs a monolithic context.** The **tool search tool** (`defer_loading`) keeps most definitions out of context and typically loads only 3–5 per request. Anthropic reports over 85% fewer definition tokens, and selection accuracy degrades past roughly 30–50 visible tools. Use it with 10+ tools, 10K+ tokens of definitions, or many MCP servers. Skip it with fewer than 10 tools that every request uses.
+- **Protocol choice.** Use **MCP** when many AI clients or teams need the same capability through a standard, discoverable interface with OAuth-based authorization. Use a **direct API or CLI call** for a deterministic step inside your own code. Use an **agent-to-agent** protocol when peer agents delegate whole tasks to each other.
+- **Authn and authz gaps.** A shared service-account token behind an MCP server erases user identity, so use per-user delegated OAuth. Authorize each tool call against the caller's role in the system, not in the prompt. Keep secrets in a secret manager or use workload identity federation, never in the model's context.
+- **RAG pipeline.** Chunk along document structure and keep heading paths. Store metadata (version, effective date) so retrieval can filter. **Contextual Retrieval** prepends chunk-specific context before embedding and BM25 indexing: 49% fewer failed retrievals, 67% with reranking. Anthropic doesn't offer its own embedding model; its docs point to Voyage AI.
+- **Retrieval strategy matched to the data.** Use **hybrid BM25 plus embeddings** with rank fusion and reranking when queries carry exact identifiers. Use a **read-only query tool** for aggregates over structured warehouses, not vector search. Use a live tool for data that changes minute to minute.
+- **Accuracy–latency trade-offs.** Configure each path separately: stream a faster model at lower effort for live chat, and run a more capable model at higher effort for offline reports. Parallelize independent calls. Put strict timeouts on optional calls. Plan a fallback model: the Claude API has server-side `fallbacks`, and other clouds use the client-side pattern.
+- **Observability at scale.** Tag requests by tenant and aggregate reported usage. Watch token usage, latency percentiles, error and refusal rates, cache-hit rate, and live eval pass rate. The Usage & Cost Admin API reports org-level usage.
+- **Where Claude runs.** The same model can have different feature sets on different platforms:
+  - **Claude API**: all features. `inference_geo` supports only `"global"` or `"us"`, with US-only priced at 1.1×. HIPAA readiness is available with a BAA.
+  - **Claude in Amazon Bedrock**: AWS-operated. Offers global, geography (including EU), and in-region endpoints; regional endpoints carry a 10% premium. This is Anthropic's pointer for FedRAMP High, IL4/IL5, or AWS as sole processor. It doesn't support the Message Batches API, structured outputs, Agent Skills, or the MCP connector.
+  - **Vertex AI**: global, multi-region (US, EU), and regional endpoints; multi-region and regional carry a 10% premium.
+  - **Microsoft Foundry**: billed through Azure Marketplace. *Hosted on Azure* offers Global Standard plus a **US-only** Data Zone. *Hosted on Anthropic* is Global Standard and has the widest model list, including Fable. Foundry doesn't offer the Message Batches, Models, or Admin APIs. Hosted-on-Azure deployments also exclude code execution, Agent Skills, and the Files API. HIPAA readiness isn't available.
+  - **Claude Platform on AWS**: Anthropic's API through AWS Marketplace. Anthropic stays the data processor.
 
-Think in terms of a **safety stack** and **defense in depth**. A single instruction in the system prompt is a single point of failure. Layer independent controls so that no one failure opens the system:
+## 4. Evaluation, Testing & Optimization (16%)
 
-1. **Input screening** — block malicious payloads, prompt-injection strings, and unauthorized PII *before* they reach the model.
-2. **Output screening** — filter unsafe, incorrect, or PII-leaking responses *before* they reach users or downstream systems. You need this even with input screening, because the model can generate or retrieve PII the input screen never saw.
-3. **Tool-call authorization** — gate high-impact/irreversible tool calls in an **external policy layer** the system enforces. The model *requests*; the system *authorizes*.
+- **Define metrics before building**: accuracy, latency, cost, safety, and security. Acceptance criteria are an eval set with graded expectations and a pass threshold.
+- **Datasets and frameworks**: cover representative inputs, edge cases, and real production failures, and grow the set from incidents. Keep a **held-out** set to catch overfitting. For open-ended output, use an **LLM-as-judge** with a rubric, run independently and validated against human labels. Red-team safety controls before launch.
+- **Metric traps**: proxy gaming (rewarding brevity instead of helpfulness), and averaged-away regressions (block a change when a critical slice regresses). Set confidence thresholds from measured outcomes, not self-reported confidence.
+- **A/B testing and iteration**: randomize assignment concurrently and fix the primary metric, guardrail metrics, and sample size in advance. Don't peek and stop early. Gate model swaps on the eval suite against the pinned baseline, run the gate in CI, and roll out in shadow or canary stages.
+- **Diagnose before you fix**: separate prompt failure, hallucination (ground the model with citations and let it say it doesn't know), retrieval problems (stale or irrelevant chunks), and model mismatch.
+- **Optimize cost and latency**: the Batches API is 50% off for non-interactive jobs but can't run a mid-request tool loop, and it isn't available on Bedrock, Vertex AI, or Foundry through the Claude API surface. Combine caching and routing. Monitor offline gates and online telemetry together.
 
-Two placement principles the exam loves:
+## 5. Governance, Safety & Risk Management (14%)
 
-- **Fail closed.** On uncertainty, timeout, or an unavailable check, **deny or hold** — especially for irreversible or high-stakes actions. Failing open to preserve availability lets through exactly the actions the control exists to stop.
-- **Don't put a guardrail where the attacker has influence.** Asking the model to judge whether its own input is an injection is unsound: the malicious input can steer the judgment. Enforcement must be **external and deterministic**.
+- **Guardrails in depth**: input screening, output screening, and tool-call authorization enforced outside the model. **Fail closed** on uncertain or unavailable checks for high-stakes actions. Never put a guardrail where attacker-controlled input can steer it.
+- **Risks and failure modes**: prompt injection through documents or tools (treat that content as untrusted data), confused deputies, PII echo, and hallucination. Keep privileged instructions structurally separate from data.
+- **Human in the loop**: route on confidence, reversibility, and cost of error. Irreversibility and cost dominate even high confidence. Size thresholds to reviewer capacity.
+- **Compliance**: apply GDPR-style data minimization (redact before the model and before logs). Meet residency with the right platform and geography. For **HIPAA** on the Claude API you need a signed BAA and a HIPAA-enabled org. Only eligible features are covered, and others return a 400; most betas aren't covered, and Foundry and Claude Platform on AWS are excluded. For **FedRAMP High** use Claude in Amazon Bedrock. Map each obligation to a named control, an owner, and an evidence artifact, and keep per-decision traceability.
+- **Ethical AI**: measure outcomes across demographic slices, disclose AI involvement, and keep accountable humans on consequential decisions, never as rubber stamps.
 
-**Prompt-injection defense** is architectural, not a matter of a stern prompt line. Treat all tool and document content as **untrusted data that can never elevate to privileged instructions**, keep instructions structurally separate from data, and apply **least privilege** to tools. The strongest fix for an over-powered tool is to **replace it with a narrow one** that makes misuse impossible at the interface — not to instruct the model to be careful. Combined with least privilege, an injected "email the data" command simply has no capability to execute.
+## 6. Stakeholder Communication & Lifecycle Management (14%)
 
-For **irreversible, high-impact actions** (bulk sends, production deletes, large payouts), require **explicit human approval before execution**. Enforce **role-based authorization** on each tool call against the caller's identity, so a read-only user can't trigger a write no matter how cleverly they phrase it. Handle **PII** by minimization: redact or tokenize before the model and before logs if the task doesn't need it, and screen outputs before they cross into broadly-readable stores. Finally, **red-team** powerful capabilities before launch and **log blocked/flagged events** as security telemetry.
+- **Discovery**: cover outcomes, success metrics, constraints, data sensitivity, and human-controlled actions. Turn "accurate" and "nothing risky" into testable criteria. Prioritize by value against feasibility and risk.
+- **Communicating trade-offs**: present cost, latency, accuracy, and risk in business terms, with a clear recommendation and the conditions that would change it.
+- **Expectations and SLAs**: base SLOs on measured percentiles and composite availability across dependencies, define what is measured, and document degraded modes. Be honest about limits and name the mitigations.
+- **Documentation**: keep ADRs for the "why", runbooks that map symptoms to causes, remediation, rollback, and escalation, and versioned docs and config in the repo.
+- **Lifecycle**: discovery → design → handoff (with the eval suite and dashboards) → monitoring → iteration. Roll out in phases, manage change, run a formal acceptance sign-off, and measure outcomes after launch.
 
-## Evals as Acceptance Criteria & Decision Routing
+## 7. Developer Productivity & Operational Enablement (7%)
 
-Evals are the backbone of governance. Build them **first**, as the objective definition of "good enough": a representative dataset with graded expected outputs, covering edge cases and real failure modes, plus a measurable pass threshold. Then use the eval suite as the **gate** — never ship a model swap or architecture change that regresses it. Wire the suite into **CI** so it runs on every prompt/model change and blocks sub-threshold merges.
-
-Eval-design traps to recognize:
-
-- **Overfitting** — a near-perfect score with no production gain means you tuned against your test set. Keep a **held-out** set for true generalization.
-- **Happy-path-only sets** — expand with edge cases and the failures production actually shows; grow the suite from real incidents.
-- **Proxy gaming** — if the metric rewards a surrogate (e.g., brevity), the system optimizes the surrogate at the expense of the goal. Align the metric with the true objective.
-- **Averaged-away regressions** — an aggregate gain can hide a regression on a **critical slice**. Block the change until the critical slice recovers.
-- **Judging open-ended output** — use an **LLM-as-judge with an explicit rubric**, run independently of the generator, validated against human labels.
-- **Offline is not forever** — pair pre-deploy evals with **online monitoring**; inputs and dependencies drift.
-
-**Decision routing** decides which model outputs auto-execute and which go to a human. Route on three factors: **confidence, reversibility, and cost of error**. Cheap, reversible, high-confidence actions auto-proceed; low-confidence, irreversible, or high-cost actions go to a human. Crucially, **irreversibility and cost dominate confidence** — a confident but irreversible, high-cost action still routes to a human. Set thresholds from **measured outcomes on eval data**, not the model's self-reported confidence (which is poorly calibrated), and tune the threshold to balance residual risk against reviewer capacity.
-
-**Compliance** is made auditable by mapping every obligation to a **named control, an accountable owner, and an evidence artifact** (a retained, versioned eval report with sign-off; the audit log; the traceability record). An unowned control decays; a control with no evidence can't be proven. Governance also requires **per-decision traceability** — inputs, model/prompt version, and routing outcome recorded so any automated decision can be explained after the fact.
-
-## Stakeholder Engagement, Lifecycle & Enablement
-
-An architect's value is only realized if stakeholders can act on it and the system outlives your involvement.
-
-**Structured discovery** with non-technical stakeholders starts with the **business outcome, success metrics, constraints, data sensitivity, and which actions must stay human-controlled** — not model or region choices. Turn vague goals ("accurate," "nothing risky") into **measurable acceptance criteria** and explicit data-sensitivity and prohibited-action rules. Prioritize a backlog by **value against effort/feasibility and risk**, starting with high-value, feasible, lower-risk cases.
-
-**Presenting trade-offs**: frame options in business terms — cost, latency, accuracy, risk — and deliver a **clear recommendation** with its rationale and what would change it. A neutral list with no guidance leaves the client where they started; enumerating is not advising.
-
-**A handoff that survives your absence** is the recurring theme. Put operating knowledge into **versioned docs, runbooks, and shared config in the repo** — not one person's head or a one-time email. A good **runbook** maps symptoms → likely causes → remediation → rollback → escalation. Preserve the reasoning behind significant choices in **Architecture Decision Records**. And hand over the **means to verify**: the eval suite (to gate future changes) and the monitoring dashboards (to observe live health).
-
-**Enabling a team** to adopt and operate the system uses Claude Code's sharing model correctly:
-
-- **Team-wide standards** go in the **committed project `CLAUDE.md`** so every session loads them; `~/.claude/CLAUDE.md` is personal-only and won't reach teammates.
-- **Reusable workflows** (release review, deploys) go in **project Skills** (`.claude/skills`) that load on demand via trigger keywords — not in always-on `CLAUDE.md`, which would bloat every unrelated task.
-- **Shared tools** go in **`.mcp.json`** with `${ENV}` expansion so each developer supplies their own secret; never commit tokens.
-- **Project skills take precedence** over same-named personal skills; to customize privately, use a **different name** in `~/.claude/skills` rather than editing shared config.
-
-Finally, treat the **lifecycle** as ongoing: roll out in **phases** with a pilot and feedback loop; practice **change management** (tell users what's changing, why, and how, with support ready); set expectations **honestly** about value *and* limits, naming mitigations (output screening, human review, verifiable citations) rather than denying risk; confirm delivery with a **formal acceptance review and recorded sign-off** against the agreed criteria; and after launch, measure **adoption and outcome metrics tied to the original success criteria** with a channel to drive iteration. Enablement — training, example workflows, internal champions, office hours — closes adoption gaps far better than mandates.
+- **Team setup in Claude Code.** Settings precedence, highest first: **managed settings** → command line → `.claude/settings.local.json` → shared `.claude/settings.json` → `~/.claude/settings.json`. Put org guardrails in managed settings. Permission rules are evaluated **deny → ask → allow**, and Claude Code enforces them, not CLAUDE.md. Put team standards in the committed `CLAUDE.md`, workflows in `.claude/skills`, and shared tools in `.mcp.json` with `${ENV}` expansion. When skills share a name, enterprise beats personal and personal beats project, so give a personal variant a different name.
+- **AI-assisted workflows.** Use Claude Code for repository-wide changes that run tests, hooks such as a blocking `PreToolUse` to enforce policy, subagents to keep noisy side tasks out of the main context, and GitHub Actions (`@claude` in a PR or issue).
+- **Operational debugging.** Stream long generations to avoid timeouts. Retry 429 and 529 errors with exponential backoff and jitter. Make side-effecting tools idempotent, add circuit breakers for flaky dependencies, and degrade gracefully with the gaps annotated. Monitor team usage and cost with OpenTelemetry (`CLAUDE_CODE_ENABLE_TELEMETRY=1`).
 
 ## How to study with this bank
 
-1. For every scenario, force the altitude question first: single call → workflow → agent. Escalate only when the lower rung cannot meet the requirement.
-2. Practice Safety & Risk and Evals & Governance until you default to defense-in-depth (code gates + evals + monitoring), not prompt-only hope.
-3. Drill flashcards for stakeholder discovery, ADRs/runbooks, and handoff artifacts (evals + dashboards + shared config).
-4. Run domain-filtered practice on your weakest 20%, then a Full mock. Aim comfortably above 720 before exam day.
+1. Weight your time by the blueprint. Integration (19%) and Solution Design (17%) together are over a third of the exam.
+2. For every scenario, ask the altitude question first: augmented LLM → workflow → agent → multi-agent.
+3. For platform questions, check the feature and compliance matrix above. Many distractors are true on one cloud and false on another.
+4. Practice the multiple-response items until you evaluate each option on its own.
+5. Run domain-filtered practice on your weakest domains, then a full mock. Aim comfortably above 720.
 
-Docs: [platform.claude.com/docs](https://platform.claude.com/docs) · [code.claude.com/docs](https://code.claude.com/docs).
+Docs: [platform.claude.com/docs](https://platform.claude.com/docs) · [code.claude.com/docs](https://code.claude.com/docs) · [Claude in Microsoft Foundry on Microsoft Learn](https://learn.microsoft.com/azure/foundry/foundry-models/concepts/claude-models).

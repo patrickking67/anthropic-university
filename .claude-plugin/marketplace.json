@@ -5,24 +5,27 @@
     "url": "https://github.com/patrickking67"
   },
   "metadata": {
-    "description": "Unofficial Claude Certification study plugins: adaptive quizzes, timed mock exams, concept explainers, flashcard drills, and contributor authoring tools. Not affiliated with Anthropic.",
-    "version": "1.1.0"
+    "description": "Unofficial Anthropic University learning plugin by Patrick King for Claude Code, the Claude desktop app, and Claude chat: certification prep for all four Claude exams plus 13 learning lanes, including partner tracks. Not affiliated with Anthropic.",
+    "version": "2.1.0"
   },
   "plugins": [
     {
-      "name": "exam-coach",
-      "source": "./plugins/exam-coach",
-      "description": "Interactive tutor: adaptive /quiz-me, timed /mock-exam (100–1000 scale), /explain-concept, and /grade-my-answer. Bundled question banks for all four tracks."
-    },
-    {
-      "name": "flashcard-drill",
-      "source": "./plugins/flashcard-drill",
-      "description": "Terminal Leitner-style flashcard drilling for any Anthropic University track, with domain filters and weak-card requeues."
-    },
-    {
-      "name": "cert-author",
-      "source": "./plugins/cert-author",
-      "description": "Contributor toolkit: author original docs-grounded questions, adversarially review a bank, and rebuild generated content."
+      "name": "anthropic-university",
+      "displayName": "Anthropic University",
+      "source": "./plugins/anthropic-university",
+      "description": "Learn Claude end to end: study plans and role paths, 13 learning lanes (use, build, administer, partner & industry), adaptive quizzes, official-format mock exams, flashcards, cheat sheets, concept explainers, answer grading, client role-play for partners, Quizlet/Anki export, and contributor tools. Mapped to the official exam guides and grounded live through Claude Code Docs, Microsoft Learn, Agent Skills, the Anthropic Economic Index, and Claude Docs connectors, with a bundled helper script and banks for all four certification tracks.",
+      "version": "2.1.0",
+      "category": "education",
+      "keywords": [
+        "certification",
+        "study",
+        "learning",
+        "quiz",
+        "flashcards",
+        "partners",
+        "quizlet",
+        "anki"
+      ]
     }
   ]
 }

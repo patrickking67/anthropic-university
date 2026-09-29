@@ -5,277 +5,327 @@
     {
       "front": "Which entry point works directly across the files of a local code repository?",
       "back": "Claude Code (the terminal tool) reads, edits, and runs code in your repo. Use claude.ai chat for quick Q&A, Projects for reusable context, and the API to build automation.",
-      "domain": "platform-models"
+      "domain": "product-model-selection"
     },
     {
       "front": "When should you use a Claude Project instead of a plain chat?",
       "back": "When you reuse the same instructions and reference material across many chats. A Project's custom instructions and knowledge sources apply to every conversation in it.",
-      "domain": "platform-models"
+      "domain": "product-model-selection"
     },
     {
       "front": "When is the API the right entry point?",
-      "back": "When you need Claude embedded in your own software, running programmatically with no person in the loop.",
-      "domain": "platform-models"
+      "back": "When Claude must be embedded in your own software and run programmatically with no person in the loop. That build work belongs to Claude Developers and Architects; Associates scope the need and escalate.",
+      "domain": "workflow-solution-design"
     },
     {
-      "front": "Which model for the hardest, multi-step reasoning?",
-      "back": "Claude Opus 4.8 — the most capable model. Reserve it for genuinely complex work where accuracy outweighs cost and speed.",
-      "domain": "platform-models"
+      "front": "Which model is the recommended starting point, and when do you step up?",
+      "back": "Start with Claude Opus 5.5 for most demanding work. Step up to Claude Fable 5.1 for the hardest reasoning and long-horizon agentic work when Opus 5.5 still falls short.",
+      "domain": "product-model-selection"
     },
     {
       "front": "Which model for high-volume, balanced work?",
-      "back": "Claude Sonnet 5 — strong quality at a cost and speed that scale.",
-      "domain": "platform-models"
+      "back": "Claude Sonnet 5.5, the best combination of speed and intelligence, with strong quality at a cost and latency that scale.",
+      "domain": "product-model-selection"
     },
     {
       "front": "Which model for simple, fast, high-volume tasks?",
-      "back": "Claude Haiku 4.5 — the lowest latency and cost for lightweight tasks like classification or language detection.",
-      "domain": "platform-models"
+      "back": "Claude Haiku 4.5, the fastest and lowest-cost current model, for lightweight tasks like classification or language detection.",
+      "domain": "product-model-selection"
     },
     {
       "front": "What feature helps Claude reason through multi-step problems?",
       "back": "Extended (adaptive) thinking — it lets Claude work through intermediate steps before answering.",
-      "domain": "platform-models"
+      "domain": "product-model-selection"
     },
     {
       "front": "How do you get accurate answers about events after the training cutoff?",
       "back": "Enable web search so Claude can retrieve current information; reasoning alone cannot recover facts it never learned.",
-      "domain": "platform-models"
+      "domain": "product-model-selection"
     },
     {
       "front": "Your long chat is dragging in irrelevant earlier details. What is the fix?",
-      "back": "Start a fresh conversation focused on the current topic; everything earlier is context Claude may draw on.",
-      "domain": "platform-models"
+      "back": "Start a fresh conversation focused on the current topic, carrying over a short summary if needed. Everything earlier is context Claude may draw on, and automatic summarization of long chats keeps that history rather than removing it.",
+      "domain": "product-model-selection"
     },
     {
       "front": "Why not run every task on the biggest model?",
-      "back": "Match the model to the task. Simple/high-volume work runs well on Haiku or Sonnet; Opus is for the hardest reasoning. Oversizing wastes cost and latency.",
-      "domain": "platform-models"
+      "back": "Match the model to the task. Simple, high-volume work runs well on Haiku 4.5 or Sonnet 5.5; Opus 5.5 (or Fable 5.1) is for the hardest reasoning. Oversizing wastes cost and latency.",
+      "domain": "product-model-selection"
     },
     {
       "front": "What are the core elements of a well-structured prompt?",
       "back": "Role, a clear task, relevant context, the desired output format, and examples.",
-      "domain": "prompting"
+      "domain": "prompting-task-execution"
     },
     {
       "front": "Instructions keep missing a specific format. What works better?",
       "back": "Show two or three worked input-to-output examples (few-shot). Demonstrating the pattern beats describing it.",
-      "domain": "prompting"
+      "domain": "prompting-task-execution"
     },
     {
       "front": "Why change only one thing at a time when iterating?",
       "back": "So you can tell which change caused the effect; changing many at once makes the result uninterpretable.",
-      "domain": "prompting"
+      "domain": "prompting-task-execution"
     },
     {
       "front": "Best fix for a vague, off-target answer?",
       "back": "Be specific — state the exact scope, format, and success criteria.",
-      "domain": "prompting"
+      "domain": "prompting-task-execution"
     },
     {
       "front": "A complex request returns shallow results. What helps?",
       "back": "Decompose it into focused steps; do and check each before it feeds the next.",
-      "domain": "prompting"
+      "domain": "prompting-task-execution"
     },
     {
       "front": "'Don't be so formal' is not working. Better approach?",
       "back": "Positively describe the tone you do want (warm, conversational) with a short example. Say what to do, not just what to avoid.",
-      "domain": "prompting"
+      "domain": "prompting-task-execution"
     },
     {
       "front": "Claude does not know your internal policy. What is essential?",
       "back": "Provide the policy text as context; capability cannot substitute for a document it never saw.",
-      "domain": "prompting"
+      "domain": "prompting-task-execution"
     },
     {
       "front": "When are few-shot examples worth adding?",
       "back": "When a task has a specific format or edge cases that plain instructions keep getting wrong. For simple tasks Claude already handles, skip them.",
-      "domain": "prompting"
+      "domain": "prompting-task-execution"
     },
     {
       "front": "Does confident, fluent writing mean the answer is correct?",
       "back": "No — Claude can be confidently and articulately wrong. Fluency is not a reliability signal.",
-      "domain": "evaluating"
+      "domain": "output-evaluation"
     },
     {
       "front": "Claude cites a study or statistic. What must you do before publishing?",
       "back": "Independently verify the claim and that the cited source actually says it; citations can be fabricated.",
-      "domain": "evaluating"
+      "domain": "output-evaluation"
     },
     {
       "front": "A citation looks authoritative but you cannot find the source anywhere. Likely cause?",
       "back": "A hallucination — a plausible-looking but nonexistent citation. Treat it as unverified.",
-      "domain": "evaluating"
+      "domain": "output-evaluation"
     },
     {
       "front": "Which outputs require human verification?",
       "back": "High-stakes, factual, legal/medical, or irreversible ones. Validate before you act or put your name on it.",
-      "domain": "evaluating"
+      "domain": "output-evaluation"
     },
     {
       "front": "A real, working citation URL — is the claim now proven?",
       "back": "No — confirm the linked source actually supports the specific claim, not just that the page exists.",
-      "domain": "evaluating"
+      "domain": "output-evaluation"
     },
     {
       "front": "How much verification does an output need?",
       "back": "Scale it with stakes and reversibility. Brainstorming needs little; a tax figure or contract needs independent human review.",
-      "domain": "evaluating"
+      "domain": "output-evaluation"
     },
     {
       "front": "Claude's resume shortlist skews to one demographic. Response?",
       "back": "Treat it as a possible bias signal — examine the criteria and keep human oversight.",
-      "domain": "evaluating"
+      "domain": "output-evaluation"
     },
     {
       "front": "Who is accountable for Claude's output you send under your name?",
       "back": "You are. Validate the facts and reasoning first.",
-      "domain": "evaluating"
+      "domain": "output-evaluation"
     },
     {
       "front": "Which steps are best to delegate to Claude?",
       "back": "Well-specified, repeatable, checkable, low-risk steps. Keep ambiguous, high-stakes, accountability-bearing judgment with a human.",
-      "domain": "workflow"
+      "domain": "workflow-solution-design"
     },
     {
       "front": "What decides whether an action can be automated vs. needs human approval?",
       "back": "The cost and reversibility of an error. Cheap and reversible can auto-proceed; costly or irreversible needs human review.",
-      "domain": "workflow"
+      "domain": "workflow-solution-design"
     },
     {
       "front": "How do you describe a Claude workflow's value to stakeholders?",
       "back": "Honestly — pair the real benefit with the limitations and where humans stay in the loop. Do not overpromise.",
-      "domain": "workflow"
+      "domain": "workflow-solution-design"
     },
     {
       "front": "Moving from 'I use Claude' to 'our workflow uses Claude'?",
       "back": "Capture working prompts, context, and configuration in a shared, reusable setup so the whole team gets consistent results.",
-      "domain": "workflow"
+      "domain": "workflow-solution-design"
     },
     {
       "front": "Best first process to automate with Claude?",
       "back": "A frequent, well-defined, low-risk task with clear inputs and checkable outputs.",
-      "domain": "workflow"
+      "domain": "workflow-solution-design"
     },
     {
       "front": "Who should hold accountability for a final decision in an AI-assisted workflow?",
       "back": "A designated human owner who reviews and approves. A tool cannot be accountable.",
-      "domain": "workflow"
+      "domain": "workflow-solution-design"
     },
     {
       "front": "Your workflow only lives in your head. What is the risk?",
       "back": "It is fragile. Document steps, prompts, and config so others can run it when you are away.",
-      "domain": "workflow"
+      "domain": "workflow-solution-design"
     },
     {
       "front": "What do a Project's custom instructions do?",
       "back": "They apply automatically to every chat in the Project — standing rules for tone, format, and behavior.",
-      "domain": "configuration"
+      "domain": "configuration-knowledge"
     },
     {
       "front": "Where should reusable reference documents go in a Project?",
       "back": "As knowledge sources. Tone and format rules go in custom instructions.",
-      "domain": "configuration"
+      "domain": "configuration-knowledge"
     },
     {
       "front": "Claude keeps quoting last year's prices. Root-cause fix?",
       "back": "Update the Project's knowledge source to current data. Stale config is a top failure cause.",
-      "domain": "configuration"
+      "domain": "configuration-knowledge"
     },
     {
       "front": "Main advantage of Project context over per-prompt context?",
       "back": "Every chat in the Project inherits it, raising quality and consistency across all of them.",
-      "domain": "configuration"
+      "domain": "configuration-knowledge"
     },
     {
       "front": "Two unrelated kinds of work — one Project or two?",
       "back": "Two. Separate Projects keep each set of instructions and knowledge focused and relevant.",
-      "domain": "configuration"
+      "domain": "configuration-knowledge"
     },
     {
       "front": "How do you keep Project knowledge trustworthy over time?",
       "back": "Review and refresh it on a regular cadence; Claude will not update your sources for you.",
-      "domain": "configuration"
+      "domain": "configuration-knowledge"
     },
     {
       "front": "Conflicting policy versions in a Project's knowledge. Fix?",
       "back": "Keep only the current authoritative version; remove outdated and draft copies so Claude cites the right one.",
-      "domain": "configuration"
+      "domain": "configuration-knowledge"
     },
     {
       "front": "About to paste a config with a live API key. What do you do?",
       "back": "Redact or remove the secret first. Never paste live credentials; asking Claude to 'ignore' it does not undo the exposure.",
-      "domain": "governance"
+      "domain": "governance-risk"
     },
     {
       "front": "Before using regulated personal data (PII/PHI) in a tool?",
       "back": "Follow your data policy and get authorization; minimize or anonymize what you do not need.",
-      "domain": "governance"
+      "domain": "governance-risk"
     },
     {
       "front": "Most important thing to know before entering sensitive data?",
       "back": "Where the data goes, how it may be used or retained, and whether policy permits it.",
-      "domain": "governance"
+      "domain": "governance-risk"
     },
     {
       "front": "Confidential doc plus an unapproved tool. Right move?",
       "back": "Do not. Use only tools approved for that data class; deleting the chat later does not undo the exposure.",
-      "domain": "governance"
+      "domain": "governance-risk"
     },
     {
       "front": "What is data minimization?",
       "back": "Include only the data the task requires, and no more, to reduce exposure of sensitive info.",
-      "domain": "governance"
+      "domain": "governance-risk"
     },
     {
       "front": "Why does data classification matter before pasting?",
       "back": "It sets the handling rules — some classes may not be entered into certain tools at all.",
-      "domain": "governance"
+      "domain": "governance-risk"
     },
     {
       "front": "Employee uses a personal, unvetted AI account for company data. Concern?",
       "back": "Company data flows outside approved controls and agreements — a core governance risk.",
-      "domain": "governance"
+      "domain": "governance-risk"
     },
     {
       "front": "Before sending Claude output to an external partner?",
       "back": "Review it to ensure no confidential or personal internal data was carried into the output.",
-      "domain": "governance"
+      "domain": "governance-risk"
     },
     {
       "front": "Answers are generic and could fit any company. Root cause?",
       "back": "A context-poor prompt. Add the specific details of your situation.",
-      "domain": "troubleshooting"
+      "domain": "troubleshooting-optimization"
     },
     {
       "front": "You described the format three times and it is still wrong. Durable fix?",
       "back": "Provide a concrete example of the exact output you want.",
-      "domain": "troubleshooting"
+      "domain": "troubleshooting-optimization"
     },
     {
       "front": "Simple high-volume job is slow/costly on the biggest model. Fix?",
       "back": "Switch to a smaller, faster model suited to the task.",
-      "domain": "troubleshooting"
+      "domain": "troubleshooting-optimization"
     },
     {
       "front": "Same manual correction every day. Durable fix?",
       "back": "Encode it once in the Project's custom instructions instead of patching each chat.",
-      "domain": "troubleshooting"
+      "domain": "troubleshooting-optimization"
     },
     {
       "front": "Answer is confidently out of date on a recent topic. Fix?",
       "back": "Enable web search — the gap is the training cutoff, not reasoning.",
-      "domain": "troubleshooting"
+      "domain": "troubleshooting-optimization"
     },
     {
       "front": "An output regressed after you changed several things at once. Move?",
       "back": "Revert and reintroduce changes one at a time to isolate the cause.",
-      "domain": "troubleshooting"
+      "domain": "troubleshooting-optimization"
     },
     {
       "front": "What is a sound troubleshooting sequence?",
       "back": "Diagnose the root cause — ambiguous ask, missing context, wrong model, or wrong entry point — then fix that specific cause durably.",
-      "domain": "troubleshooting"
+      "domain": "troubleshooting-optimization"
+    },
+    {
+      "front": "Web search vs. extended thinking vs. research?",
+      "back": "Web search for quick factual lookups (one or two searches). Extended thinking for deep reasoning that needs no web data. Research for multi-source synthesis across the web and connected apps, returning a cited report over a few minutes.",
+      "domain": "product-model-selection"
+    },
+    {
+      "front": "What does Claude memory do, and how is it scoped?",
+      "back": "It saves short topics from your chats so future chats can build on them. You can view, edit, pause, or reset it in Settings. Each Project has its own separate memory; incognito chats are never added to memory.",
+      "domain": "product-model-selection"
+    },
+    {
+      "front": "What are the tabs in the Claude desktop app?",
+      "back": "Chat, Cowork, and Code. Cowork handles multi-step tasks such as reports, spreadsheets, and presentations delivered as files; on Pro and Max it is merging with chat into one Claude experience.",
+      "domain": "product-model-selection"
+    },
+    {
+      "front": "Artifact, inline reply, or structured data?",
+      "back": "Artifact for substantial, self-contained content you will edit, iterate on, or reuse. Inline for quick answers. Structured data (table, CSV, JSON) when the output feeds another tool.",
+      "domain": "output-evaluation"
+    },
+    {
+      "front": "Name three prompt techniques that reduce hallucinations.",
+      "back": "Let Claude say \"I don't know\"; restrict it to the supplied documents; and ask for direct quotes or citations for each claim, retracting any it cannot support.",
+      "domain": "output-evaluation"
+    },
+    {
+      "front": "How do you adapt a draft for a new audience?",
+      "back": "Say who the audience is and what they need: lead with what matters to them, adjust vocabulary and jargon, and set a length. Then check the facts survived the rewrite.",
+      "domain": "output-evaluation"
+    },
+    {
+      "front": "Why add a Google Doc through the Drive connector instead of uploading a copy?",
+      "back": "Google Docs added from Drive sync to the latest version, so Project knowledge does not go stale. Claude only sees files the user already has permission to access.",
+      "domain": "configuration-knowledge"
+    },
+    {
+      "front": "Skills vs. Project instructions?",
+      "back": "Project instructions and knowledge are always loaded for chats in that Project. Skills are folders of instructions and resources that Claude loads only when relevant to a specialized task; they require code execution.",
+      "domain": "configuration-knowledge"
+    },
+    {
+      "front": "Does an incognito chat make sensitive data safe to paste?",
+      "back": "No. Incognito chats skip history and memory and are not used for training, but they are still retained for a period (30 days by default). Data policy still applies, and secrets never belong in any chat.",
+      "domain": "governance-risk"
+    },
+    {
+      "front": "You retype the same context in every new chat. Optimization?",
+      "back": "Move the reusable context into a Project (instructions plus knowledge) or a connector-synced document so every chat starts with it.",
+      "domain": "troubleshooting-optimization"
     }
   ]
 }
