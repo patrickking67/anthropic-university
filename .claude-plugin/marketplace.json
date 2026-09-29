@@ -11,6 +11,7 @@
   "plugins": [
     {
       "name": "anthropic-university",
+      "displayName": "Anthropic University",
       "source": "./plugins/anthropic-university",
       "description": "Learn Claude end to end: study plans and role paths, 13 learning lanes (use, build, administer, partner & industry), adaptive quizzes, official-format mock exams, flashcards, concept explainers, answer grading, client role-play for partners, Quizlet/Anki export, and contributor tools. Mapped to the official exam guides, grounded live via Claude Code Docs and Microsoft Learn connectors, with bundled banks for all four certification tracks.",
       "version": "2.0.0",
