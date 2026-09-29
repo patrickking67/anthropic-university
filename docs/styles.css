@@ -859,3 +859,15 @@ select, .select {
   .mode-nav a { padding: 7px 10px; font-size: 12px; }
   .qnav { flex-wrap: wrap; justify-content: center; }
 }
+
+/* ---- sections, lanes, multiple-response ---------------------------------- */
+.section-head { margin: 34px 0 14px; }
+.section-head h2 { margin: 0 0 4px; font-size: 22px; }
+.section-head p { margin: 0; }
+.lane-groups .group-title { margin: 26px 0 2px; font-size: 16px; color: var(--clay); letter-spacing: 0.02em; }
+.lane-groups > p { margin: 0 0 12px; }
+.lane-card h3 { margin-bottom: 4px; }
+.lane-card .track-meta + .track-meta { margin-top: 6px; }
+.tag.multi { color: var(--clay); border-color: var(--clay); }
+.opt.multi .key { border-radius: 5px; }
+.opt.multi[aria-pressed="true"] .key { background: var(--clay); color: var(--surface); border-color: var(--clay); }

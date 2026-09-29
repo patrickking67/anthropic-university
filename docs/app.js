@@ -6,6 +6,13 @@
 
   var AU = window.AU || {};
   var CATALOG = AU.index || [];
+  var LANES = AU.laneIndex || [];
+  var LANE_GROUPS = [
+    { id: "use", name: "Use Claude", blurb: "Get great results in the Claude apps." },
+    { id: "build", name: "Build with Claude", blurb: "The API, Claude Code, MCP, and agents." },
+    { id: "administer", name: "Administer Claude", blurb: "Deploy, secure, and govern Claude for an organization." },
+    { id: "partner", name: "Partner tracks", blurb: "Explain, position, scope, and deliver Claude for clients." },
+  ];
   var appEl = document.getElementById("app");
   var keyHandler = null;
 
@@ -49,6 +56,26 @@
     return String(h);
   }
   var LETTERS = ["A", "B", "C", "D"];
+  var ALL_LETTERS = ["A", "B", "C", "D", "E", "F"];
+
+  // Select-N items store the answer as a sorted array; single items as a letter.
+  function isMulti(q) { return Array.isArray(q.answer); }
+  function keysOf(q) { return ALL_LETTERS.filter(function (k) { return q.options && q.options[k] != null; }); }
+  function norm(a) { return Array.isArray(a) ? a.slice().sort().join(",") : (a || ""); }
+  function isCorrect(q, a) { return !!a && norm(a) === norm(q.answer); }
+  function hasAnswer(q, a) { return isMulti(q) ? Array.isArray(a) && a.length === q.select : !!a; }
+  function answerLabel(q) { return isMulti(q) ? q.answer.join(" + ") : q.answer; }
+  function inAnswer(q, L) { return isMulti(q) ? q.answer.indexOf(L) !== -1 : q.answer === L; }
+  function toggleIn(arr, L, max) {
+    arr = Array.isArray(arr) ? arr.slice() : [];
+    var i = arr.indexOf(L);
+    if (i !== -1) arr.splice(i, 1);
+    else if (arr.length < max) arr.push(L);
+    return arr.sort();
+  }
+  function stemText(q) {
+    return q.stem + (isMulti(q) && !/select\s*\d/i.test(q.stem) ? " (Select " + q.select + ".)" : "");
+  }
 
   function bindKeys(handler) {
     if (keyHandler) window.removeEventListener("keydown", keyHandler);
@@ -78,7 +105,67 @@
   store.examBest = store.examBest || {};
   function persist() { saveStore(store); }
 
-  function getExam(id) { return (AU.exams || {})[id] || null; }
+  var laneCache = {};
+  function getExam(id) {
+    if (id && id.indexOf("lane:") === 0) return laneAsExam(id.slice(5));
+    return (AU.exams || {})[id] || null;
+  }
+  function getLane(id) { return (AU.lanes || {})[id] || null; }
+
+  // A lane reuses the track views: modules act as domains, cards as flashcards.
+  function laneAsExam(laneId) {
+    if (laneCache[laneId]) return laneCache[laneId];
+    var lane = getLane(laneId);
+    if (!lane) return null;
+    var md = ["# " + lane.title, "", lane.summary || ""];
+    if ((lane.officialResources || []).length) {
+      md.push("", "## Take alongside", "");
+      lane.officialResources.forEach(function (r) {
+        md.push("- [" + r.title + "](" + r.url + ")" + (r.provider ? " - " + r.provider : ""));
+      });
+    }
+    (lane.modules || []).forEach(function (m, i) {
+      md.push("", "## " + (i + 1) + ". " + m.title, "");
+      if (m.summary) md.push(m.summary, "");
+      if ((m.objectives || []).length) {
+        md.push("**You will be able to:**", "");
+        m.objectives.forEach(function (o) { md.push("- " + o); });
+        md.push("");
+      }
+      if ((m.keyPoints || []).length) {
+        md.push("**Key points**", "");
+        m.keyPoints.forEach(function (k) { md.push("- " + k); });
+        md.push("");
+      }
+      if (m.practice) md.push("**Practice:** " + m.practice, "");
+      if ((m.docs || []).length) {
+        md.push("**Read:** " + m.docs.map(function (d) { return "[" + d.title + "](" + d.url + ")"; }).join(" · "), "");
+      }
+    });
+    if (lane.guide) md.push("", "---", "", lane.guide);
+    var exam = {
+      examId: "lane:" + laneId,
+      isLane: true,
+      lane: lane,
+      title: lane.title,
+      shortTitle: lane.title,
+      track: groupName(lane.group),
+      level: lane.level,
+      meta: { scaleMin: 100, scaleMax: 1000, passScaled: 720, timeMinutes: null },
+      guide: md.join("\n"),
+      domains: (lane.modules || []).map(function (m) { return { id: m.id, name: m.title, weight: 1 / Math.max(1, lane.modules.length) }; }),
+      questions: (lane.questions || []).map(function (q) {
+        var c = {}; Object.keys(q).forEach(function (k) { c[k] = q[k]; }); c.domain = q.module; return c;
+      }),
+      flashcards: (lane.cards || []).map(function (c) { return { front: c.front, back: c.back, domain: c.module }; }),
+    };
+    laneCache[laneId] = exam;
+    return exam;
+  }
+  function groupName(g) {
+    var x = LANE_GROUPS.filter(function (y) { return y.id === g; })[0];
+    return x ? x.name : "Lane";
+  }
   function domainName(exam, id) {
     var d = (exam.domains || []).filter(function (x) { return x.id === id; })[0];
     return d ? d.name : (id || "General");
@@ -235,6 +322,7 @@
     bindKeys(null);
     window.scrollTo(0, 0);
     if (!CATALOG.length) return appEl.appendChild(noData());
+    if (r.mode === "lanes") return renderLanes();
     if (r.mode === "home" || !r.exam) return renderHome();
     var exam = getExam(r.exam);
     if (!exam) return renderMissingExam(r.exam);
@@ -270,9 +358,12 @@
   }
 
   // ---- shared chrome ------------------------------------------------------
+  // Tracks and lanes share views; lanes use their own vocabulary (lessons, checkpoint, modules).
+  function word(exam, track, lane) { return exam && exam.isLane ? lane : track; }
+
   function crumb(exam, modeLabel) {
     return el("div", { class: "crumb" }, [
-      el("a", { class: "back", href: "#/", text: "← All tracks" }),
+      el("a", { class: "back", href: exam.isLane ? "#/lanes" : "#/", text: exam.isLane ? "← All lanes" : "← All tracks" }),
       el("h2", { text: exam.shortTitle || exam.title }),
       el("span", { class: "chip", text: modeLabel }),
     ]);
@@ -280,9 +371,9 @@
 
   function modeNav(exam, active) {
     var modes = [
-      { id: "study", label: "Study" },
+      { id: "study", label: exam.isLane ? "Lessons" : "Study" },
       { id: "practice", label: "Practice" },
-      { id: "exam", label: "Exam" },
+      { id: "exam", label: exam.isLane ? "Checkpoint" : "Exam" },
       { id: "flashcards", label: "Flashcards" },
     ];
     return el("nav", { class: "mode-nav", "aria-label": "Study modes" }, modes.map(function (m) {
@@ -307,15 +398,19 @@
     var wrap = el("div", { class: "view-enter" });
     wrap.appendChild(el("div", { class: "hero" }, [
       el("div", { class: "hero-brand", html: 'Anthropic <span>University</span>' }),
-      el("h1", { text: "Study for the Claude certifications" }),
-      el("p", { text: "Original practice exams, study guides, and flashcards for four tracks. Learn a domain, drill it, then take a timed mock exam on the same 100–1000 scale." }),
+      el("h1", { text: "Learn Claude, end to end" }),
+      el("p", { text: "Certification prep for all four Claude exams plus learning lanes for using, building with, administering, and partnering on Claude. Learn a topic, drill it, then prove it." }),
       el("div", { class: "hero-modes" }, [
         el("span", { html: "<strong>Study</strong> the guide" }),
         el("span", { html: "<strong>Practice</strong> with feedback" }),
         el("span", { html: "<strong>Exam</strong> timed mock" }),
         el("span", { html: "<strong>Flashcards</strong> drill" }),
       ]),
-      el("div", { class: "disclaimer", text: "Unofficial and community-authored - not affiliated with Anthropic. Questions are original study material, not real exam content." }),
+      el("div", { class: "disclaimer", text: "Created by Patrick King. Unofficial - not affiliated with Anthropic. Questions are original study material, not real exam content." }),
+    ]));
+    wrap.appendChild(el("div", { class: "section-head" }, [
+      el("h2", { text: "Certification tracks" }),
+      el("p", { class: "track-meta", text: "Aligned to the official exam guides (v1.0, July 2026): official domains and weights, multiple-response items, 720 to pass." }),
     ]));
 
     var grid = el("div", { class: "track-grid" });
@@ -345,13 +440,66 @@
       grid.appendChild(card);
     });
     wrap.appendChild(grid);
+    if (LANES.length) {
+      wrap.appendChild(el("div", { class: "section-head" }, [
+        el("h2", { text: "Learning lanes" }),
+        el("p", { class: "track-meta", text: LANES.length + " lanes across Use, Build, Administer, and Partner. " }, [
+          el("a", { href: "#/lanes", text: "Browse all lanes →" }),
+        ]),
+      ]));
+      wrap.appendChild(laneGroups(LANES, true));
+    }
+    appEl.appendChild(wrap);
+  }
+
+  function laneCard(l) {
+    var ex = getExam("lane:" + l.laneId);
+    return el("article", { class: "track-card lane-card" }, [
+      el("div", { class: "track-head" }, [
+        el("div", {}, [
+          el("div", { class: "eyebrow", text: groupName(l.group) + (l.level ? " · " + l.level : "") }),
+          el("h3", { text: l.title }),
+          el("div", { class: "track-meta", text: l.summary }),
+          el("div", { class: "track-meta", text: l.moduleCount + " modules · " + l.questionCount + " questions · " + l.cardCount + " cards" + (l.estimatedHours ? " · ~" + l.estimatedHours + " h" : "") }),
+        ]),
+        ring(ex ? practiceCoverage(ex) : 0),
+      ]),
+      el("div", { class: "mode-row" }, [
+        el("a", { class: "btn small primary", href: "#/study/lane:" + l.laneId, text: "Lessons" }),
+        el("a", { class: "btn small", href: "#/practice/lane:" + l.laneId, text: "Practice" }),
+        el("a", { class: "btn small", href: "#/flashcards/lane:" + l.laneId, text: "Flashcards" }),
+      ]),
+    ]);
+  }
+
+  function laneGroups(list, compact) {
+    var box = el("div", { class: "lane-groups" });
+    LANE_GROUPS.forEach(function (g) {
+      var items = list.filter(function (l) { return l.group === g.id; });
+      if (!items.length) return;
+      box.appendChild(el("h3", { class: "group-title", text: g.name }));
+      box.appendChild(el("p", { class: "track-meta", text: g.blurb }));
+      var grid = el("div", { class: "track-grid" });
+      items.forEach(function (l) { grid.appendChild(laneCard(l)); });
+      box.appendChild(grid);
+    });
+    return box;
+  }
+
+  function renderLanes() {
+    var wrap = el("div", { class: "view-enter" });
+    wrap.appendChild(el("div", { class: "crumb" }, [
+      el("a", { class: "back", href: "#/", text: "← Home" }),
+      el("h2", { text: "Learning lanes" }),
+    ]));
+    wrap.appendChild(laneGroups(LANES, false));
     appEl.appendChild(wrap);
   }
 
   // ---- study --------------------------------------------------------------
   function renderStudy(exam) {
     var wrap = el("div", { class: "view-enter" });
-    wrap.appendChild(crumb(exam, "Study guide"));
+    wrap.appendChild(crumb(exam, word(exam, "Study guide", "Lessons")));
     wrap.appendChild(modeNav(exam, "study"));
     if (exam.guide) {
       wrap.appendChild(el("div", { class: "guide", html: renderMarkdown(exam.guide) }));
@@ -380,7 +528,7 @@
         if (domainFilter !== "all" && q.domain !== domainFilter) return false;
         if (viewFilter === "unanswered") return !st.answers[q.id];
         if (viewFilter === "flagged") return !!st.flags[q.id];
-        if (viewFilter === "missed") return st.answers[q.id] && st.answers[q.id] !== q.answer;
+        if (viewFilter === "missed") return st.answers[q.id] && !isCorrect(q, st.answers[q.id]);
         return true;
       });
     }
@@ -394,7 +542,7 @@
         "aria-label": "Filter by domain",
         onchange: function (e) { domainFilter = e.target.value; st.pos = 0; draw(); },
       });
-      sel.appendChild(el("option", { value: "all", text: "All domains" }));
+      sel.appendChild(el("option", { value: "all", text: word(exam, "All domains", "All modules") }));
       (exam.domains || []).forEach(function (d) {
         sel.appendChild(el("option", { value: d.id, text: d.name }));
       });
@@ -416,7 +564,7 @@
 
       var answeredCount = Object.keys(st.answers).length;
       var correctCount = (exam.questions || []).filter(function (q) {
-        return st.answers[q.id] === q.answer;
+        return isCorrect(q, st.answers[q.id]);
       }).length;
       wrap.appendChild(el("div", { class: "toolbar" }, [
         el("div", { class: "group" }, [sel, viewSel]),
@@ -456,10 +604,25 @@
       if (st.pos < 0) st.pos = 0;
       var q = qs[st.pos];
       var picked = st.answers[q.id] || null;
+      var multi = isMulti(q);
+      st.pending = st.pending || {};
 
       function pick(L) {
         if (picked) return;
+        if (multi) {
+          st.pending[q.id] = toggleIn(st.pending[q.id], L, q.select);
+          draw();
+          return;
+        }
         st.answers[q.id] = L;
+        persist();
+        draw();
+      }
+      function submitMulti() {
+        var sel = st.pending[q.id] || [];
+        if (picked || sel.length !== q.select) return;
+        st.answers[q.id] = sel;
+        delete st.pending[q.id];
         persist();
         draw();
       }
@@ -472,7 +635,8 @@
       bindKeys(function (e) {
         if (typingTarget(e) || e.metaKey || e.ctrlKey || e.altKey) return;
         var key = e.key.toUpperCase();
-        if (LETTERS.indexOf(key) !== -1) { e.preventDefault(); pick(key); return; }
+        if (keysOf(q).indexOf(key) !== -1) { e.preventDefault(); pick(key); return; }
+        if (e.key === "Enter" && multi) { e.preventDefault(); submitMulti(); return; }
         if (e.key === "ArrowRight" || e.key === "n") { e.preventDefault(); go(1); return; }
         if (e.key === "ArrowLeft" || e.key === "p") { e.preventDefault(); go(-1); return; }
         if (e.key === "f") {
@@ -492,6 +656,7 @@
         q.scenario ? el("span", { class: "scenario", text: q.scenario }) : null,
         q.studyArea ? el("span", { class: "tag", text: q.studyArea }) : null,
         q.difficulty ? el("span", { class: "tag", text: q.difficulty }) : null,
+        multi ? el("span", { class: "tag multi", text: "Select " + q.select }) : null,
         el("button", {
           class: "flag-btn" + (st.flags[q.id] ? " on" : ""),
           title: "Flag for review (F)",
@@ -504,18 +669,22 @@
           text: st.flags[q.id] ? "Flagged" : "Flag",
         }),
       ]));
-      card.appendChild(el("div", { class: "stem", text: q.stem }));
+      card.appendChild(el("div", { class: "stem", text: stemText(q) }));
 
+      var pend = (st.pending && st.pending[q.id]) || [];
       var opts = el("div", { class: "options", role: "group", "aria-label": "Answer choices" });
-      LETTERS.forEach(function (L) {
-        var cls = "opt";
+      keysOf(q).forEach(function (L) {
+        var cls = "opt" + (multi ? " multi" : "");
+        var mine = multi ? (picked || pend).indexOf(L) !== -1 : picked === L;
         if (picked) {
-          if (L === q.answer) cls += " correct";
-          else if (L === picked) cls += " wrong";
-        }
+          if (inAnswer(q, L)) cls += " correct";
+          else if (mine) cls += " wrong";
+        } else if (mine) cls += " selected";
         opts.appendChild(el("button", {
           class: cls,
           disabled: picked ? "disabled" : null,
+          "aria-pressed": multi ? String(mine) : null,
+          "aria-label": L + ": " + q.options[L],
           onclick: picked ? null : function () { pick(L); },
         }, [
           el("span", { class: "key", text: L }),
@@ -523,17 +692,27 @@
         ]));
       });
       card.appendChild(opts);
+      if (multi && !picked) {
+        card.appendChild(el("div", { class: "mode-row", style: "margin-top:10px" }, [
+          el("button", {
+            class: "btn primary small",
+            disabled: pend.length === q.select ? null : "disabled",
+            onclick: submitMulti,
+            text: "Check answer (" + pend.length + "/" + q.select + ")",
+          }),
+        ]));
+      }
 
       if (picked) {
-        var correct = picked === q.answer;
+        var correct = isCorrect(q, picked);
         var fb = el("div", { class: "feedback " + (correct ? "correct" : "wrong") });
         fb.appendChild(el("div", {
           class: "verdict",
-          text: correct ? "Correct" : ("Incorrect - the answer is " + q.answer),
+          text: correct ? "Correct" : ("Incorrect - the answer is " + answerLabel(q)),
         }));
         fb.appendChild(el("p", { text: q.explanationCorrect }));
         if (!correct && q.explanationDistractor) {
-          fb.appendChild(el("p", { class: "why", text: "Why " + picked + " misses: " + q.explanationDistractor }));
+          fb.appendChild(el("p", { class: "why", text: "Why " + norm(picked).replace(/,/g, " + ") + " misses: " + q.explanationDistractor }));
         }
         if (q.reference) {
           fb.appendChild(el("p", { class: "why" }, [
@@ -564,8 +743,8 @@
   }
 
   // ---- exam ---------------------------------------------------------------
-  function sampleByDomain(exam, n) {
-    var qs = exam.questions || [];
+  function sampleByDomain(exam, n, pool) {
+    var qs = pool || exam.questions || [];
     if (n >= qs.length) return shuffle(qs);
     var byDomain = {};
     qs.forEach(function (q) { (byDomain[q.domain] = byDomain[q.domain] || []).push(q); });
@@ -582,6 +761,18 @@
     return shuffle(picked.slice(0, n));
   }
 
+  // Official format: the official item count, and for scenario-based exams (Architect – Foundations)
+  // a random draw of 4 scenarios whose items are grouped under each scenario, like the real exam.
+  function sampleOfficial(exam) {
+    var n = (exam.official && exam.official.items) || Math.min(60, (exam.questions || []).length);
+    var sc = exam.scenarios || [];
+    if (!sc.length) return sampleByDomain(exam, n);
+    var drawn = shuffle(sc).slice(0, Math.min(4, sc.length)).map(function (s) { return s.name; });
+    var pool = (exam.questions || []).filter(function (q) { return drawn.indexOf(q.scenario) !== -1; });
+    var picked = sampleByDomain(exam, Math.min(n, pool.length), pool);
+    return picked.sort(function (a, b) { return drawn.indexOf(a.scenario) - drawn.indexOf(b.scenario); });
+  }
+
   function renderExam(exam) {
     var wrap = el("div", { class: "view-enter" });
     appEl.appendChild(wrap);
@@ -595,13 +786,18 @@
     function setup() {
       clear(wrap);
       bindKeys(null);
-      wrap.appendChild(crumb(exam, "Mock exam"));
+      wrap.appendChild(crumb(exam, word(exam, "Mock exam", "Checkpoint")));
       wrap.appendChild(modeNav(exam, "exam"));
-      var choices = [{ n: Math.min(20, total), label: "Quick - " + Math.min(20, total) + " questions" }];
+      var choices = [];
+      if (exam.official && exam.official.items && total >= exam.official.items) {
+        choices.push({ official: true, n: exam.official.items, label: "Official format - " + exam.official.items + " questions" +
+          ((exam.scenarios || []).length ? ", 4 scenarios" : "") });
+      }
+      choices.push({ n: Math.min(20, total), label: "Quick - " + Math.min(20, total) + " questions" });
       if (total > 40) choices.push({ n: 40, label: "Half - 40 questions" });
       choices.push({ n: total, label: "Full - " + total + " questions" });
       var box = el("div", { class: "qcard" }, [
-        el("h3", { text: "Timed mock exam", style: "margin-top:0" }),
+        el("h3", { text: word(exam, "Timed mock exam", "Timed checkpoint"), style: "margin-top:0" }),
         el("p", {
           class: "track-meta",
           text: "Approximate " + exam.meta.scaleMin + "–" + exam.meta.scaleMax + " scale · " + exam.meta.passScaled +
@@ -610,14 +806,15 @@
         el("ul", { class: "exam-setup-list" }, [
           el("li", { text: "Flag questions to revisit before submitting." }),
           el("li", { text: "Use the number grid to jump around." }),
-          el("li", { text: "Keyboard: A–D to answer, ← → to navigate, F to flag." }),
+          el("li", { text: "Some items are multiple-response: they say how many to select." }),
+          el("li", { text: "Keyboard: letters to answer, ← → to navigate, F to flag." }),
         ]),
       ]);
       var row = el("div", { class: "mode-row", style: "margin-top:14px" });
       choices.forEach(function (c, idx) {
         row.appendChild(el("button", {
           class: "btn" + (idx === 0 ? " primary" : ""),
-          onclick: function () { run(c.n); },
+          onclick: function () { run(c.n, c.official); },
           text: c.label,
         }));
       });
@@ -625,8 +822,8 @@
       wrap.appendChild(box);
     }
 
-    function run(n) {
-      var questions = sampleByDomain(exam, n);
+    function run(n, official) {
+      var questions = official ? sampleOfficial(exam) : sampleByDomain(exam, n);
       var answers = {};
       var flags = {};
       var pos = 0;
@@ -651,11 +848,11 @@
 
       function draw() {
         clear(wrap);
-        wrap.appendChild(crumb(exam, "Mock exam"));
+        wrap.appendChild(crumb(exam, word(exam, "Mock exam", "Checkpoint")));
         wrap.appendChild(el("div", { class: "toolbar" }, [
           el("div", { class: "group" }, [
             el("span", { class: "exam-timer", id: "exam-timer", text: fmt(seconds) }),
-            el("span", { class: "counter", text: Object.keys(answers).length + " / " + questions.length + " answered" }),
+            el("span", { class: "counter", text: questions.filter(function (x) { return hasAnswer(x, answers[x.id]); }).length + " / " + questions.length + " answered" }),
             el("span", { class: "kbd-hint", html: "<kbd>A</kbd>–<kbd>D</kbd> · <kbd>F</kbd> flag" }),
           ]),
           el("button", { class: "btn primary small", onclick: submit, text: "Submit exam" }),
@@ -663,8 +860,13 @@
 
         var q = questions[pos];
         var picked = answers[q.id] || null;
+        var multi = isMulti(q);
 
-        function pick(L) { answers[q.id] = L; draw(); }
+        function pick(L) {
+          answers[q.id] = multi ? toggleIn(answers[q.id], L, q.select) : L;
+          if (multi && !answers[q.id].length) delete answers[q.id];
+          draw();
+        }
         function go(delta) {
           pos = Math.max(0, Math.min(questions.length - 1, pos + delta));
           draw();
@@ -673,7 +875,7 @@
         bindKeys(function (e) {
           if (typingTarget(e) || e.metaKey || e.ctrlKey || e.altKey) return;
           var key = e.key.toUpperCase();
-          if (LETTERS.indexOf(key) !== -1) { e.preventDefault(); pick(key); return; }
+          if (keysOf(q).indexOf(key) !== -1) { e.preventDefault(); pick(key); return; }
           if (e.key === "ArrowRight" || e.key === "n") { e.preventDefault(); go(1); return; }
           if (e.key === "ArrowLeft" || e.key === "p") { e.preventDefault(); go(-1); return; }
           if (e.key === "f") {
@@ -691,6 +893,7 @@
         card.appendChild(el("div", { class: "qmeta" }, [
           q.scenario ? el("span", { class: "scenario", text: q.scenario }) : null,
           q.studyArea ? el("span", { class: "tag", text: q.studyArea }) : null,
+          multi ? el("span", { class: "tag multi", text: "Select " + q.select }) : null,
           el("button", {
             class: "flag-btn" + (flags[q.id] ? " on" : ""),
             onclick: function () {
@@ -701,11 +904,14 @@
             text: flags[q.id] ? "Flagged" : "Flag",
           }),
         ]));
-        card.appendChild(el("div", { class: "stem", text: q.stem }));
+        card.appendChild(el("div", { class: "stem", text: stemText(q) }));
         var opts = el("div", { class: "options", role: "group", "aria-label": "Answer choices" });
-        LETTERS.forEach(function (L) {
+        keysOf(q).forEach(function (L) {
+          var mine = multi ? (picked || []).indexOf(L) !== -1 : picked === L;
           opts.appendChild(el("button", {
-            class: "opt" + (picked === L ? " selected" : ""),
+            class: "opt" + (multi ? " multi" : "") + (mine ? " selected" : ""),
+            "aria-pressed": multi ? String(mine) : null,
+            "aria-label": L + ": " + q.options[L],
             onclick: function () { pick(L); },
           }, [
             el("span", { class: "key", text: L }),
@@ -730,10 +936,10 @@
         var grid = el("div", { class: "qgrid", "aria-label": "Question navigator" });
         questions.forEach(function (qq, idx) {
           grid.appendChild(el("button", {
-            class: (answers[qq.id] ? "answered " : "") + (flags[qq.id] ? "flagged " : "") + (idx === pos ? "current" : ""),
+            class: (hasAnswer(qq, answers[qq.id]) ? "answered " : "") + (flags[qq.id] ? "flagged " : "") + (idx === pos ? "current" : ""),
             onclick: function () { pos = idx; draw(); },
             text: String(idx + 1),
-            title: flags[qq.id] ? "Flagged" : (answers[qq.id] ? "Answered" : "Unanswered"),
+            title: flags[qq.id] ? "Flagged" : (hasAnswer(qq, answers[qq.id]) ? "Answered" : "Unanswered"),
           }));
         });
         wrap.appendChild(el("div", { style: "margin-top:16px" }, [
@@ -748,8 +954,8 @@
         var perDomain = {};
         var skipped = 0;
         questions.forEach(function (q) {
-          if (!answers[q.id]) skipped++;
-          var ok = answers[q.id] === q.answer;
+          if (!hasAnswer(q, answers[q.id])) skipped++;
+          var ok = isCorrect(q, answers[q.id]);
           if (ok) correct++;
           var d = perDomain[q.domain] = perDomain[q.domain] || { c: 0, t: 0 };
           d.t++;
@@ -814,7 +1020,7 @@
           var reviewPool = questions.filter(function (q) {
             if (reviewMode === "all") return true;
             if (reviewMode === "flagged") return !!flags[q.id];
-            return answers[q.id] !== q.answer;
+            return !isCorrect(q, answers[q.id]);
           });
 
           wrap.appendChild(el("h3", { text: "Review" }));
@@ -842,17 +1048,20 @@
 
           reviewPool.forEach(function (q) {
             var yours = answers[q.id];
-            var ok = yours === q.answer;
+            var ok = isCorrect(q, yours);
+            var optText = function (a) {
+              return (Array.isArray(a) ? a : [a]).map(function (k) { return k + ". " + escapeHtml(q.options[k] || ""); }).join("<br>");
+            };
             wrap.appendChild(el("div", { class: "qcard miss-card" }, [
               el("div", { class: "qmeta" }, [
                 q.studyArea ? el("span", { class: "tag", text: q.studyArea }) : null,
                 el("span", { class: "tag", text: ok ? "Correct" : (yours ? "Incorrect" : "Skipped") }),
                 domainName(exam, q.domain) ? el("span", { class: "tag", text: domainName(exam, q.domain) }) : null,
               ]),
-              el("p", { class: "stem", text: q.stem }),
-              el("p", { html: "<strong>Correct: " + q.answer + ".</strong> " + escapeHtml(q.options[q.answer]) }),
+              el("p", { class: "stem", text: stemText(q) }),
+              el("p", { html: "<strong>Correct:</strong><br>" + optText(q.answer) }),
               yours && !ok
-                ? el("p", { class: "why", html: "You chose " + yours + ": " + escapeHtml(q.options[yours] || "") })
+                ? el("p", { class: "why", html: "You chose:<br>" + optText(yours) })
                 : (!yours ? el("p", { class: "why", text: "You skipped this one." }) : null),
               el("p", { text: q.explanationCorrect }),
               q.reference
@@ -903,7 +1112,7 @@
         "aria-label": "Filter by domain",
         onchange: function (e) { domainFilter = e.target.value; idx = 0; flipped = false; draw(); },
       });
-      sel.appendChild(el("option", { value: "all", text: "All domains" }));
+      sel.appendChild(el("option", { value: "all", text: word(exam, "All domains", "All modules") }));
       (exam.domains || []).forEach(function (d) {
         sel.appendChild(el("option", { value: d.id, text: d.name }));
       });
@@ -1001,19 +1210,23 @@
   }
 
   // ---- boot ---------------------------------------------------------------
+  function loadScript(src) {
+    return new Promise(function (resolve) {
+      var s = document.createElement("script");
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = resolve;
+      document.head.appendChild(s);
+    });
+  }
   function loadExamData() {
     AU.exams = AU.exams || {};
-    var pending = CATALOG.filter(function (c) { return !AU.exams[c.examId]; });
-    if (!pending.length) return Promise.resolve();
-    return Promise.all(pending.map(function (c) {
-      return new Promise(function (resolve) {
-        var s = document.createElement("script");
-        s.src = "data/" + c.examId + ".js";
-        s.onload = resolve;
-        s.onerror = resolve;
-        document.head.appendChild(s);
-      });
-    }));
+    AU.lanes = AU.lanes || {};
+    var jobs = CATALOG.filter(function (c) { return !AU.exams[c.examId]; })
+      .map(function (c) { return loadScript("data/" + c.examId + ".js"); });
+    jobs = jobs.concat(LANES.filter(function (l) { return !AU.lanes[l.laneId]; })
+      .map(function (l) { return loadScript("data/lanes/" + l.laneId + ".js"); }));
+    return Promise.all(jobs);
   }
 
   clear(appEl);
@@ -1021,6 +1234,7 @@
   loadExamData().then(function () {
     AU = window.AU;
     CATALOG = AU.index || CATALOG;
+    LANES = AU.laneIndex || LANES;
     render();
   });
 })();

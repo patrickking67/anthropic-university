@@ -2,15 +2,15 @@
 
 > **Unofficial, community-authored study material.** Not affiliated with, endorsed by, or produced by Anthropic. Questions are original and written to teach the publicly documented concepts — they are **not** real exam items.
 
-**100 questions** · Real exam format: 120 min · Passing scaled score 720/1000
+**121 questions** · Real exam format: 120 min · Passing scaled score 720/1000
 
 *This file is generated from `questions.json` by `scripts/build.mjs`. Do not edit by hand.*
 
 ---
 
-### Question 1 of 100
+### Question 1 of 121
 
-*Study area: Entry Points · easy*
+*Study area: Product Features · easy*
 
 A developer wants Claude to read, edit, and run tests across the files of a local Git repository from the terminal. Which entry point is the best fit?
 
@@ -33,10 +33,10 @@ Reference: https://code.claude.com/docs/en/overview
 
 ---
 
-### Question 2 of 100
+### Question 2 of 121
 
 **Scenario: Customer Support Team**
-*Study area: Entry Points · easy*
+*Study area: Product Features · easy*
 
 Your team answers customer questions using the same product FAQ, tone guidelines, and policy documents every day, and you want every chat to start with that context without pasting it each time. Which entry point best fits?
 
@@ -53,15 +53,15 @@ Projects let you set durable custom instructions and attach knowledge sources, s
 
 _Why a tempting wrong answer misses:_ Re-pasting the documents into a fresh chat each time is exactly the manual repetition Projects eliminate; it is error-prone and easy to forget.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://support.claude.com/en/articles/9517075-what-are-projects
 
 </details>
 
 ---
 
-### Question 3 of 100
+### Question 3 of 121
 
-*Study area: Entry Points · medium*
+*Study area: Solution Design · medium*
 
 An engineer needs Claude to classify incoming support tickets automatically inside the company's own application, with no person in the loop. Which entry point is most appropriate?
 
@@ -78,15 +78,15 @@ Programmatic, automated classification inside your own software is what the API 
 
 _Why a tempting wrong answer misses:_ claude.ai chat requires a person to paste each ticket and read each answer, which defeats the goal of automatic, in-app classification.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://platform.claude.com/docs/en/intro
 
 </details>
 
 ---
 
-### Question 4 of 100
+### Question 4 of 121
 
-*Study area: Entry Points · easy*
+*Study area: Product Features · easy*
 
 A marketer wants to brainstorm ten taglines for a campaign and refine the best few in a quick back-and-forth. There is no code, no repeated workflow, and nothing confidential. Which entry point is the simplest appropriate choice?
 
@@ -103,30 +103,30 @@ For a quick, one-off, conversational task with no code or reusable context, a pl
 
 _Why a tempting wrong answer misses:_ Creating a Project with knowledge sources is unnecessary overhead for a single throwaway brainstorm that will not be repeated.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://support.claude.com/en/articles/9517075-what-are-projects
 
 </details>
 
 ---
 
-### Question 5 of 100
+### Question 5 of 121
 
-*Study area: Model Selection · easy*
+*Study area: Model Types · easy*
 
 You need Claude to work through a complex, multi-step financial analysis that requires careful reasoning, and where subtle mistakes are costly. Speed and cost are secondary. Which model is the best default?
 
 - **A.** Claude Haiku 4.5, for the fastest possible response
-- **B.** Claude Opus 4.8, for the strongest reasoning
+- **B.** Claude Opus 5.5, a high-capability model for hard reasoning
 - **C.** Whichever model happens to be cheapest that day
-- **D.** Claude Sonnet 5, chosen mainly to minimize latency
+- **D.** Claude Sonnet 5.5, chosen mainly to minimize latency
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: B**
 
-Opus 4.8 is the most capable model for the hardest, multi-step reasoning. When accuracy on a complex task outweighs speed and cost, it is the right default.
+Opus 5.5 is Anthropic's recommended starting point for demanding work, built for careful multi-step reasoning. When accuracy on a complex task outweighs speed and cost, a high-capability model is the right default; Fable 5.1 is the step up if Opus 5.5 still falls short.
 
-_Why a tempting wrong answer misses:_ Haiku 4.5 is optimized for speed and simple tasks; using it for costly, subtle multi-step reasoning trades away the capability the task demands.
+_Why a tempting wrong answer misses:_ Haiku 4.5 is optimized for speed and simple, high-volume tasks; using it for costly, subtle multi-step reasoning trades away the capability the task demands.
 
 Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
@@ -134,39 +134,39 @@ Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
 ---
 
-### Question 6 of 100
+### Question 6 of 121
 
-*Study area: Model Selection · medium*
+*Study area: Model-Task Fit · medium*
 
 A product feature will summarize thousands of documents per day. Each summary is moderately complex, and you need a strong balance of quality, speed, and cost at scale. Which model is the most appropriate default?
 
-- **A.** Claude Opus 4.8 for every request, regardless of the cost
+- **A.** Claude Opus 5.5 for every request, regardless of the cost
 - **B.** Claude Haiku 4.5, accepting weaker quality on harder documents
-- **C.** Claude Sonnet 5, balancing quality and cost at volume
+- **C.** Claude Sonnet 5.5, balancing quality and cost at volume
 - **D.** A model chosen at random per request
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: C**
 
-Sonnet 5 is designed for the balanced, high-volume middle ground: strong quality at a cost and speed that scale to thousands of requests. It fits moderately complex work at volume.
+Sonnet 5.5 offers the best combination of speed and intelligence: strong quality at a cost and latency that scale to thousands of requests. It fits moderately complex work at volume.
 
-_Why a tempting wrong answer misses:_ Running Opus 4.8 on every request maximizes quality, but its cost and latency are hard to justify across thousands of moderately complex summaries per day.
+_Why a tempting wrong answer misses:_ Running Opus 5.5 on every request pays roughly twice Sonnet 5.5's per-token price, and adds latency, for summaries that do not need its extra depth.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://platform.claude.com/docs/en/about-claude/models/choosing-a-model
 
 </details>
 
 ---
 
-### Question 7 of 100
+### Question 7 of 121
 
-*Study area: Model Selection · easy*
+*Study area: Model-Task Fit · easy*
 
 You need to detect whether each incoming message is written in English or Spanish: a simple, high-volume, latency-sensitive classification. Which model is the best fit?
 
 - **A.** Claude Haiku 4.5, the fastest and most economical option
-- **B.** Claude Opus 4.8, reached for just to be extra safe on accuracy
+- **B.** Claude Opus 5.5, reached for just to be extra safe on accuracy
 - **C.** Whichever model happens to have the largest available context window
 - **D.** A separate Opus call per language, then compared side by side
 
@@ -174,19 +174,19 @@ You need to detect whether each incoming message is written in English or Spanis
 
 **Correct answer: A**
 
-Haiku 4.5 is built for simple, fast, high-volume tasks like language detection, delivering low latency and low cost where heavier reasoning is not needed.
+Haiku 4.5 is the fastest, lowest-cost current model, built for simple, high-volume tasks like language detection where heavier reasoning is not needed.
 
-_Why a tempting wrong answer misses:_ Reaching for Opus 4.8 "to be safe" on a trivial classification wastes cost and latency without meaningfully improving a task Haiku handles well.
+_Why a tempting wrong answer misses:_ Reaching for Opus 5.5 "to be safe" on a trivial classification wastes cost and latency without meaningfully improving a task Haiku handles well.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://platform.claude.com/docs/en/about-claude/models/choosing-a-model
 
 </details>
 
 ---
 
-### Question 8 of 100
+### Question 8 of 121
 
-*Study area: Features · medium*
+*Study area: Product Features · medium*
 
 A logic puzzle keeps tripping Claude up because it involves several dependent reasoning steps. Which built-in capability is most directly aimed at improving multi-step reasoning like this?
 
@@ -199,19 +199,19 @@ A logic puzzle keeps tripping Claude up because it involves several dependent re
 
 **Correct answer: B**
 
-Extended (adaptive) thinking gives Claude room to reason through intermediate steps before committing to an answer, which directly helps on multi-step problems.
+Extended (adaptive) thinking gives Claude room to reason through intermediate steps before committing to an answer. Anthropic recommends it for complex reasoning that does not need recent information from the web.
 
 _Why a tempting wrong answer misses:_ Artifacts only change how output is displayed in a side panel; they do nothing to improve the underlying reasoning on a multi-step problem.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://support.claude.com/en/articles/11095361-when-should-i-use-web-search-extended-thinking-and-research
 
 </details>
 
 ---
 
-### Question 9 of 100
+### Question 9 of 121
 
-*Study area: Features · easy*
+*Study area: Product Features · easy*
 
 You ask Claude about a regulation that changed last week, after the model's training cutoff. Which feature should you enable to get an accurate, current answer?
 
@@ -228,15 +228,15 @@ Web search lets Claude retrieve current information from the internet, which is 
 
 _Why a tempting wrong answer misses:_ Extended thinking helps Claude reason about what it already knows; it cannot conjure facts about an event that postdates its training data.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://support.claude.com/en/articles/10684626-enable-and-use-web-search
 
 </details>
 
 ---
 
-### Question 10 of 100
+### Question 10 of 121
 
-*Study area: Features · medium*
+*Study area: Product Features · medium*
 
 You are drafting a policy document with Claude and want to see it in a dedicated panel, edit it across turns, and keep a stable version as you refine it. Which feature is designed for this?
 
@@ -249,19 +249,19 @@ You are drafting a policy document with Claude and want to see it in a dedicated
 
 **Correct answer: A**
 
-Artifacts render substantial, self-contained content (like a document or code) in a dedicated, editable side panel you can iterate on across turns, which is exactly this use case.
+Artifacts hold substantial, self-contained content, like a document or code, that you are likely to edit, iterate on, or reuse. Claude updates the artifact across turns, which is exactly this use case.
 
 _Why a tempting wrong answer misses:_ Web search retrieves information; it has nothing to do with displaying and iterating on a document you are co-writing.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them
 
 </details>
 
 ---
 
-### Question 11 of 100
+### Question 11 of 121
 
-*Study area: Features · easy*
+*Study area: Product Features · easy*
 
 A colleague sends you a 40-page PDF contract and asks for a plain-language summary of its key obligations. In claude.ai, what is the most direct way to have Claude work from the actual document?
 
@@ -278,15 +278,15 @@ claude.ai supports file uploads, including PDFs, so Claude can read the actual d
 
 _Why a tempting wrong answer misses:_ Describing the contract from memory strips out the exact terms Claude needs and invites an inaccurate summary of a document Claude never actually saw.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://support.claude.com/en/articles/8241126-uploading-files-to-claude
 
 </details>
 
 ---
 
-### Question 12 of 100
+### Question 12 of 121
 
-*Study area: Context Management · medium*
+*Study area: Context and Memory · medium*
 
 After a long chat that drifted across several unrelated topics, Claude's answers start pulling in irrelevant details from earlier in the conversation. What is the best way to manage this?
 
@@ -299,19 +299,19 @@ After a long chat that drifted across several unrelated topics, Claude's answers
 
 **Correct answer: C**
 
-Everything earlier in a conversation is context Claude may draw on. When accumulated, unrelated history starts to interfere, a fresh conversation gives Claude a clean, focused context.
+Everything earlier in a conversation is context Claude may draw on. When unrelated history starts to interfere, a fresh conversation gives Claude a clean, focused context. Automatic summarization of long chats keeps the earlier material; it does not remove it.
 
 _Why a tempting wrong answer misses:_ Switching to a smaller model does not remove the irrelevant conversation history that is actually causing the interference.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-claude-plans
 
 </details>
 
 ---
 
-### Question 13 of 100
+### Question 13 of 121
 
-*Study area: Context Management · medium*
+*Study area: Context and Memory · medium*
 
 You want Claude to answer a specific question about one section of a large report. Which approach gives Claude the most useful context to work with?
 
@@ -328,15 +328,15 @@ Giving Claude the relevant section plus a clear, specific question focuses its a
 
 _Why a tempting wrong answer misses:_ Dumping hundreds of irrelevant pages buries the pertinent section and can dilute Claude's attention, making a precise answer harder rather than easier.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
 
 </details>
 
 ---
 
-### Question 14 of 100
+### Question 14 of 121
 
-*Study area: Entry Points · medium*
+*Study area: Product Features · medium*
 
 You find yourself pasting the same brand style guide into a new chat several times a week to keep Claude's writing on-brand. What is the better long-term setup?
 
@@ -353,15 +353,15 @@ When the same reference is reused repeatedly, moving it into a Project (knowledg
 
 _Why a tempting wrong answer misses:_ Continuing to paste the guide every time is the manual, error-prone repetition that a Project is designed to eliminate.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://support.claude.com/en/articles/9517075-what-are-projects
 
 </details>
 
 ---
 
-### Question 15 of 100
+### Question 15 of 121
 
-*Study area: Model Selection · medium*
+*Study area: Model-Task Fit · medium*
 
 A teammate runs every task, even trivial reformatting, on the largest, most expensive model "to be safe." What is the most sensible guidance?
 
@@ -374,19 +374,19 @@ A teammate runs every task, even trivial reformatting, on the largest, most expe
 
 **Correct answer: B**
 
-Model selection is about fit: simple, high-volume tasks run well on Haiku or Sonnet, while Opus is reserved for the hardest reasoning. Matching model to task controls cost and latency without sacrificing needed quality.
+Model selection is about fit: simple, high-volume tasks run well on Haiku 4.5 or Sonnet 5.5, while Opus 5.5 (or Fable 5.1) is reserved for the hardest reasoning. Matching model to task controls cost and latency without sacrificing needed quality.
 
 _Why a tempting wrong answer misses:_ "Always use the largest model" pays premium cost and latency for trivial work that a smaller model handles just as correctly.
 
-Reference: https://platform.claude.com/docs/en/about-claude/models/overview
+Reference: https://platform.claude.com/docs/en/about-claude/models/choosing-a-model
 
 </details>
 
 ---
 
-### Question 16 of 100
+### Question 16 of 121
 
-*Study area: Prompt Structure · easy*
+*Study area: Effective Prompts · easy*
 
 You want Claude to review a draft email the way an experienced communications editor would. Which addition to your prompt most directly sets that up?
 
@@ -409,9 +409,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 17 of 100
+### Question 17 of 121
 
-*Study area: Output Format · easy*
+*Study area: Effective Prompts · easy*
 
 Claude keeps returning its answer as flowing paragraphs, but you need a table with three named columns to drop into a report. What is the most effective fix?
 
@@ -434,9 +434,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 18 of 100
+### Question 18 of 121
 
-*Study area: Providing Context · easy*
+*Study area: Effective Prompts · easy*
 
 You ask Claude to "write a follow-up message to the client," but its draft misses that the client is upset about a missed deadline. What would most improve the result?
 
@@ -459,7 +459,7 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 19 of 100
+### Question 19 of 121
 
 **Scenario: Quarterly Reporting**
 *Study area: Task Decomposition · medium*
@@ -485,9 +485,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 20 of 100
+### Question 20 of 121
 
-*Study area: Diagnostic Iteration · medium*
+*Study area: Prompt Iteration · medium*
 
 An output is not quite right, so in one new attempt you rewrite the role, add three examples, change the format, and swap models all at once. It improves, but you have a problem. What is it?
 
@@ -510,9 +510,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 21 of 100
+### Question 21 of 121
 
-*Study area: Being Specific · easy*
+*Study area: Effective Prompts · easy*
 
 Your prompts often produce vague, off-target answers. Which single change tends to help the most?
 
@@ -535,9 +535,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 22 of 100
+### Question 22 of 121
 
-*Study area: Few-Shot Examples · medium*
+*Study area: Effective Prompts · medium*
 
 You need every product description formatted in a very specific pattern, and written instructions keep producing near-misses. What most reliably locks in the exact format?
 
@@ -560,9 +560,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 23 of 100
+### Question 23 of 121
 
-*Study area: Examples vs Instructions · medium*
+*Study area: Prompt Iteration · medium*
 
 Claude keeps misinterpreting how you want a data field transformed, even after you reworded the instruction twice. What is the most effective next move?
 
@@ -585,9 +585,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 24 of 100
+### Question 24 of 121
 
-*Study area: Prompt Structure · medium*
+*Study area: Effective Prompts · medium*
 
 A colleague's prompts are just a one-line task with no other detail, and results are inconsistent. Which set of additions best reflects good prompt structure?
 
@@ -610,9 +610,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 25 of 100
+### Question 25 of 121
 
-*Study area: Positive Instructions · medium*
+*Study area: Effective Prompts · medium*
 
 You keep telling Claude "don't be so formal," but the tone still misses. Which instruction is likely to work better?
 
@@ -635,9 +635,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 26 of 100
+### Question 26 of 121
 
-*Study area: Providing Context · easy*
+*Study area: Effective Prompts · easy*
 
 You want Claude to answer questions using your company's internal policy, which it was never trained on. What is the essential step?
 
@@ -660,9 +660,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 27 of 100
+### Question 27 of 121
 
-*Study area: Being Specific · medium*
+*Study area: Effective Prompts · medium*
 
 A teammate asks Claude to "make this report better" and is frustrated by the results. What advice best addresses the root problem?
 
@@ -685,9 +685,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 28 of 100
+### Question 28 of 121
 
-*Study area: Few-Shot Examples · hard*
+*Study area: Adapting to Task Type · hard*
 
 For a straightforward task like "summarize this paragraph in one sentence," Claude already does exactly what you want. When is adding few-shot examples actually worth the effort?
 
@@ -710,9 +710,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 29 of 100
+### Question 29 of 121
 
-*Study area: Diagnostic Iteration · medium*
+*Study area: Prompt Iteration · medium*
 
 Your first prompt gives a decent but too-technical answer for a general audience. What is the most efficient single adjustment to try next?
 
@@ -735,9 +735,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 30 of 100
+### Question 30 of 121
 
-*Study area: Prompt Structure · medium*
+*Study area: Effective Prompts · medium*
 
 A prompt reads simply "Write a job description," and the drafts come back generic and unusable. Which elements are most important to add?
 
@@ -760,9 +760,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 31 of 100
+### Question 31 of 121
 
-*Study area: Verifying Citations · medium*
+*Study area: Fact-Checking · medium*
 
 Claude's answer includes three specific statistics attributed to named studies. Before you use them in a published report, what should you do?
 
@@ -779,15 +779,15 @@ Claude can produce fluent, specific-looking citations that are inaccurate or fab
 
 _Why a tempting wrong answer misses:_ A confident, specific citation is not evidence of accuracy; Claude can state a fabricated source just as fluently as a real one, so trusting it unverified is risky.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 32 of 100
+### Question 32 of 121
 
-*Study area: Confident but Wrong · easy*
+*Study area: Accuracy and Completeness · easy*
 
 An answer is written with total confidence and reads smoothly, with no hedging. What can you conclude about its accuracy?
 
@@ -804,15 +804,15 @@ The tone and fluency of an answer are independent of its correctness. Claude can
 
 _Why a tempting wrong answer misses:_ Absence of hedging is a stylistic feature, not a fact-check; it does not mean the claims were verified against any source.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 33 of 100
+### Question 33 of 121
 
-*Study area: Hallucinations · medium*
+*Study area: Hallucinations and Bias · medium*
 
 You ask Claude for case law supporting an argument, and it returns a citation with a court, year, and quote that looks authoritative, but you cannot find the case anywhere. What is the most likely explanation?
 
@@ -829,16 +829,16 @@ Models can generate citations that look authoritative but do not exist, a halluc
 
 _Why a tempting wrong answer misses:_ Assuming the citation must be valid and blaming your search ignores a well-known failure mode: confidently formatted citations that were never real.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 34 of 100
+### Question 34 of 121
 
 **Scenario: Clinical Guidance**
-*Study area: Human Verification · medium*
+*Study area: Human Review · medium*
 
 Claude drafts what looks like sound guidance on adjusting a patient's medication dosage. What is the responsible way to use this output?
 
@@ -855,15 +855,15 @@ Medical dosing is high-stakes and potentially irreversible, so it requires human
 
 _Why a tempting wrong answer misses:_ Following detailed-looking reasoning directly skips the professional judgment that high-stakes medical decisions require; detail is not the same as clinical validation.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 35 of 100
+### Question 35 of 121
 
-*Study area: Irreversible Actions · easy*
+*Study area: Human Review · easy*
 
 Claude generates a database command that will permanently delete every record matching a filter. What should you do before running it?
 
@@ -880,15 +880,15 @@ Irreversible actions demand human verification first. Reviewing precisely what t
 
 _Why a tempting wrong answer misses:_ Assuming the command is safe because Claude produced it skips the check that matters most, exactly when the consequences cannot be undone.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 36 of 100
+### Question 36 of 121
 
-*Study area: Bias · medium*
+*Study area: Hallucinations and Bias · medium*
 
 You use Claude to screen resumes and notice its shortlist skews heavily toward one demographic. What is the appropriate response?
 
@@ -905,15 +905,15 @@ AI outputs can reflect and amplify bias. A skewed result is a signal to scrutini
 
 _Why a tempting wrong answer misses:_ Treating the model as inherently objective ignores that it can reproduce bias; a skewed shortlist warrants investigation, not blind trust.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 37 of 100
+### Question 37 of 121
 
-*Study area: Verifying Against Source · medium*
+*Study area: Fact-Checking · medium*
 
 Claude summarizes a long report and includes a striking claim you do not remember reading. Before quoting that claim, what is the right step?
 
@@ -930,15 +930,15 @@ Summaries can introduce claims that are not in the source. Verifying a surprisin
 
 _Why a tempting wrong answer misses:_ Rephrasing a claim to sound less striking does nothing to establish whether it is actually supported by the source.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 38 of 100
+### Question 38 of 121
 
-*Study area: Scaling Verification · medium*
+*Study area: Human Review · medium*
 
 For which task is it most reasonable to accept Claude's output with only a light check?
 
@@ -955,15 +955,15 @@ Verification effort should scale with stakes. A low-stakes, easily reversible, n
 
 _Why a tempting wrong answer misses:_ A binding legal contract is high-stakes and hard to reverse; its wording needs careful human review, not a light check.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 39 of 100
+### Question 39 of 121
 
-*Study area: Accountability · easy*
+*Study area: Human Review · easy*
 
 You are about to send a client-facing analysis that Claude largely wrote, under your own name. What is the guiding principle?
 
@@ -980,15 +980,15 @@ When you put your name on Claude's output, you own its accuracy. Validating the 
 
 _Why a tempting wrong answer misses:_ Disclaiming responsibility because "Claude wrote it" does not hold up; the person who sends the work is accountable for it.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 40 of 100
+### Question 40 of 121
 
-*Study area: Fabricated Precision · medium*
+*Study area: Hallucinations and Bias · medium*
 
 Asked for market-size figures, Claude returns very precise numbers such as "$4.37B in 2023" with no source. How should you treat them?
 
@@ -1005,15 +1005,15 @@ Oddly precise figures with no source are a classic hallucination pattern. Precis
 
 _Why a tempting wrong answer misses:_ Precision does not signal reliability; a fabricated figure can be stated to the cent just as easily as a rounded one.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 41 of 100
+### Question 41 of 121
 
-*Study area: Checking Accuracy · medium*
+*Study area: Fact-Checking · medium*
 
 A quick way to gauge whether a long Claude answer is trustworthy on a topic you do not know well is to:
 
@@ -1030,16 +1030,16 @@ Spot-checking verifiable claims gives real evidence about accuracy. If the check
 
 _Why a tempting wrong answer misses:_ The number of sources mentioned says nothing about whether those sources are real or support the claims; it is easy to list citations that do not check out.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 42 of 100
+### Question 42 of 121
 
 **Scenario: Vendor Contract Review**
-*Study area: Human Verification · medium*
+*Study area: Human Review · medium*
 
 Claude reviews a vendor contract and flags no issues, and your company is about to sign. What is the responsible next step?
 
@@ -1056,15 +1056,15 @@ A binding contract is high-stakes and hard to reverse. Claude's review can assis
 
 _Why a tempting wrong answer misses:_ Treating "Claude found nothing" as proof of no legal risk over-trusts a tool that can miss issues and is not a substitute for professional legal judgment.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 43 of 100
+### Question 43 of 121
 
-*Study area: Over-Trust · hard*
+*Study area: Human Review · hard*
 
 A team has used Claude for months with good results and now approves its outputs without any review. What is the main risk?
 
@@ -1081,15 +1081,15 @@ A good track record does not make outputs infallible. Dropping verification enti
 
 _Why a tempting wrong answer misses:_ Concluding review was never necessary misreads past success; the good results likely depended in part on the very checking now being removed.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 44 of 100
+### Question 44 of 121
 
-*Study area: Verifying Citations · hard*
+*Study area: Fact-Checking · hard*
 
 Claude provides a real, working URL as a citation for a claim. What still needs checking?
 
@@ -1106,15 +1106,15 @@ A valid link is necessary but not sufficient. Claude may cite a real page that d
 
 _Why a tempting wrong answer misses:_ A link merely loading proves the page exists, not that its content backs the claim it was attached to.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 45 of 100
+### Question 45 of 121
 
-*Study area: Scaling Verification · easy*
+*Study area: Human Review · easy*
 
 Which output most clearly demands independent human verification before you act on it?
 
@@ -1131,16 +1131,16 @@ Verification scales with stakes and reversibility. A tax figure you will formall
 
 _Why a tempting wrong answer misses:_ A haiku for a birthday card is low-stakes and subjective; an error carries no real consequence, so it does not require the same scrutiny.
 
-Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
 
 </details>
 
 ---
 
-### Question 46 of 100
+### Question 46 of 121
 
 **Scenario: Monthly Reporting**
-*Study area: Delegation Boundaries · medium*
+*Study area: Workflow Integration · medium*
 
 You are deciding which parts of a monthly reporting process to hand to Claude. Which step is the best candidate to delegate?
 
@@ -1163,9 +1163,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 47 of 100
+### Question 47 of 121
 
-*Study area: Human Judgment · easy*
+*Study area: Workflow Integration · easy*
 
 Which task should stay with a human rather than being fully delegated to Claude?
 
@@ -1188,9 +1188,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 48 of 100
+### Question 48 of 121
 
-*Study area: Communicating Limits · medium*
+*Study area: Stakeholder Communication · medium*
 
 You are presenting a new Claude-assisted workflow to leadership. How should you describe its capabilities?
 
@@ -1213,10 +1213,10 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 49 of 100
+### Question 49 of 121
 
 **Scenario: Team Enablement**
-*Study area: Team Adoption · medium*
+*Study area: Workflow Integration · medium*
 
 You personally get great results from Claude, but your teammates get inconsistent ones on the same tasks. What best moves the team from "I use Claude" to "our workflow uses Claude"?
 
@@ -1239,9 +1239,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 50 of 100
+### Question 50 of 121
 
-*Study area: First Candidates · medium*
+*Study area: Requirements and Use Cases · medium*
 
 A team wants a first win with Claude. Which process is the best starting candidate?
 
@@ -1264,9 +1264,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 51 of 100
+### Question 51 of 121
 
-*Study area: Communicating Value · medium*
+*Study area: Stakeholder Communication · medium*
 
 How should you frame the value of a Claude-assisted drafting workflow to stakeholders?
 
@@ -1289,9 +1289,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 52 of 100
+### Question 52 of 121
 
-*Study area: Accountability · easy*
+*Study area: Workflow Integration · easy*
 
 In a Claude-assisted approval workflow, who should hold accountability for the final decision?
 
@@ -1314,10 +1314,10 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 53 of 100
+### Question 53 of 121
 
 **Scenario: Hiring Pipeline**
-*Study area: Mixed Workflows · hard*
+*Study area: Workflow Integration · hard*
 
 A hiring workflow has four steps: (1) format incoming resumes, (2) draft interview questions, (3) decide who advances, and (4) send templated scheduling emails. Which split is most appropriate?
 
@@ -1340,9 +1340,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 54 of 100
+### Question 54 of 121
 
-*Study area: Durability · medium*
+*Study area: Workflow Integration · medium*
 
 Your Claude-assisted workflow works well, but only you know how to run it. What most improves its long-term resilience?
 
@@ -1365,9 +1365,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 55 of 100
+### Question 55 of 121
 
-*Study area: Managing Expectations · medium*
+*Study area: Stakeholder Communication · medium*
 
 A stakeholder expects the new Claude workflow to be "100% accurate with no oversight." What is the best response?
 
@@ -1390,9 +1390,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 56 of 100
+### Question 56 of 121
 
-*Study area: Communicating Value · hard*
+*Study area: Stakeholder Communication · hard*
 
 You want to show that adopting Claude improved a workflow. What is the most credible way to communicate the value?
 
@@ -1415,9 +1415,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 57 of 100
+### Question 57 of 121
 
-*Study area: Delegation Boundaries · medium*
+*Study area: Solution Design · medium*
 
 When deciding whether Claude can take an action automatically or a human must approve it first, which factor matters most?
 
@@ -1440,9 +1440,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 58 of 100
+### Question 58 of 121
 
-*Study area: Solution Fit · medium*
+*Study area: Solution Design · medium*
 
 A colleague proposes building an elaborate automated system for a task the team does twice a year by hand in ten minutes. What is the most sensible guidance?
 
@@ -1465,10 +1465,10 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 59 of 100
+### Question 59 of 121
 
 **Scenario: Refund Processing**
-*Study area: Human-in-the-Loop · medium*
+*Study area: Solution Design · medium*
 
 You are integrating Claude into a customer-refund process. Refunds under $20 are routine; refunds over $500 are sensitive. How should you place the human checkpoint?
 
@@ -1491,9 +1491,9 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/overview
 
 ---
 
-### Question 60 of 100
+### Question 60 of 121
 
-*Study area: Custom Instructions · easy*
+*Study area: System-Level Instructions · easy*
 
 In a Claude Project, you set custom instructions that say "always write in British English and cite the source section." What is the effect?
 
@@ -1510,15 +1510,15 @@ A Project's custom instructions persist and apply to every conversation started 
 
 _Why a tempting wrong answer misses:_ Custom instructions are not limited to a single message; the whole point is that they persist across every chat in the Project.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 61 of 100
+### Question 61 of 121
 
-*Study area: Knowledge Sources · easy*
+*Study area: Knowledge and Connectors · easy*
 
 Your team keeps asking Claude questions about a 60-page internal handbook. What is the durable way to make that handbook available in every relevant chat?
 
@@ -1533,18 +1533,18 @@ Your team keeps asking Claude questions about a 60-page internal handbook. What 
 
 Attaching the handbook as a Project knowledge source makes it available to every chat in the Project, so Claude can ground answers in it without anyone re-pasting the document.
 
-_Why a tempting wrong answer misses:_ Asking Claude to "memorize" a document once does not work; it has no persistent memory of pasted text across separate conversations.
+_Why a tempting wrong answer misses:_ Claude's memory saves short topics about you and your work, not a faithful copy of a 60-page document. A knowledge source is the reliable way to give every chat the full handbook.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 62 of 100
+### Question 62 of 121
 
 **Scenario: Pricing Knowledge Base**
-*Study area: Keeping Config Current · medium*
+*Study area: Configuration Maintenance · medium*
 
 A Project's knowledge base still contains last year's pricing, and Claude keeps quoting the old prices. What is the root-cause fix?
 
@@ -1561,15 +1561,15 @@ Stale configuration is a leading cause of wrong output. Updating the Project's k
 
 _Why a tempting wrong answer misses:_ Correcting the price by hand in each chat treats the symptom repeatedly while the outdated source keeps producing the same error.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 63 of 100
+### Question 63 of 121
 
-*Study area: Project Context · medium*
+*Study area: Project Setup · medium*
 
 What is the main advantage of putting durable context into a Project rather than into individual prompts?
 
@@ -1586,15 +1586,15 @@ Project context is shared by every conversation in the Project. Investing in goo
 
 _Why a tempting wrong answer misses:_ Project context is not limited to the first chat; its value is precisely that it carries into every conversation in the Project.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 64 of 100
+### Question 64 of 121
 
-*Study area: Instructions vs Prompt · medium*
+*Study area: System-Level Instructions · medium*
 
 Which item is best placed in a Project's custom instructions rather than typed into a single prompt?
 
@@ -1611,15 +1611,15 @@ Durable, always-apply rules, like a standard report structure every output shoul
 
 _Why a tempting wrong answer misses:_ A one-time weather question is transient and specific to one conversation; putting it in standing instructions would wrongly apply it to every future chat.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 65 of 100
+### Question 65 of 121
 
-*Study area: Knowledge vs Instructions · medium*
+*Study area: Project Setup · medium*
 
 You have (1) reference documents Claude should consult and (2) rules about tone and format. In a Project, where does each belong?
 
@@ -1636,15 +1636,15 @@ Knowledge sources hold reference material Claude draws on; custom instructions h
 
 _Why a tempting wrong answer misses:_ Pasting large reference documents into the instructions field misuses it; bulky reference material belongs in knowledge sources, with instructions reserved for rules.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 66 of 100
+### Question 66 of 121
 
-*Study area: Keeping Config Current · medium*
+*Study area: Configuration Maintenance · medium*
 
 Your company just changed its refund policy, and several Projects rely on the old policy document. What should you do?
 
@@ -1661,15 +1661,15 @@ Configuration must be kept current as facts change. Proactively updating the pol
 
 _Why a tempting wrong answer misses:_ Waiting for a complaint means Claude keeps giving wrong, outdated answers in the meantime; keeping config current is a proactive maintenance task.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 67 of 100
+### Question 67 of 121
 
-*Study area: Project Scoping · medium*
+*Study area: Project Setup · medium*
 
 You do two very different kinds of work: legal contract review and social-media copywriting. How should you organize Projects for the best context in each?
 
@@ -1686,16 +1686,16 @@ Separate Projects keep each body of instructions and knowledge focused and relev
 
 _Why a tempting wrong answer misses:_ Cramming both kinds of work into one Project mixes unrelated instructions and knowledge, diluting the context and risking cross-contamination of guidance.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 68 of 100
+### Question 68 of 121
 
 **Scenario: Team Onboarding**
-*Study area: Team Consistency · medium*
+*Study area: Workflow Integration · medium*
 
 A new hire's Claude outputs do not match the team's house style, while veterans' outputs do. What is the most scalable fix?
 
@@ -1712,15 +1712,15 @@ Encoding the house style once in a shared Project gives every team member, new o
 
 _Why a tempting wrong answer misses:_ Having the new hire guess the style from old documents is slow and unreliable, and it leaves the knowledge uncaptured for the next new hire.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 69 of 100
+### Question 69 of 121
 
-*Study area: Config Hygiene · easy*
+*Study area: Configuration Maintenance · easy*
 
 What is a good practice for Project knowledge that references facts, policies, or data that change over time?
 
@@ -1737,15 +1737,15 @@ Knowledge that references changeable facts drifts out of date. Reviewing and ref
 
 _Why a tempting wrong answer misses:_ Claude does not automatically update your uploaded knowledge sources; keeping them current is the owner's responsibility.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 70 of 100
+### Question 70 of 121
 
-*Study area: Grounding · medium*
+*Study area: Knowledge and Connectors · medium*
 
 Without any reference material, Claude sometimes guesses at your product's specifications. How does a well-configured Project reduce this?
 
@@ -1762,15 +1762,15 @@ Providing the actual specifications as Project knowledge grounds Claude's answer
 
 _Why a tempting wrong answer misses:_ A Project does not make guessing more confident; it replaces guessing with grounded answers by giving Claude the real reference material.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 71 of 100
+### Question 71 of 121
 
-*Study area: Instruction Specificity · medium*
+*Study area: System-Level Instructions · medium*
 
 A Project's custom instruction reads only "be professional," yet outputs vary widely in structure and length. What would most improve consistency?
 
@@ -1787,15 +1787,15 @@ Vague instructions produce varied results. Specifying the concrete structure, le
 
 _Why a tempting wrong answer misses:_ Adding more vague adjectives compounds the ambiguity; "good" and "nice" give Claude no more concrete direction than "professional" did.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 72 of 100
+### Question 72 of 121
 
-*Study area: Single Source of Truth · hard*
+*Study area: Configuration Maintenance · hard*
 
 Different team members keep their own slightly different copies of the prompt instructions, and outputs have drifted apart. What is the best remedy?
 
@@ -1812,15 +1812,15 @@ Divergent private copies cause drift. A single shared Project configuration acts
 
 _Why a tempting wrong answer misses:_ Letting each person refine a private version is what produced the drift; it guarantees the copies keep diverging.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 73 of 100
+### Question 73 of 121
 
-*Study area: Knowledge Currency · medium*
+*Study area: Configuration Maintenance · medium*
 
 A Project's knowledge contains three versions of the same policy: last year's, a draft, and the current one. Claude sometimes cites the wrong version. What should you do?
 
@@ -1837,15 +1837,15 @@ Conflicting documents let Claude cite the wrong one. Keeping only the current, a
 
 _Why a tempting wrong answer misses:_ "More documents is always better" is false when they conflict; extra outdated versions are exactly what causes Claude to cite the wrong policy.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 74 of 100
+### Question 74 of 121
 
-*Study area: Secrets · easy*
+*Study area: Data Sensitivity and Privacy · easy*
 
 While debugging, you are about to paste a configuration file that includes a live production API key into a chat. What should you do?
 
@@ -1868,10 +1868,10 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 75 of 100
+### Question 75 of 121
 
 **Scenario: Customer Health Data**
-*Study area: Regulated Data · medium*
+*Study area: Data Sensitivity and Privacy · medium*
 
 You want to analyze a spreadsheet of customers' names, addresses, and health conditions. What is the responsible first step?
 
@@ -1894,9 +1894,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 76 of 100
+### Question 76 of 121
 
-*Study area: Confidential Data · medium*
+*Study area: Organizational Policy · medium*
 
 A teammate suggests pasting an unreleased, confidential product roadmap into a tool that is not approved for confidential data. What is the right response?
 
@@ -1919,9 +1919,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 77 of 100
+### Question 77 of 121
 
-*Study area: Where Data Goes · medium*
+*Study area: Data Sensitivity and Privacy · medium*
 
 Before entering any sensitive business data into an AI tool, the most important thing to understand is:
 
@@ -1944,9 +1944,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 78 of 100
+### Question 78 of 121
 
-*Study area: What Not to Paste · easy*
+*Study area: Data Sensitivity and Privacy · easy*
 
 Which of the following is clearly inappropriate to paste into a general AI chat tool?
 
@@ -1969,9 +1969,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 79 of 100
+### Question 79 of 121
 
-*Study area: Data Minimization · medium*
+*Study area: Data Sensitivity and Privacy · medium*
 
 You need Claude to help spot trends in support tickets, but the tickets contain customer names and emails you do not need for the analysis. What is the best practice?
 
@@ -1994,9 +1994,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 80 of 100
+### Question 80 of 121
 
-*Study area: Responsible Use · medium*
+*Study area: Appropriate Use Cases · medium*
 
 A user asks Claude to help them access an ex-partner's private accounts without permission. As a responsible operator, what is the right stance?
 
@@ -2013,15 +2013,15 @@ Responsible use includes refusing tasks that facilitate harm or unauthorized acc
 
 _Why a tempting wrong answer misses:_ Adding a disclaimer does not change the nature of the act; assisting unauthorized access to someone's private accounts is inappropriate regardless of a caveat.
 
-Reference: https://privacy.anthropic.com
+Reference: https://www.anthropic.com/legal/aup
 
 </details>
 
 ---
 
-### Question 81 of 100
+### Question 81 of 121
 
-*Study area: Data Classification · hard*
+*Study area: Organizational Policy · hard*
 
 Your company classifies data as Public, Internal, Confidential, and Restricted. Before pasting a document into an AI tool, the classification matters because:
 
@@ -2044,9 +2044,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 82 of 100
+### Question 82 of 121
 
-*Study area: Health Data · medium*
+*Study area: Data Sensitivity and Privacy · medium*
 
 A clinic wants to use a general consumer AI tool to summarize identifiable patient records. Before doing so, the key governance question is:
 
@@ -2069,9 +2069,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 83 of 100
+### Question 83 of 121
 
-*Study area: Output Review · medium*
+*Study area: Data Sensitivity and Privacy · medium*
 
 Before forwarding a Claude-generated report to an external partner, you should:
 
@@ -2094,10 +2094,10 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 84 of 100
+### Question 84 of 121
 
 **Scenario: Shadow IT**
-*Study area: Approved Tools · medium*
+*Study area: Organizational Policy · medium*
 
 An employee starts using a personal, unvetted AI account for work involving company data because it is convenient. What is the governance concern?
 
@@ -2120,9 +2120,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 85 of 100
+### Question 85 of 121
 
-*Study area: Data Minimization · medium*
+*Study area: Data Sensitivity and Privacy · medium*
 
 Which principle best guides how much data to include when prompting with real business information?
 
@@ -2145,9 +2145,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 86 of 100
+### Question 86 of 121
 
-*Study area: Where Data Goes · medium*
+*Study area: Organizational Policy · medium*
 
 Two AI tools are available. Tool X is approved by your company with a data agreement in place; Tool Y is a random free site with unknown data practices. For confidential work, which should you use and why?
 
@@ -2170,9 +2170,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 87 of 100
+### Question 87 of 121
 
-*Study area: Responsible-Use Policy · hard*
+*Study area: Organizational Policy · hard*
 
 An organization wants a simple rule for employees about sensitive data and AI tools. Which rule is soundest?
 
@@ -2195,9 +2195,9 @@ Reference: https://privacy.anthropic.com
 
 ---
 
-### Question 88 of 100
+### Question 88 of 121
 
-*Study area: Missing Context · easy*
+*Study area: Diagnosing Poor Outputs · easy*
 
 Claude's answers to your question are consistently generic and could apply to any company. What is the most likely root cause and fix?
 
@@ -2220,9 +2220,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 89 of 100
+### Question 89 of 121
 
-*Study area: Format Fixes · medium*
+*Study area: Adjusting from Feedback · medium*
 
 You have clearly described the output format three times and Claude still gets the layout slightly wrong. What is the most effective durable fix?
 
@@ -2245,9 +2245,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 90 of 100
+### Question 90 of 121
 
-*Study area: Wrong Model · medium*
+*Study area: Workflow Optimization · medium*
 
 A high-volume, simple text-cleanup job is running slowly and costing more than expected on your largest model. What is the root-cause fix?
 
@@ -2264,15 +2264,15 @@ Running a simple, high-volume task on the largest model wastes cost and latency.
 
 _Why a tempting wrong answer misses:_ Adding more instructions does not address the mismatch between a heavyweight model and a lightweight task; the model choice is the lever.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+Reference: https://platform.claude.com/docs/en/about-claude/models/choosing-a-model
 
 </details>
 
 ---
 
-### Question 91 of 100
+### Question 91 of 121
 
-*Study area: Wrong Model · medium*
+*Study area: Diagnosing Poor Outputs · medium*
 
 A genuinely complex, multi-step analysis produces shallow, error-prone results on a small, fast model. What is the most appropriate fix?
 
@@ -2289,15 +2289,15 @@ When a task genuinely exceeds a small model's reasoning, the fix is to match the
 
 _Why a tempting wrong answer misses:_ Repeating the prompt on the same small model does not add the reasoning capacity the complex task needs; the model is the constraint.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+Reference: https://platform.claude.com/docs/en/about-claude/models/choosing-a-model
 
 </details>
 
 ---
 
-### Question 92 of 100
+### Question 92 of 121
 
-*Study area: Durable Fixes · medium*
+*Study area: Workflow Optimization · medium*
 
 Every day you correct Claude's tone the same way in a fresh chat. What is the durable fix?
 
@@ -2314,16 +2314,16 @@ A repeated manual correction is a signal to fix the configuration. Putting the t
 
 _Why a tempting wrong answer misses:_ Correcting the tone by hand each day is the endlessly repeated one-off patch that a durable configuration change is meant to replace.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
 
 </details>
 
 ---
 
-### Question 93 of 100
+### Question 93 of 121
 
 **Scenario: Codebase Edits**
-*Study area: Wrong Entry Point · medium*
+*Study area: Workflow Optimization · medium*
 
 A developer keeps pasting files from a large codebase into chat one at a time to get Claude to make coordinated edits, and it is painful and error-prone. What is the root-cause fix?
 
@@ -2346,9 +2346,9 @@ Reference: https://code.claude.com/docs/en/overview
 
 ---
 
-### Question 94 of 100
+### Question 94 of 121
 
-*Study area: Stale Knowledge · easy*
+*Study area: Diagnosing Poor Outputs · easy*
 
 Claude's answer about a fast-moving topic is confidently out of date. What is the most direct fix?
 
@@ -2365,15 +2365,15 @@ Out-of-date answers on recent topics stem from the training cutoff. Enabling web
 
 _Why a tempting wrong answer misses:_ Asking Claude to "be more current" cannot conjure post-cutoff facts it never learned; it needs a retrieval tool like web search.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+Reference: https://support.claude.com/en/articles/10684626-enable-and-use-web-search
 
 </details>
 
 ---
 
-### Question 95 of 100
+### Question 95 of 121
 
-*Study area: Ambiguous Prompt · medium*
+*Study area: Diagnosing Poor Outputs · medium*
 
 Two people give Claude "clean up this text" and get very different results, and neither is what they wanted. What is the root cause and fix?
 
@@ -2396,9 +2396,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 96 of 100
+### Question 96 of 121
 
-*Study area: Isolating Variables · hard*
+*Study area: Adjusting from Feedback · hard*
 
 An output got worse after you edited your prompt, but you changed several things at once. What is the best troubleshooting move?
 
@@ -2421,9 +2421,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 97 of 100
+### Question 97 of 121
 
-*Study area: Right Diagnosis · medium*
+*Study area: Diagnosing Poor Outputs · medium*
 
 Claude gives wrong answers about your internal process. You are tempted to blame the model, but it was never given the process documentation. What is the real root cause?
 
@@ -2446,9 +2446,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 98 of 100
+### Question 98 of 121
 
-*Study area: Constraining Output · medium*
+*Study area: Adjusting from Feedback · medium*
 
 Claude's responses are far longer and more rambling than you need for a quick summary. What is the durable fix?
 
@@ -2471,9 +2471,9 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 99 of 100
+### Question 99 of 121
 
-*Study area: Root-Cause Thinking · hard*
+*Study area: Diagnosing Poor Outputs · hard*
 
 A prompt underperforms. Which sequence best reflects sound troubleshooting?
 
@@ -2496,10 +2496,10 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 100 of 100
+### Question 100 of 121
 
 **Scenario: Team Standardization**
-*Study area: Durable Fixes · medium*
+*Study area: Workflow Optimization · medium*
 
 You discover a prompt tweak that reliably fixes a recurring problem across your team's chats. What is the best way to capture the win?
 
@@ -2516,7 +2516,539 @@ A durable fix belongs in shared configuration. Encoding the improvement in the t
 
 _Why a tempting wrong answer misses:_ Applying the tweak manually whenever you remember is fragile and does not help teammates; building it into shared config makes the fix permanent and universal.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview
+Reference: https://support.claude.com/en/articles/9519177-how-can-i-create-and-manage-projects
+
+</details>
+
+---
+
+### Question 101 of 121
+
+*Study area: Adapting to Task Type · medium*
+
+This week you use Claude for two tasks: generating 30 raw ideas for a team offsite, and explaining a dip in a quarterly sales export. Which prompting approach best fits the difference between them?
+
+- **A.** Ask for many varied ideas with judging deferred; for the analysis, give the data and ask for reasoning tied to figures
+- **B.** Reuse one identical template for both tasks, since keeping prompts consistent matters more than task type
+- **C.** Ask for one polished idea; for the analysis, ask for broad speculative explanations without sharing any data
+- **D.** Ask for only the single best answer in both cases, so there is less output for you to review afterward
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Prompting should adapt to the task type. Brainstorming benefits from breadth and deferred judgment, while analysis needs the actual data and reasoning tied to specific evidence you can check.
+
+_Why a tempting wrong answer misses:_ Option C inverts the two needs: it narrows the brainstorm to one idea and asks the analysis to speculate without the data that would ground it.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+
+</details>
+
+---
+
+### Question 102 of 121
+
+*Study area: Task Decomposition · hard*
+
+You want Claude to turn 12 customer interview transcripts into a recommendations memo. Which TWO practices apply prompt chaining well? (Select 2.)
+
+- **A.** First have Claude extract themes with supporting quotes, review them, then feed the approved themes into the memo draft
+- **B.** Give each step one clear objective so you can check its output before the next step builds on it
+- **C.** Put extraction, drafting, and formatting into one long prompt so Claude can see the whole job at once
+- **D.** Skip reviewing the intermediate outputs, since any problems will show up in the final memo anyway
+- **E.** Start drafting the memo before themes are extracted so that the two steps can finish sooner
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: A, B**
+
+Prompt chaining splits a complex job into focused subtasks whose outputs feed the next step. Single-objective steps with a review point between them make errors easy to catch before they propagate.
+
+_Why a tempting wrong answer misses:_ One long all-in-one prompt (C) is the pattern chaining replaces; it spreads attention across every subtask and hides where a problem was introduced.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/chain-prompts
+
+</details>
+
+---
+
+### Question 103 of 121
+
+*Study area: Output Formats · easy*
+
+You need a three-page onboarding guide that you will revise with Claude several times and then share with new hires. Which output format fits best?
+
+- **A.** An artifact, so the guide lives as its own document you can iterate on and share
+- **B.** An inline chat reply, with the full guide re-pasted after every revision you ask for
+- **C.** A structured JSON object, since machine-readable data is the easiest format for people
+- **D.** A single dense paragraph, so the whole guide fits in one message without any breaks
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Artifacts suit content that is substantial, self-contained, and likely to be edited, iterated on, or reused outside the conversation, which describes a multi-page guide you will revise and share.
+
+_Why a tempting wrong answer misses:_ Re-pasting the guide inline after every revision buries each version in the chat and makes iteration and sharing harder than keeping it as one artifact.
+
+Reference: https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them
+
+</details>
+
+---
+
+### Question 104 of 121
+
+*Study area: Output Formats · medium*
+
+A colleague asks, "Which of our three vendor contracts has the shortest term?" The contracts are already in the chat. What is the best output?
+
+- **A.** A full artifact report covering every clause of all three contracts, with headings
+- **B.** A short inline answer naming the vendor and its term, citing the relevant clause
+- **C.** A JSON array listing every field extracted from all three of the vendor contracts
+- **D.** A slide outline comparing the three vendors across a broad range of criteria
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+Match the format to the need. A quick factual question is best answered inline and briefly, with the supporting clause cited so the colleague can check it.
+
+_Why a tempting wrong answer misses:_ A full artifact report is built for substantial, reusable content; for a one-line factual question it adds reading time without adding value.
+
+Reference: https://support.claude.com/en/articles/17153992-what-are-artifacts-and-how-do-i-use-them
+
+</details>
+
+---
+
+### Question 105 of 121
+
+*Study area: Output Formats · medium*
+
+You need Claude to pull the invoice number, date, and total from 200 invoices so the results can go straight into a spreadsheet. Which output format should you ask for?
+
+- **A.** Narrative paragraphs describing each invoice in turn, in the order they were provided
+- **B.** A bulleted summary of the overall spending trends seen across all of the invoices
+- **C.** Structured data, such as CSV or a table with one row per invoice and fixed columns
+- **D.** A persuasive memo recommending which of the invoices should be paid off first
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: C**
+
+When output feeds another tool, ask for structured data with a fixed schema. One row per invoice with named columns can be loaded and checked directly.
+
+_Why a tempting wrong answer misses:_ Narrative paragraphs carry the same facts but in a shape a spreadsheet cannot ingest, forcing someone to re-extract every value by hand.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+
+</details>
+
+---
+
+### Question 106 of 121
+
+*Study area: Refining for Audience · medium*
+
+Claude drafted a detailed incident summary for the engineering team. You now need a version for the executive team. Which request is best?
+
+- **A.** Send the engineering version unchanged, since the facts are the same for every audience
+- **B.** Ask Claude to expand the draft so executives have every technical detail in front of them
+- **C.** Ask Claude to add more technical terms so the summary sounds more authoritative to leaders
+- **D.** Ask Claude to lead with business impact and next steps, cut jargon, and keep it to one page
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Adapting output for an audience means changing emphasis, vocabulary, and length to fit what that audience needs. Executives need impact and decisions first, in plain language and brief form.
+
+_Why a tempting wrong answer misses:_ Sending the engineering version unchanged keeps the facts but ignores the audience; executives would have to dig through jargon to find the impact and next steps.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+
+</details>
+
+---
+
+### Question 107 of 121
+
+*Study area: Refining for Audience · medium*
+
+You asked Claude for two versions of a customer announcement and must choose one to send. Which TWO comparison steps are most useful? (Select 2.)
+
+- **A.** Check each version's claims against the facts in your approved release notes
+- **B.** Judge each version against the audience, tone, and length you asked for
+- **C.** Choose whichever version is longer, since it probably covers more ground
+- **D.** Choose the version that Claude says it feels more confident about
+- **E.** Choose the version generated second, since later drafts are always better
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: A, B**
+
+Comparing outputs means scoring each against the same criteria: factual accuracy against an authoritative source, and fit to the stated audience and requirements.
+
+_Why a tempting wrong answer misses:_ Length, self-reported confidence, and generation order are not quality signals; none of them tells you which version is accurate or right for the customers.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
+</details>
+
+---
+
+### Question 108 of 121
+
+*Study area: Accuracy and Completeness · medium*
+
+You gave Claude a list of 10 requirements and asked for a project plan. The plan reads well. Which check most directly tests whether it is complete?
+
+- **A.** Count the words in the plan to confirm that it is long enough to cover everything
+- **B.** Map each of the 10 requirements to where the plan addresses it, flagging any gaps
+- **C.** Ask Claude whether the plan is complete and then accept whatever answer it gives
+- **D.** Confirm that every heading in the plan uses the same consistent formatting style
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+Completeness is checked against the original requirements. Tracing each requirement to the part of the plan that meets it exposes anything missing, however polished the plan reads.
+
+_Why a tempting wrong answer misses:_ Asking Claude to grade its own completeness is not independent evidence; tracing requirements yourself is what reveals a gap.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
+</details>
+
+---
+
+### Question 109 of 121
+
+*Study area: Fact-Checking · medium*
+
+You are about to ask Claude to summarize a 60-page policy and want every point to be easy to audit. Which instruction best supports verification?
+
+- **A.** Quote the exact passage supporting each point, and drop any point you cannot support
+- **B.** Write in a confident tone so the summary reads as authoritative to the policy team
+- **C.** Fill any gaps using your general knowledge of similar policies at other companies
+- **D.** Keep the summary very short so that there are fewer individual claims to check
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Grounding claims in direct quotes, and retracting any claim without a supporting quote, makes each point auditable against the source and reduces invented content.
+
+_Why a tempting wrong answer misses:_ Filling gaps from general knowledge (C) invites claims that are not in this policy at all, which is the opposite of an auditable summary.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
+</details>
+
+---
+
+### Question 110 of 121
+
+*Study area: Hallucinations and Bias · medium*
+
+Claude will answer staff questions from a supplied benefits document. Which TWO instructions most reduce the chance that it invents details? (Select 2.)
+
+- **A.** "If the document does not contain the answer, say you do not have enough information."
+- **B.** "Use only the attached document, not your general knowledge, to answer."
+- **C.** "Always give a specific number, even if you need to estimate one."
+- **D.** "Never say that you are unsure; staff want decisive answers."
+- **E.** "Answer as quickly as possible without re-reading the document."
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: A, B**
+
+Giving Claude explicit permission to say it does not know, and restricting it to the supplied document, are documented ways to reduce hallucinations.
+
+_Why a tempting wrong answer misses:_ Demanding a specific number or forbidding uncertainty pressures Claude to produce an answer even when the document has none, which is how fabrication happens.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
+</details>
+
+---
+
+### Question 111 of 121
+
+*Study area: Human Review · hard*
+
+Claude helps draft two items this week: a casual internal team newsletter and a quarterly earnings statement for public release. How should review effort be applied?
+
+- **A.** Apply the same rigorous review to both, since every output carries identical risk
+- **B.** Skip review for both, since both drafts come from the same well-tested prompt
+- **C.** Lightly review the newsletter; have experts verify every figure in the earnings statement
+- **D.** Lightly review both, since Claude's financial summaries are usually quite accurate
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: C**
+
+Review effort scales with stakes. A public earnings statement is high-stakes and hard to retract, so every figure needs expert verification; a casual internal newsletter needs only a light check.
+
+_Why a tempting wrong answer misses:_ A light review of the earnings statement relies on "usually accurate," but a single wrong figure in a public financial release is costly and cannot be quietly undone.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations
+
+</details>
+
+---
+
+### Question 112 of 121
+
+*Study area: Product Features · medium*
+
+A marketing lead needs a competitor comparison that draws on about a dozen web sources and their connected Google Drive, with citations, and is happy to wait a few minutes. Which Claude feature fits best?
+
+- **A.** Extended thinking on its own, which reasons more deeply but does not search anything
+- **B.** A single web search, which suits a quick factual question needing one or two lookups
+- **C.** An artifact, which displays content in its own panel but does not gather any sources
+- **D.** Research, which searches the web and connected apps and returns a cited report
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Research is built for comprehensive, multi-source gathering: it runs many searches across the web and connected sources such as Google Drive over a few minutes and produces a report with citations.
+
+_Why a tempting wrong answer misses:_ A single web search suits quick factual lookups; it is not designed to synthesize a dozen sources plus internal documents into a cited comparison.
+
+Reference: https://support.claude.com/en/articles/11088861-use-research-on-claude
+
+</details>
+
+---
+
+### Question 113 of 121
+
+*Study area: Context and Memory · medium*
+
+You have worked for days in one very long chat on a launch plan and want to continue next week without losing key decisions. Which TWO approaches fit how Claude works today? (Select 2.)
+
+- **A.** Have Claude summarize the key decisions, then start a fresh chat in the launch Project with that summary
+- **B.** Keep the plan's durable reference material in the Project's knowledge so every new chat can use it
+- **C.** Move the work into an incognito chat so that Claude remembers the launch details next week
+- **D.** Rely on every chat in a Project automatically seeing the full text of every other chat
+- **E.** Paste the entire multi-day transcript into each new message you send from now on
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: A, B**
+
+Summarizing and restarting keeps the decisions while dropping noisy history, and Project knowledge persists reference material for every chat in the Project.
+
+_Why a tempting wrong answer misses:_ Chats in a Project do not automatically share each other's context, and incognito chats are neither saved to history nor added to memory, so C and D would lose the work.
+
+Reference: https://support.claude.com/en/articles/9517075-what-are-projects
+
+</details>
+
+---
+
+### Question 114 of 121
+
+*Study area: Requirements and Use Cases · medium*
+
+An operations manager has messy notes from five stakeholder interviews about a new request-intake process. How can Claude best help at the requirements stage?
+
+- **A.** Finalize the requirements from the notes alone and send them straight to the build team
+- **B.** Organize the notes into draft requirements and open questions for stakeholders to confirm
+- **C.** Replace the interviews by asking Claude what stakeholders at similar firms usually want
+- **D.** Skip requirements and ask Claude to design the complete solution from the raw notes
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+Claude is strong at structuring messy input into draft requirements and surfacing open questions, while the manager keeps ownership by confirming them with the real stakeholders.
+
+_Why a tempting wrong answer misses:_ Finalizing requirements from notes alone skips validation with the people who gave them, so gaps and misreadings go straight to the build team.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+
+</details>
+
+---
+
+### Question 115 of 121
+
+*Study area: Solution Design · hard*
+
+A team wants a process that pulls data from three internal systems on a schedule and writes results back automatically. As an Associate, which TWO steps are most appropriate? (Select 2.)
+
+- **A.** Use Claude to document the requirements and a proposed workflow for the automation
+- **B.** Escalate the integration build to a Claude Developer or Architect on the team
+- **C.** Paste each system's admin password into a chat so Claude can connect to it directly
+- **D.** Promise stakeholders the automation will run unattended with no errors at all
+- **E.** Skip the documentation and start building by trial and error inside a chat
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: A, B**
+
+Associates add value by analyzing requirements and designing the workflow, and they escalate scheduled, multi-system integrations to Developers or Architects who build against APIs.
+
+_Why a tempting wrong answer misses:_ Pasting admin passwords into a chat exposes secrets and still would not produce a governed, scheduled integration.
+
+Reference: https://platform.claude.com/docs/en/intro
+
+</details>
+
+---
+
+### Question 116 of 121
+
+*Study area: Research and Planning · medium*
+
+You are planning an improvement to invoice approvals, which currently take nine days end to end. How is Claude best used during planning?
+
+- **A.** Have Claude map current steps from your notes, flag likely bottlenecks, and propose options to weigh
+- **B.** Have Claude invent an industry cycle-time benchmark and present it to leadership as fact
+- **C.** Have Claude choose the final redesign and roll it out without input from the approvers
+- **D.** Have Claude rewrite the invoice policy first and collect the current process details later
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Claude supports process optimization by structuring the current state, spotting likely bottlenecks, and proposing options, leaving evaluation and the decision with the people who own the process.
+
+_Why a tempting wrong answer misses:_ An invented benchmark presented as fact is a fabrication risk; any external figure must come from a verified source before it reaches leadership.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices
+
+</details>
+
+---
+
+### Question 117 of 121
+
+*Study area: Knowledge and Connectors · medium*
+
+Your Project relies on a pricing sheet that finance updates weekly in Google Docs. Uploading a fresh copy each week keeps going stale. What is the better setup?
+
+- **A.** Upload a new PDF copy every Monday and remember to delete last week's version
+- **B.** Paste the pricing table into the Project instructions and edit it by hand weekly
+- **C.** Add the Google Doc to Project knowledge through the Drive connector so it stays synced
+- **D.** Ask Claude to remember last week's prices and adjust them itself as time goes by
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: C**
+
+Google Docs added to a Project through Google Drive sync from Drive, so the Project always works from the latest version without manual re-uploads.
+
+_Why a tempting wrong answer misses:_ Weekly manual uploads (A) are the fragile process causing staleness; one missed Monday and Claude quotes old prices.
+
+Reference: https://support.claude.com/en/articles/10166901-use-google-workspace-connectors
+
+</details>
+
+---
+
+### Question 118 of 121
+
+*Study area: Knowledge and Connectors · medium*
+
+Your organization on a Team plan is rolling out the Gmail and Google Drive connectors. Which TWO statements are accurate? (Select 2.)
+
+- **A.** An Owner or Primary Owner must enable the connectors for the organization before members can connect
+- **B.** Claude can reach only the files and email that the connected user already has permission to access
+- **C.** Connecting Drive gives Claude access to every file in the company's Google Workspace domain
+- **D.** Once connected, Claude continuously reads each user's whole inbox in the background
+- **E.** Enabling connectors removes the need for the organization's data-handling policy
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: A, B**
+
+On Team and Enterprise plans an Owner or Primary Owner enables Google Workspace connectors first, and Claude mirrors each user's existing permissions rather than granting new access.
+
+_Why a tempting wrong answer misses:_ Connectors do not widen access (C) or run constantly (D); Claude retrieves data when you ask for something that needs it, within your own permissions.
+
+Reference: https://support.claude.com/en/articles/10166901-use-google-workspace-connectors
+
+</details>
+
+---
+
+### Question 119 of 121
+
+*Study area: Ethical Implications · medium*
+
+A manager plans to have Claude draft performance reviews and send them without checking them against actual performance records. What is the most important concern?
+
+- **A.** The drafts might run longer than the company's usual review template allows
+- **B.** Reviews affect careers, so the manager must verify them and own the judgment
+- **C.** Claude might use a slightly different tone from the manager's usual writing
+- **D.** The drafts might take a few extra minutes to format for the HR platform
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+Decisions that affect people's livelihoods carry ethical weight. AI drafts can be wrong or biased, so the accountable human must verify them against real evidence and own the final judgment.
+
+_Why a tempting wrong answer misses:_ Tone and formatting are cosmetic; the real risk is unverified, possibly unfair assessments reaching employees under the manager's name.
+
+Reference: https://www.anthropic.com/legal/aup
+
+</details>
+
+---
+
+### Question 120 of 121
+
+*Study area: Appropriate Use Cases · medium*
+
+Which request is the most appropriate use of Claude for an Associate on a general business team?
+
+- **A.** Deciding alone which employees are laid off, using a spreadsheet of salaries
+- **B.** Giving a customer a final medical diagnosis based on symptoms typed into chat
+- **C.** Generating fake five-star customer reviews for the company's product listing
+- **D.** Drafting a plain-language benefits FAQ from approved policy for HR to review
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Drafting from an approved source with human review is a well-bounded, low-risk use. The others hand consequential judgments to a tool or create deceptive content.
+
+_Why a tempting wrong answer misses:_ Fabricated reviews (C) are deceptive regardless of how well written they are, and Anthropic's Usage Policy prohibits that kind of deception.
+
+Reference: https://www.anthropic.com/legal/aup
+
+</details>
+
+---
+
+### Question 121 of 121
+
+*Study area: Data Sensitivity and Privacy · medium*
+
+Your organization's policy permits using Claude for a sensitive one-off question, and you would prefer it not be saved to your chat history. Which TWO statements about incognito chats are accurate? (Select 2.)
+
+- **A.** Incognito chats are not saved to chat history and are not added to Claude's memory
+- **B.** Incognito mode is available only for chats started outside of Projects
+- **C.** Incognito chats are erased instantly, so data-handling policies no longer apply
+- **D.** Incognito chats can be started inside any Project to keep its work private
+- **E.** Incognito chats make it safe to paste live passwords, since nothing is kept
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: A, B**
+
+Incognito chats are temporary: they skip chat history and memory, and they are currently available only outside Projects.
+
+_Why a tempting wrong answer misses:_ Incognito chats are still retained for a period (30 days by default, longer under some Enterprise settings), so they never override data policy or make pasting secrets safe.
+
+Reference: https://support.claude.com/en/articles/12260368-use-incognito-chats
 
 </details>
 

@@ -2,57 +2,57 @@
 
 > **Unofficial, community-authored study material.** Not affiliated with, endorsed by, or produced by Anthropic. Questions are original and written to teach the publicly documented concepts — they are **not** real exam items.
 
-**100 questions** · Real exam format: 120 min · Passing scaled score 720/1000
+**117 questions** · Real exam format: 120 min · Passing scaled score 720/1000
 
 *This file is generated from `questions.json` by `scripts/build.mjs`. Do not edit by hand.*
 
 ---
 
-### Question 1 of 100
+### Question 1 of 117
 
 **Scenario: Multi-Agent Research System**
-*Study area: Coordinator as Hub · medium*
+*Study area: Coordinator-subagent orchestration · medium*
 
-An engineer proposes letting the web-search worker hand its raw findings straight to the citation-checking worker to 'save a hop' instead of returning through the coordinator. Why does the orchestrator-workers pattern deliberately route worker output through the coordinator?
+Your research coordinator sends every request through the full pipeline of search, document analysis, synthesis, and report generation. Logs show that simple requests such as 'what year was this standard ratified?' take minutes and cost as much as a full literature review. What is the best design change?
 
-- **A.** Direct worker-to-worker links add measurable network latency at every hop, so removing the coordinator from the path is the only way to keep parallel workers fast enough for production loads
-- **B.** The coordinator provides centralized visibility, consistent error handling, and control over exactly what each worker receives, which direct links would lose
-- **C.** Workers cannot serialize their messages into a format that other workers are able to parse
-- **D.** The Messages API forbids more than two agents from sharing a single conversation
+- **A.** Have the coordinator assess each request's complexity and invoke only the subagents that request actually needs
+- **B.** Keep the fixed pipeline but lower max_tokens on every subagent so that short requests finish sooner and cost less
+- **C.** Split the system into two separate deployments, one for simple lookups and one for full literature reviews
+- **D.** Cache each subagent's last output so repeated simple requests can skip the search and analysis stages entirely
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+A coordinator's job includes deciding which subagents a query requires. Routing everything through the whole pipeline wastes time and tokens on requests that one step could answer; dynamic selection matches effort to query complexity.
+
+_Why a tempting wrong answer misses:_ Lowering max_tokens (B) truncates output without removing the unnecessary stages, so the cost and latency of running four agents remain.
+
+Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+
+</details>
+
+---
+
+### Question 2 of 117
+
+**Scenario: Multi-Agent Research System**
+*Study area: Coordinator-subagent orchestration · hard*
+
+A report on regional water policy comes back well written, but a reviewer notes that it barely covers groundwater rights, a topic the request explicitly named. The subagents did what they were asked. Which coordinator behavior would most reliably close gaps like this before the report ships?
+
+- **A.** Ask the synthesis subagent to write longer reports so that minor topics are less likely to be squeezed out of the draft
+- **B.** Evaluate the synthesis against the request's required topics, re-delegate targeted searches for any gaps, then re-run synthesis
+- **C.** Run the whole pipeline three times on the same request and merge the three reports into one combined final document
+- **D.** Give the report-generation subagent web search so it can fill any missing topics on its own while it formats the report
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: B**
 
-The hub's value is centralized oversight: the coordinator sees every result, applies consistent error handling, and controls what each worker is fed. Bypassing it trades that control for a shortcut.
+An iterative refinement loop has the coordinator check synthesized output against the goal, send focused follow-up queries to search and analysis for whatever is thin, and synthesize again until coverage is sufficient.
 
-_Why a tempting wrong answer misses:_ The benefit is coordination and control, not latency; worker-to-worker messaging is not primarily a speed problem, so the latency framing in A misidentifies the reason.
-
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
-
-</details>
-
----
-
-### Question 2 of 100
-
-**Scenario: Multi-Agent Research System**
-*Study area: Task Decomposition Quality · hard*
-
-A research run finishes with every subagent reporting success and no errors logged, yet the final brief omits the regulatory-risk dimension entirely. What most likely caused the gap?
-
-- **A.** The coordinator decomposed the topic too narrowly, so no subagent was ever assigned the regulatory dimension to research
-- **B.** The synthesis prompt lacked a regulatory section header, so Claude dropped that content while aggregating the collected worker reports into the final brief
-- **C.** Lost-in-the-middle positioning caused the regulatory findings to be under-weighted during synthesis, so they were gathered by a worker but never surfaced into the final written brief
-- **D.** The workers deduplicated too aggressively and removed the regulatory content as redundant
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: A**
-
-Coverage is bounded by decomposition quality: if the coordinator never carves out a dimension, no worker produces it and synthesis cannot recover what was never gathered. All-success plus a whole-topic omission points to the plan, not a runtime loss.
-
-_Why a tempting wrong answer misses:_ Lost-in-the-middle (C) would under-weight content that was collected, not omit an entire dimension that was never assigned; it presupposes the findings existed.
+_Why a tempting wrong answer misses:_ Giving the report writer a search tool (D) spreads research across a role that should not do it and bypasses the coordinator, which loses the central check on coverage.
 
 Reference: https://www.anthropic.com/engineering/multi-agent-research-system
 
@@ -60,296 +60,296 @@ Reference: https://www.anthropic.com/engineering/multi-agent-research-system
 
 ---
 
-### Question 3 of 100
+### Question 3 of 117
 
 **Scenario: Multi-Agent Research System**
-*Study area: Partition Before Delegate · medium*
+*Study area: Subagent context and spawning · medium*
 
-Three workers each search 'the whole web' for a market-sizing question and return heavily overlapping sources, roughly tripling cost with no coverage gain. You want to keep them running in parallel. What is the best design change?
+You define three AgentDefinition entries for a coordinator built on the Agent SDK. The coordinator's allowedTools lists Read, Grep, and WebSearch. At runtime it never delegates; it tries to do all the research itself. What is the most likely cause?
 
-- **A.** Reduce to a single worker so there is no overlap to worry about
-- **B.** Add a shared 'claimed sources' list in external storage that every worker reads and writes before each fetch, so in principle no two workers ever pull the same source twice
-- **C.** Have the coordinator assign each worker a distinct source class up front (filings, news, analyst reports) so their searches cannot collide
-- **D.** Let all three run, then have the coordinator deduplicate the overlapping sources afterward, right before the synthesis step reconciles them into a single answer
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: C**
-
-Partitioning the search space at the coordinator before delegation removes the overlap at its root while preserving parallelism; distinct source classes guarantee non-colliding work.
-
-_Why a tempting wrong answer misses:_ A shared claimed-sources list (B) introduces race conditions and still allows duplicate fetches before a worker notices a claim; proactive partitioning is simpler and reliable.
-
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
-
-</details>
-
----
-
-### Question 4 of 100
-
-**Scenario: Multi-Agent Research System**
-*Study area: Tool Distribution & Least Privilege · hard*
-
-A document-analysis worker is given a general fetch_url tool to pull cited PDFs. Logs show it also points fetch_url at search-engine URLs and scrapes results, doing the search worker's job badly. What is the most robust fix?
-
-- **A.** Add a firmly worded system-prompt rule instructing the worker never to point fetch_url at search engines and to use it only for retrieving the specific cited documents it was given
-- **B.** Block search-engine domains with a denylist inside fetch_url
-- **C.** Route every fetch through the coordinator so it can review each request
-- **D.** Replace fetch_url with a narrower load_document tool that only accepts an allowlisted document identifier, making ad-hoc search impossible at the interface
+- **A.** AgentDefinition entries only take effect when each subagent is also registered as a separate MCP server
+- **B.** Subagents are disabled by default and must be switched on with a beta header on every coordinator request
+- **C.** The coordinator needs a PreToolUse hook that forwards each research request to the right subagent
+- **D.** The coordinator's allowedTools omits the Agent tool, so it has no way to spawn the defined subagents
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: D**
 
-Constraining the tool interface makes the misuse structurally impossible: a load_document tool that only takes a document id cannot perform search at all. This beats advisory prompts or partial blocks.
+Subagents are invoked through the Agent tool (formerly named Task). If the coordinator's allowed tools do not include it, the definitions exist but the coordinator cannot launch them.
 
-_Why a tempting wrong answer misses:_ A prompt instruction (A) is advisory and drifts under pressure; the model can still call the capable tool. Removing the capability at the interface is the durable fix.
+_Why a tempting wrong answer misses:_ Subagents are not MCP servers (A); AgentDefinition is the SDK's own mechanism, and it still depends on the Agent tool being allowed.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
+Reference: https://code.claude.com/docs/en/agent-sdk/subagents
 
 </details>
 
 ---
 
-### Question 5 of 100
+### Question 4 of 117
 
 **Scenario: Multi-Agent Research System**
-*Study area: Scoped Tools for Hot Paths · medium*
+*Study area: Subagent context and spawning · medium*
 
-Your synthesis agent constantly needs quick single-fact confirmations (dates, figures) and currently routes every check back through the coordinator, adding latency. Genuine multi-hop verifications are rare. What is the best least-privilege design?
+The coordinator spawns a synthesis subagent with the prompt 'Synthesize the findings into a briefing.' The briefing comes back generic and cites nothing from the search or analysis steps. What should change?
 
-- **A.** Give the synthesis agent a narrow verify_fact tool for the common single-fact case, and keep routing complex verification through the coordinator
-- **B.** Give the synthesis agent the full research toolset, including web search and document loaders, so it can independently verify any claim it encounters without ever waiting on the coordinator
-- **C.** Have the coordinator pre-verify every fact before synthesis even begins
-- **D.** Cache all prior findings so the synthesis agent never has to verify anything
+- **A.** Switch the synthesis subagent to a larger model so it can recall what the other subagents found earlier in the run
+- **B.** Tell the synthesis subagent to call the search subagent itself whenever it needs to see the findings
+- **C.** Turn on session forking so the synthesis subagent automatically inherits the coordinator's history
+- **D.** Include the complete search results and analysis outputs directly in the synthesis subagent's prompt
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: A**
+**Correct answer: D**
 
-A scoped verify_fact tool handles the high-frequency simple case locally (a latency win) while rare complex checks still escalate through the coordinator, preserving least privilege.
+Subagents start with their own context and do not inherit the parent's conversation or other subagents' results. Whatever the synthesis step needs has to be passed explicitly in the prompt the coordinator writes.
 
-_Why a tempting wrong answer misses:_ Handing over the full toolset (B) violates least privilege and bloats the agent's capabilities far beyond the narrow hot path it actually needs.
+_Why a tempting wrong answer misses:_ A larger model (A) cannot recall information that was never placed in its context; the gap is missing input, not reasoning ability.
 
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+Reference: https://code.claude.com/docs/en/agent-sdk/subagents
 
 </details>
 
 ---
 
-### Question 6 of 100
+### Question 5 of 117
 
 **Scenario: Multi-Agent Research System**
-*Study area: Structured Error Context · medium*
+*Study area: Subagent context and spawning · medium*
 
-A worker's primary data source times out mid-run. Which return value best lets the coordinator recover intelligently?
+Your coordinator needs four independent literature searches, one per region. Traces show it launches one search subagent, waits for the result, then launches the next, so a run takes four times longer than one search. How should the coordinator spawn them?
 
-- **A.** Return an empty result set so the pipeline keeps moving, and let the downstream synthesis step infer from the conspicuously missing data that this particular source must have been unavailable
-- **B.** A structured error object: failure type (timeout), the query attempted, any partial results gathered, and suggested alternative sources
-- **C.** A thrown exception that aborts the entire research run
-- **D.** A success response containing a prose note that 'some data may be missing,' leaving the coordinator to guess from the wording whether the source actually failed
+- **A.** Chain the regions so each subagent receives the previous region's results as extra context
+- **B.** Launch one subagent and tell it to cover all four regions in sequence inside one long session
+- **C.** Add a sleep between launches so the searches overlap without hitting the API rate limits
+- **D.** Emit all four Agent tool calls in a single response so the subagents can run concurrently
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Independent subtasks can run in parallel when the coordinator issues multiple Agent tool calls in the same turn. Spreading them across separate turns serializes work that has no dependency between its parts.
+
+_Why a tempting wrong answer misses:_ Chaining the regions (A) creates an artificial dependency and keeps the run sequential, which is the problem being fixed.
+
+Reference: https://code.claude.com/docs/en/agent-sdk/subagents
+
+</details>
+
+---
+
+### Question 6 of 117
+
+**Scenario: Customer Support Resolution Agent**
+*Study area: Structured tool errors · medium*
+
+Your process_refund tool returns the same message, 'Operation failed', whether the payment gateway timed out or the refund broke policy. The agent retries policy violations three times and gives up on timeouts that would have succeeded. What should the tool return instead?
+
+- **A.** A longer free-text error paragraph describing everything that might have gone wrong with the refund request
+- **B.** Structured error metadata such as an error category, an isRetryable flag, and a plain-language description
+- **C.** An HTTP status code only, since the model already understands every standard code in the same way
+- **D.** An empty success response, so the agent moves on and the customer can simply try again later on
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: B**
 
-Structured error context (failure type, attempted input, partial results, alternatives) gives the coordinator what it needs to retry, reroute, or degrade gracefully instead of guessing.
+Distinguishing transient, validation, business, and permission errors, with a clear retryable flag, lets the agent retry what can succeed and stop on what cannot.
 
-_Why a tempting wrong answer misses:_ Returning an empty set (A) collapses a failure into a valid 'no results,' so the coordinator cannot distinguish a real gap from a genuine zero and may report false coverage.
+_Why a tempting wrong answer misses:_ A bare status code (C) loses the business context, such as which policy was violated, that the agent needs to explain the outcome to the customer.
 
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+Reference: https://modelcontextprotocol.io/specification/2026-07-28/server/tools
 
 </details>
 
 ---
 
-### Question 7 of 100
+### Question 7 of 117
 
-**Scenario: Multi-Agent Research System**
-*Study area: Empty vs. Failure · medium*
+**Scenario: Developer Productivity with Claude**
+*Study area: Structured tool errors · medium*
 
-Two workers each return zero items: one because the database genuinely has no matching records, the other because its API call timed out. Why must the coordinator treat these differently?
+An internal MCP tool that reads deployment logs fails because the agent's service account lacks access to the production namespace. The agent retries the call nine times. How should the tool report this failure?
 
-- **A.** Timeouts are always transient, so the coordinator should silently retry both cases in exactly the same way
-- **B.** Both are failures and the run should abort to avoid publishing incomplete data
-- **C.** 'Zero matches' is a valid finding to report as-is, while a timeout is an access failure to retry or annotate; collapsing both into 'no results' produces misleading coverage
-- **D.** Zero matches should quietly trigger an escalation to a human reviewer while timeouts are retried automatically, since a genuinely missing record is the more suspicious of the two outcomes
+- **A.** As a transient error, so the agent keeps retrying until the permission change eventually takes effect
+- **B.** As a successful call with an empty log list, so the agent assumes there were simply no errors to report
+- **C.** As a permission error marked non-retryable, naming the missing access so the agent can report or route it
+- **D.** As a validation error, so the agent rewrites its query parameters and tries a slightly different request
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: C**
 
-A legitimate empty result and an access failure carry different meanings and demand different responses; conflating them either discards valid findings or hides real gaps.
+Retrying cannot fix missing access. Categorizing the failure as a permission error and marking it non-retryable tells the agent to stop and surface the problem to someone who can grant access.
 
-_Why a tempting wrong answer misses:_ Aborting the whole run (B) throws away the legitimately-empty worker's valid answer; the two conditions need distinct handling, not a shared abort.
+_Why a tempting wrong answer misses:_ Reporting an empty result (B) turns a failure into a false 'nothing found', which is worse than an error.
 
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
-
-</details>
-
----
-
-### Question 8 of 100
-
-**Scenario: Multi-Agent Research System**
-*Study area: Local Recovery · medium*
-
-A search worker hits an intermittent HTTP 429 on one of its ten queries. Where should this be handled?
-
-- **A.** In the coordinator, which should catch every error from every worker centrally so that all retry and backoff logic lives in one place and the individual workers can stay simple
-- **B.** In a global exception handler that restarts the entire research run
-- **C.** Nowhere in particular: drop the failed query and proceed, since nine of the ten queries already succeeded and the missing one is unlikely to change the result
-- **D.** In the worker, which retries with backoff locally and only escalates to the coordinator (with context) if its retries are exhausted
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: D**
-
-Handle errors at the lowest level that can resolve them: a transient 429 is a local, recoverable condition, so the worker retries and only surfaces what it genuinely cannot fix.
-
-_Why a tempting wrong answer misses:_ Centralizing every transient retry in the coordinator (A) defeats the layering; the coordinator should see only failures the worker could not resolve on its own.
-
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+Reference: https://modelcontextprotocol.io/specification/2026-07-28/server/tools
 
 </details>
 
 ---
 
-### Question 9 of 100
+### Question 8 of 117
 
-**Scenario: Multi-Agent Research System**
-*Study area: Graceful Degradation · medium*
+**Scenario: Developer Productivity with Claude**
+*Study area: Built-in tool selection · easy*
 
-During a run, two of six planned sources are unavailable and the deadline is firm. What should the final report do?
+Your productivity agent has Read, Write, Edit, Bash, Grep, and Glob. An engineer asks it to list every Storybook file in the repo, which follow the naming pattern *.stories.tsx. Which tool fits best?
 
-- **A.** Proceed and annotate coverage, marking which conclusions are well-supported and which rest on gapped sources, rather than hiding the missing coverage
-- **B.** Silently omit the topics the failed sources would have covered so the report reads cleanly, and record the reduced scope only in an internal log that the team can consult later
-- **C.** Fail the run and deliver nothing until all six sources are reachable again
-- **D.** Fill the gaps with the model's best guesses to keep the report looking complete
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: A**
-
-Graceful degradation with transparency delivers value under a firm deadline while coverage annotations tell readers exactly which findings to trust and which are gapped.
-
-_Why a tempting wrong answer misses:_ Filling gaps with guesses (D) manufactures unsupported claims, which is more dangerous than an honestly-labeled gap and erodes trust in the whole report.
-
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
-
-</details>
-
----
-
-### Question 10 of 100
-
-**Scenario: Multi-Agent Research System**
-*Study area: Long-Context Position Effects · medium*
-
-Your synthesis agent receives 40 worker reports concatenated into one long message. Key conclusions buried in the middle are consistently underused in the final brief. What is the most effective mitigation?
-
-- **A.** Randomly rotate the order of the reports on each run so that no single position is consistently disadvantaged and, over many runs, every report eventually lands near the top of the input
-- **B.** Put a key-findings summary at the top and add explicit section headers, so critical content sits where the model attends most and is easy to navigate
-- **C.** Summarize every report down to a single sentence to shrink the whole input
-- **D.** Increase max_tokens so the model has more room to consider everything
+- **A.** Grep, searching file contents for the word 'stories'
+- **B.** Glob, matching the path pattern **/*.stories.tsx
+- **C.** Read, opening each directory's index file one by one
+- **D.** Edit, adding a marker comment to every matching file
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: B**
 
-Models attend most reliably to the beginning and end of long inputs, so leading with a key-findings summary and adding headers places critical content where it is actually used.
+Glob finds files by name or path pattern, which is exactly what a naming convention like *.stories.tsx describes. Grep searches inside files.
 
-_Why a tempting wrong answer misses:_ Rotating order (A) only moves the blind spot around instead of removing it; something always lands in the weakly-attended middle.
+_Why a tempting wrong answer misses:_ Grep (A) would scan contents and match any file that mentions 'stories', missing the point that the files are identified by their names.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/long-context-tips
-
-</details>
-
----
-
-### Question 11 of 100
-
-**Scenario: Multi-Agent Research System**
-*Study area: Token Reduction at Source · medium*
-
-Token usage per run is dominated by workers pasting full page dumps and their entire reasoning chains into their reports. Coverage is fine; cost is not. What is the best fix?
-
-- **A.** Truncate every worker report to the first 500 tokens before synthesis
-- **B.** Switch the synthesis model to a larger context window so cost stops mattering
-- **C.** Have each worker return structured findings (key facts, citations, relevance scores) instead of raw page text and full reasoning transcripts
-- **D.** Add a separate summarization pass over the reports after they arrive, compressing each one down to its essentials before the synthesis agent has to read the whole set
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: C**
-
-Cutting bloat at the source, by having workers emit structured findings rather than verbose dumps, reduces tokens without a second model pass and keeps only the signal synthesis needs.
-
-_Why a tempting wrong answer misses:_ A downstream summarization pass (D) still pays to generate and transmit the bloat, then pays again to compress it; shaping the output upstream is cheaper and cleaner.
-
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+Reference: https://code.claude.com/docs/en/tools-reference
 
 </details>
 
 ---
 
-### Question 12 of 100
+### Question 9 of 117
 
-**Scenario: Multi-Agent Research System**
-*Study area: Conflicting-Source Handling · medium*
+**Scenario: Developer Productivity with Claude**
+*Study area: Built-in tool selection · medium*
 
-Two workers return contradictory figures for the same metric: one source reports 12%, another reports 18%. How should the system handle the conflict when producing the brief?
+The agent's Edit call to change `retries: 3` fails because that exact string appears in four places in a config file, and only one of them should change. What should the agent do next?
 
-- **A.** Average the two figures and report the 15% midpoint as the answer, treating the gap between the sources as ordinary measurement noise
-- **B.** Keep whichever figure arrived first and discard the other as noise
-- **C.** Have the coordinator pick the source it deems most authoritative and silently drop the other
-- **D.** Surface the disagreement with both values and their sources so synthesis and the reader can weigh them, rather than hiding the conflict behind a single number
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: D**
-
-Conflicting sources should be presented with their provenance so the disagreement is visible and can be judged; hiding it behind one number destroys information the reader needs.
-
-_Why a tempting wrong answer misses:_ Averaging (A) invents a value neither source actually supports and masks a genuine conflict as if it were a settled fact.
-
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
-
-</details>
-
----
-
-### Question 13 of 100
-
-**Scenario: Multi-Agent Research System**
-*Study area: Tool Naming & Description Overlap · medium*
-
-Your system exposes two tools, search_news and search_articles, with near-identical descriptions. Claude routes queries between them almost at random, frequently choosing the wrong one. What is the most effective fix?
-
-- **A.** Rewrite both tools' names and descriptions so each states an unambiguous, non-overlapping purpose and when to use it versus the other
-- **B.** Delete search_articles and force every query through search_news
-- **C.** Add a system-prompt paragraph that lists which kinds of query should go to search_news versus search_articles, overriding whatever the model infers from the two tool descriptions
-- **D.** Lower the sampling temperature so tool selection becomes more deterministic and the model stops routing near-identical queries between the two tools at random
+- **A.** Give Edit a longer old_string that includes nearby unique lines so it matches only the intended occurrence
+- **B.** Set replace_all so all four occurrences change, then revert the three that should not have been changed
+- **C.** Delete the config file with Bash and ask the engineer to recreate it by hand with the new setting
+- **D.** Switch to Grep, since Grep can modify the matching line in place without needing a unique anchor
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: A**
 
-Tool names and descriptions are the primary signal the model selects on, so overlapping descriptions cause misrouting; disambiguating both fixes the actual cause.
+Edit replaces an exact string that must appear once. Adding surrounding context pins down the one occurrence. If Edit still cannot find a unique anchor, reading the file and writing it back in full is the fallback.
 
-_Why a tempting wrong answer misses:_ A system-prompt routing paragraph (C) is a brittle patch layered over ambiguous tool metadata; the model still selects primarily on the descriptions, so fix those.
+_Why a tempting wrong answer misses:_ replace_all (B) is for when every occurrence should change; using it here creates three wrong edits to undo.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
+Reference: https://code.claude.com/docs/en/tools-reference
 
 </details>
 
 ---
 
-### Question 14 of 100
+### Question 10 of 117
+
+**Scenario: Customer Support Resolution Agent**
+*Study area: Context preservation · medium*
+
+Each call to your warehouse's get_shipment tool returns about 60 fields, including carrier internals and audit metadata. A return case needs about six of them. After a few lookups, the agent loses track of earlier details. What should you change?
+
+- **A.** Trim tool results to the fields relevant to the task before they enter the agent's context
+- **B.** Ask the agent to remember the important fields and ignore the others as the chat goes on
+- **C.** Call get_shipment again every turn so the latest full record is always at the end of context
+- **D.** Move the full records into the system prompt, where they will not count against the context
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Verbose tool output accumulates and crowds out what matters. Keeping only the relevant fields controls context growth at the source.
+
+_Why a tempting wrong answer misses:_ Re-calling the tool every turn (C) multiplies the same bloat that caused the problem.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools
+
+</details>
+
+---
+
+### Question 11 of 117
+
+**Scenario: Developer Productivity with Claude**
+*Study area: Large-codebase context · medium*
+
+During a long exploration of a legacy monolith, the agent's answers drift: it starts describing 'typical' service patterns instead of the specific classes it found an hour ago. What practice counters this?
+
+- **A.** Have the agent record key findings in a scratchpad file and consult that file for later questions
+- **B.** Ask the agent to re-read the entire monolith before every question, to keep all its facts fresh
+- **C.** Switch to a model with a larger context window so that the earlier findings never fall away
+- **D.** Tell the agent to answer from general knowledge whenever it cannot recall a specific class
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Context degrades over long sessions. A scratchpad file persists concrete findings outside the conversation, so the agent can reload specifics instead of falling back on generic patterns.
+
+_Why a tempting wrong answer misses:_ Answering from general knowledge (D) formalizes the exact failure being described.
+
+Reference: https://code.claude.com/docs/en/context-window
+
+</details>
+
+---
+
+### Question 12 of 117
 
 **Scenario: Multi-Agent Research System**
-*Study area: Composite Tools · medium*
+*Study area: Provenance and uncertainty · hard*
+
+Synthesis reports that two sources 'contradict each other' on a city's population, 1.8 million versus 2.1 million. On inspection, one figure is from a 2015 census and the other from a 2024 estimate. What design change prevents this misreading?
+
+- **A.** Tell synthesis to always prefer whichever of the two sources reports the larger population figure
+- **B.** Average conflicting figures automatically so the report shows one population number instead of two
+- **C.** Require subagents to include publication or collection dates with each figure in their structured output
+- **D.** Drop any statistic that appears in more than one source, so no contradictions reach the report
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: C**
+
+Without dates, a change over time looks like a contradiction. Carrying publication or collection dates through structured outputs lets synthesis interpret differences correctly.
+
+_Why a tempting wrong answer misses:_ Averaging (B) produces a number neither source reported and hides the real timeline.
+
+Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+
+</details>
+
+---
+
+### Question 13 of 117
+
+**Scenario: Multi-Agent Research System**
+*Study area: Tool interface design · hard*
+
+Your research system has one tool, analyze_document, whose description says 'Analyzes a document.' Subagents use it for extraction, summarization, and fact-checking, and the outputs are inconsistent because nothing defines what each use should return. What is the best redesign?
+
+- **A.** Keep analyze_document and add an optional free-text 'mode' parameter that each subagent can fill in
+- **B.** Replace the tool with direct document access so subagents read the files and do the analysis themselves
+- **C.** Keep one tool but tell every subagent in its prompt to phrase requests to analyze_document more precisely
+- **D.** Split it into purpose-specific tools, such as extract_data_points, summarize_content, and verify_claim, each with its own contract
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Purpose-specific tools with defined inputs and outputs make selection clear and results consistent. A generic tool forces the model to guess what each call should do and return.
+
+_Why a tempting wrong answer misses:_ A free-text mode parameter (A) keeps the ambiguity inside one tool instead of removing it.
+
+Reference: https://www.anthropic.com/engineering/writing-tools-for-agents
+
+</details>
+
+---
+
+### Question 14 of 117
+
+**Scenario: Multi-Agent Research System**
+*Study area: Tool interface design · medium*
 
 A worker repeatedly calls get_company, then get_filings, then get_officers for the same entity, one round-trip each, and end-to-end latency is poor. What best reduces the round-trips?
 
@@ -372,51 +372,51 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overvie
 
 ---
 
-### Question 15 of 100
+### Question 15 of 117
 
-**Scenario: Multi-Agent Research System**
-*Study area: Corrupted Input Handling · medium*
+**Scenario: Developer Productivity with Claude**
+*Study area: Built-in tool selection · medium*
 
-A worker fetches a document that turns out to be corrupted and cannot be parsed. What is the best behavior?
+An engineer asks the agent how session tokens are validated in a large unfamiliar service. The agent starts by reading every file under src/, fills its context, and answers vaguely. What exploration strategy works better?
 
-- **A.** Return the corrupted bytes to the coordinator and let the synthesis step attempt to interpret whatever partial content can still be salvaged from the damaged document
-- **B.** Silently skip the document and report the subtask as successful
-- **C.** Return a structured error with context (which document, what failed) so the coordinator can decide whether to retry, substitute, or annotate the gap
-- **D.** Retry the same fetch indefinitely until the document finally parses
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: C**
-
-An unparseable input is a failure to report with context, letting the coordinator choose the recovery; the worker should not swallow it, loop on it, or push raw garbage downstream.
-
-_Why a tempting wrong answer misses:_ Silently reporting success (B) hides a real gap, so synthesis proceeds as though coverage were complete when it is not.
-
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
-
-</details>
-
----
-
-### Question 16 of 100
-
-**Scenario: Multi-Agent Research System**
-*Study area: Coordinator as Hub · hard*
-
-A teammate justifies the central-coordinator design by saying its main advantage is batching worker requests to reduce API latency. Why is that justification off-base?
-
-- **A.** The coordinator always adds an extra serialization and routing hop that increases end-to-end latency, so calling latency the pattern's advantage gets it backwards
-- **B.** Batching requests is impossible in an orchestrator-workers topology
-- **C.** Reducing latency is the job of prompt caching, never of a coordinator
-- **D.** The coordinator's core value is centralized visibility, consistent error handling, and control over each worker's inputs; latency and batching are not why you adopt the pattern
+- **A.** Read all files again but in reverse order, so the most recent code lands last in the agent's context
+- **B.** Ask the engineer to paste the relevant code into chat, since agents cannot explore large codebases
+- **C.** Use Glob to list every file in the repository and pick files at random to read until the answer appears
+- **D.** Grep for entry points such as the validation function name, then Read along the imports from there
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: D**
 
-The hub exists for oversight and control, not throughput; misattributing its value to batching leads to wrong architectural trade-offs down the line.
+Building understanding incrementally, by searching for a precise entry point and then following imports and calls, keeps context focused on relevant code instead of the whole tree.
 
-_Why a tempting wrong answer misses:_ Claiming the coordinator always increases latency (A) overcorrects; the point is that latency is simply not the pattern's rationale, whichever way it nets out.
+_Why a tempting wrong answer misses:_ Reading in a different order (A) still loads everything and does nothing about the flooded context.
+
+Reference: https://code.claude.com/docs/en/best-practices
+
+</details>
+
+---
+
+### Question 16 of 117
+
+**Scenario: Multi-Agent Research System**
+*Study area: Subagent context and spawning · hard*
+
+Your coordinator's delegation prompts read like scripts: 'Step 1, search for X. Step 2, open the first three results. Step 3, summarize each.' Subagents follow them rigidly and miss better sources when the first results are weak. What prompt design works better?
+
+- **A.** Add more steps to the script so the subagent has a fallback instruction for every situation it could encounter
+- **B.** Keep the script but raise the effort level so the subagent reasons more carefully about each fixed step
+- **C.** Remove the prompt entirely and let each subagent infer its task from the name of its AgentDefinition entry
+- **D.** State the research goal, the scope, and the quality bar for sources, and let the subagent choose how to reach them
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Delegation prompts that specify the objective and the criteria for a good result let a capable subagent adapt its approach. Procedural scripts remove that adaptability and break when conditions differ from what the script assumed.
+
+_Why a tempting wrong answer misses:_ Longer scripts (A) still cannot anticipate every case and make the subagent even more rigid.
 
 Reference: https://www.anthropic.com/engineering/multi-agent-research-system
 
@@ -424,10 +424,10 @@ Reference: https://www.anthropic.com/engineering/multi-agent-research-system
 
 ---
 
-### Question 17 of 100
+### Question 17 of 117
 
 **Scenario: Multi-Agent Research System**
-*Study area: Sequential vs. Parallel Decomposition · medium*
+*Study area: Task decomposition · medium*
 
 The coordinator must gather a company's current CEO and then find that person's published statements. An engineer wants both workers to run in parallel to save time. Why is parallel delegation the wrong call here?
 
@@ -450,43 +450,43 @@ Reference: https://www.anthropic.com/engineering/multi-agent-research-system
 
 ---
 
-### Question 18 of 100
+### Question 18 of 117
 
-**Scenario: Multi-Agent Research System**
-*Study area: Orchestrator-Workers Pattern · easy*
+**Scenario: Developer Productivity with Claude**
+*Study area: Subagent context and spawning · medium*
 
-In the orchestrator-workers pattern, after the specialized workers finish gathering, what is the coordinator's remaining responsibility?
+Your developer-productivity agent has a custom 'dependency-auditor' subagent defined with the description 'Helper agent.' Engineers ask the main agent to check for outdated packages, but it never delegates to the auditor. What is the first thing to fix?
 
-- **A.** To immediately return each worker's raw output to the user in the order received
-- **B.** To route the collected results into a synthesis/aggregation step that reconciles them into one coherent output
-- **C.** To spawn a second, identical set of workers to double-check the first
-- **D.** To discard any worker result that disagrees with the majority
+- **A.** Give the auditor every tool the main agent has so that it looks more capable when the main agent chooses
+- **B.** Rename the auditor so that its name sorts first alphabetically among the subagents that are available
+- **C.** Rewrite the description to say what the auditor does and when to use it, such as checking package versions
+- **D.** Move the auditor's instructions into the main agent's system prompt and delete the subagent definition
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: B**
+**Correct answer: C**
 
-The pattern terminates in a coordinator-owned synthesis step: workers gather, and the coordinator reconciles their results into a single coherent answer.
+The main agent decides whether to delegate based on each subagent's description. A vague description gives it no basis to match a request to the subagent, so a clear statement of purpose and trigger conditions is the first fix.
 
-_Why a tempting wrong answer misses:_ Returning raw worker output in arrival order (A) skips the reconciliation that turns parallel findings into a usable, coherent result.
+_Why a tempting wrong answer misses:_ Granting every tool (A) does nothing for selection and violates least privilege; the router reads the description, not the tool list.
 
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+Reference: https://code.claude.com/docs/en/agent-sdk/subagents
 
 </details>
 
 ---
 
-### Question 19 of 100
+### Question 19 of 117
 
 **Scenario: Multi-Agent Research System**
-*Study area: Least Privilege · medium*
+*Study area: Tool distribution and tool_choice · medium*
 
 Your data-gathering workers only need to read sources, but for convenience every worker is provisioned with one shared toolset that includes a destructive delete_cache tool. From a least-privilege standpoint, what is the problem and fix?
 
-- **A.** There is no real problem; sharing a single toolset across workers simplifies configuration
-- **B.** The fix is to instruct workers in the prompt never to call delete_cache
-- **C.** Read-only workers should not hold a destructive tool at all; provision each worker only the tools its role actually requires
-- **D.** delete_cache should be renamed so workers are less likely to invoke it by accident
+- **A.** Nothing needs to change, because one shared toolset keeps the worker configuration simple
+- **B.** Keep the shared toolset and add a prompt rule telling workers never to call delete_cache
+- **C.** Remove delete_cache from the read-only workers and give each worker only the tools its role needs
+- **D.** Rename delete_cache to something obscure so workers are less likely to call it by accident
 
 <details><summary>Answer &amp; explanation</summary>
 
@@ -494,7 +494,7 @@ Your data-gathering workers only need to read sources, but for convenience every
 
 Least privilege means each agent holds only the tools its role needs; a read-only worker should be structurally unable to perform a destructive action.
 
-_Why a tempting wrong answer misses:_ A prompt instruction (B) is advisory and can be overridden mid-run; removing the tool from the worker's set makes the destructive call impossible.
+_Why a tempting wrong answer misses:_ A prompt rule (B) leaves the destructive capability in place and relies on the model never slipping, which is not least privilege.
 
 Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
 
@@ -502,25 +502,25 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overvie
 
 ---
 
-### Question 20 of 100
+### Question 20 of 117
 
 **Scenario: Multi-Agent Research System**
-*Study area: Independent Verification · medium*
+*Study area: Provenance and uncertainty · hard*
 
-You want a verification step that reliably catches the lead research agent's own blind spots before the brief ships. Which approach is most effective?
+Your pipeline summarizes each source, then summarizes the summaries. Reviewers find claims in the final report that no one can trace to a source. What design keeps attribution intact?
 
-- **A.** Ask the lead agent to re-read and critique its own final brief
-- **B.** Increase the lead agent's thinking effort so it reasons more carefully the first time
-- **C.** Have the lead agent lower its confidence threshold before finalizing
-- **D.** Run a second, independent agent with a fresh context and no access to the lead's reasoning to review the brief
+- **A.** Summarize fewer times, but keep the prose format for every step in the pipeline as it is today
+- **B.** Have subagents output claim-source mappings, such as the claim, URL, and excerpt, that later steps must preserve
+- **C.** Add a final step that searches the web for a source matching each claim once the report is written
+- **D.** Attach every original source document to the final report so that readers can check claims themselves
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: D**
+**Correct answer: B**
 
-A fresh independent instance is not anchored to the author's reasoning, so it catches confirmation-bias blind spots that self-review, sharing the same context, tends to reproduce.
+Attribution is lost when findings are compressed without their sources. Structured claim-source mappings that each stage must carry forward keep every claim traceable.
 
-_Why a tempting wrong answer misses:_ Self-critique (A) runs inside the same context and assumptions that created the blind spot, so it typically misses the very things it was meant to catch.
+_Why a tempting wrong answer misses:_ Searching for sources after the fact (C) can attach a claim to a source that never supported it.
 
 Reference: https://www.anthropic.com/engineering/multi-agent-research-system
 
@@ -528,285 +528,259 @@ Reference: https://www.anthropic.com/engineering/multi-agent-research-system
 
 ---
 
-### Question 21 of 100
+### Question 21 of 117
 
-**Scenario: Multi-Agent Research System**
-*Study area: Context Control · medium*
+**Scenario: Developer Productivity with Claude**
+*Study area: Session resume and fork · medium*
 
-To keep each worker focused and cheap, how should the coordinator manage the context it passes to workers?
+An agent has spent an hour analyzing a payments module. You want to compare two refactoring strategies, one that extracts a service and one that keeps a modular monolith, without redoing the analysis or letting the two explorations contaminate each other. What should you do?
 
-- **A.** Send each worker only the scoped instructions and inputs relevant to its subtask, not the entire shared conversation history
-- **B.** Broadcast the full conversation history to every worker so none is missing context
-- **C.** Let workers pull whatever context they want directly from one another
-- **D.** Give every worker the coordinator's complete system prompt verbatim
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: A**
-
-Controlling worker inputs is a core hub advantage: scoping each worker's context to its subtask keeps it focused and reduces token cost.
-
-_Why a tempting wrong answer misses:_ Broadcasting the full history (B) inflates every worker's token bill and dilutes its focus with irrelevant conversation.
-
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
-
-</details>
-
----
-
-### Question 22 of 100
-
-**Scenario: Multi-Agent Research System**
-*Study area: Coverage Validation · medium*
-
-Given that under-decomposition can silently drop whole topics, which practice best guards against coverage gaps before workers are dispatched?
-
-- **A.** Dispatch the workers immediately and rely on the synthesis step to notice anything missing, since it sees all of the results together and can always request additional follow-up research
-- **B.** Have the coordinator enumerate the required subtopics or dimensions explicitly and confirm every one is assigned to a worker before delegating
-- **C.** Always spawn the maximum number of workers so more ground gets covered
-- **D.** Let each worker pick its own subtopic at runtime to avoid a central bottleneck
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: B**
-
-Because final coverage is bounded by the decomposition, explicitly enumerating required dimensions and confirming each is assigned catches gaps before they become silent omissions.
-
-_Why a tempting wrong answer misses:_ Relying on synthesis to catch gaps (A) is too late: the synthesis step cannot reconstruct a dimension that no worker was ever tasked to research.
-
-Reference: https://www.anthropic.com/engineering/multi-agent-research-system
-
-</details>
-
----
-
-### Question 23 of 100
-
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Headless Execution · easy*
-
-You are wiring Claude Code into a CI job that must run non-interactively, print its result to stdout, and then exit. Which invocation fits?
-
-- **A.** Launch the interactive REPL and pipe the diff into it, then capture whatever it prints once the session settles, which keeps a human in the loop for the CI run
-- **B.** Run claude --watch to keep a single long-lived session alive across every stage of the pipeline so the CI never has to relaunch it
-- **C.** Run claude -p "<review prompt>" (the --print flag), which executes once, prints to stdout, and exits
-- **D.** Run claude --serve to expose a persistent local HTTP endpoint that each CI job calls into whenever it needs a review
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: C**
-
-The -p/--print flag is Claude Code's headless mode: a single non-interactive run that prints to stdout and exits, which is exactly what an unattended CI step needs.
-
-_Why a tempting wrong answer misses:_ The interactive REPL (A) blocks waiting for input and is designed for a human at a terminal, not an unattended pipeline step.
-
-Reference: https://code.claude.com/docs/en/headless
-
-</details>
-
----
-
-### Question 24 of 100
-
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Structured Output · medium*
-
-Your CI step must post each review finding as an inline PR comment through the GitHub API, so it needs machine-parseable output carrying file, line, and message fields. What should the Claude Code invocation use?
-
-- **A.** Ask Claude in the prompt to 'format findings nicely' and then screen-scrape the resulting text for the file, line, and message of each finding
-- **B.** Pipe the default text output through a carefully maintained regex that pulls out the file, line, and message fields for each finding before posting them as comments
-- **C.** Enable streaming so the CI can read the finding tokens as they arrive and assemble the file, line, and message fields incrementally on its own
-- **D.** Use --output-format json with a schema so findings return as structured data the CI can post directly
+- **A.** Continue in the same session and ask the agent to alternate between the two strategies turn by turn
+- **B.** Start two brand-new sessions and paste the entire earlier transcript into the first message of each
+- **C.** Resume the session twice without forking so both explorations write to the same shared history
+- **D.** Fork the analyzed session twice so each strategy branches from the same baseline in its own history
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: D**
 
---output-format json with a schema produces parseable, structured output, which is the supported path for programmatic actions like posting inline PR comments.
+Forking creates a new session that starts with a copy of the original history and then diverges. Two forks give two independent branches that both keep the shared analysis.
 
-_Why a tempting wrong answer misses:_ Regex-scraping the default text (B) is brittle and breaks whenever the model's wording shifts; structured output exists precisely to avoid that.
+_Why a tempting wrong answer misses:_ Resuming without forking (C) appends both explorations to one history, which is exactly the contamination you want to avoid.
 
-Reference: https://code.claude.com/docs/en/headless
-
-</details>
-
----
-
-### Question 25 of 100
-
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Independent Second Reviewer · medium*
-
-A senior engineer has already reviewed a PR. You want an automated check that catches issues a single reviewer, human or model, might rationalize past. What adds the most value?
-
-- **A.** A second, independent Claude Code review instance that sees only the diff, not the first reviewer's notes, reducing shared blind spots
-- **B.** Re-run the exact same review prompt three separate times and take the majority verdict, on the theory that a real issue will surface in at least two of the three passes
-- **C.** Giving the reviewer the author's own justification for each change
-- **D.** Increasing the review model's max_tokens so it writes longer comments
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: A**
-
-An independent reviewer with no access to the first reviewer's reasoning brings a fresh perspective that catches blind spots a single viewpoint rationalizes past.
-
-_Why a tempting wrong answer misses:_ Re-running the identical prompt (B) reproduces the same blind spots each time; independence, not repetition, is what surfaces new issues.
-
-Reference: https://code.claude.com/docs/en/headless
+Reference: https://code.claude.com/docs/en/agent-sdk/sessions
 
 </details>
 
 ---
 
-### Question 26 of 100
+### Question 22 of 117
 
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Batch vs. Synchronous · medium*
+**Scenario: Code Generation with Claude Code**
+*Study area: Session resume and fork · hard*
 
-Your review must complete and block the merge before a PR can land. Which execution model fits, and why not the Message Batches API?
+Yesterday a Claude Code session mapped a service's data flow. Overnight, a large merge rewrote most of the files it read. Today you need to continue the investigation. Which approach is most reliable?
 
-- **A.** Use the Batches API for the ~50% cost cut; for unattended review, cost outweighs when the result arrives
-- **B.** Run a synchronous blocking review call; a required pre-merge gate needs a result now, and Batches can take up to 24 hours
-- **C.** Use the Batches API because it guarantees results within one minute for any workload
-- **D.** Use either model interchangeably; there is no meaningful difference for a blocking merge gate
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: B**
-
-A blocking pre-merge gate is latency-sensitive and needs an immediate answer, so it must run synchronously; the Batches API is fire-and-forget with up to a 24-hour completion window.
-
-_Why a tempting wrong answer misses:_ Batch's cost savings (A) are irrelevant when the workflow cannot proceed until the result is back; async completion breaks the gate.
-
-Reference: https://platform.claude.com/docs/en/build-with-claude/batch-processing
-
-</details>
-
----
-
-### Question 27 of 100
-
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Batch vs. Synchronous · medium*
-
-You want a nightly scan of the entire repository's open TODOs and dead code, where results can land by morning and cost should be minimized. Which is the best fit?
-
-- **A.** Run a synchronous claude -p call for every file during the workday so a person can watch the results come in and react to anything urgent right away
-- **B.** An interactive session that an engineer supervises overnight
-- **C.** The Message Batches API, which is about 50% cheaper and asynchronous (up to 24h), ideal for latency-tolerant scheduled jobs
-- **D.** Streaming responses to a live dashboard in real time
+- **A.** Resume yesterday's session as-is, since its earlier tool results are already loaded and cost nothing extra
+- **B.** Resume the session and ask Claude to trust its earlier notes unless a file fails to open this morning
+- **C.** Start a fresh session seeded with a short summary of yesterday's conclusions, then re-read the changed code
+- **D.** Fork yesterday's session so the stale tool results are isolated in the original while you keep working
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: C**
 
-A scheduled, latency-tolerant, high-volume scan is the Batches API's sweet spot: roughly half the cost, asynchronous, with results well within the 24-hour window.
+Resumption works when prior context is mostly still valid. When most of the files behind earlier tool results have changed, those results are stale, and a new session seeded with a structured summary avoids reasoning from outdated reads.
 
-_Why a tempting wrong answer misses:_ Per-file synchronous calls (A) forgo the ~50% batch savings and add no benefit for an unattended overnight job that no one is waiting on.
+_Why a tempting wrong answer misses:_ Forking (D) copies the same stale history into the new branch, so it does not remove the problem.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/batch-processing
-
-</details>
-
----
-
-### Question 28 of 100
-
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Batch Constraints · hard*
-
-You considered moving your iterative, tool-calling review agent (it reads files, runs a linter, then revises its findings) onto the Batches API to cut cost. Why does that not work?
-
-- **A.** The Batches API rejects any prompt longer than a few thousand tokens, so a review agent that reads whole files would blow past that limit almost immediately
-- **B.** The Batches API cannot return JSON output
-- **C.** Batch jobs actually cost more than synchronous calls whenever tools are involved, so the cost saving you were counting on never materializes for this kind of review
-- **D.** The Batches API is fire-and-forget and cannot execute a tool mid-request and continue, so it does not fit interactive tool-calling loops
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: D**
-
-Batch is an asynchronous, fire-and-forget model: you cannot pause a request to run a tool and resume it, so multi-step tool-calling loops are incompatible with it.
-
-_Why a tempting wrong answer misses:_ Batch can return JSON (B); the real blocker is that it cannot execute a tool partway through a request and continue the loop.
-
-Reference: https://platform.claude.com/docs/en/build-with-claude/batch-processing
+Reference: https://code.claude.com/docs/en/agent-sdk/sessions
 
 </details>
 
 ---
 
-### Question 29 of 100
+### Question 23 of 117
 
 **Scenario: Claude Code for Continuous Integration**
-*Study area: False-Positive Reduction · medium*
+*Study area: CI/CD integration · medium*
 
-Your automated reviewer's naming and style findings are wrong so often that engineers now ignore all of its comments, including the valuable security ones. What is the best near-term move?
+A nightly CI job runs claude -p to triage flaky tests. On a bad night it kept working for hours and ran up a large bill. Which flags bound an unattended print-mode run?
 
-- **A.** Temporarily disable the noisy low-precision categories (style, naming), keep the high-precision ones, then improve those prompts and re-enable
-- **B.** Keep every category but add a disclaimer that some findings may be wrong
-- **C.** Switch to a cheaper model tier so at least the noise costs less
-- **D.** Post all of the findings but sort the style and naming issues to the bottom of the comment, so the security findings engineers care about appear first and get read
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: A**
-
-A high false-positive category poisons trust in every finding; muting the noisy categories restores signal, after which you refine their prompts and bring them back.
-
-_Why a tempting wrong answer misses:_ Sorting style issues lower (D) still floods the PR with low-precision noise, which keeps training engineers to tune the bot out entirely.
-
-Reference: https://code.claude.com/docs/en/headless
-
-</details>
-
----
-
-### Question 30 of 100
-
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Prompt Specificity · medium*
-
-The reviewer was told to 'check that comments are accurate' and now flags almost every code comment as suspicious. How do you make it useful?
-
-- **A.** Tell it to be less strict and flag fewer comments
-- **B.** Specify explicit criteria, for example flag a comment only when it contradicts the actual behavior of the code it describes
-- **C.** Remove comment-checking from the review altogether
-- **D.** Ask the reviewer to rate each comment's accuracy on a 1-to-10 scale so that borderline comments land on a middling score and only the clearly wrong ones stand out
+- **A.** --continue and --fork-session, which reuse the previous night's session and keep each run's context small
+- **B.** --max-turns and --max-budget-usd, which cap the number of agentic turns and the dollar spend of the run
+- **C.** --verbose and --debug, which make runaway behavior visible in the logs so the team can stop it by hand
+- **D.** --permission-mode plan, which keeps the job in read-only planning so it can never run for too long
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: B**
 
-A vague instruction yields vague over-flagging; a concrete criterion (flag only when a comment contradicts code behavior) gives the model a precise, testable bar.
+In print mode, --max-turns limits the agentic turns and exits with an error when reached, and --max-budget-usd stops the run once spend reaches the cap. Both put a hard ceiling on unattended jobs.
 
-_Why a tempting wrong answer misses:_ 'Be less strict' (A) is just another vague directive with no concrete rule, so the flagging stays arbitrary and unpredictable.
+_Why a tempting wrong answer misses:_ Verbose logging (C) shows what happened but does not stop it; nobody is watching a nightly job in real time.
 
-Reference: https://code.claude.com/docs/en/headless
+Reference: https://code.claude.com/docs/en/cli-reference
 
 </details>
 
 ---
 
-### Question 31 of 100
+### Question 24 of 117
 
 **Scenario: Claude Code for Continuous Integration**
-*Study area: Few-Shot for Actionable Findings · medium*
+*Study area: CI/CD integration · hard*
 
-Findings come back as vague one-liners like 'improve error handling here' that engineers cannot act on. What most reliably fixes the format?
+Your CI review job runs claude --bare -p to start faster. Reviews now ignore the review criteria and fixture conventions documented in the repository's CLAUDE.md. Why?
 
-- **A.** Increase the review temperature for more creative suggestions, on the theory that more varied phrasings will include the concrete, actionable detail engineers want
-- **B.** Add a sentence to the prompt asking the reviewer for 'more actionable' findings and reminding it that engineers need to be able to act on each one directly
-- **C.** Provide a few-shot example of the exact desired finding format: problem, location, and a concrete suggested change
-- **D.** Switch to the largest available model
+- **A.** Print mode never reads CLAUDE.md, so review criteria have to be passed in the prompt on every CI run
+- **B.** CLAUDE.md only loads when a developer opens an interactive session on their machine for the first time
+- **C.** Bare mode skips auto-discovery of CLAUDE.md, skills, hooks, and MCP servers, so the project context never loads
+- **D.** The model ignores CLAUDE.md in CI because it is written for people rather than for automated review jobs
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: C**
 
-Few-shot examples of the exact finding you want beat abstract instructions for nailing down output format, because the model has a concrete target to imitate.
+--bare starts a minimal session that skips discovery of hooks, skills, plugins, MCP servers, auto memory, and CLAUDE.md. That speeds scripted calls but drops the project context a review depends on.
 
-_Why a tempting wrong answer misses:_ Asking for 'more actionable' findings (B) restates the goal without showing the shape; the model needs an exemplar, not another adjective.
+_Why a tempting wrong answer misses:_ Print mode itself does load CLAUDE.md (A); the flag that removes it is --bare.
+
+Reference: https://code.claude.com/docs/en/cli-reference
+
+</details>
+
+---
+
+### Question 25 of 117
+
+**Scenario: Claude Code for Continuous Integration**
+*Study area: CI/CD integration · medium*
+
+CI-generated tests are technically valid but low value: they re-test getters, ignore your shared fixtures, and skip the edge cases your team cares about. Where should you document what a valuable test looks like so every CI run applies it?
+
+- **A.** In the project CLAUDE.md, covering testing standards, the fixtures available, and which cases are worth testing
+- **B.** In each engineer's ~/.claude/CLAUDE.md, so the guidance follows whoever triggers the CI pipeline run
+- **C.** In a comment at the top of every test file, so Claude sees the standards whenever it opens a test
+- **D.** In the pull-request template, so authors paste the testing standards into every PR description
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+CLAUDE.md is how project context reaches CI-invoked Claude Code. Documenting standards, fixtures, and what counts as a valuable test raises the quality of generated tests on every run.
+
+_Why a tempting wrong answer misses:_ User-level files (B) live on individual machines and are not present on a CI runner.
+
+Reference: https://code.claude.com/docs/en/github-actions
+
+</details>
+
+---
+
+### Question 26 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Batch processing · hard*
+
+Contracts arrive continuously, and extracted terms must be available within 36 hours of arrival. You use the Message Batches API, which can take up to 24 hours to process a batch. How often must you submit batches, at minimum, to guarantee the 36-hour window?
+
+- **A.** Once a day, since each batch finishes within 24 hours and 24 is below the 36-hour window
+- **B.** Every 12 hours, so a document waits at most 12 hours before a batch that takes at most 24
+- **C.** Every 36 hours, matching the window, because batches usually finish in under an hour
+- **D.** Every 48 hours, since the API returns results early enough to cover the extra waiting time
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+Worst-case latency equals the wait until the next submission plus the maximum processing time. With 24 hours of processing, submissions must occur at least every 12 hours to stay within 36.
+
+_Why a tempting wrong answer misses:_ Daily submission (A) lets a document wait up to 24 hours plus 24 of processing, which is 48 hours.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/batch-processing
+
+</details>
+
+---
+
+### Question 27 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Batch processing · medium*
+
+A batch of 10,000 extraction requests finishes with 140 errored results, most of them documents that exceeded the context window. What is the most efficient recovery?
+
+- **A.** Resubmit the entire batch of 10,000 requests so that every result comes from the same run
+- **B.** Use each failed result's custom_id to resubmit only those documents, chunking the oversized ones
+- **C.** Discard the 140 documents, because a batch cannot be retried once it has finished processing
+- **D.** Resubmit the 140 unchanged through the synchronous API in case they succeed there instead
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+custom_id links each result to its request, so you can resubmit just the failures. Documents that were too large need a modification such as chunking, or they will fail again.
+
+_Why a tempting wrong answer misses:_ Resending them unchanged (D) repeats the same context overflow on a more expensive path.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/batch-processing
+
+</details>
+
+---
+
+### Question 28 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Batch processing · medium*
+
+You are about to batch-process 250,000 archived invoices with a new extraction prompt. What should you do before submitting the full volume?
+
+- **A.** Submit everything at once, since batch pricing makes any reruns cheap enough to not matter
+- **B.** Refine the prompt on a representative sample until first-pass quality is acceptable, then batch
+- **C.** Remove all examples from the prompt so each of the 250,000 requests uses fewer input tokens
+- **D.** Split the invoices across many models and keep whichever model's output looks best later
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+Iterating on a sample catches prompt problems while they are cheap to fix. It raises first-pass success so you avoid resubmitting large volumes.
+
+_Why a tempting wrong answer misses:_ Even at half price (A), rerunning 250,000 requests because of a prompt flaw is expensive and slow.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/batch-processing
+
+</details>
+
+---
+
+### Question 29 of 117
+
+**Scenario: Claude Code for Continuous Integration**
+*Study area: Explicit criteria · medium*
+
+Your review prompt says 'be conservative and only report findings you are confident about.' False positives barely changed. What revision is most likely to improve precision?
+
+- **A.** Repeat the instruction in capital letters at both the beginning and the end of the review prompt
+- **B.** Ask the model to report a confidence number and suppress everything below a fixed threshold
+- **C.** Define which categories to report, such as correctness and security bugs, and which to skip, such as style
+- **D.** Add 'you will be penalized for false positives' so the model feels more pressure to hold back
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: C**
+
+Specific categorical criteria about what to report and what to skip change behavior far more than general appeals to caution or confidence.
+
+_Why a tempting wrong answer misses:_ Confidence thresholds (B) depend on the model's self-assessment, which is a weak filter for precision.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/be-clear-and-direct
+
+</details>
+
+---
+
+### Question 30 of 117
+
+**Scenario: Claude Code for Continuous Integration**
+*Study area: Few-shot prompting · hard*
+
+Your reviewer keeps flagging your team's intentional early-return guard pattern as 'confusing control flow,' and it also misses a genuinely unsafe variant of the same pattern. What prompt change helps most?
+
+- **A.** Add a rule saying 'never flag early returns' so the acceptable pattern stops appearing in reviews
+- **B.** Add few-shot examples contrasting the acceptable guard with the unsafe variant, with reasons for each
+- **C.** Remove control-flow review from the prompt entirely, since the reviewer cannot judge that category
+- **D.** Lower the reviewer's effort setting so that it flags fewer control-flow findings in general
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+Examples that show why one form is fine and another is a real problem teach the distinction, so the model can generalize to new cases instead of matching a keyword.
+
+_Why a tempting wrong answer misses:_ A blanket rule (A) also suppresses the unsafe variant, trading false positives for missed bugs.
 
 Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/multishot-prompting
 
@@ -814,140 +788,166 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 32 of 100
+### Question 31 of 117
 
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Prior Findings in Context · medium*
+**Scenario: Structured Data Extraction**
+*Study area: Few-shot prompting · hard*
 
-On each new commit to a long-lived PR, the bot re-reports the same issues it already flagged, burying the genuinely new ones. What is the best fix?
+You extract cited sources from research papers. Papers with a bibliography section work well, but papers that cite inline, such as '(Okafor, 2019)', often return an empty sources array. What is the most effective fix?
 
-- **A.** Review only the most recent commit's diff and ignore the earlier commits, on the assumption that anything already flagged must have been addressed in a prior round
-- **B.** Post findings to a separate channel so the PR stays clean, and let reviewers open that channel to check whether each flagged issue is new or already reported
-- **C.** Reduce how often the review runs
-- **D.** Include the prior findings in the review context and ask Claude to report only new or still-unaddressed issues
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: D**
-
-Supplying the reviewer with its earlier findings lets it deduplicate against them and surface only what is new or still unresolved.
-
-_Why a tempting wrong answer misses:_ Reviewing only the latest commit (A) can miss issues introduced in earlier commits and handle carryover inconsistently; feeding prior findings targets the duplication directly.
-
-Reference: https://code.claude.com/docs/en/headless
-
-</details>
-
----
-
-### Question 33 of 100
-
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Existing Tests in Context · medium*
-
-Your reviewer keeps suggesting unit tests that already exist in the repository's test file. How do you stop the redundant suggestions?
-
-- **A.** Include the existing test file in the review context so Claude can see what is already covered
-- **B.** Tell Claude to assume the necessary tests already exist and to never suggest adding any new ones for the code under review
-- **C.** Delete the redundant suggestions in a post-processing step that keyword-matches each suggested test against the names of the tests already present in the repository
-- **D.** Ask Claude to restrict itself to suggesting only integration tests and to skip unit tests entirely so the existing ones stop coming up
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: A**
-
-The model suggests duplicate tests because it cannot see the existing ones; putting the test file in context lets it recommend only genuine coverage gaps.
-
-_Why a tempting wrong answer misses:_ A blanket 'never suggest tests' (B) discards legitimately missing coverage along with the duplicates, which defeats the purpose of the check.
-
-Reference: https://code.claude.com/docs/en/headless
-
-</details>
-
----
-
-### Question 34 of 100
-
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Per-File and Integration Passes · hard*
-
-A 30-file PR gets shallow, inconsistent review depth when handled in one pass: some files get thorough comments, others almost none. What structure improves consistency?
-
-- **A.** Feed the entire thirty-file PR in one prompt but raise max_tokens substantially so the model has enough room to comment on every file in a single pass
-- **B.** Run focused per-file review passes for depth, then a separate integration pass that checks cross-file data flow
-- **C.** Review only the three largest files in depth and take a quick sampling pass over the remaining twenty-seven to keep the total review time down
-- **D.** Split the large PR into three smaller pull requests and review each of them once, so no single review has to hold all thirty files in context at the same time
+- **A.** Make the sources field required, so the model must return at least one entry for every paper
+- **B.** Add few-shot examples showing correct extraction from both bibliography-style and inline-citation papers
+- **C.** Run each paper through the prompt twice and keep whichever run returns the longer sources array
+- **D.** Tell the model in capital letters that every paper always contains citations somewhere in it
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: B**
 
-Per-file passes give every file consistent depth, and a dedicated integration pass catches the cross-file interactions that a single wide sweep skims over.
+Few-shot examples that cover varied document structures show the model how to handle formats that instructions alone do not convey, which fixes empty extraction on the underrepresented format.
 
-_Why a tempting wrong answer misses:_ One large prompt (A) is what spread attention thin in the first place; more output tokens don't stop the model from under-covering some files.
+_Why a tempting wrong answer misses:_ Forcing the field to be non-empty (A) pressures the model to invent sources when none are found.
 
-Reference: https://code.claude.com/docs/en/headless
+Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/multishot-prompting
 
 </details>
 
 ---
 
-### Question 35 of 100
+### Question 32 of 117
 
 **Scenario: Claude Code for Continuous Integration**
-*Study area: Inline Reasoning and Confidence · medium*
+*Study area: Validation and retry loops · hard*
 
-Reviewers spend most of their time deciding which bot findings are worth investigating, and policy forbids auto-filtering any finding out. What change most reduces that triage cost?
+Developers dismiss about a third of your bot's review findings, but you cannot tell which kinds of code trigger the dismissed ones. What change to the finding schema would enable that analysis?
 
-- **A.** Post fewer findings by raising the severity bar so only the most serious issues appear, which shrinks the list the reviewers have to work through on each run
-- **B.** Group the findings by file
-- **C.** Have Claude include its reasoning and a confidence level inline with each finding so humans can triage faster
-- **D.** Convert the findings into a spreadsheet
+- **A.** Add a detected_pattern field that records which code construct triggered each finding
+- **B.** Remove the severity field so developers stop dismissing findings marked as low priority
+- **C.** Add a free-text apology field so the bot can explain itself when a finding is wrong
+- **D.** Store only the count of findings per pull request so the data stays small and simple
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: C**
+**Correct answer: A**
 
-When you cannot drop findings, attaching each one's reasoning and confidence lets a human judge it at a glance instead of re-investigating from scratch.
+Recording what triggered each finding lets you group dismissals by pattern and see which constructs produce false positives, which tells you where to tighten the prompt.
 
-_Why a tempting wrong answer misses:_ Raising the severity bar (A) drops findings, which the no-filter constraint forbids; the goal is faster triage of all of them, not fewer.
+_Why a tempting wrong answer misses:_ Per-PR counts (D) discard exactly the detail needed to find the problem patterns.
 
-Reference: https://code.claude.com/docs/en/headless
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
 
 </details>
 
 ---
 
-### Question 36 of 100
+### Question 33 of 117
 
 **Scenario: Claude Code for Continuous Integration**
-*Study area: Severity Criteria · medium*
+*Study area: Multi-pass review · medium*
 
-The same class of issue is labeled 'critical' in one file and 'minor' in another across runs. What most improves severity consistency?
+Your review pipeline has limited senior-reviewer time. You want the model's findings routed so that uncertain ones get human attention first. What should the verification pass add?
 
-- **A.** Default every finding to 'medium' severity so the labels can never disagree across files, then bump only the few that clearly deserve more
-- **B.** Let engineers relabel the severities by hand after each run so the team gradually converges on a shared, if informal, sense of what counts as critical
-- **C.** Ask the model to simply be more consistent about how it applies severity from one file to the next, without giving it any concrete rubric to follow
-- **D.** Give explicit severity definitions with concrete examples of what counts as critical, major, and minor
+- **A.** A rule that the model must only emit findings it is completely certain about
+- **B.** A self-reported confidence level on each finding, used to route human review
+- **C.** A random shuffle of the findings, so reviewers see a different order each time
+- **D.** A single overall score for the pull request in place of the individual findings
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+A verification pass in which the model reports confidence for each finding gives the pipeline a signal for routing reviewer attention, ideally with thresholds calibrated against labeled data.
+
+_Why a tempting wrong answer misses:_ Emitting only certain findings (A) hides the uncertain cases that most need a human.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
+</details>
+
+---
+
+### Question 34 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Validation and retry loops · hard*
+
+Invoices sometimes extract with line items that do not add up to the stated total, and nothing downstream notices. How can the extraction design surface these discrepancies?
+
+- **A.** Extract only the stated total and skip the line items, since the stated total is the authoritative figure
+- **B.** Enable strict schema enforcement, which guarantees that the extracted numbers are arithmetically correct
+- **C.** Ask the model to round each line item so that small mismatches disappear before the data is stored
+- **D.** Extract a calculated_total alongside the stated_total and flag the record when the two values differ
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: D**
 
-Inconsistent severity comes from an undefined scale; explicit criteria anchored by concrete examples give the model a stable rubric to apply the same way every time.
+Having the extraction produce both figures turns a silent semantic error into a checkable condition that validation can flag for review or retry.
 
-_Why a tempting wrong answer misses:_ 'Be more consistent' (C) supplies no rubric, so each run still applies a subjective, drifting standard.
+_Why a tempting wrong answer misses:_ Strict schemas (B) guarantee structure and types, not that the values are semantically consistent.
 
-Reference: https://code.claude.com/docs/en/headless
+Reference: https://platform.claude.com/docs/en/build-with-claude/structured-outputs
 
 </details>
 
 ---
 
-### Question 37 of 100
+### Question 35 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Validation and retry loops · medium*
+
+A shipping-manifest extraction fails validation because a weight field reads '12 kg' where the schema expects a number. What should the retry request contain to give the model the best chance of correcting it?
+
+- **A.** The same prompt resent unchanged, since the error was probably random and will not repeat itself
+- **B.** Only the validation error, sent without the document, to keep the retry request short and cheap
+- **C.** The original document, the failed extraction, and the specific validation error that it triggered
+- **D.** A shorter version of the document with the weight section removed so the field is skipped
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: C**
+
+Retry with error feedback works best when the model can see what it produced, what was wrong with it, and the source it should correct against.
+
+_Why a tempting wrong answer misses:_ Sending the error alone (B) leaves the model without the source text it needs to fix the value.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/structured-outputs
+
+</details>
+
+---
+
+### Question 36 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Validation and retry loops · medium*
+
+Validation flags that purchase-order numbers are missing from 8% of extracted invoices. Retries with the error message do not help. You find that for those vendors, the PO number is printed only on a separate packing slip that is not in the input. What does this tell you?
+
+- **A.** Retries cannot recover information that is absent from the input, so the fix is supplying the slip or allowing null
+- **B.** The retry messages were not forceful enough and should say the field is mandatory in stronger terms
+- **C.** The model needs a higher effort setting to find PO numbers that are printed in very small fonts
+- **D.** The schema should mark the PO number as required so the model is forced to always return one
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Retry loops fix format and structural errors. When the required information is not in the document, no amount of retrying will produce it.
+
+_Why a tempting wrong answer misses:_ Making the field required (D) pushes the model toward inventing a value that does not exist in the input.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/structured-outputs
+
+</details>
+
+---
+
+### Question 37 of 117
 
 **Scenario: Claude Code for Continuous Integration**
-*Study area: Build Gating · medium*
+*Study area: CI/CD integration · medium*
 
 Your pipeline must fail the build when the reviewer finds a blocking issue. Given a headless claude -p run with --output-format json, what is the cleanest way to gate the build?
 
@@ -970,10 +970,10 @@ Reference: https://code.claude.com/docs/en/headless
 
 ---
 
-### Question 38 of 100
+### Question 38 of 117
 
 **Scenario: Claude Code for Continuous Integration**
-*Study area: Prompt Caching as a Cost Lever · hard*
+*Study area: Batch processing · hard*
 
 You must cut the cost of a synchronous pre-merge review without changing its blocking behavior, and you cannot switch to the Batches API. Which lever applies?
 
@@ -996,10 +996,10 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 
 ---
 
-### Question 39 of 100
+### Question 39 of 117
 
 **Scenario: Claude Code for Continuous Integration**
-*Study area: Sufficient Review Context · hard*
+*Study area: CI/CD integration · hard*
 
 The reviewer flags a 'null pointer' bug on a changed line, but the value is guaranteed non-null by a check three lines above the diff hunk. What context change reduces these false positives?
 
@@ -1022,10 +1022,10 @@ Reference: https://code.claude.com/docs/en/headless
 
 ---
 
-### Question 40 of 100
+### Question 40 of 117
 
 **Scenario: Claude Code for Continuous Integration**
-*Study area: Structured Output Schema · medium*
+*Study area: Schema-enforced output · medium*
 
 You are defining the JSON schema for review findings that a script will turn into inline PR comments. Which set of fields is most fit for purpose?
 
@@ -1048,10 +1048,10 @@ Reference: https://code.claude.com/docs/en/headless
 
 ---
 
-### Question 41 of 100
+### Question 41 of 117
 
 **Scenario: Claude Code for Continuous Integration**
-*Study area: Headless Permissions · medium*
+*Study area: CI/CD integration · medium*
 
 Your headless claude -p review job occasionally stalls in CI. Investigation shows it is waiting on an interactive approval prompt for a tool it wants to use. What is the right fix for unattended CI?
 
@@ -1068,291 +1068,136 @@ Headless CI has no human to approve prompts, so the tools the job needs must be 
 
 _Why a tempting wrong answer misses:_ Sleeping past the prompt (B) never grants permission, so the tool call still cannot proceed and the job stalls or fails anyway.
 
-Reference: https://code.claude.com/docs/en/headless
+Reference: https://code.claude.com/docs/en/cli-reference
 
 </details>
 
 ---
 
-### Question 42 of 100
+### Question 42 of 117
 
-**Scenario: Claude Code for Continuous Integration**
-*Study area: Independent Second Reviewer · medium*
+**Scenario: Code Generation with Claude Code**
+*Study area: Session resume and fork · medium*
 
-A team uses Claude Code to generate a database migration script, then wants Claude to review it before running. Why run the review in a separate instance rather than asking the same session that wrote it?
+You resume a named Claude Code session that was reviewing a billing module. Since then, a teammate changed three specific files in that module and nothing else. What is the most efficient way to bring the session up to date?
 
-- **A.** A separate session is cheaper to run than continuing the original one
-- **B.** A fresh instance has no access to the generation session's reasoning, so it evaluates the script on its merits and avoids confirmation bias toward the author's assumptions
-- **C.** The original session's context window is always full immediately after generating code
-- **D.** Claude Code is technically unable to review code that it wrote earlier in the same session, so spinning up a separate instance is the only way to get any review at all
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: B**
-
-A fresh reviewer that never saw the generator's reasoning judges the code independently, avoiding the confirmation bias of re-endorsing the same assumptions that produced it.
-
-_Why a tempting wrong answer misses:_ Same-session review is not impossible (D); the point is that an independent instance yields a more objective review, not that the tool refuses.
-
-Reference: https://code.claude.com/docs/en/headless
-
-</details>
-
----
-
-### Question 43 of 100
-
-**Scenario: Customer Support Resolution Agent**
-*Study area: Tool Interface Design · medium*
-
-Your support agent has get_order_status and track_shipment tools, but it frequently calls track_shipment when a user's question should be answered by get_order_status. Both schemas are valid. What should you try FIRST?
-
-- **A.** Add a routing rule in the system prompt that maps common phrases to specific tools, so a mention of tracking always sends the request to track_shipment
-- **B.** Remove track_shipment from the agent
-- **C.** Lower the sampling temperature to make tool selection more deterministic so the model stops drifting to track_shipment on status questions
-- **D.** Improve both tools' descriptions so each clearly states its purpose and when to use it versus the other
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: D**
-
-Tool descriptions are the primary signal the model selects on, so the first fix for wrong tool choice is to clarify each description's purpose, boundaries, and when-to-use versus a similar tool.
-
-_Why a tempting wrong answer misses:_ Keyword-to-tool routing rules in the prompt (A) are a brittle patch and can themselves bias selection; the descriptions are what the model actually reasons over.
-
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
-
-</details>
-
----
-
-### Question 44 of 100
-
-**Scenario: Customer Support Resolution Agent**
-*Study area: Ambiguous Multi-Match · medium*
-
-A customer writes 'cancel my order for John Smith.' The lookup returns three customers named John Smith with active orders. What should the agent do?
-
-- **A.** Cancel the most recently placed order, since a customer asking to cancel is most likely referring to their latest purchase rather than an older one
-- **B.** Cancel all three orders to be safe and then let the two customers who did not actually want a cancellation place their orders again afterward
-- **C.** Ask the customer for an additional identifier (email, phone, or order number) to disambiguate before taking any action
-- **D.** Cancel the first match returned by the database
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: C**
-
-With multiple matches, the agent must request a disambiguating identifier before acting; taking an irreversible action on a guessed account is the failure to avoid.
-
-_Why a tempting wrong answer misses:_ Cancelling the most recent order (A) is still a guess that can cancel the wrong person's order; only a disambiguating identifier resolves the ambiguity safely.
-
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
-
-</details>
-
----
-
-### Question 45 of 100
-
-**Scenario: Customer Support Resolution Agent**
-*Study area: Workflow Prerequisite Enforcement · hard*
-
-Policy requires verifying identity before any account change. A system-prompt instruction to 'always verify first' is followed most of the time but occasionally skipped. What is the most reliable enforcement?
-
-- **A.** Add stronger, capitalized wording to the system prompt stressing that identity must always be verified before any account change is ever attempted
-- **B.** Programmatically block the account-change tools until get_customer has returned a verified identity, enforcing the order in code rather than by prompt
-- **C.** Ask the model to self-report whether it verified identity first
-- **D.** Add a few-shot example showing verification happening before the change
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: B**
-
-A programmatic prerequisite (gate the downstream tools on a verified ID) enforces the sequence deterministically, independent of whether the model follows the prompt on any given run.
-
-_Why a tempting wrong answer misses:_ Stronger prompt wording (A) still depends on the model complying every single time; a code-level gate removes that dependence entirely.
-
-Reference: https://code.claude.com/docs/en/hooks
-
-</details>
-
----
-
-### Question 46 of 100
-
-**Scenario: Customer Support Resolution Agent**
-*Study area: Escalation on Policy Gaps · medium*
-
-A customer asks the agent to match a competitor's lower price. The company's policy documents say nothing about price matching at all. What is the appropriate behavior?
-
-- **A.** Escalate to a human, because the policy is genuinely silent and the agent would otherwise have to invent a policy
-- **B.** Confidently tell the customer that price matching is not allowed, on the principle that anything not explicitly permitted in the policy should be treated as prohibited
-- **C.** Approve the price match on the spot to satisfy the customer, effectively creating a brand-new pricing policy that the documented rules never actually granted
-- **D.** Ask the customer to prove the competitor's price with a screenshot, then decide unilaterally whether to grant the match without any policy to rely on
+- **A.** Tell the resumed session which three files changed and ask it to re-analyze just those files
+- **B.** Ask the session to re-read the whole billing module from scratch before it continues any work
+- **C.** Start over in a new session, because a resumed session cannot see any changes made to the files
+- **D.** Say nothing about the change, since Claude Code refreshes every earlier tool result on resume
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: A**
 
-A genuine policy gap (the rules are silent on this case) is exactly when to escalate, so a human can decide rather than the agent fabricating a policy.
+A resumed session still holds its earlier tool results. Telling it exactly which files changed lets it target the re-analysis instead of re-exploring everything or silently relying on outdated reads.
 
-_Why a tempting wrong answer misses:_ Asserting 'not allowed' (B) fabricates a rule the documents do not contain, which is the very failure escalation is meant to prevent.
+_Why a tempting wrong answer misses:_ Earlier tool results are not refreshed automatically on resume (D), so staying silent leaves the session reasoning from old file contents.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
+Reference: https://code.claude.com/docs/en/agent-sdk/sessions
 
 </details>
 
 ---
 
-### Question 47 of 100
+### Question 43 of 117
 
-**Scenario: Customer Support Resolution Agent**
-*Study area: Escalation Calibration · hard*
+**Scenario: Developer Productivity with Claude**
+*Study area: MCP server integration · hard*
 
-Your agent escalates too often on cases it could handle and misses some it should escalate. A teammate suggests escalating whenever the model's self-reported confidence drops below 0.7. What is the better approach?
+You connected an MCP server whose semantic_code_search tool understands call graphs and returns ranked results. The agent still uses Grep for almost every search, and results suffer. The MCP tool's description reads 'Searches code.' What should you change first?
 
-- **A.** Trust self-reported confidence but lower the threshold to 0.5 so the agent escalates only when quite unsure
-- **B.** Escalate every case to a human so the agent never makes an unsupported resolution decision
-- **C.** Never escalate and always attempt a resolution so ticket volume and handle time stay low
-- **D.** Define explicit escalation criteria with few-shot examples; self-reported confidence is poorly calibrated
+- **A.** Remove Grep from the agent completely, so the MCP tool is the only search option that remains available
+- **B.** Move the MCP server from project scope to user scope so its tools are loaded earlier in each session
+- **C.** Rename semantic_code_search to grep so the agent reaches for it by habit whenever it needs to search
+- **D.** Expand the MCP tool's description to explain what it finds that Grep cannot, what it returns, and when to use it
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: D**
 
-Model self-reported confidence is poorly calibrated, so explicit escalation criteria plus few-shot examples of escalate-versus-resolve produce far more reliable routing.
+The agent chooses tools by their descriptions. If the MCP tool's description does not explain its advantages, the model defaults to the familiar built-in. A detailed description is the first lever.
 
-_Why a tempting wrong answer misses:_ Tuning a threshold on an unreliable confidence signal (A) just inherits its poor calibration; the signal itself, not the cutoff, is the problem.
+_Why a tempting wrong answer misses:_ Removing Grep (A) forces the choice but also removes a tool that is still right for simple literal searches.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/multishot-prompting
+Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools
 
 </details>
 
 ---
 
-### Question 48 of 100
+### Question 44 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: PostToolUse Normalization · hard*
+*Study area: Escalation and ambiguity · easy*
 
-Two backend tools return timestamps in different formats (one Unix epoch, one ISO 8601) and the agent occasionally misreads dates to customers. One tool is a third-party MCP server you cannot modify. What is the most maintainable fix?
+A customer's first message says: 'I want to talk to a real person about my bill, please.' The billing issue looks simple for the agent to resolve. What should the agent do?
 
-- **A.** Add a prompt instruction telling the agent how to convert each timestamp format, with a worked example of turning an epoch value into a readable date
-- **B.** Fork the third-party MCP server and patch its output
-- **C.** Add a PostToolUse hook that normalizes both tools' timestamps to one readable format before the agent sees them
-- **D.** Ask the customer to specify which timezone and date format they meant, then trust the agent to read each backend timestamp correctly from then on
+- **A.** Resolve the billing issue first and offer a human only if the customer is still unhappy
+- **B.** Ask several diagnostic questions so the human agent has a complete picture of the issue
+- **C.** Honor the request and escalate to a human right away, without first investigating it
+- **D.** Explain that the agent can resolve simple issues faster, and keep working on the bill
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: C**
 
-A PostToolUse hook is the deterministic, maintainable place to normalize tool output, and it works even for third-party MCP servers you cannot change.
+An explicit request for a human is an escalation trigger that should be honored immediately, even when the issue looks easy.
 
-_Why a tempting wrong answer misses:_ A prompt instruction to convert formats (A) relies on the model doing the conversion correctly every time; a hook normalizes the data deterministically before the model ever sees it.
+_Why a tempting wrong answer misses:_ Resolving first (A) overrides a clear customer choice; offering to resolve fits customers who are frustrated but have not asked for a person.
 
-Reference: https://code.claude.com/docs/en/hooks
+Reference: https://platform.claude.com/docs/en/about-claude/use-case-guides/customer-support-chat
 
 </details>
 
 ---
 
-### Question 49 of 100
+### Question 45 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: Parallel and Composite Tools · medium*
+*Study area: Workflow enforcement and handoffs · hard*
 
-For each ticket the agent runs get_customer, then get_orders, then get_subscription across three sequential turns, making resolution feel slow. Given the customer id, those last lookups are independent. What best cuts the round-trips?
+A telecom support agent can call swap_sim, which moves a phone number to a new SIM card. Policy says a one-time passcode must be verified first. Which TWO statements about enforcing that rule are correct? (Select 2.)
 
-- **A.** Cache the results of each lookup between tickets so that repeat customers are resolved faster, amortizing the three calls across the day's overall volume
-- **B.** Have the agent issue the independent lookups in parallel within a single turn (or expose a composite tool that returns all three) and return the results together
-- **C.** Drop get_subscription to save a call
-- **D.** Increase max_tokens so the agent can think longer
+- **A.** A clear system-prompt instruction to verify first makes the ordering deterministic enough for account-takeover risks
+- **B.** A PreToolUse hook that denies swap_sim until session state records a successful verify_otp call enforces the order in code
+- **C.** Few-shot examples of the verification step remove the need for any programmatic check on high-risk tools
+- **D.** Prompt-only guidance keeps a non-zero failure rate, which is unacceptable when the step guards against fraud
+- **E.** Raising the effort level guarantees the agent will never skip a step that its system prompt describes
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: B**
+**Correct answers: B, D**
 
-Independent lookups can be issued in parallel in one turn, or collapsed into a composite tool, with results returned together, which removes the sequential round-trips driving the latency.
+Prompt instructions and examples shape behavior probabilistically, so some calls will still skip the step. When a skipped step enables fraud, a programmatic gate such as a hook that blocks the tool until verification succeeds is required.
 
-_Why a tempting wrong answer misses:_ Caching (A) helps across tickets but does nothing for a single ticket's sequential calls; parallelizing the independent ones is the direct fix.
+_Why a tempting wrong answer misses:_ Few-shot examples (C) improve compliance but cannot guarantee it; they complement a code-level gate rather than replace it.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
-
-</details>
-
----
-
-### Question 50 of 100
-
-**Scenario: Customer Support Resolution Agent**
-*Study area: Persistent Case Facts · medium*
-
-In long conversations, after the history is summarized the agent starts getting the order number and refund amount slightly wrong. What design preserves these details?
-
-- **A.** Keep a persistent 'case facts' block (order number, amounts, dates) maintained verbatim outside the summarized history
-- **B.** Summarize the conversation more aggressively so there is far less content left for the summary step to get wrong when it compresses the history
-- **C.** Ask the customer to repeat the details on every turn
-- **D.** Disable summarization entirely and let the full conversation context grow without bound, so that no precise detail is ever lost to a lossy summary step
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: A**
-
-Precise identifiers belong in a persistent case-facts block kept verbatim outside the lossy summary, so summarization cannot corrupt the exact values.
-
-_Why a tempting wrong answer misses:_ Summarizing more aggressively (B) discards even more precise detail, which makes the corruption worse rather than better.
-
-Reference: https://platform.claude.com/docs/en/build-with-claude/context-windows
+Reference: https://code.claude.com/docs/en/agent-sdk/hooks
 
 </details>
 
 ---
 
-### Question 51 of 100
+### Question 46 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: Self-Critique for Completeness · medium*
+*Study area: Workflow enforcement and handoffs · medium*
 
-The agent resolves tickets correctly, but its explanations to customers are inconsistently complete: some cover every question asked, others miss one. What most improves completeness?
+When your support agent escalates a disputed invoice, the human specialist receives only the ticket number and must re-read a 60-turn transcript before acting. Specialists cannot see the agent's tool results. What should the escalation step produce?
 
-- **A.** Tell the agent to write longer replies
-- **B.** Lower the sampling temperature
-- **C.** Route every ticket to a human for a completeness check before the reply is sent, so a person always confirms that each question was actually addressed
-- **D.** Add a self-critique/evaluator step that checks the drafted reply against explicit completeness criteria before sending
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: D**
-
-A self-critique pass against explicit completeness criteria catches unanswered sub-questions before the reply is sent, making completeness consistent.
-
-_Why a tempting wrong answer misses:_ Longer replies (A) are not necessarily more complete; a targeted check against criteria addresses whether each question was actually answered.
-
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/chain-of-thought
-
-</details>
-
----
-
-### Question 52 of 100
-
-**Scenario: Customer Support Resolution Agent**
-*Study area: Decompose Multi-Concern Requests · medium*
-
-A customer's message contains three separate concerns (a billing dispute, a shipping delay, and a feature question), and the agent redundantly re-fetches the customer record for each. What is the best approach?
-
-- **A.** Handle only the first concern and ask the customer to resend the other two as separate tickets
-- **B.** Escalate the whole multi-concern message because parallel investigation is too complex for the agent
-- **C.** Decompose into three concerns, investigate in parallel over one shared customer context, then synthesize one reply
-- **D.** Answer all three from memory without lookups so the agent avoids redundant tool round-trips
+- **A.** The full raw transcript attached to the ticket, so that the specialist has every detail available to scroll through
+- **B.** A one-line note saying 'customer unhappy, please review' so the specialist can start from a neutral position
+- **C.** A structured handoff with customer ID, the disputed amount, findings so far, the likely root cause, and a recommended action
+- **D.** A request that the customer restate the whole issue once the specialist joins, so nothing is lost in translation
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: C**
 
-Decomposing the request and investigating the parts in parallel over a shared customer context avoids redundant fetches and yields one coherent, complete reply.
+A structured handoff summary gives the specialist the facts and the agent's analysis in a compact, reliable form. It avoids forcing a human to reconstruct context from a transcript or tool data they cannot access.
 
-_Why a tempting wrong answer misses:_ Escalating (B) is wrong for a multi-concern message the agent can handle sequentially; escalation is reserved for genuine policy gaps, not workload.
+_Why a tempting wrong answer misses:_ The raw transcript (A) technically contains everything but pushes the reconstruction work onto the specialist, which is what the handoff is meant to remove.
 
 Reference: https://www.anthropic.com/engineering/multi-agent-research-system
 
@@ -1360,62 +1205,218 @@ Reference: https://www.anthropic.com/engineering/multi-agent-research-system
 
 ---
 
-### Question 53 of 100
+### Question 47 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: Agentic Loop Control · easy*
+*Study area: Escalation and ambiguity · hard*
 
-You are writing the loop that drives the support agent on the Messages API. After each response, how should the loop decide whether to run the requested tools and call the API again, or to stop?
+Your agent escalates whenever a sentiment score shows strong frustration. A customer writes, angrily, that a coupon failed at checkout, which is a case the agent can fix in one step. What behavior should the design produce?
 
-- **A.** Stop when the assistant text contains a closing phrase like 'let me know if there is anything else', which usually signals that the agent considers itself finished
-- **B.** Check stop_reason: continue the loop when it is tool_use, and stop when it is end_turn
-- **C.** Stop after a fixed three iterations of the loop regardless of what the response actually contains or whether the agent is finished
-- **D.** Stop as soon as any text block appears in the response, even when that same response also contains a tool_use block still waiting to run
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: B**
-
-stop_reason is the structured loop-control signal: tool_use means run the requested tools and continue, end_turn means the agent has finished.
-
-_Why a tempting wrong answer misses:_ Scanning for a closing phrase (A) is brittle; the API returns stop_reason precisely so you never have to infer completion from the prose.
-
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
-
-</details>
-
----
-
-### Question 54 of 100
-
-**Scenario: Customer Support Resolution Agent**
-*Study area: Keyword-Routing Bias · hard*
-
-Despite well-written tool descriptions, the agent almost always calls issue_refund whenever a message contains the word 'refund,' even for questions that only ask about the refund policy. What is the most likely cause?
-
-- **A.** Keyword-sensitive routing in the system prompt (e.g. 'if they say refund, use issue_refund') overrides nuanced tool choice
-- **B.** The issue_refund input schema is subtly malformed, so the model falls back to calling it whenever refunds come up
-- **C.** The model is too small to read tool descriptions, so it ignores them and keys only on message keywords
-- **D.** Sampling temperature is set too high, which makes the agent randomly prefer refund tools over policy tools
+- **A.** Acknowledge the frustration, offer to fix the coupon now, and escalate if the customer still asks for a person
+- **B.** Escalate at once, since strong negative sentiment is the most reliable sign of a complex case
+- **C.** Ignore the tone and apply the coupon without comment, since emotion is not relevant to the fix
+- **D.** Ask the customer to calm down before the agent is willing to look at the coupon issue at all
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: A**
 
-When descriptions are good but a keyword still forces a specific tool, the usual culprit is keyword-based routing instructions in the system prompt biasing the model toward that tool.
+Sentiment is a poor proxy for complexity. When the issue is within the agent's ability, acknowledging the frustration and offering a fix serves the customer, with escalation if they reiterate a wish for a human.
 
-_Why a tempting wrong answer misses:_ A malformed schema (B) would cause tool errors or non-use, not reliable keyword-triggered overuse of that specific tool.
+_Why a tempting wrong answer misses:_ Sentiment-triggered escalation (B) sends easy cases to humans and does not track actual case complexity.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
+Reference: https://platform.claude.com/docs/en/about-claude/use-case-guides/customer-support-chat
 
 </details>
 
 ---
 
-### Question 55 of 100
+### Question 48 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: Tool Description Quality · medium*
+*Study area: Agent SDK hooks · medium*
+
+A PreToolUse hook blocks apply_account_credit calls above $250. After a block, the agent keeps retrying the same call with the same amount. What should the hook return so the agent redirects instead of retrying?
+
+- **A.** A deny decision with no reason, so the agent cannot argue with the policy and has nothing to respond to
+- **B.** An exception that ends the whole session, since any over-limit request means the conversation must stop
+- **C.** An allow decision with the amount silently lowered to $250, so the call succeeds without further discussion
+- **D.** A deny decision with a permissionDecisionReason explaining the limit and that such credits go to human review
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+When a hook denies a tool call, the reason is passed back to the model. Explaining the limit and the correct path lets the agent stop retrying and escalate instead.
+
+_Why a tempting wrong answer misses:_ Silently rewriting the amount (C) changes what the customer receives without telling anyone, which trades a blocked action for an unexplained one.
+
+Reference: https://code.claude.com/docs/en/agent-sdk/hooks
+
+</details>
+
+---
+
+### Question 49 of 117
+
+**Scenario: Customer Support Resolution Agent**
+*Study area: Agent SDK hooks · hard*
+
+A third-party MCP billing tool returns full card numbers in its results, and compliance says the model must never see them. You cannot change the tool. Which approach meets the requirement deterministically?
+
+- **A.** Add a system-prompt rule telling the agent to ignore any card numbers that it happens to see in tool results
+- **B.** Ask the agent to call a separate masking tool on each billing result before it reads the content
+- **C.** Lower the tool's priority in the tool list so the agent calls it less often during normal conversations
+- **D.** Use a PostToolUse hook that replaces the tool's output with a redacted version before the model receives it
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+PostToolUse hooks run after a tool executes and can replace its output before the model processes it. That makes redaction a code-level guarantee rather than a request the model might not follow.
+
+_Why a tempting wrong answer misses:_ A masking tool the agent must remember to call (B) still lets the raw result reach the model first and depends on the model's compliance.
+
+Reference: https://code.claude.com/docs/en/agent-sdk/hooks
+
+</details>
+
+---
+
+### Question 50 of 117
+
+**Scenario: Multi-Agent Research System**
+*Study area: Error propagation · hard*
+
+A multi-agent research run crashed partway through after four of seven subagents had finished. Restarting from scratch wastes hours. How should the system be designed for recovery?
+
+- **A.** Rely on the coordinator's memory of the run, since it can recall which subagents finished
+- **B.** Have each agent export its state to a known location, and have the coordinator load a manifest on resume
+- **C.** Run every subagent twice in parallel so that one copy of each is likely to survive a crash
+- **D.** Increase timeouts on every subagent so that the crash is less likely to happen in the future
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+Structured state exports and a manifest let the coordinator see what finished and inject prior results into the remaining agents' prompts, so a restart resumes rather than repeats.
+
+_Why a tempting wrong answer misses:_ The coordinator's context (A) does not survive a crash of the process that held it.
+
+Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+
+</details>
+
+---
+
+### Question 51 of 117
+
+**Scenario: Customer Support Resolution Agent**
+*Study area: Subagent context and spawning · medium*
+
+Your support agent delegates refund research to a billing subagent. The customer said early on that they want store credit, not a card refund, and that the order shipped to Canada. The subagent's recommendation ignores both points. What is the fix?
+
+- **A.** Tell the billing subagent to read the main agent's conversation history before it starts any research work
+- **B.** Include the customer's stated constraints, such as store credit and the Canadian address, in the delegation prompt
+- **C.** Move all refund research back into the main agent, because subagents are not able to handle customer preferences
+- **D.** Add the customer's preferences to the billing subagent's permanent system prompt for every future conversation
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+A subagent receives only what the delegation prompt gives it. Constraints that matter to the outcome must be passed explicitly, or the subagent will reason without them.
+
+_Why a tempting wrong answer misses:_ Subagents cannot read the parent's history on request (A); they do not inherit it, so the constraints have to be in the prompt.
+
+Reference: https://code.claude.com/docs/en/agent-sdk/subagents
+
+</details>
+
+---
+
+### Question 52 of 117
+
+**Scenario: Developer Productivity with Claude**
+*Study area: Task decomposition · hard*
+
+You ask an agent to 'add meaningful test coverage to this 12-year-old codebase with almost no tests.' Which decomposition approach fits this task best?
+
+- **A.** A fixed chain that writes tests for every file in alphabetical order, then runs the full suite once at the end
+- **B.** One pass that reads the whole repository into context and writes all the new tests in a single response
+- **C.** Map the structure first, pick high-impact areas, then work through a prioritized plan that adapts as dependencies appear
+- **D.** Split the repository evenly by line count across parallel subagents and merge whatever tests each returns
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: C**
+
+Open-ended work with unknown structure calls for dynamic decomposition: explore, prioritize, and let later subtasks depend on what earlier steps discover. A fixed chain suits predictable tasks, not this one.
+
+_Why a tempting wrong answer misses:_ Splitting by line count (D) ignores where risk and value actually sit, and the pieces cannot coordinate on shared fixtures or dependencies.
+
+Reference: https://code.claude.com/docs/en/best-practices
+
+</details>
+
+---
+
+### Question 53 of 117
+
+**Scenario: Customer Support Resolution Agent**
+*Study area: Agentic loops · medium*
+
+Your hand-written loop ends the conversation whenever Claude's response contains a text block. Customers report that the agent says 'Let me look up your order' and then goes silent without answering. What is the bug?
+
+- **A.** The model should never produce text alongside a tool call, so the prompt needs a rule that forbids any narration
+- **B.** The loop should wait a few seconds after each text block in case a tool call arrives in a later response
+- **C.** The loop should parse the text for phrases like 'let me' and treat those as a signal to keep the loop running
+- **D.** A response can hold text and tool_use blocks together; the loop must continue when stop_reason is tool_use
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Claude often narrates before calling a tool, so a response can contain both a text block and a tool_use block. The stop_reason field, not the presence of text, tells the loop whether tools need to run.
+
+_Why a tempting wrong answer misses:_ Parsing phrases (C) replaces a reliable structured signal with guesswork about wording.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls
+
+</details>
+
+---
+
+### Question 54 of 117
+
+**Scenario: Customer Support Resolution Agent**
+*Study area: Tool distribution and tool_choice · medium*
+
+To save setup time, your support agent was given all 22 tools from three internal MCP servers. Tool-selection errors rose sharply after the change, even for simple order questions. What is the most effective fix?
+
+- **A.** Give the agent only the handful of tools its support role needs, and leave the rest out of its configuration
+- **B.** Keep all 22 tools but sort them so the most commonly used support tools appear first in the tool list
+- **C.** Add a system-prompt paragraph that describes all 22 tools again in more detail than their own descriptions
+- **D.** Raise the effort level so the agent spends more reasoning on choosing among the 22 tools each turn
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+More tools means more decision complexity and more near-miss choices. Scoping the agent to the tools its role needs restores selection reliability.
+
+_Why a tempting wrong answer misses:_ Reordering (B) does not reduce the number of options the model must weigh on each turn.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools
+
+</details>
+
+---
+
+### Question 55 of 117
+
+**Scenario: Customer Support Resolution Agent**
+*Study area: Tool interface design · medium*
 
 The agent selects the right tool but often passes the date argument in the wrong format, causing failures. Where is the most effective place to fix this?
 
@@ -1432,16 +1433,16 @@ The tool description is the primary place the model learns how to call a tool, s
 
 _Why a tempting wrong answer misses:_ A vague global 'use correct formats' (B) gives no concrete target; the specific format belongs in the tool's own description where the model reads it.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
+Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools
 
 </details>
 
 ---
 
-### Question 56 of 100
+### Question 56 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: When Not to Escalate · hard*
+*Study area: Escalation and ambiguity · hard*
 
 A customer claims their package never arrived, but the tracking tool shows 'delivered.' A teammate says the agent should escalate any time evidence conflicts. Is escalation the right default here?
 
@@ -1464,10 +1465,10 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overvie
 
 ---
 
-### Question 57 of 100
+### Question 57 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: Tool Error Handling · medium*
+*Study area: Structured tool errors · medium*
 
 One of the agent's tool calls fails with an error. How should the loop handle it so the agent can recover?
 
@@ -1484,16 +1485,16 @@ A failed tool should return a tool_result with is_error true so the model can se
 
 _Why a tempting wrong answer misses:_ Dropping the failed result (A) makes the model believe the call worked, producing incorrect downstream actions built on a phantom success.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
+Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls
 
 </details>
 
 ---
 
-### Question 58 of 100
+### Question 58 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: Ask for Missing Information · easy*
+*Study area: Escalation and ambiguity · easy*
 
 A customer says 'I want a refund' with no order reference, and the agent has no way to identify which purchase they mean. What is the best next step?
 
@@ -1516,10 +1517,10 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overvie
 
 ---
 
-### Question 59 of 100
+### Question 59 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: Fabricated Policy · medium*
+*Study area: Escalation and ambiguity · medium*
 
 Under pressure to resolve tickets without escalating, the agent starts stating specific policies (return windows, fees) that do not appear anywhere in its knowledge base. What is the root problem and fix?
 
@@ -1542,10 +1543,10 @@ Reference: https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guar
 
 ---
 
-### Question 60 of 100
+### Question 60 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: Programmatic Policy Limits · medium*
+*Study area: Agent SDK hooks · medium*
 
 Refund policy caps automatic refunds at $100, above which a manager must approve. Relying on the prompt, the agent occasionally issues automatic refunds above the cap. What is the best fix?
 
@@ -1562,42 +1563,42 @@ A hard business limit should be enforced programmatically at the tool boundary s
 
 _Why a tempting wrong answer misses:_ A bolded prompt rule (A) still depends on model compliance every time, whereas a code-enforced cap cannot be bypassed by a wayward generation.
 
-Reference: https://code.claude.com/docs/en/hooks
+Reference: https://code.claude.com/docs/en/agent-sdk/hooks
 
 </details>
 
 ---
 
-### Question 61 of 100
+### Question 61 of 117
 
-**Scenario: Customer Support Resolution Agent**
-*Study area: Persistent Constraints · medium*
+**Scenario: Developer Productivity with Claude**
+*Study area: Large-codebase context · medium*
 
-Early in a chat the customer states they are in the EU, which changes the applicable return window. Twenty turns later, after summarization, the agent quotes the US window. What prevents this?
+A three-phase investigation (map the modules, trace the data flow, then assess risk) is running out of context during phase two because phase one's raw exploration output is still in the conversation. What should you do between phases?
 
-- **A.** Ask the customer to restate their region at the end of the chat so the agent can verify it before replying
-- **B.** Keep region and other durable constraints in a persistent case-facts block that survives summarization
-- **C.** Never summarize the conversation at all so early regional details cannot be lost mid-session
-- **D.** Shorten the return policy so region no longer changes the window the agent is allowed to quote
+- **A.** Summarize phase one's key findings and pass that summary into the next phase's subagents, compacting if needed
+- **B.** Keep all of phase one's raw output, because deleting any of it risks losing an important detail
+- **C.** Start phase two in a new session with no information from phase one, to keep the context clean
+- **D.** Ask the agent to answer the risk question now, skipping phase two to avoid running out of space
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: B**
+**Correct answer: A**
 
-Durable constraints like region or entitlements belong in a persistent facts block that outlives summarization, so the agent keeps applying the right rule throughout the conversation.
+Summarizing findings at phase boundaries and injecting the summary into the next phase's initial context keeps what matters while freeing space; /compact helps when discovery output has piled up.
 
-_Why a tempting wrong answer misses:_ Never summarizing (C) lets context grow until it overflows; a persistent facts block is the targeted, scalable way to retain the constraint.
+_Why a tempting wrong answer misses:_ A clean session with nothing carried over (C) throws away the phase-one map that phase two depends on.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/context-windows
+Reference: https://code.claude.com/docs/en/context-window
 
 </details>
 
 ---
 
-### Question 62 of 100
+### Question 62 of 117
 
 **Scenario: Customer Support Resolution Agent**
-*Study area: Loop Safeguards · medium*
+*Study area: Agentic loops · medium*
 
 Your support agent loop is driven by stop_reason, but you also want to prevent a pathological case where the model keeps requesting tools indefinitely. What is a reasonable safeguard that does not break normal operation?
 
@@ -1614,31 +1615,31 @@ stop_reason should remain the primary signal, with a max-iteration cap only as a
 
 _Why a tempting wrong answer misses:_ A fixed two-iteration limit (B) would cut off normal multi-step resolutions that legitimately need more tool calls to finish.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
+Reference: https://code.claude.com/docs/en/agent-sdk/agent-loop
 
 </details>
 
 ---
 
-### Question 63 of 100
+### Question 63 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Glob-Scoped Rules · medium*
+*Study area: Path-scoped rules · hard*
 
-Your team wants test-writing conventions to apply automatically whenever anyone edits a file matching **/*.test.ts, wherever it lives, without loading those rules for unrelated work. What mechanism fits best?
+A .claude/rules/ file with paths: ["migrations/**"] loads correctly when Claude reads a migration. In a long session, after /compact, Claude stops following that rule even while still editing migrations. What explains this?
 
-- **A.** Put the test-writing conventions in the root CLAUDE.md so that they are always loaded and every engineer sees them on every task, regardless of the file being edited
-- **B.** Add a file under .claude/rules/ with YAML frontmatter specifying the **/*.test.ts glob, so it applies automatically based on the file being edited
-- **C.** Create a skill that engineers must invoke by name before writing tests
-- **D.** Paste the conventions into each pull request description
+- **A.** Path-scoped rules expire after a fixed number of turns and must be re-enabled with a slash command
+- **B.** The glob is wrong; migrations/** only matches files at the top level of the migrations folder
+- **C.** Compaction deletes the .claude/rules/ directory, so the rule file must be restored from version control
+- **D.** Path-scoped rules enter message history when triggered, so compaction summarizes them away with the rest
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: B**
+**Correct answer: D**
 
-.claude/rules/ files carry glob frontmatter that applies path-scoped conventions automatically based on the edited file, which is exactly the file-type scoping this needs.
+A path-scoped rule loads into the conversation when a matching file is read, so compaction can summarize it away. If a rule must survive compaction, drop the paths field or move it to the project-root CLAUDE.md.
 
-_Why a tempting wrong answer misses:_ The root CLAUDE.md (A) loads for every task and cannot be limited to test files; rules provide the glob scoping that CLAUDE.md lacks.
+_Why a tempting wrong answer misses:_ The glob (B) is fine; ** matches files at any depth, and the rule did load before compaction.
 
 Reference: https://code.claude.com/docs/en/memory
 
@@ -1646,77 +1647,25 @@ Reference: https://code.claude.com/docs/en/memory
 
 ---
 
-### Question 64 of 100
+### Question 64 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Skills vs. CLAUDE.md · medium*
+*Study area: Slash commands and skills · medium*
 
-You have a detailed, multi-step database-migration workflow that should load only when someone is actually doing a migration, not on every task. Where does it belong?
+You wrote a /deploy skill that pushes to production. You want it to run only when a developer types /deploy, never because Claude decided the code looked ready. Which frontmatter setting does that?
 
-- **A.** In a Skill (.claude/skills/<name>/SKILL.md) that loads on demand when its trigger keywords appear
-- **B.** Put the migration workflow in the root CLAUDE.md so it is always available and no one ever has to remember to invoke it before starting a migration
-- **C.** In a .claude/rules/ file scoped by a glob, so the migration workflow attaches automatically whenever a matching migration file is opened for editing
-- **D.** In the user-level ~/.claude/CLAUDE.md, so the full migration workflow is always loaded in your own sessions across every project you work in
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: A**
-
-Task/workflow-specific guidance that should not load on every task belongs in a Skill, which loads on demand when its trigger keywords appear.
-
-_Why a tempting wrong answer misses:_ The root CLAUDE.md (B) loads every session, so it would carry an occasional workflow into every unrelated task; Skills load only when triggered.
-
-Reference: https://code.claude.com/docs/en/skills
-
-</details>
-
----
-
-### Question 65 of 100
-
-**Scenario: Code Generation with Claude Code**
-*Study area: context: fork · hard*
-
-A skill performs a noisy, verbose repository scan whose intermediate output would clutter the main conversation, but you only need its final summary. Which frontmatter option keeps the main context clean?
-
-- **A.** allowed-tools, which restricts which tools the skill may call (for example to read-only commands)
-- **B.** argument-hint, which only suggests parameters in the UI and does not isolate context
-- **C.** model, which pins a specific model for the skill but still runs in the main conversation
-- **D.** context: fork, which runs the skill in an isolated subagent so verbose output stays out of the main chat
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: D**
-
-context: fork runs a skill in an isolated subagent so its verbose intermediate output stays out of the main conversation and only the result returns.
-
-_Why a tempting wrong answer misses:_ allowed-tools (A) restricts capabilities but does nothing about verbose output flooding the main context; forking is what isolates it.
-
-Reference: https://code.claude.com/docs/en/skills
-
-</details>
-
----
-
-### Question 66 of 100
-
-**Scenario: Code Generation with Claude Code**
-*Study area: allowed-tools · medium*
-
-You want a documentation-generation skill to be structurally unable to run shell commands or edit files, only to read them. Which frontmatter field enforces that guardrail deterministically?
-
-- **A.** context: fork, which runs the skill in an isolated subagent so its file reads and shell calls cannot touch the main context
-- **B.** argument-hint
-- **C.** allowed-tools, restricting the skill to just the read tools it needs
-- **D.** Add a clear sentence in the skill body asking it to only read files and never run shell commands or make edits while it generates the documentation
+- **A.** user-invocable: false
+- **B.** context: fork
+- **C.** disable-model-invocation: true
+- **D.** argument-hint: [environment]
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: C**
 
-allowed-tools restricts what a skill can do at the harness level, a deterministic guardrail that is far stronger than an in-body request.
+disable-model-invocation: true stops Claude from loading or running the skill on its own, which suits workflows with side effects that a person should trigger deliberately.
 
-_Why a tempting wrong answer misses:_ A request in the skill body (D) is advisory and can be ignored mid-task; allowed-tools enforces the restriction so the capability simply is not available.
+_Why a tempting wrong answer misses:_ user-invocable: false (A) does the opposite: it hides the skill from the / menu so only Claude can invoke it.
 
 Reference: https://code.claude.com/docs/en/skills
 
@@ -1724,25 +1673,26 @@ Reference: https://code.claude.com/docs/en/skills
 
 ---
 
-### Question 67 of 100
+### Question 65 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: argument-hint · easy*
+*Study area: Slash commands and skills · hard*
 
-Your custom /deploy skill needs the target environment as a parameter, and you want Claude Code to prompt for it. Which frontmatter field is designed for this?
+Which TWO statements about skill frontmatter in Claude Code are accurate? (Select 2.)
 
-- **A.** argument-hint, which declares and prompts for the expected parameter(s)
-- **B.** allowed-tools, which lists the tools a skill may call and could be misread as also declaring the environment it should receive
-- **C.** context: fork, which runs the skill in an isolated subagent that is handed the target environment separately from the main conversation
-- **D.** model
+- **A.** argument-hint is text shown during autocomplete to indicate which arguments the skill expects
+- **B.** allowed-tools removes every tool it does not list, so the skill cannot call anything else
+- **C.** context: fork runs the skill in its own subagent context, apart from the main conversation
+- **D.** A skill in .claude/skills/ always overrides a personal skill of the same name in ~/.claude/skills/
+- **E.** disable-model-invocation: true hides the skill from the / menu so that only Claude can run it
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: A**
+**Correct answers: A, C**
 
-argument-hint declares the parameters a skill or command expects and prompts the user to supply them.
+argument-hint is an autocomplete hint, and context: fork runs the skill in a separate subagent context. Both are documented frontmatter fields.
 
-_Why a tempting wrong answer misses:_ allowed-tools (B) restricts which tools a skill may call and has nothing to do with prompting for parameters.
+_Why a tempting wrong answer misses:_ allowed-tools (B) pre-approves the listed tools for that turn; it does not restrict the others. To remove tools, use disallowed-tools.
 
 Reference: https://code.claude.com/docs/en/skills
 
@@ -1750,25 +1700,25 @@ Reference: https://code.claude.com/docs/en/skills
 
 ---
 
-### Question 68 of 100
+### Question 66 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Project Skill Precedence · hard*
+*Study area: Slash commands and skills · hard*
 
-The project defines a skill named 'review' in .claude/skills/. You want your own personal variant with different behavior, but your personal 'review' skill never runs. Why, and what is the clean fix?
+Your autonomous /triage-backlog skill runs unattended and must never stop to ask the developer a question through AskUserQuestion. Which frontmatter setting removes that tool while the skill is active?
 
-- **A.** Personal skills are disabled inside project repos by default; re-enable them in local settings
-- **B.** Project skills take precedence over a same-named personal skill; rename your personal skill to coexist
-- **C.** Move your personal skill into the project directory so it overrides the team's shared skill
-- **D.** Delete the project skill from the repo so your personal skill is the only one that can run
+- **A.** allowed-tools listing every tool except AskUserQuestion
+- **B.** disallowed-tools: AskUserQuestion
+- **C.** user-invocable: false
+- **D.** argument-hint: [no-questions]
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: B**
 
-A project skill wins over a same-named personal skill; to customize personally without conflict, give your personal skill a different name so both remain available.
+disallowed-tools removes the named tools from Claude's pool while the skill is active. allowed-tools only pre-approves tools for the invoking turn and leaves every other tool callable.
 
-_Why a tempting wrong answer misses:_ Moving your skill into the project (C) would change behavior for the whole team, not just you; a differently-named personal skill keeps the customization personal.
+_Why a tempting wrong answer misses:_ Listing everything else in allowed-tools (A) grants permissions but does not take AskUserQuestion away.
 
 Reference: https://code.claude.com/docs/en/skills
 
@@ -1776,129 +1726,181 @@ Reference: https://code.claude.com/docs/en/skills
 
 ---
 
-### Question 69 of 100
+### Question 67 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Custom Command Location · medium*
+*Study area: Slash commands and skills · medium*
 
-You want a custom slash command to be available to everyone on the team automatically when they clone or pull the repository. Where should it live?
+Your /release-notes skill needs a version number. Developers type /release-notes 4.2.0, but the skill body never uses the value. How should the body reference what the developer typed?
 
-- **A.** Put the command in each developer's personal ~/.claude/commands/ directory and ask everyone on the team to add it there after they clone the repository
-- **B.** In a .claude/config.json 'commands' array
-- **C.** In the project's .claude/commands/ (or .claude/skills/) directory, so it is version-controlled and ships with the repo
-- **D.** In an environment variable set on the CI runner
+- **A.** With the $ARGUMENTS placeholder, or $0 for the first argument, which Claude Code replaces with the typed text
+- **B.** By asking Claude in the body to scroll back through the chat and find whatever the developer typed
+- **C.** By adding an argument-hint field, which stores the typed value in an environment variable for Bash
+- **D.** By reading a file named ARGUMENTS in the skill directory, which Claude Code writes on each call
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Claude Code substitutes $ARGUMENTS with the full argument string and $N with individual arguments in the skill's content.
+
+_Why a tempting wrong answer misses:_ argument-hint (C) only shows a hint in autocomplete; it does not capture or pass the value.
+
+Reference: https://code.claude.com/docs/en/skills
+
+</details>
+
+---
+
+### Question 68 of 117
+
+**Scenario: Code Generation with Claude Code**
+*Study area: Slash commands and skills · hard*
+
+The repository ships a /deploy skill in .claude/skills/deploy/. One developer's /deploy behaves differently from everyone else's. You find a deploy skill in their ~/.claude/skills/ folder. What is happening?
+
+- **A.** Project skills always win, so the difference must come from their local settings rather than the skill
+- **B.** Claude Code merges the two skills into one, and the personal file's steps are appended to the project's
+- **C.** Personal skills take precedence over project skills with the same name, so their personal copy runs
+- **D.** Claude Code picks one of the two same-named skills at random on each invocation of /deploy
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: C**
 
-Team commands and skills belong in the project's .claude/ directory so they are version-controlled and available to everyone who clones or pulls the repo.
+When skills share a name, enterprise wins over personal and personal wins over project. The developer's personal deploy skill shadows the team's version; renaming the personal one resolves it.
 
-_Why a tempting wrong answer misses:_ There is no .claude/config.json 'commands' array (B); custom commands live as files under .claude/commands/ or .claude/skills/.
+_Why a tempting wrong answer misses:_ Project skills do not override personal ones (A); the precedence runs the other way.
 
-Reference: https://code.claude.com/docs/en/slash-commands
+Reference: https://code.claude.com/docs/en/skills
 
 </details>
 
 ---
 
-### Question 70 of 100
+### Question 69 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Plan Mode vs. Direct Execution · medium*
+*Study area: CLAUDE.md hierarchy · medium*
 
-You are asked to split a monolith into microservices, a change with major architectural implications and several viable decompositions. What is the best first move in Claude Code?
+In a monorepo, the payments package must follow your PCI coding standard and the web package must follow your accessibility standard. Both standards live as separate markdown files in /standards. How can each package pull in only the standard it needs?
 
-- **A.** Start editing the largest source file directly to make immediate progress, then rework the structure later as the design becomes clearer
-- **B.** Ask Claude to compact the context window first so there is more room to hold the whole monolith before deciding how to split it
-- **C.** Immediately generate the full implementation across all of the services and then review the result afterward, iterating on whatever the first pass gets wrong
-- **D.** Use plan mode to explore the codebase and design the approach before touching code
+- **A.** Paste both standards into the root CLAUDE.md so every package receives both documents in full
+- **B.** Rename each standards file to CLAUDE.md and copy it into every directory of the monorepo
+- **C.** Store both standards as personal rules so that each engineer can decide which one to load
+- **D.** Import the relevant file from each package's CLAUDE.md with @path syntax, such as @../../standards/pci.md
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: D**
 
-Architecturally significant or ambiguous work calls for plan mode to explore and design before implementation; direct execution is for well-specified, low-ambiguity changes.
+CLAUDE.md files can import other files with @path syntax. Each package's CLAUDE.md can import just the standards that apply to it, keeping configuration modular.
 
-_Why a tempting wrong answer misses:_ Jumping straight into edits (A) risks committing to a poor decomposition on a high-ambiguity architectural change; planning first surfaces the trade-offs.
+_Why a tempting wrong answer misses:_ Putting both in the root file (A) loads irrelevant standards everywhere and grows every session's context.
 
-Reference: https://code.claude.com/docs/en/common-workflows
-
-</details>
-
----
-
-### Question 71 of 100
-
-**Scenario: Code Generation with Claude Code**
-*Study area: Explore Subagent · medium*
-
-Before implementing, you must understand how authentication flows through a large unfamiliar codebase, which means reading many files. You want to preserve your main context window. What is the best approach?
-
-- **A.** Read every file yourself in the main session to build a complete picture, then run /compact once the context window starts to fill up from all of that reading
-- **B.** Delegate the discovery to the Explore subagent, which isolates the verbose reading and returns a summary, preserving the main context
-- **C.** Increase the context window size in settings
-- **D.** Skip discovery and start implementing, correcting as you go
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: B**
-
-The Explore subagent isolates verbose discovery and returns a concise summary, preserving the main context window; delegating beats a lossy /compact.
-
-_Why a tempting wrong answer misses:_ Reading everything in the main session and then /compact (A) is lossy and still fills the context; the Explore subagent avoids both problems.
-
-Reference: https://code.claude.com/docs/en/sub-agents
+Reference: https://code.claude.com/docs/en/memory
 
 </details>
 
 ---
 
-### Question 72 of 100
+### Question 70 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Concrete Examples · medium*
+*Study area: Plan mode vs direct execution · medium*
 
-Claude keeps misinterpreting a data transformation you described in prose, producing subtly wrong output shapes. What most reliably communicates the transform?
+You must migrate 60 files from a deprecated HTTP client to a new one, and the new client handles retries differently. Which workflow fits best?
 
-- **A.** Provide a concrete input-to-output example pair showing exactly what goes in and what should come out
-- **B.** Rewrite the prose description of the transformation to be considerably longer and more detailed, spelling out each edge case the model keeps getting wrong
-- **C.** Raise the model's thinking effort so it reasons longer about your prose description and is less likely to misread the intended output shape
-- **D.** Add more of the transformation's requirements as a longer bulleted list of constraints, describing each rule the output shape must satisfy in words
+- **A.** Use plan mode to investigate usage patterns and agree on an approach, then execute the approved plan directly
+- **B.** Start editing the files one by one immediately and adjust the approach whenever a test starts failing
+- **C.** Stay in plan mode for the whole migration so that every one of the 60 file edits gets planned in detail
+- **D.** Ask Claude to rewrite all 60 files in a single response without any investigation beforehand
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: A**
 
-Concrete input-to-output examples beat more prose for pinning down a transform the model keeps misreading, because the exact shapes remove the ambiguity.
+Plan mode suits the investigation and design phase of a change with real choices to make. Once the approach is agreed, direct execution implements it efficiently.
 
-_Why a tempting wrong answer misses:_ Longer prose (B) preserves the same ambiguity that caused the misread; a worked example shows the target directly instead of describing it again.
+_Why a tempting wrong answer misses:_ Jumping straight into edits (B) risks rework across dozens of files once the retry difference surfaces.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/multishot-prompting
+Reference: https://code.claude.com/docs/en/permission-modes
 
 </details>
 
 ---
 
-### Question 73 of 100
+### Question 71 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: MCP Env Expansion · medium*
+*Study area: Iterative refinement · medium*
 
-Your team wants a shared MCP server configuration checked into the repo, but each developer must supply their own GitHub token and no secret may be committed. What is the idiomatic setup?
+You need a caching layer for a pricing service, a domain you have not worked in. You are not sure what invalidation or failure cases matter. What is an effective way to start with Claude Code?
 
-- **A.** Commit .mcp.json with the token hard-coded into the file and simply rotate that token frequently so that a leak has only a limited window of usefulness
-- **B.** Have each developer keep their own private copy of the MCP configuration outside the repository so their personal token never gets committed anywhere
-- **C.** Store the token in CLAUDE.md so Claude can read it
-- **D.** Commit .mcp.json using ${GITHUB_TOKEN} environment-variable expansion, so each developer supplies their own secret at runtime
+- **A.** Ask Claude to implement the cache immediately and fix whatever breaks during code review later
+- **B.** Paste a generic caching tutorial into the prompt and ask Claude to follow it exactly as written
+- **C.** Ask Claude to interview you first, raising questions about invalidation, staleness, and failures before it writes code
+- **D.** Skip the design discussion and ask Claude for three implementations so you can pick one at random
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: D**
+**Correct answer: C**
 
-.mcp.json supports ${ENV} expansion, so the shared config stays version-controlled while each developer provides their own secret via an environment variable, never committing tokens.
+Having Claude ask questions before implementing surfaces considerations you may not have anticipated, such as invalidation strategy and failure modes, so the design is settled before code exists.
 
-_Why a tempting wrong answer misses:_ Hard-coding a token in a committed file (A) leaks the secret no matter how often it is rotated; env expansion avoids committing it at all.
+_Why a tempting wrong answer misses:_ Implementing first (A) pushes design discovery into review, where changes are more expensive.
+
+Reference: https://code.claude.com/docs/en/best-practices
+
+</details>
+
+---
+
+### Question 72 of 117
+
+**Scenario: Code Generation with Claude Code**
+*Study area: Iterative refinement · medium*
+
+You want Claude Code to build a currency-rounding module with strict rules for half-cent cases, negative amounts, and very large values. Which iteration approach gives the most dependable result?
+
+- **A.** Describe the rules in a long paragraph, then accept the first version that compiles without errors
+- **B.** Write tests for expected behavior and the edge cases first, then iterate by sharing the failing tests
+- **C.** Ask Claude to write the module and its tests together, then trust that passing tests prove correctness
+- **D.** Implement the module yourself and ask Claude only to add comments explaining how it works to others
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+Test-driven iteration makes the requirements executable. Sharing concrete failures gives Claude precise feedback and progressively improves the implementation.
+
+_Why a tempting wrong answer misses:_ Tests written alongside the code (C) can encode the same misunderstanding as the implementation.
+
+Reference: https://code.claude.com/docs/en/best-practices
+
+</details>
+
+---
+
+### Question 73 of 117
+
+**Scenario: Developer Productivity with Claude**
+*Study area: MCP server integration · medium*
+
+Your team wants Claude to read and update issues in a widely used issue tracker. An engineer proposes writing a custom MCP server from scratch. A well-maintained community server for that tracker already exists. What is the sensible default?
+
+- **A.** Write the custom server anyway, since any server not written in-house cannot be connected to Claude Code
+- **B.** Skip MCP and give the agent Bash access so it can call the tracker's REST API directly with curl
+- **C.** Use the existing community server for the standard integration and save custom servers for team-specific workflows
+- **D.** Ask Claude to reimplement the tracker's API inside a skill so no server is needed for the integration at all
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: C**
+
+Standard integrations are well served by existing servers, which saves build and maintenance effort. Custom servers earn their keep for workflows unique to your team.
+
+_Why a tempting wrong answer misses:_ Raw curl through Bash (B) gives up the typed tool interface and puts credentials and parsing on the agent.
 
 Reference: https://code.claude.com/docs/en/mcp
 
@@ -1906,25 +1908,25 @@ Reference: https://code.claude.com/docs/en/mcp
 
 ---
 
-### Question 74 of 100
+### Question 74 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: CLAUDE.md Hierarchy · easy*
+*Study area: CLAUDE.md hierarchy · easy*
 
-You want a coding standard that applies to every engineer working in this repository, loaded in every session. Where should it go?
+You want Claude to use your personal sandbox URL and test account in this one repository, without committing them or applying them to your other projects. Where do they belong?
 
-- **A.** Put the coding standard in your personal ~/.claude/CLAUDE.md so it travels with you, and ask each teammate to copy the same content into their own personal file
-- **B.** In a .claude/rules/ file scoped to a single narrow glob, so the standard only attaches when a file matching that one pattern is being edited
-- **C.** In the project's CLAUDE.md (checked into the repo) so the whole team inherits it every session
-- **D.** In a Skill that individual engineers have to remember to invoke by name each time before the coding standard will actually apply to their work
+- **A.** In the project CLAUDE.md, under a heading that asks teammates to ignore the personal section
+- **B.** In ~/.claude/CLAUDE.md, since that file is private to you and applies in every project you open
+- **C.** In a CLAUDE.local.md at the project root, added to .gitignore so it stays on your machine only
+- **D.** In a path-scoped rule under .claude/rules/ that matches only the files you personally edit
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: C**
 
-Team-wide, always-on guidance belongs in the project CLAUDE.md, which is checked in and loaded every session for everyone on the team.
+CLAUDE.local.md holds personal, project-specific preferences. It loads alongside CLAUDE.md and, when gitignored, never reaches the repository.
 
-_Why a tempting wrong answer misses:_ The personal ~/.claude/CLAUDE.md (A) is user-level and applies only to your sessions, so teammates would never receive the standard.
+_Why a tempting wrong answer misses:_ ~/.claude/CLAUDE.md (B) is private but applies to all your projects, not just this one.
 
 Reference: https://code.claude.com/docs/en/memory
 
@@ -1932,36 +1934,36 @@ Reference: https://code.claude.com/docs/en/memory
 
 ---
 
-### Question 75 of 100
+### Question 75 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Mechanism Selection · hard*
+*Study area: CLAUDE.md hierarchy · hard*
 
-Match the mechanism to the need: universal always-apply standards, file-path-scoped conventions, and task-triggered workflows. Which mapping is correct?
+Your repo has services/billing/CLAUDE.md with billing conventions. A developer launches Claude Code at the repo root and asks a general question about billing, and the answer ignores those conventions. Nothing is misconfigured. Why?
 
-- **A.** Universal standards to CLAUDE.md; file-path-scoped conventions to .claude/rules/ globs; task-triggered workflows to Skills
-- **B.** Universal standards to Skills; file-path-scoped conventions to the root CLAUDE.md; and task-triggered workflows to .claude/rules/ glob files
-- **C.** Put everything into CLAUDE.md, since it always loads and therefore guarantees that every standard, convention, and workflow is available on every single task
-- **D.** Universal standards to rules; conventions to Skills; workflows to CLAUDE.md
+- **A.** Subdirectory CLAUDE.md files load on demand when Claude reads files in that directory, not at launch
+- **B.** Only one CLAUDE.md can load per session, and the root file always replaces every nested file
+- **C.** Nested CLAUDE.md files apply only when the file is named CLAUDE.local.md and is gitignored
+- **D.** Claude Code reads nested CLAUDE.md files only in plan mode, never in the default permission mode
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: A**
 
-CLAUDE.md is always-on for universal standards, .claude/rules/ globs scope by file path, and Skills load on trigger keywords for task workflows.
+Files in the directory hierarchy above the working directory load at launch. CLAUDE.md files in subdirectories load when Claude reads files there, so a question answered without touching billing files never pulls them in.
 
-_Why a tempting wrong answer misses:_ Option B inverts the roles: Skills load on demand and cannot carry universal always-apply standards the way CLAUDE.md does.
+_Why a tempting wrong answer misses:_ Multiple CLAUDE.md files are concatenated rather than replacing one another (B).
 
-Reference: https://code.claude.com/docs/en/skills
+Reference: https://code.claude.com/docs/en/memory
 
 </details>
 
 ---
 
-### Question 76 of 100
+### Question 76 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Plan Mode vs. Direct Execution · easy*
+*Study area: Plan mode vs direct execution · easy*
 
 A ticket says: 'rename the variable userId to accountId across the auth module and update all references.' It is unambiguous and low-risk. What is the appropriate mode?
 
@@ -1984,10 +1986,10 @@ Reference: https://code.claude.com/docs/en/common-workflows
 
 ---
 
-### Question 77 of 100
+### Question 77 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Rules vs. Skills Scope · hard*
+*Study area: Path-scoped rules · hard*
 
 A teammate proposes using a .claude/rules/ file with a glob to encode your five-step release workflow so it 'loads automatically.' Why is a rule the wrong tool, and what fits?
 
@@ -2010,10 +2012,10 @@ Reference: https://code.claude.com/docs/en/skills
 
 ---
 
-### Question 78 of 100
+### Question 78 of 117
 
-**Scenario: Code Generation with Claude Code**
-*Study area: MCP Config Scopes · medium*
+**Scenario: Developer Productivity with Claude**
+*Study area: MCP server integration · medium*
 
 You configured an MCP server in .mcp.json and a teammate says it should instead go in the 'user' scope. What distinguishes the project scope (.mcp.json) from the user and local scopes?
 
@@ -2036,10 +2038,10 @@ Reference: https://code.claude.com/docs/en/mcp
 
 ---
 
-### Question 79 of 100
+### Question 79 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Few-Shot for Output Format · medium*
+*Study area: Few-shot prompting · medium*
 
 Generated code keeps coming back in a formatting style your repo does not use, even after you describe the style in words. What most reliably fixes it?
 
@@ -2062,10 +2064,10 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-engineer
 
 ---
 
-### Question 80 of 100
+### Question 80 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: CLAUDE.md Hierarchy · medium*
+*Study area: CLAUDE.md hierarchy · medium*
 
 You personally prefer verbose commit messages and want that to apply across all of your repositories, without imposing it on teammates. Where does that instruction belong?
 
@@ -2088,25 +2090,25 @@ Reference: https://code.claude.com/docs/en/memory
 
 ---
 
-### Question 81 of 100
+### Question 81 of 117
 
-**Scenario: Code Generation with Claude Code**
-*Study area: Explore and Plan Subagents · medium*
+**Scenario: Developer Productivity with Claude**
+*Study area: Plan mode vs direct execution · hard*
 
-In Claude Code's subagent model, which pairing correctly describes the Explore and Plan subagents?
+When Claude Code delegates codebase research to its built-in Explore subagent, the summary it returns sometimes ignores naming conventions written in your project CLAUDE.md. What explains this?
 
-- **A.** Explore writes the final implementation code while Plan runs the test suite, so the two subagents together cover building and then verifying the change
-- **B.** Explore and Plan both edit files directly in the main conversation context rather than working in any isolated subagent
-- **C.** Explore compacts the running conversation to save space, while Plan deletes stale or outdated context that is no longer needed
-- **D.** Explore isolates verbose discovery and returns a summary; Plan designs the implementation approach
+- **A.** Explore runs on an older model that is not able to follow instructions written in markdown files
+- **B.** Explore and Plan skip CLAUDE.md files to keep research fast, so conventions there do not reach them
+- **C.** Explore reads only files under .claude/, so it never sees any of the source code it summarizes
+- **D.** The main agent strips the summary of every convention before showing it, to save context space
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: D**
+**Correct answer: B**
 
-Explore handles verbose discovery and returns a summary that preserves context, and Plan designs the implementation approach before any code is written.
+The built-in Explore and Plan subagents skip CLAUDE.md and the git status snapshot to keep research fast and inexpensive. Conventions the main agent must apply stay in the main conversation.
 
-_Why a tempting wrong answer misses:_ Neither subagent is a code-writing or test-running role (A); Explore discovers and Plan designs.
+_Why a tempting wrong answer misses:_ Explore does read source code (C); its purpose is to search and understand the codebase without making changes.
 
 Reference: https://code.claude.com/docs/en/sub-agents
 
@@ -2114,88 +2116,88 @@ Reference: https://code.claude.com/docs/en/sub-agents
 
 ---
 
-### Question 82 of 100
+### Question 82 of 117
 
 **Scenario: Code Generation with Claude Code**
-*Study area: Skills as Reusable Context · medium*
+*Study area: Iterative refinement · medium*
 
-You maintain a set of canonical example implementations that Claude should reference only when building a new API endpoint, not on every task. What is the best home for them?
+A generated import script has three problems: dates parse in the wrong timezone, the resulting off-by-one day breaks deduplication, and the dedupe step then drops valid rows. How should you report them to Claude?
 
-- **A.** Paste the canonical example implementations into the root CLAUDE.md so they are always on hand, ensuring the model can reference them the moment they are needed
-- **B.** Put them in a .claude/rules/ file with a broad glob
-- **C.** Put them in a Skill that loads on demand when endpoint-building keywords trigger it, keeping them out of unrelated tasks
-- **D.** Keep them only in a wiki outside the repo
+- **A.** Report one problem per message and wait for each fix, since tackling them separately is always safest
+- **B.** Report only the dropped rows, because that is the symptom users notice, and let Claude find the rest
+- **C.** Ask Claude to regenerate the whole script from scratch without describing any of the three problems
+- **D.** Describe all three in one detailed message, because the fixes interact and must be designed together
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: C**
+**Correct answer: D**
 
-Reusable exemplar context that should not load for every task fits a Skill, which loads on demand by trigger keywords and keeps unrelated sessions lean.
+When issues interact, fixing them one at a time can produce changes that conflict. One message that lays out all three lets Claude design a coherent fix. Independent issues can be handled sequentially.
 
-_Why a tempting wrong answer misses:_ Putting exemplars in CLAUDE.md (A) loads them into every session, spending context on tasks that never need them.
+_Why a tempting wrong answer misses:_ Sequential fixes (A) suit independent problems; here each fix changes the input to the next step.
 
-Reference: https://code.claude.com/docs/en/skills
+Reference: https://code.claude.com/docs/en/best-practices
 
 </details>
 
 ---
 
-### Question 83 of 100
+### Question 83 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Messages API · easy*
+**Scenario: Customer Support Resolution Agent**
+*Study area: Context preservation · medium*
 
-A developer new to the platform asks which endpoint handles a normal chat completion, a tool-use turn, and a vision request. What is the correct answer?
+Your support backend sends each new customer message to the Messages API on its own. The agent keeps asking for the order number the customer gave two messages earlier. What is wrong?
 
-- **A.** All of them go through the single Messages API endpoint (POST /v1/messages); tools, images, and text are all expressed within that one request
-- **B.** Each capability uses a different endpoint: /v1/chat for text, /v1/tools for tool use, and /v1/vision for images
-- **C.** Chat uses /v1/messages, but tool use requires a separate /v1/functions endpoint
-- **D.** Vision requires a dedicated /v1/images endpoint
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: A**
-
-The Messages API (POST /v1/messages) is the single entry point; tool use, vision, and text are all expressed inside that one request shape.
-
-_Why a tempting wrong answer misses:_ There are no separate /v1/chat or /v1/tools endpoints (B); the whole surface is the Messages API with different content blocks and parameters.
-
-Reference: https://platform.claude.com/docs/en/api/messages
-
-</details>
-
----
-
-### Question 84 of 100
-
-**Scenario: Building on the Claude Platform**
-*Study area: tool_choice · medium*
-
-You want to force Claude to call one specific tool, get_weather, on this turn rather than letting it decide. Which tool_choice setting does that?
-
-- **A.** tool_choice: auto, which leaves the decision to the model and tends to select get_weather when the prompt is obviously about weather, though it is not guaranteed
-- **B.** tool_choice: { type: "tool", name: "get_weather" }, which forces that specific tool
-- **C.** tool_choice: any, which requires the model to call some tool on this turn, making it very likely to reach for get_weather in a weather scenario
-- **D.** tool_choice: none
+- **A.** The model's memory expires after a few seconds, so customers must repeat details in each message
+- **B.** The API is stateless, so each request must include the prior conversation turns for the model to see them
+- **C.** Order numbers are filtered out of requests for privacy, so the model never receives them at all
+- **D.** The agent needs a larger max_tokens value to remember messages that arrived earlier in the chat
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: B**
 
-tool_choice of type "tool" with a name forces that exact tool; auto lets the model decide, any forces some tool, and none forbids tools.
+The Messages API does not store conversation state between calls. Coherent multi-turn behavior requires sending the relevant history, or a maintained summary plus key facts, with every request.
 
-_Why a tempting wrong answer misses:_ any (C) forces the model to use some tool but not a specific one; only type "tool" pins the exact tool to call.
+_Why a tempting wrong answer misses:_ max_tokens (D) caps the length of the response; it has nothing to do with what the model can see from earlier turns.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
+Reference: https://platform.claude.com/docs/en/build-with-claude/working-with-messages
 
 </details>
 
 ---
 
-### Question 85 of 100
+### Question 84 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Prompt Caching Invalidation · hard*
+**Scenario: Structured Data Extraction**
+*Study area: Schema-enforced output · hard*
+
+After moving an extraction job to Claude Opus 5.5, requests that set tool_choice to {"type": "any"} now fail with a 400 error. You still need schema-valid structured results. What should you use?
+
+- **A.** Switch tool_choice to {"type": "tool", "name": "extract"}, which forces one named tool
+- **B.** Remove the tools and prefill the assistant turn with an opening brace to start the JSON
+- **C.** Keep tool_choice auto with strict: true on the tool, or request output_config.format with a JSON schema
+- **D.** Set temperature to 0 so the model reliably calls the extraction tool without being forced
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: C**
+
+Claude Opus 5.5, Sonnet 5.5, and Fable 5.1 reject forced tool use (any or a named tool). The documented alternatives are auto with strict tool use for schema-valid inputs, or structured outputs for a fixed JSON response.
+
+_Why a tempting wrong answer misses:_ A named-tool choice (A) is also forced tool use and returns the same 400 on these models.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools
+
+</details>
+
+---
+
+### Question 85 of 117
+
+**Scenario: Claude Code for Continuous Integration**
+*Study area: Batch processing · hard*
 
 You enabled prompt caching with a large static system prompt first, but cache hit rates are near zero. Logs show you prepend the current timestamp to the system prompt on every request. What is happening?
 
@@ -2218,36 +2220,37 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
 
 ---
 
-### Question 86 of 100
+### Question 86 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Prompt Caching Invalidation · medium*
+**Scenario: Structured Data Extraction**
+*Study area: Schema-enforced output · hard*
 
-Which change will NOT, on its own, invalidate an existing prompt cache entry?
+You enabled structured outputs with a strict JSON schema for receipt extraction. Which TWO problems can still occur and still need validation? (Select 2.)
 
-- **A.** Changing the model
-- **B.** Changing the tool definitions sent with the request, since the tools sit in the cached prefix and editing them busts the cache
-- **C.** Editing the text of the cached system prompt is a safe operation, because the cache keys on structure rather than exact wording, so the entry survives it
-- **D.** Adding a new user message after the cached prefix while leaving the prefix itself unchanged
+- **A.** A response that cannot be parsed as JSON at all
+- **B.** A tax amount placed in the tip field of the output
+- **C.** A required field that is missing from the object
+- **D.** Line items that do not add up to the printed total
+- **E.** A string value where the schema requires a number
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: D**
+**Correct answers: B, D**
 
-Because caching is prefix-based, appending new content after an unchanged cached prefix still hits the cache; changing the model, the tools, or the prefix text is what invalidates it.
+Structured outputs guarantee valid JSON, correct types, and required fields, but not semantic correctness. Values in the wrong field and totals that do not reconcile still need checks.
 
-_Why a tempting wrong answer misses:_ Changing the model (A) does invalidate the cache; the safe operation is adding content after the stable prefix, not altering anything within it.
+_Why a tempting wrong answer misses:_ Parse failures, missing required fields, and type mismatches (A, C, E) are the syntactic problems a strict schema eliminates.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+Reference: https://platform.claude.com/docs/en/build-with-claude/structured-outputs
 
 </details>
 
 ---
 
-### Question 87 of 100
+### Question 87 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Message Batches API · medium*
+**Scenario: Structured Data Extraction**
+*Study area: Batch processing · medium*
 
 Which statement about the Message Batches API is accurate?
 
@@ -2270,36 +2273,36 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/batch-processin
 
 ---
 
-### Question 88 of 100
+### Question 88 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Streaming · medium*
+**Scenario: Structured Data Extraction**
+*Study area: Schema-enforced output · medium*
 
-You are generating very long outputs with a high max_tokens and occasionally hit HTTP timeouts on non-streaming requests. What is the recommended fix, and how do you get the assembled result?
+Your lease-extraction schema marks renewal_option_date as required. For leases without a renewal option, the model returns plausible but invented dates. What schema change addresses this?
 
-- **A.** Lower max_tokens until the timeouts stop, accepting that some answers will be truncated, since a shorter completion is less likely to exceed the request timeout
-- **B.** Use streaming to avoid the timeout, then assemble the complete result with the SDK's get_final_message()/finalMessage() helper
-- **C.** Retry the non-streaming call with only a longer client timeout
-- **D.** Split the prompt across the Batches API
+- **A.** Keep the field required and add a prompt line asking the model to be honest about the renewal date
+- **B.** Make the field nullable so that the model can return null when the lease does not contain a date
+- **C.** Replace the date field with a free-text notes field so that the model can say anything it likes
+- **D.** Remove the field from the schema and ask reviewers to find renewal dates by hand for every lease
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: B**
 
-Streaming is recommended for long outputs or high max_tokens to avoid HTTP timeouts, and the SDK's get_final_message()/finalMessage() gives you the fully assembled message.
+When source documents may lack a value, a required field pressures the model to fabricate one. A nullable or optional field lets it report absence honestly.
 
-_Why a tempting wrong answer misses:_ Lowering max_tokens (A) sacrifices the output you actually need; streaming solves the timeout without truncating the response.
+_Why a tempting wrong answer misses:_ A prompt plea (A) fights the schema, which still demands a value on every lease.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/streaming
+Reference: https://platform.claude.com/docs/en/build-with-claude/structured-outputs
 
 </details>
 
 ---
 
-### Question 89 of 100
+### Question 89 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Structured Outputs · hard*
+**Scenario: Structured Data Extraction**
+*Study area: Schema-enforced output · hard*
 
 You need the model's final response to conform exactly to a JSON schema so a downstream service can parse it without defensive code. On current models, what is the recommended mechanism?
 
@@ -2322,10 +2325,10 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/structured-outp
 
 ---
 
-### Question 90 of 100
+### Question 90 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: MCP Primitives · easy*
+**Scenario: Developer Productivity with Claude**
+*Study area: MCP server integration · easy*
 
 In the Model Context Protocol, which trio names the core primitives a server can expose?
 
@@ -2348,36 +2351,36 @@ Reference: https://platform.claude.com/docs/en/agents-and-tools/mcp
 
 ---
 
-### Question 91 of 100
+### Question 91 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: MCP Transports · medium*
+**Scenario: Developer Productivity with Claude**
+*Study area: MCP server integration · medium*
 
 You are connecting Claude to a local MCP server running on the same machine and, separately, to a remote hosted one. Which transports fit these two cases?
 
-- **A.** stdio for the local server and streamable HTTP/SSE for the remote server
-- **B.** HTTP for the local server so it can be reached on localhost, and stdio for the remote server so it can stream over the network connection to the host
-- **C.** WebSocket connections for both the local and the remote server, since the MCP specification requires that single transport everywhere
-- **D.** gRPC for the local server on the same machine and a plain REST API for the remote hosted server over the network
+- **A.** stdio for the local server and streamable HTTP for the remote server
+- **B.** HTTP for the local server on localhost and stdio for the remote server over the network
+- **C.** WebSocket for both servers, since the MCP specification allows only that one transport
+- **D.** gRPC for the local server and a plain REST API for the remote hosted server
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: A**
 
-MCP uses stdio for local servers and streamable HTTP/SSE for remote ones.
+stdio suits a server launched as a local process on the same machine, and streamable HTTP is the standard transport for a remote server reached over the network.
 
-_Why a tempting wrong answer misses:_ Option B reverses the two: stdio is the local transport and HTTP/SSE is for remote servers, not the other way around.
+_Why a tempting wrong answer misses:_ stdio (B) communicates over a child process's standard input and output, so it cannot reach a server running on another host.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/mcp
+Reference: https://code.claude.com/docs/en/mcp
 
 </details>
 
 ---
 
-### Question 92 of 100
+### Question 92 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Agent SDK vs. API · medium*
+**Scenario: Developer Productivity with Claude**
+*Study area: Agentic loops · medium*
 
 A team wants Claude to run an agent loop with tool execution, context management, and file/permission handling largely handled for them, rather than writing that orchestration against raw HTTP. Which choice matches?
 
@@ -2394,16 +2397,16 @@ The Claude Agent SDK provides the agent harness (loop, tool execution, context h
 
 _Why a tempting wrong answer misses:_ The raw Messages API (A) does not include a harness; you would have to write the loop, tool dispatch, and context handling manually.
 
-Reference: https://platform.claude.com/docs/en/api/agent-sdk/overview
+Reference: https://code.claude.com/docs/en/agent-sdk/overview
 
 </details>
 
 ---
 
-### Question 93 of 100
+### Question 93 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Token Counting · medium*
+**Scenario: Structured Data Extraction**
+*Study area: Context preservation · medium*
 
 Before sending a large request you want an accurate token count for the exact model and message shape you will use. What is the right approach?
 
@@ -2426,36 +2429,36 @@ Reference: https://platform.claude.com/docs/en/build-with-claude/token-counting
 
 ---
 
-### Question 94 of 100
+### Question 94 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: PDF and Vision Inputs · easy*
+**Scenario: Structured Data Extraction**
+*Study area: Schema-enforced output · medium*
 
-You need Claude to answer questions about a multi-page PDF and a screenshot. How are these provided?
+Your support-ticket classifier uses an enum of eight categories. New kinds of tickets get forced into the nearest category, and truly ambiguous tickets get a confident label. What schema design handles both?
 
-- **A.** Only plain text extracted from the PDF and image can be sent, so you must run OCR and text extraction yourself before putting anything into the request
-- **B.** They must first be uploaded to a separate vision product outside the Messages API, which then returns text you can paste into your request
-- **C.** PDF documents are supported as native input, but screenshots and other images are not, so you would still have to extract the image's text yourself
-- **D.** Both PDFs and images are supported as content blocks within a Messages API request (document and image inputs)
+- **A.** Grow the enum to 60 categories so that every conceivable ticket has an exact match somewhere
+- **B.** Replace the enum with free text so the model can describe each ticket in its own words
+- **C.** Add 'other' with a detail string for new kinds, and 'unclear' for tickets that are truly ambiguous
+- **D.** Keep the eight categories and ask the model to pick the first one whenever it is unsure
 
 <details><summary>Answer &amp; explanation</summary>
 
-**Correct answer: D**
+**Correct answer: C**
 
-The Messages API natively accepts PDF (document) and image inputs as content blocks, so you do not need to pre-extract text or use a separate product.
+An 'other' value paired with a detail field makes the category set extensible, and an 'unclear' value lets the model flag ambiguity instead of guessing.
 
-_Why a tempting wrong answer misses:_ Native PDF and vision input are supported (A is wrong), so pre-extracting text is unnecessary and would discard layout and visual information the model can use.
+_Why a tempting wrong answer misses:_ Free text (B) loses the consistency downstream systems need to route and count tickets.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/pdf-support
+Reference: https://platform.claude.com/docs/en/build-with-claude/structured-outputs
 
 </details>
 
 ---
 
-### Question 95 of 100
+### Question 95 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Parallel Tool Results · hard*
+**Scenario: Customer Support Resolution Agent**
+*Study area: Agentic loops · hard*
 
 Claude requested three tools in a single turn. Your code returns each tool_result in its own separate user message across three API calls. Over time Claude stops calling tools in parallel. Why?
 
@@ -2470,85 +2473,85 @@ Claude requested three tools in a single turn. Your code returns each tool_resul
 
 All tool_results for a turn should be returned together in a single user message; splitting them across messages trains Claude to stop calling tools in parallel.
 
-_Why a tempting wrong answer misses:_ Setting tool_choice to any (D) forces a tool call but does not fix the pattern; the remedy is returning all results together in one message.
+_Why a tempting wrong answer misses:_ tool_choice (D) controls whether a tool must be called, and the newest models reject any and named-tool values with a 400; it does nothing for parallelism. The remedy is returning all results together in one message.
 
-Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
-
-</details>
-
----
-
-### Question 96 of 100
-
-**Scenario: Building on the Claude Platform**
-*Study area: Prompt Caching Mechanics · medium*
-
-How do you mark a block for caching, and what TTLs are available?
-
-- **A.** Set stream: true and caching then turns on automatically for the request, with a fixed ten-minute time-to-live that you do not configure yourself
-- **B.** Add cache_control { type: "ephemeral" } to the block; the default TTL is 5 minutes, with a 1-hour option
-- **C.** Prefix the block with a special cache token in the content; the TTL for a block cached that way is always fixed at 24 hours
-- **D.** Enable it globally in the dashboard; the TTL cannot be changed
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: B**
-
-You opt a block into caching with cache_control { type: "ephemeral" }; the default TTL is 5 minutes, and a 1-hour TTL is also available.
-
-_Why a tempting wrong answer misses:_ Caching is not automatic and has no fixed 10-minute TTL (A); you opt in per block with cache_control and choose the TTL.
-
-Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/parallel-tool-use
 
 </details>
 
 ---
 
-### Question 97 of 100
+### Question 96 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: stop_reason Values · medium*
+**Scenario: Structured Data Extraction**
+*Study area: Schema-enforced output · medium*
 
-Your agent loop must handle every way a turn can end. Which set correctly lists Messages API stop_reason values you should branch on?
+Your strict schema requires ISO 8601 dates, but source forms write dates as '3/4/25', '4 March 2025', and '2025.03.04', and some US-format dates come out with day and month swapped. What should you add?
 
-- **A.** success, failure, retry, and timeout, which between them describe every way an API turn can finish and tell the loop whether it should try again
-- **B.** complete, incomplete, and error, the three states the loop should branch on to decide whether a turn finished cleanly or needs handling
-- **C.** end_turn, tool_use, max_tokens, stop_sequence, plus pause_turn and refusal
-- **D.** done, continue, and stop, a simple trio of control signals the loop can switch on to decide whether to call the API again or finish
-
-<details><summary>Answer &amp; explanation</summary>
-
-**Correct answer: C**
-
-Valid stop_reason values include end_turn, tool_use, max_tokens, stop_sequence, pause_turn (a server-tool loop paused), and refusal; the loop should branch on these.
-
-_Why a tempting wrong answer misses:_ Options like success/failure/retry (A) are invented; the API reports structured stop_reason values such as end_turn and tool_use.
-
-Reference: https://platform.claude.com/docs/en/api/handling-stop-reasons
-
-</details>
-
----
-
-### Question 98 of 100
-
-**Scenario: Building on the Claude Platform**
-*Study area: Model Selection · medium*
-
-For a high-volume classification job where each item is simple and latency matters, which current model is the most cost-and-speed appropriate default, assuming quality is adequate?
-
-- **A.** Always use Opus 4.8 regardless of the task, on the reasoning that the strongest model gives the best quality and avoids any risk of misclassification
-- **B.** Use whichever model has the largest context window
-- **C.** Fine-tune a custom model first
-- **D.** Haiku 4.5, which targets simple, high-throughput, latency-sensitive work (with Sonnet 5 as the balanced step up and Opus 4.8 for the hardest reasoning)
+- **A.** Nothing, because the schema's date format already tells the model how to read each source format
+- **B.** A post-processing step that rejects every date and asks a human to re-enter all of them by hand
+- **C.** A looser schema that accepts any string, so the source formatting is preserved exactly as written
+- **D.** Explicit normalization rules in the prompt, such as how to read slashed dates and what to do when unsure
 
 <details><summary>Answer &amp; explanation</summary>
 
 **Correct answer: D**
 
-Haiku 4.5 fits simple, high-volume, latency-sensitive tasks; Sonnet 5 is the balanced choice and Opus 4.8 is for the hardest reasoning. Match the model to the task.
+A strict schema fixes the output shape, but it does not tell the model how to interpret inconsistent source formats. Normalization rules in the prompt resolve that ambiguity.
 
-_Why a tempting wrong answer misses:_ Defaulting everything to Opus (A) overpays and adds latency for simple, high-volume work that Haiku handles well.
+_Why a tempting wrong answer misses:_ Loosening the schema (C) pushes the inconsistency downstream instead of resolving it.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/structured-outputs
+
+</details>
+
+---
+
+### Question 97 of 117
+
+**Scenario: Developer Productivity with Claude**
+*Study area: Agentic loops · medium*
+
+Your agent loop must handle every way a turn can end. Which set correctly lists Messages API stop_reason values you should branch on?
+
+- **A.** success, failure, retry, and timeout, which tell the loop whether a turn should be tried again
+- **B.** complete, incomplete, and error, the three states that show whether a turn finished cleanly
+- **C.** end_turn, tool_use, max_tokens, stop_sequence, pause_turn, refusal, and model_context_window_exceeded
+- **D.** done, continue, and stop, a simple trio of control signals for deciding whether to call again
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: C**
+
+The documented stop_reason values are end_turn, tool_use, max_tokens, stop_sequence, pause_turn (a server-tool loop hit its iteration limit), refusal, and model_context_window_exceeded. A robust loop branches on each.
+
+_Why a tempting wrong answer misses:_ Options like success/failure/retry (A) are invented; the API reports structured stop_reason values such as end_turn and tool_use.
+
+Reference: https://platform.claude.com/docs/en/build-with-claude/handling-stop-reasons
+
+</details>
+
+---
+
+### Question 98 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Batch processing · medium*
+
+You need to classify five million short product listings into a fixed set of categories overnight. Quality tests show every current model is accurate enough. Which choice best minimizes cost?
+
+- **A.** Claude Haiku 4.5 through the Message Batches API
+- **B.** Claude Fable 5.1 through the synchronous Messages API
+- **C.** Claude Opus 5.5 with the effort level set to max
+- **D.** Claude Sonnet 5.5 called one listing at a time
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Haiku 4.5 is the fastest and cheapest current model for high-volume, bounded tasks, and the Batch API halves the price for latency-tolerant work.
+
+_Why a tempting wrong answer misses:_ Fable 5.1 (B) is the most capable and most expensive model; its extra reasoning adds cost without benefit on a simple task.
 
 Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
@@ -2556,10 +2559,10 @@ Reference: https://platform.claude.com/docs/en/about-claude/models/overview
 
 ---
 
-### Question 99 of 100
+### Question 99 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Adaptive Thinking · hard*
+**Scenario: Developer Productivity with Claude**
+*Study area: Agentic loops · hard*
 
 On the newest models, how do you increase reasoning depth for a hard multi-step problem, given that fixed budget_tokens and sampling controls have changed?
 
@@ -2576,16 +2579,16 @@ Current models use adaptive thinking (replacing fixed budget_tokens) with an eff
 
 _Why a tempting wrong answer misses:_ Fixed budget_tokens (A) has been superseded by adaptive thinking on the newest models; you steer depth with the effort setting instead.
 
-Reference: https://platform.claude.com/docs/en/build-with-claude/extended-thinking
+Reference: https://platform.claude.com/docs/en/build-with-claude/thinking
 
 </details>
 
 ---
 
-### Question 100 of 100
+### Question 100 of 117
 
-**Scenario: Building on the Claude Platform**
-*Study area: Verifying Cache Hits · medium*
+**Scenario: Claude Code for Continuous Integration**
+*Study area: Batch processing · medium*
 
 After enabling prompt caching you want to confirm at runtime that reads are actually hitting the cache. What tells you?
 
@@ -2603,6 +2606,453 @@ The response usage reports cache_read_input_tokens (and cache-creation counts), 
 _Why a tempting wrong answer misses:_ Latency (A) is noisy and not a reliable signal; the usage cache-token fields are what actually confirm a cache read.
 
 Reference: https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
+</details>
+
+---
+
+### Question 101 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Task decomposition · medium*
+
+Every insurance claim packet goes through the same steps: classify the document type, extract fields for that type, then check the fields against policy rules. The steps and their order never change. Which decomposition pattern fits?
+
+- **A.** A fixed prompt chain in which each step's output feeds the next step's prompt
+- **B.** A coordinator that invents a new plan for each packet based on what it finds
+- **C.** A single prompt that performs classification, extraction, and checking together
+- **D.** Parallel subagents that each attempt all three steps and then vote on a result
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+When the workflow is predictable, prompt chaining keeps each step focused and easy to test. Dynamic, adaptive decomposition is for open-ended tasks whose subtasks depend on what is discovered.
+
+_Why a tempting wrong answer misses:_ A coordinator that replans every packet (B) adds cost and variability to a process that has no need for it.
+
+Reference: https://www.anthropic.com/engineering/building-effective-agents
+
+</details>
+
+---
+
+### Question 102 of 117
+
+**Scenario: Multi-Agent Research System**
+*Study area: Coordinator-subagent orchestration · medium*
+
+In a hub-and-spoke research system, which TWO responsibilities belong to the coordinator? (Select 2.)
+
+- **A.** Deciding how the research question is split into subtasks and which subagent receives each one
+- **B.** Letting subagents message each other directly so they can trade findings without a round-trip
+- **C.** Receiving each subagent's results and errors so it can aggregate them and decide on recovery
+- **D.** Running every web search itself so that subagents only ever format the text that it returns
+- **E.** Sharing its full conversation history with each subagent automatically at the moment of launch
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: A, C**
+
+The coordinator decomposes and delegates the work, and all results and failures flow back through it so it can aggregate, handle errors consistently, and decide what happens next.
+
+_Why a tempting wrong answer misses:_ Direct subagent-to-subagent messaging (B) bypasses the hub and removes the central visibility and control that the pattern exists to provide.
+
+Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+
+</details>
+
+---
+
+### Question 103 of 117
+
+**Scenario: Multi-Agent Research System**
+*Study area: Subagent context and spawning · hard*
+
+The analysis subagent hands findings to synthesis as paragraphs of prose with sources mentioned in passing. The final report often attaches a claim to the wrong document. How should findings be passed between agents?
+
+- **A.** As longer prose with a closing sentence that lists every source the analysis subagent consulted
+- **B.** As a single citation list at the end of the handoff, numbered in the order the documents were read
+- **C.** As raw copies of every source document, so synthesis can work out attribution again on its own
+- **D.** As structured records that keep each claim separate from its metadata, such as source URL, document name, and page
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Separating content from metadata in a structured format preserves the link between each claim and its source as it moves between agents, so attribution survives synthesis.
+
+_Why a tempting wrong answer misses:_ Passing raw documents (C) floods the synthesis context and forces it to redo analysis that already happened.
+
+Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+
+</details>
+
+---
+
+### Question 104 of 117
+
+**Scenario: Customer Support Resolution Agent**
+*Study area: Agent SDK hooks · hard*
+
+You are deciding which support-agent rules to enforce with Agent SDK hooks and which to leave to the system prompt. Which TWO rules most clearly need a hook? (Select 2.)
+
+- **A.** Keep a warm, professional tone that matches the brand voice in every customer message
+- **B.** Never issue a refund to an account that is flagged for suspected fraud in the risk system
+- **C.** Suggest a relevant help-center article when the customer's question matches one directly
+- **D.** Strip government ID numbers from tool results before the model can read or repeat them
+- **E.** Prefer short paragraphs and plain language when explaining any billing policy to a customer
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: B, D**
+
+Hooks give deterministic guarantees, so they belong on rules where a single miss causes real harm: blocking a prohibited financial action and removing sensitive data before the model sees it. Style and helpfulness guidance is fine as probabilistic prompt guidance.
+
+_Why a tempting wrong answer misses:_ Tone and article suggestions (A, C, E) matter, but an occasional miss is tolerable and they depend on judgment that hooks cannot express.
+
+Reference: https://code.claude.com/docs/en/agent-sdk/hooks
+
+</details>
+
+---
+
+### Question 105 of 117
+
+**Scenario: Code Generation with Claude Code**
+*Study area: Session resume and fork · easy*
+
+You run several long Claude Code investigations in the same repository and keep resuming the wrong one. What is the cleanest way to return to a specific investigation later?
+
+- **A.** Give each session a name when you start it, then return with claude --resume and that name
+- **B.** Use claude --continue each time, since it always opens the investigation you care about most
+- **C.** Copy the transcript into CLAUDE.md so every new session starts with the investigation loaded
+- **D.** Keep one terminal open per investigation and never close them, so no session ever needs resuming
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Named sessions can be resumed by name, which removes the guesswork of picking from a list or relying on whichever session was most recent.
+
+_Why a tempting wrong answer misses:_ --continue (B) loads the most recent conversation in the directory, which is exactly how the wrong investigation gets picked up.
+
+Reference: https://code.claude.com/docs/en/cli-reference
+
+</details>
+
+---
+
+### Question 106 of 117
+
+**Scenario: Developer Productivity with Claude**
+*Study area: Agentic loops · medium*
+
+In your custom loop, after running a requested tool you append its output as a new assistant message that says 'Tool output: ...'. Claude then asks for the same tool again and seems unaware of the result. What is wrong?
+
+- **A.** Tool output must be sent in the system prompt so that the model treats it as trusted context for its next step
+- **B.** The result should be returned as a tool_result block in a user message that references the tool_use id
+- **C.** Tool output is too long for the model to read, so it should be summarized before it goes back into the loop
+- **D.** The loop should restart the conversation with only the tool output so the model focuses on it alone
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+The API expects each tool result as a tool_result block, keyed to the tool_use id, in the next user message. Appending it as assistant text breaks that pairing, so the model never registers the call as answered.
+
+_Why a tempting wrong answer misses:_ Putting tool output in the system prompt (A) is the wrong channel and, for external content, raises prompt-injection risk.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/handle-tool-calls
+
+</details>
+
+---
+
+### Question 107 of 117
+
+**Scenario: Customer Support Resolution Agent**
+*Study area: Agentic loops · hard*
+
+A team replaced model-driven tool selection with a hard-coded sequence: always get_customer, then get_orders, then get_returns. It works for returns but fails badly on billing and login questions. What does this show?
+
+- **A.** The sequence needs more branches, so the team should add a hand-written path for each new question type
+- **B.** Tools should only ever be called in a fixed order, so the billing and login tools must be removed entirely
+- **C.** The model needs a larger context window, because a fixed sequence fails only when the conversation grows long
+- **D.** Model-driven selection lets Claude pick the next tool from context, which adapts to requests a fixed tree did not foresee
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+In an agentic loop, the model reasons about which tool to call next based on what it has learned so far. A pre-configured sequence only covers the paths someone anticipated.
+
+_Why a tempting wrong answer misses:_ Adding branches (A) grows a brittle decision tree that will keep missing the next unanticipated request.
+
+Reference: https://code.claude.com/docs/en/agent-sdk/agent-loop
+
+</details>
+
+---
+
+### Question 108 of 117
+
+**Scenario: Developer Productivity with Claude**
+*Study area: MCP server integration · medium*
+
+Your agent answers questions about an analytics warehouse with 300 tables. It spends many tool calls running exploratory queries just to discover which tables and columns exist. What MCP design reduces this?
+
+- **A.** Expose the schema catalog as MCP resources so the agent can see what data exists without probing queries
+- **B.** Add a run_any_sql tool with broader permissions so each exploratory query returns more rows at once
+- **C.** Put all 300 table definitions into the agent's system prompt so the schema is loaded on every request
+- **D.** Lower the tool-call limit so the agent is forced to guess table names instead of querying for them
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+MCP resources expose content such as schemas or documentation hierarchies that a client can list and read. Giving the agent a catalog cuts the exploratory calls it would otherwise make.
+
+_Why a tempting wrong answer misses:_ Loading every definition into the system prompt (C) spends context on all 300 tables for every request, including ones that need none of them.
+
+Reference: https://modelcontextprotocol.io/specification/2026-07-28/server/resources
+
+</details>
+
+---
+
+### Question 109 of 117
+
+**Scenario: Multi-Agent Research System**
+*Study area: Tool distribution and tool_choice · hard*
+
+You are assigning tools across a research coordinator and its search, analysis, and synthesis subagents. Which TWO choices follow sound tool-distribution principles? (Select 2.)
+
+- **A.** Give every subagent the full shared toolset so any of them can cover for another when it is busy
+- **B.** Limit the analysis subagent to document-loading and extraction tools and leave web search out
+- **C.** Let the synthesis subagent read only the findings the coordinator hands it, with no search or fetch tools of its own
+- **D.** Let the synthesis subagent run open web searches whenever it thinks a finding looks incomplete
+- **E.** Remove all tools from the coordinator and have it guess which subagent produced each result
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: B, C**
+
+Each agent should hold only the tools its role needs: analysis loads and extracts from documents, and synthesis works from the findings it is given. Any extra research goes back through the coordinator.
+
+_Why a tempting wrong answer misses:_ Open web search for synthesis (D) invites the cross-specialization misuse that scoped tools are meant to prevent.
+
+Reference: https://code.claude.com/docs/en/agent-sdk/subagents
+
+</details>
+
+---
+
+### Question 110 of 117
+
+**Scenario: Developer Productivity with Claude**
+*Study area: Built-in tool selection · hard*
+
+You need every caller of a payment function, but the codebase re-exports it through a wrapper module under two aliases, chargeCard and payNow. A Grep for the original name finds only a few callers. What is the right approach?
+
+- **A.** Conclude that the function is rarely used, since Grep found only a few references to its original name
+- **B.** Use Glob for *.ts files and assume that every TypeScript file in the repository calls the function
+- **C.** Edit the wrapper to remove the aliases so that future Grep searches only have one name to look for
+- **D.** Read the wrapper to find every exported name for the function, then Grep for each name across the codebase
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Tracing usage through wrappers means first identifying all exported names, then searching for each one. Searching only for the original identifier misses callers that use the aliases.
+
+_Why a tempting wrong answer misses:_ Editing the wrapper (C) changes production code to make a search easier and would break every caller that uses the aliases.
+
+Reference: https://code.claude.com/docs/en/tools-reference
+
+</details>
+
+---
+
+### Question 111 of 117
+
+**Scenario: Customer Support Resolution Agent**
+*Study area: Tool distribution and tool_choice · hard*
+
+Your support agent has a run_sql tool so it can look up invoices. Logs show it sometimes runs broad queries across all customers and once ran an UPDATE. What is the most robust fix?
+
+- **A.** Keep run_sql but add a system-prompt warning against UPDATE statements and against broad queries
+- **B.** Replace run_sql with a get_invoice tool that takes an invoice ID and returns only that customer's record
+- **C.** Keep run_sql and log every query so that a reviewer can undo harmful statements after the fact
+- **D.** Give run_sql a longer description listing the specific tables the agent should be allowed to query
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+A constrained tool with a narrow contract makes the unwanted behavior impossible at the interface. A general-purpose tool with prompt warnings still leaves the risky capability in place.
+
+_Why a tempting wrong answer misses:_ Logging and undoing (C) detects damage after it happens instead of preventing it.
+
+Reference: https://www.anthropic.com/engineering/writing-tools-for-agents
+
+</details>
+
+---
+
+### Question 112 of 117
+
+**Scenario: Developer Productivity with Claude**
+*Study area: Tool interface design · medium*
+
+Your developer agent loads tools from a code host and an issue tracker, and both expose a tool named list_items. The agent often queries the wrong system. What naming practice helps most?
+
+- **A.** Give both tools random suffixes so that each one has a unique name the model has never seen before
+- **B.** Leave the names alone and rely on the order the servers connect in to decide which one gets called
+- **C.** Merge both tools into one list_items tool that queries each system and returns the combined results
+- **D.** Namespace the tools by service, such as repo_list_pull_requests and tracker_list_issues
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Prefixing tool names with the service and naming the resource makes selection unambiguous as the tool library grows.
+
+_Why a tempting wrong answer misses:_ Merging (C) hides which system each result came from and makes every call hit both services.
+
+Reference: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools
+
+</details>
+
+---
+
+### Question 113 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Human review and confidence · hard*
+
+An extraction pipeline reports 97% field accuracy, and leadership wants to stop human review. You have not yet broken the number down. What should you check first?
+
+- **A.** Nothing further, since 97% overall accuracy is well above the level at which review adds value
+- **B.** Whether the model can explain its reasoning when asked about a handful of random extractions
+- **C.** Whether a larger model would push the overall accuracy figure from 97% up to 99%
+- **D.** Accuracy by document type and by field, since a high average can hide weak segments
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: D**
+
+Aggregate accuracy can mask poor performance on particular document types or fields. Validating each segment is necessary before reducing human review.
+
+_Why a tempting wrong answer misses:_ Stopping at the average (A) risks automating exactly the segment where errors concentrate.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
+</details>
+
+---
+
+### Question 114 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Human review and confidence · medium*
+
+You auto-approve high-confidence extractions and only humans see the low-confidence ones. How can you keep measuring the error rate of the auto-approved stream and catch new error patterns?
+
+- **A.** Review a stratified random sample of high-confidence extractions on an ongoing basis
+- **B.** Trust the high-confidence stream completely, since the model already rated it as reliable
+- **C.** Review only the extractions that downstream users have complained about each month
+- **D.** Re-run every high-confidence extraction through the same model and compare the outputs
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: A**
+
+Stratified random sampling of high-confidence output gives an unbiased ongoing error estimate across segments and surfaces novel error types before they spread.
+
+_Why a tempting wrong answer misses:_ Complaint-driven review (C) only sees errors someone noticed, which biases the measurement.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
+</details>
+
+---
+
+### Question 115 of 117
+
+**Scenario: Structured Data Extraction**
+*Study area: Human review and confidence · hard*
+
+Your extraction model outputs a confidence score for each field, and reviewer capacity is limited. Which TWO practices make confidence-based routing trustworthy? (Select 2.)
+
+- **A.** Calibrate the review threshold against a labeled validation set before relying on the scores
+- **B.** Treat any score above 0.9 as correct, since the model's own ratings need no further checking
+- **C.** Route extractions from ambiguous or contradictory source documents to human review
+- **D.** Remove the scores from the output so reviewers are not biased by the model's own opinion
+- **E.** Pick one threshold for all fields and document types, so the routing rule stays simple
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: A, C**
+
+Raw confidence scores need calibration against labeled data before they can set thresholds. Low confidence and conflicting source material are both good reasons to spend limited reviewer time.
+
+_Why a tempting wrong answer misses:_ Trusting uncalibrated scores (B) assumes the model's self-assessment is accurate, which is what calibration exists to test.
+
+Reference: https://platform.claude.com/docs/en/test-and-evaluate/develop-tests
+
+</details>
+
+---
+
+### Question 116 of 117
+
+**Scenario: Multi-Agent Research System**
+*Study area: Error propagation · hard*
+
+Which TWO subagent error-handling behaviors are anti-patterns in a multi-agent research system? (Select 2.)
+
+- **A.** Retrying a transient timeout locally before reporting anything to the coordinator
+- **B.** Returning an empty result marked as success when the source could not be reached
+- **C.** Reporting the failure type, the query attempted, and any partial results gathered
+- **D.** Terminating the entire research run because a single source returned an error
+- **E.** Distinguishing a valid 'no matches' result from a failed request in the response
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answers: B, D**
+
+Silently turning a failure into an empty success hides it from the coordinator, and aborting everything on one failure throws away recoverable work. Both are anti-patterns.
+
+_Why a tempting wrong answer misses:_ Local retries, structured error context, and separating empty results from failures (A, C, E) are the recommended practices.
+
+Reference: https://www.anthropic.com/engineering/multi-agent-research-system
+
+</details>
+
+---
+
+### Question 117 of 117
+
+**Scenario: Multi-Agent Research System**
+*Study area: Provenance and uncertainty · medium*
+
+Your research reports convert everything into bullet points: quarterly revenue figures, a news timeline, and an API compatibility matrix. Readers find the financial comparison hard to use. What should the synthesis step do?
+
+- **A.** Keep a single bullet format everywhere, because consistency matters more than fit for readers
+- **B.** Render each content type in a suitable form, such as tables for financials and prose for news
+- **C.** Remove the financial data from reports, since it is the section that readers find hardest to use
+- **D.** Convert every section into one long table so that all of the content can be compared side by side
+
+<details><summary>Answer &amp; explanation</summary>
+
+**Correct answer: B**
+
+Different content types read best in different forms: tables for numeric comparisons, prose for narrative, structured lists for technical findings. Forcing a uniform format hurts usability.
+
+_Why a tempting wrong answer misses:_ One giant table (D) is as mismatched for the news timeline as bullets are for the financials.
+
+Reference: https://www.anthropic.com/engineering/multi-agent-research-system
 
 </details>
 
