@@ -23,18 +23,18 @@
       "provider": "Claude Partner Network"
     },
     {
-      "title": "AI Capabilities and Limitations",
-      "url": "https://anthropic.skilljar.com/ai-capabilities-and-limitations",
+      "title": "AI capabilities and limitations",
+      "url": "https://academy.claude.com/courses/ai-capabilities-and-limitations",
       "provider": "Anthropic Academy"
     },
     {
-      "title": "AI Fluency: Framework & Foundations",
-      "url": "https://anthropic.skilljar.com/ai-fluency-framework-foundations",
+      "title": "AI Fluency: Framework and foundations",
+      "url": "https://academy.claude.com/courses/ai-fluency-framework-foundations",
       "provider": "Anthropic Academy"
     },
     {
       "title": "Claude Platform 101",
-      "url": "https://anthropic.skilljar.com/claude-platform-101",
+      "url": "https://academy.claude.com/courses/claude-platform-101",
       "provider": "Anthropic Academy"
     }
   ],

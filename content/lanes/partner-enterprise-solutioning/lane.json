@@ -26,23 +26,23 @@
       "provider": "Claude Partner Network"
     },
     {
-      "title": "Deploying Claude Enterprise with Confidence",
-      "url": "https://anthropic.skilljar.com/deploying-claude-enterprise-with-confidence",
+      "title": "Deploying Claude Enterprise with confidence: The five decisions that shape your rollout",
+      "url": "https://academy.claude.com/courses/deploying-claude-enterprise-with-confidence",
       "provider": "Anthropic Academy"
     },
     {
       "title": "Claude 101",
-      "url": "https://anthropic.skilljar.com/claude-101",
+      "url": "https://academy.claude.com/courses/claude-101",
       "provider": "Anthropic Academy"
     },
     {
       "title": "Claude with Amazon Bedrock",
-      "url": "https://anthropic.skilljar.com/claude-in-amazon-bedrock",
+      "url": "https://academy.claude.com/courses/claude-with-amazon-bedrock",
       "provider": "Anthropic Academy"
     },
     {
-      "title": "Claude on Google Cloud",
-      "url": "https://anthropic.skilljar.com/claude-with-google-vertex",
+      "title": "Claude with Google Cloud's Vertex AI",
+      "url": "https://academy.claude.com/courses/claude-with-google-cloud-s-vertex-ai",
       "provider": "Anthropic Academy"
     }
   ],

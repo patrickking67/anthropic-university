@@ -21,3 +21,4 @@ tmp/
 # Local plugin archives and packaged builds
 plugins/*.zip
 dist/
+__pycache__/

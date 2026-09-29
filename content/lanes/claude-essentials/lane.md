@@ -10,9 +10,9 @@ Group: use · Level: beginner · ~4 h · For: New or occasional Claude users on 
 
 ## Take alongside
 
-- [Claude 101](https://anthropic.skilljar.com/claude-101) — Anthropic Academy
-- [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) — Anthropic Academy
-- [Introduction to Claude Cowork](https://anthropic.skilljar.com/introduction-to-claude-cowork) — Anthropic Academy
+- [Claude 101](https://academy.claude.com/courses/claude-101) — Anthropic Academy
+- [AI Fluency: Framework and foundations](https://academy.claude.com/courses/ai-fluency-framework-foundations) — Anthropic Academy
+- [Introduction to Claude Cowork](https://academy.claude.com/courses/introduction-to-claude-cowork) — Anthropic Academy
 - [Claude Help Center](https://support.claude.com/en/) — Anthropic
 
 ## Meet Claude and pick a model
@@ -749,7 +749,7 @@ Check Claude's work before you rely on it, protect sensitive information, and re
 
 **Practice:** Ask Claude a question in your field that has a precise, checkable answer. Verify each factual claim against a primary source and mark it correct, wrong, or unverifiable. Write one sentence on what you would change in how you prompt next time.
 
-**Read:** [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) · [Use Claude Cowork safely](https://support.claude.com/en/articles/13364135-use-claude-cowork-safely) · [Create and edit files with Claude (security considerations)](https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude)
+**Read:** [AI Fluency: Framework & Foundations](https://academy.claude.com/courses/ai-fluency-framework-foundations) · [Use Claude Cowork safely](https://support.claude.com/en/articles/13364135-use-claude-cowork-safely) · [Create and edit files with Claude (security considerations)](https://support.claude.com/en/articles/12111783-create-and-edit-files-with-claude)
 
 <details><summary>Flashcards</summary>
 

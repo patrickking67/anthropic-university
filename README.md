@@ -139,15 +139,26 @@ Claude Code. Then:
 | `mock-exam` | Timed run at official length and weights; 100–1,000 scaled score and per-domain report |
 | `flashcards` | Leitner-style spaced repetition with requeues for weak cards |
 | `explain-concept` | Layered, docs-grounded explainer with look-alike comparisons and a check question |
+| `cheat-sheet` | One-page, docs-verified review sheet, saved as a Claude Doc, a Markdown file, or in chat |
 | `grade-my-answer` | Grades pasted reasoning, names the misconception, and re-tests |
 | `client-roleplay` | Partner practice: Claude plays a CIO, CISO, GC, CFO, or engineering lead, then scores you |
 | `export-quizlet` | Exports cards to Quizlet paste-import, Anki CSV, or Markdown |
 | `author-question` · `review-bank` · `build-content` | Contributor tools (Claude Code, in this repo) |
 
-**Connectors.** The plugin bundles two official hosted MCP servers, so answers are checked against
-live docs: **Claude Code Docs** (`code.claude.com/docs/mcp`) and **Microsoft Learn**
-(`learn.microsoft.com/api/mcp`, for Claude on Microsoft Foundry, Azure, and Copilot scenarios).
-Quizlet has no public MCP server, so the plugin exports decks in Quizlet's import format instead.
+**Connectors.** The plugin bundles five hosted MCP servers:
+
+| Connector | Used for |
+| --- | --- |
+| **Claude Code Docs** (`code.claude.com/docs/mcp`) | Checking answers against the live Claude Code, MCP, and SDK docs |
+| **Microsoft Learn** (`learn.microsoft.com/api/mcp`) | Claude on Microsoft Foundry, Azure, and Copilot scenarios |
+| **Agent Skills** (`agentskills.io/mcp`) | The open `SKILL.md` format behind skills questions |
+| **Anthropic Economic Index** (`econ-index.mcp.claude.com/mcp`) | Real usage patterns for partner and industry lessons and client role-play |
+| **Claude Docs** (`api.anthropic.com/v1/pages/mcp`) | Saving plans and cheat sheets as living docs, on request (needs Claude sign-in) |
+
+Course recommendations come from Anthropic Academy's public catalog, fetched live, and are never
+recommended from memory. Quizlet has no public MCP server, so the plugin exports decks in Quizlet's
+import format instead. A bundled helper, `scripts/au.py` (Python standard library only), handles
+official-format sampling, scaled grading, search, and exports whenever a shell is available.
 
 ## How it's built
 

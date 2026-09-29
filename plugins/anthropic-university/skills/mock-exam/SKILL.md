@@ -1,8 +1,8 @@
 ---
 name: mock-exam
-description: Administer a timed, exam-like Claude Certification mock with no feedback until submit, then score it on an approximate 100–1000 scale (720 to pass) with a per-domain breakdown and full review of misses. Use when the user wants a "mock exam", "practice test", "full run", "simulate the exam", or a readiness check before test day.
-argument-hint: "<exam-id> [20|40|100]"
-allowed-tools: Read, Grep, Glob, Write
+description: Administer a timed, exam-like Claude Certification mock (official length and domain weights, and 4 of 6 scenarios for Architect – Foundations) with no feedback until submit, then score it on an approximate 100–1,000 scale (720 to pass) with a per-domain breakdown and a review of every miss. Use when the user wants a "mock exam", "practice test", "full run", "official format", "simulate the exam", or a readiness check before test day. Not for learning a topic with instant feedback (use quiz-me).
+argument-hint: "<exam-id> [20 | 40 | full | N]"
+allowed-tools: Read, Grep, Glob, Write, Bash
 ---
 
 # Mock exam
@@ -15,7 +15,12 @@ and follow it.
 1. Track from `$ARGUMENTS`; length default **20**; `full` = the official item count from
    `references/blueprints.md` (Associate 60, Developer 53, Architect Foundations 60, Architect
    Professional 63); any number up to the bank size is allowed.
-2. Build the form before asking anything: sample questions **proportionally to the official domain
+2. **With a shell**, build the form with the helper and skip the manual sampling below:
+   `au.py sample <exam-id> --official` for `full`, or `--n <length>` otherwise. It applies the
+   official weights, largest-remainder rounding, the select-N rate, and, for Architect –
+   Foundations, draws 4 of 6 scenarios with items grouped by `scenario`. At submit, score every
+   answer at once with `au.py grade <exam-id> <qid>=<ans> ...` (it returns `scaled`, `pass`, and
+   `byDomain`). Without a shell, build the form by hand before asking anything: sample questions **proportionally to the official domain
    weights** (the bank `domains` are the official ones) and include select-N items at the bank's
    rate
    (largest-remainder rounding so counts sum exactly), spread across `studyArea`s, roughly

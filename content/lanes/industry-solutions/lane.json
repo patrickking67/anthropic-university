@@ -7,16 +7,49 @@
   "audience": "Partner solution architects, consultants, and MSP practice leads who package Claude for legal teams, financial institutions, and other sector clients.",
   "estimatedHours": 6,
   "prefix": "ind",
-  "prerequisites": ["partner-enterprise-solutioning"],
-  "relatedCertifications": ["associate-foundations", "architect-professional"],
+  "prerequisites": [
+    "partner-enterprise-solutioning"
+  ],
+  "relatedCertifications": [
+    "associate-foundations",
+    "architect-professional"
+  ],
   "officialResources": [
-    { "title": "Claude Partner Network learning path", "url": "https://anthropic-partners.skilljar.com/page/claude-partner-network-learning-path", "provider": "Claude Partner Network" },
-    { "title": "Claude 101", "url": "https://anthropic.skilljar.com/claude-101", "provider": "Anthropic Academy" },
-    { "title": "Introduction to agent skills", "url": "https://anthropic.skilljar.com/introduction-to-agent-skills", "provider": "Anthropic Academy" },
-    { "title": "AI Fluency: Framework & Foundations", "url": "https://anthropic.skilljar.com/ai-fluency-framework-foundations", "provider": "Anthropic Academy" },
-    { "title": "Claude for Legal", "url": "https://claude.com/solutions/legal", "provider": "Anthropic" },
-    { "title": "Claude for Financial Services", "url": "https://claude.com/solutions/financial-services", "provider": "Anthropic" },
-    { "title": "Knowledge-work plugins (open source)", "url": "https://github.com/anthropics/knowledge-work-plugins", "provider": "Anthropic" }
+    {
+      "title": "Claude Partner Network learning path",
+      "url": "https://anthropic-partners.skilljar.com/page/claude-partner-network-learning-path",
+      "provider": "Claude Partner Network"
+    },
+    {
+      "title": "Claude 101",
+      "url": "https://academy.claude.com/courses/claude-101",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Introduction to agent skills",
+      "url": "https://academy.claude.com/courses/introduction-to-agent-skills",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "AI Fluency: Framework and foundations",
+      "url": "https://academy.claude.com/courses/ai-fluency-framework-foundations",
+      "provider": "Anthropic Academy"
+    },
+    {
+      "title": "Claude for Legal",
+      "url": "https://claude.com/solutions/legal",
+      "provider": "Anthropic"
+    },
+    {
+      "title": "Claude for Financial Services",
+      "url": "https://claude.com/solutions/financial-services",
+      "provider": "Anthropic"
+    },
+    {
+      "title": "Knowledge-work plugins (open source)",
+      "url": "https://github.com/anthropics/knowledge-work-plugins",
+      "provider": "Anthropic"
+    }
   ],
   "modules": [
     {
@@ -39,9 +72,18 @@
       ],
       "practice": "Open the legal plugin in the knowledge-work-plugins repository and list its skills. For one skill, write down three things a specific client would need to change (positions, templates, or routing) before it matches their practice.",
       "docs": [
-        { "title": "Use plugins in Claude", "url": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude" },
-        { "title": "What are skills?", "url": "https://support.claude.com/en/articles/12512176-what-are-skills" },
-        { "title": "Provision and manage skills for your organization", "url": "https://support.claude.com/en/articles/13119606-provision-and-manage-skills-for-your-organization" }
+        {
+          "title": "Use plugins in Claude",
+          "url": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude"
+        },
+        {
+          "title": "What are skills?",
+          "url": "https://support.claude.com/en/articles/12512176-what-are-skills"
+        },
+        {
+          "title": "Provision and manage skills for your organization",
+          "url": "https://support.claude.com/en/articles/13119606-provision-and-manage-skills-for-your-organization"
+        }
       ]
     },
     {
@@ -64,9 +106,18 @@
       ],
       "practice": "With a colleague acting as in-house counsel, interview them for 15 minutes about three clauses (limitation of liability, governing law, confidentiality term). Write each as a playbook entry: standard position, acceptable fallback, and escalation trigger.",
       "docs": [
-        { "title": "Legal plugin", "url": "https://claude.com/plugins/legal" },
-        { "title": "Knowledge-work plugins: legal", "url": "https://github.com/anthropics/knowledge-work-plugins" },
-        { "title": "Claude for Legal", "url": "https://claude.com/solutions/legal" }
+        {
+          "title": "Legal plugin",
+          "url": "https://claude.com/plugins/legal"
+        },
+        {
+          "title": "Knowledge-work plugins: legal",
+          "url": "https://github.com/anthropics/knowledge-work-plugins"
+        },
+        {
+          "title": "Claude for Legal",
+          "url": "https://claude.com/solutions/legal"
+        }
       ]
     },
     {
@@ -89,8 +140,14 @@
       ],
       "practice": "Sketch a signature-routing workflow for a client: the checklist Claude runs, the connector it uses, the exact point where a person approves, and what happens if a check fails. Mark every step that sends something outside the organization.",
       "docs": [
-        { "title": "Knowledge-work plugins (legal skills)", "url": "https://github.com/anthropics/knowledge-work-plugins" },
-        { "title": "Legal plugin", "url": "https://claude.com/plugins/legal" }
+        {
+          "title": "Knowledge-work plugins (legal skills)",
+          "url": "https://github.com/anthropics/knowledge-work-plugins"
+        },
+        {
+          "title": "Legal plugin",
+          "url": "https://claude.com/plugins/legal"
+        }
       ]
     },
     {
@@ -113,9 +170,18 @@
       ],
       "practice": "For the contract-review workflow from module 2, write a one-paragraph confidentiality design: which account type, which connectors and scopes, who reviews each output, and what evidence the firm keeps. End with the question you would put to the client's counsel.",
       "docs": [
-        { "title": "Claude for Legal", "url": "https://claude.com/solutions/legal" },
-        { "title": "Access audit logs", "url": "https://support.claude.com/en/articles/9970975-access-audit-logs" },
-        { "title": "Anthropic Usage Policy", "url": "https://www.anthropic.com/legal/aup" }
+        {
+          "title": "Claude for Legal",
+          "url": "https://claude.com/solutions/legal"
+        },
+        {
+          "title": "Access audit logs",
+          "url": "https://support.claude.com/en/articles/9970975-access-audit-logs"
+        },
+        {
+          "title": "Anthropic Usage Policy",
+          "url": "https://www.anthropic.com/legal/aup"
+        }
       ]
     },
     {
@@ -138,9 +204,18 @@
       ],
       "practice": "Pick one analyst task at a mid-size asset manager (for example, a quarterly portfolio review). Map its data sources to connectors, name the surface you would use, and mark where a human verifies figures before the output reaches a client.",
       "docs": [
-        { "title": "Claude for Financial Services", "url": "https://claude.com/solutions/financial-services" },
-        { "title": "Financial services plugins (GitHub)", "url": "https://github.com/anthropics/financial-services" },
-        { "title": "Claude Managed Agents overview", "url": "https://platform.claude.com/docs/en/managed-agents/overview" }
+        {
+          "title": "Claude for Financial Services",
+          "url": "https://claude.com/solutions/financial-services"
+        },
+        {
+          "title": "Financial services plugins (GitHub)",
+          "url": "https://github.com/anthropics/financial-services"
+        },
+        {
+          "title": "Claude Managed Agents overview",
+          "url": "https://platform.claude.com/docs/en/managed-agents/overview"
+        }
       ]
     },
     {
@@ -163,10 +238,22 @@
       ],
       "practice": "Choose two verticals from the solutions pages. For each, write three discovery questions that expose the sector's specific data, review, and compliance constraints, and one guardrail you would propose on day one.",
       "docs": [
-        { "title": "Claude for Government", "url": "https://claude.com/solutions/government" },
-        { "title": "Claude for Healthcare", "url": "https://claude.com/solutions/healthcare" },
-        { "title": "Claude for Life Sciences", "url": "https://claude.com/solutions/life-sciences" },
-        { "title": "Claude for Nonprofits", "url": "https://claude.com/solutions/nonprofits" }
+        {
+          "title": "Claude for Government",
+          "url": "https://claude.com/solutions/government"
+        },
+        {
+          "title": "Claude for Healthcare",
+          "url": "https://claude.com/solutions/healthcare"
+        },
+        {
+          "title": "Claude for Life Sciences",
+          "url": "https://claude.com/solutions/life-sciences"
+        },
+        {
+          "title": "Claude for Nonprofits",
+          "url": "https://claude.com/solutions/nonprofits"
+        }
       ]
     },
     {
@@ -189,9 +276,18 @@
       ],
       "practice": "Take one of your practice's runbooks and outline it as a skill: trigger description, steps, the connector calls it needs (read versus write), and the approval point before any change to a client system.",
       "docs": [
-        { "title": "Use plugins in Claude", "url": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude" },
-        { "title": "Manage Claude Cowork plugins for your organization", "url": "https://support.claude.com/en/articles/13837433-manage-cowork-plugins-for-your-organization" },
-        { "title": "Model Context Protocol", "url": "https://modelcontextprotocol.io/" }
+        {
+          "title": "Use plugins in Claude",
+          "url": "https://support.claude.com/en/articles/13837440-use-plugins-in-claude"
+        },
+        {
+          "title": "Manage Claude Cowork plugins for your organization",
+          "url": "https://support.claude.com/en/articles/13837433-manage-cowork-plugins-for-your-organization"
+        },
+        {
+          "title": "Model Context Protocol",
+          "url": "https://modelcontextprotocol.io/"
+        }
       ]
     },
     {
@@ -214,37 +310,142 @@
       ],
       "practice": "Write a one-page guardrail checklist you could attach to any regulated workflow proposal. Include a line for the high-risk category (if any), reviewer role, disclosure text, citation rule, data classes, and evidence kept.",
       "docs": [
-        { "title": "Anthropic Usage Policy", "url": "https://www.anthropic.com/legal/aup" },
-        { "title": "Compliance API FAQ", "url": "https://platform.claude.com/docs/en/manage-claude/compliance-faq" },
-        { "title": "Access audit logs", "url": "https://support.claude.com/en/articles/9970975-access-audit-logs" }
+        {
+          "title": "Anthropic Usage Policy",
+          "url": "https://www.anthropic.com/legal/aup"
+        },
+        {
+          "title": "Compliance API FAQ",
+          "url": "https://platform.claude.com/docs/en/manage-claude/compliance-faq"
+        },
+        {
+          "title": "Access audit logs",
+          "url": "https://support.claude.com/en/articles/9970975-access-audit-logs"
+        }
       ]
     }
   ],
   "cards": [
-    { "front": "What does a Claude plugin bundle?", "back": "Skills, connectors, and sub-agents, packaged so a team gets a ready setup for its role.", "module": "m1" },
-    { "front": "Which plugin parts work outside Cowork?", "back": "Skills work in web chat, the Desktop Chat tab, and Cowork. Hooks and sub-agents run only in Cowork.", "module": "m1" },
-    { "front": "Where does a client's playbook or house style live in a Claude solution?", "back": "In skills (SKILL.md plus reference files), usually shipped inside a plugin the client's admins control.", "module": "m1" },
-    { "front": "How does playbook-driven contract review report results?", "back": "Clause by clause against the configured playbook, flagged GREEN, YELLOW, or RED, with suggested redlines.", "module": "m2" },
-    { "front": "Three parts of a playbook entry", "back": "The standard position, the acceptable fallback range, and the escalation trigger.", "module": "m2" },
-    { "front": "NDA triage buckets", "back": "Standard approval, counsel review, and full review. Triage routes work; an attorney still decides.", "module": "m2" },
-    { "front": "Legal plugin skills beyond review and triage", "back": "Briefings (daily, topic, incident), compliance check, vendor check, templated legal responses, legal risk assessment, meeting briefing, and signature request.", "module": "m3" },
-    { "front": "What should a vendor-check output always state?", "back": "Which sources were searched and which were unavailable, so gaps are not mistaken for a clean record.", "module": "m3" },
-    { "front": "Human checkpoint in e-signature routing", "back": "A person confirms the checked envelope and signing order before it is sent for execution.", "module": "m3" },
-    { "front": "Default training posture on Team and Enterprise", "back": "Anthropic states it does not train on customer data by default on Team and Enterprise plans.", "module": "m4" },
-    { "front": "Connector scoping rule for legal work", "back": "Inherit the user's existing permissions and limit access to the matters and repositories the workflow needs.", "module": "m4" },
-    { "front": "Who decides whether a workflow preserves privilege?", "back": "The client's counsel. Partners design the workflow and raise the question; they do not give legal advice.", "module": "m4" },
-    { "front": "FS data integrations Anthropic names", "back": "LSEG, FactSet, S&P Global, and Morningstar, among others.", "module": "m5" },
-    { "front": "Three ways finance agent templates are delivered", "back": "As plugins for Cowork, as plugins for Claude Code, and as a cookbook for Claude Managed Agents.", "module": "m5" },
-    { "front": "Finance uses on the Usage Policy's high-risk list", "back": "Financial decisions including investment advice, loan approvals, and financial eligibility or creditworthiness.", "module": "m5" },
-    { "front": "Government authorizations Anthropic states for Claude", "back": "Up to FedRAMP High and IL5, through established procurement channels.", "module": "m6" },
-    { "front": "Healthcare: high-risk or not?", "back": "Healthcare decisions, diagnosis, patient care, and medical guidance are high-risk. General wellness advice is not.", "module": "m6" },
-    { "front": "Rule for vertical claims in a client meeting", "back": "Only claim industries and capabilities Anthropic has published on its current solution pages.", "module": "m6" },
-    { "front": "MSP rule for connector write actions", "back": "Reads can run freely; changes to a client system or customer-facing record need technician approval.", "module": "m7" },
-    { "front": "Cowork custom connector reachability", "back": "Connectors go through Anthropic's cloud, so a custom connector must be reachable over the public internet from Anthropic's IP ranges.", "module": "m7" },
-    { "front": "Biggest MSP-specific data risk", "back": "Cross-tenant exposure. Scope connector credentials per client.", "module": "m7" },
-    { "front": "Two Usage Policy requirements for high-risk uses affecting individuals", "back": "Review by a qualified professional before finalization, and disclosure of AI involvement at least at the start of each session.", "module": "m8" },
-    { "front": "Citation guardrail", "back": "Require sources in research outputs, flag anything unverified, and have reviewers check the citations themselves.", "module": "m8" },
-    { "front": "Minimum audit trail for a regulated workflow", "back": "Who ran it, which sources were used, who reviewed, and what changed, plus platform audit logs on Enterprise.", "module": "m8" }
+    {
+      "front": "What does a Claude plugin bundle?",
+      "back": "Skills, connectors, and sub-agents, packaged so a team gets a ready setup for its role.",
+      "module": "m1"
+    },
+    {
+      "front": "Which plugin parts work outside Cowork?",
+      "back": "Skills work in web chat, the Desktop Chat tab, and Cowork. Hooks and sub-agents run only in Cowork.",
+      "module": "m1"
+    },
+    {
+      "front": "Where does a client's playbook or house style live in a Claude solution?",
+      "back": "In skills (SKILL.md plus reference files), usually shipped inside a plugin the client's admins control.",
+      "module": "m1"
+    },
+    {
+      "front": "How does playbook-driven contract review report results?",
+      "back": "Clause by clause against the configured playbook, flagged GREEN, YELLOW, or RED, with suggested redlines.",
+      "module": "m2"
+    },
+    {
+      "front": "Three parts of a playbook entry",
+      "back": "The standard position, the acceptable fallback range, and the escalation trigger.",
+      "module": "m2"
+    },
+    {
+      "front": "NDA triage buckets",
+      "back": "Standard approval, counsel review, and full review. Triage routes work; an attorney still decides.",
+      "module": "m2"
+    },
+    {
+      "front": "Legal plugin skills beyond review and triage",
+      "back": "Briefings (daily, topic, incident), compliance check, vendor check, templated legal responses, legal risk assessment, meeting briefing, and signature request.",
+      "module": "m3"
+    },
+    {
+      "front": "What should a vendor-check output always state?",
+      "back": "Which sources were searched and which were unavailable, so gaps are not mistaken for a clean record.",
+      "module": "m3"
+    },
+    {
+      "front": "Human checkpoint in e-signature routing",
+      "back": "A person confirms the checked envelope and signing order before it is sent for execution.",
+      "module": "m3"
+    },
+    {
+      "front": "Default training posture on Team and Enterprise",
+      "back": "Anthropic states it does not train on customer data by default on Team and Enterprise plans.",
+      "module": "m4"
+    },
+    {
+      "front": "Connector scoping rule for legal work",
+      "back": "Inherit the user's existing permissions and limit access to the matters and repositories the workflow needs.",
+      "module": "m4"
+    },
+    {
+      "front": "Who decides whether a workflow preserves privilege?",
+      "back": "The client's counsel. Partners design the workflow and raise the question; they do not give legal advice.",
+      "module": "m4"
+    },
+    {
+      "front": "FS data integrations Anthropic names",
+      "back": "LSEG, FactSet, S&P Global, and Morningstar, among others.",
+      "module": "m5"
+    },
+    {
+      "front": "Three ways finance agent templates are delivered",
+      "back": "As plugins for Cowork, as plugins for Claude Code, and as a cookbook for Claude Managed Agents.",
+      "module": "m5"
+    },
+    {
+      "front": "Finance uses on the Usage Policy's high-risk list",
+      "back": "Financial decisions including investment advice, loan approvals, and financial eligibility or creditworthiness.",
+      "module": "m5"
+    },
+    {
+      "front": "Government authorizations Anthropic states for Claude",
+      "back": "Up to FedRAMP High and IL5, through established procurement channels.",
+      "module": "m6"
+    },
+    {
+      "front": "Healthcare: high-risk or not?",
+      "back": "Healthcare decisions, diagnosis, patient care, and medical guidance are high-risk. General wellness advice is not.",
+      "module": "m6"
+    },
+    {
+      "front": "Rule for vertical claims in a client meeting",
+      "back": "Only claim industries and capabilities Anthropic has published on its current solution pages.",
+      "module": "m6"
+    },
+    {
+      "front": "MSP rule for connector write actions",
+      "back": "Reads can run freely; changes to a client system or customer-facing record need technician approval.",
+      "module": "m7"
+    },
+    {
+      "front": "Cowork custom connector reachability",
+      "back": "Connectors go through Anthropic's cloud, so a custom connector must be reachable over the public internet from Anthropic's IP ranges.",
+      "module": "m7"
+    },
+    {
+      "front": "Biggest MSP-specific data risk",
+      "back": "Cross-tenant exposure. Scope connector credentials per client.",
+      "module": "m7"
+    },
+    {
+      "front": "Two Usage Policy requirements for high-risk uses affecting individuals",
+      "back": "Review by a qualified professional before finalization, and disclosure of AI involvement at least at the start of each session.",
+      "module": "m8"
+    },
+    {
+      "front": "Citation guardrail",
+      "back": "Require sources in research outputs, flag anything unverified, and have reviewers check the citations themselves.",
+      "module": "m8"
+    },
+    {
+      "front": "Minimum audit trail for a regulated workflow",
+      "back": "Who ran it, which sources were used, who reviewed, and what changed, plus platform audit logs on Enterprise.",
+      "module": "m8"
+    }
   ],
   "questions": [
     {
@@ -333,7 +534,10 @@
         "D": "Every contract the company signed in the last decade, pasted in full",
         "E": "An instruction to sign automatically whenever all clauses are green"
       },
-      "answer": ["A", "B"],
+      "answer": [
+        "A",
+        "B"
+      ],
       "select": 2,
       "explanationCorrect": "A playbook defines the standard position, what fallbacks are acceptable, and when to escalate. That is what lets review flag deviations in the client's own terms.",
       "explanationDistractor": "Auto-signing on all-green (E) removes attorney judgment; pasting a decade of contracts (D) is not a playbook and bloats context.",
@@ -443,7 +647,10 @@
         "D": "Remove attorney review steps once the playbook has been in use for a month",
         "E": "Share one service login across the department so activity is easier to track"
       },
-      "answer": ["A", "B"],
+      "answer": [
+        "A",
+        "B"
+      ],
       "select": 2,
       "explanationCorrect": "Scoped connectors limit exposure to what each workflow needs, and Enterprise audit logs and the Compliance API support oversight.",
       "explanationDistractor": "A shared login (E) destroys individual accountability in the audit trail rather than improving it.",

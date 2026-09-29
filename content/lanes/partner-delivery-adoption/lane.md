@@ -11,10 +11,10 @@ Group: partner · Level: intermediate · ~6 h · For: Partner consultants, deliv
 ## Take alongside
 
 - [Claude Partner Network learning path](https://anthropic-partners.skilljar.com/page/claude-partner-network-learning-path) — Claude Partner Network
-- [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) — Anthropic Academy
-- [Claude 101](https://anthropic.skilljar.com/claude-101) — Anthropic Academy
-- [Introduction to agent skills](https://anthropic.skilljar.com/introduction-to-agent-skills) — Anthropic Academy
-- [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action) — Anthropic Academy
+- [AI Fluency: Framework and foundations](https://academy.claude.com/courses/ai-fluency-framework-foundations) — Anthropic Academy
+- [Claude 101](https://academy.claude.com/courses/claude-101) — Anthropic Academy
+- [Introduction to agent skills](https://academy.claude.com/courses/introduction-to-agent-skills) — Anthropic Academy
+- [Claude Code in action](https://academy.claude.com/courses/claude-code-in-action) — Anthropic Academy
 - [Claude Enterprise Administrator Guide](https://claude.com/resources/tutorials/claude-enterprise-administrator-guide) — Anthropic
 
 ## Discovery workshops and use-case prioritization
@@ -398,7 +398,7 @@ Drive real behavior change with role-based enablement and a champion network, no
 
 **Practice:** Write a 45-minute session plan for one department: two of their real tasks as exercises, a five-minute segment on checking outputs, and a closing ask. Then list three people you would invite as champions and what you would give them.
 
-**Read:** [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) · [Claude 101](https://anthropic.skilljar.com/claude-101)
+**Read:** [AI Fluency: Framework & Foundations](https://academy.claude.com/courses/ai-fluency-framework-foundations) · [Claude 101](https://academy.claude.com/courses/claude-101)
 
 <details><summary>Flashcards</summary>
 
@@ -433,7 +433,7 @@ The diagnosed cause is missing relevance. A champion inside finance who demonstr
 
 _Why a tempting wrong answer misses:_ Usage quotas (B) drive logins without usefulness and tend to create resentment rather than lasting adoption.
 
-Reference: https://anthropic.skilljar.com/ai-fluency-framework-foundations
+Reference: https://academy.claude.com/courses/ai-fluency-framework-foundations
 
 </details>
 
@@ -457,7 +457,7 @@ Practicing on real recurring tasks, with explicit coaching on reviewing outputs,
 
 _Why a tempting wrong answer misses:_ A feature tour (B) is easy to produce but rarely connects to a person's actual week, so behavior does not change.
 
-Reference: https://anthropic.skilljar.com/claude-101
+Reference: https://academy.claude.com/courses/claude-101
 
 </details>
 

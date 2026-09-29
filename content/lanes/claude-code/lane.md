@@ -10,7 +10,7 @@ Group: build · Level: intermediate · ~6 h · For: Developers and technical lea
 
 ## Take alongside
 
-- [Claude Code in Action](https://anthropic.skilljar.com/claude-code-in-action) — Anthropic Academy
+- [Claude Code in action](https://academy.claude.com/courses/claude-code-in-action) — Anthropic Academy
 - [Claude Code documentation](https://code.claude.com/docs/en/overview) — Anthropic
 - [Best practices for Claude Code](https://code.claude.com/docs/en/best-practices) — Anthropic
 

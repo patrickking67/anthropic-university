@@ -22,7 +22,12 @@ Read `${CLAUDE_PLUGIN_ROOT}/references/study-core.md` and `references/sources.md
 2. Ground the scenario in the partner lanes (`partner-foundation-models`,
    `partner-enterprise-solutioning`, `partner-delivery-adoption`, `industry-solutions`). Load the
    relevant lane's modules and keyPoints so the persona's questions test that material.
-3. Tell the user the rules in one line: you are the client, they are the partner. `pause` lets them
+3. **Usage context (optional).** For an industry or regional scenario, pull one or two facts from
+   the `econ-index` connector (for example the top work tasks, or the usage index for the client's
+   country) so the client can reference realistic adoption patterns. Follow the Economic Index
+   rules in sources.md: usage patterns only, no job-impact claims, "labor market" not "job
+   market", and include https://www.anthropic.com/economic-index when you cite it at scoring time.
+4. Tell the user the rules in one line: you are the client, they are the partner. `pause` lets them
    step out for coaching. `score` ends the scene.
 
 ## Run the scene
@@ -50,6 +55,9 @@ one quoted example each:
 
 Finish with the two best moves and the two to fix, a stronger answer to the hardest objection (in
 your own words), and the lane module to review.
+
+If the partner quoted Economic Index data, check the framing too: citing usage as proof of ROI, or
+as a prediction about jobs, loses a point under Trust.
 
 Never invent confidential pricing or terms. When the answer is "it depends on the contract", say so
 and show how a partner confirms it.

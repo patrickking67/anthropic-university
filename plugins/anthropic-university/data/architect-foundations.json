@@ -8,6 +8,22 @@
     "scaleMax": 1000,
     "timeMinutes": 120
   },
+  "official": {
+    "examCode": "CCAR-F",
+    "guideVersion": "1.0",
+    "effective": "2026-07",
+    "items": 60,
+    "fee": "$125 USD",
+    "formats": [
+      "multiple-choice",
+      "multiple-response"
+    ],
+    "structure": "4 scenarios drawn at random from a bank of 6",
+    "delivery": "Pearson VUE (online proctored or test center)",
+    "timeMinutes": 120,
+    "passScaled": 720,
+    "validityMonths": 12
+  },
   "domains": [
     {
       "id": "agentic-architecture",
@@ -77,6 +93,59 @@
         "Large-codebase context",
         "Human review and confidence",
         "Provenance and uncertainty"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "s1",
+      "name": "Customer Support Resolution Agent",
+      "domains": [
+        "agentic-architecture",
+        "tool-design-mcp",
+        "context-reliability"
+      ]
+    },
+    {
+      "id": "s2",
+      "name": "Code Generation with Claude Code",
+      "domains": [
+        "claude-code-config",
+        "context-reliability"
+      ]
+    },
+    {
+      "id": "s3",
+      "name": "Multi-Agent Research System",
+      "domains": [
+        "agentic-architecture",
+        "tool-design-mcp",
+        "context-reliability"
+      ]
+    },
+    {
+      "id": "s4",
+      "name": "Developer Productivity with Claude",
+      "domains": [
+        "tool-design-mcp",
+        "claude-code-config",
+        "agentic-architecture"
+      ]
+    },
+    {
+      "id": "s5",
+      "name": "Claude Code for Continuous Integration",
+      "domains": [
+        "claude-code-config",
+        "prompt-structured-output"
+      ]
+    },
+    {
+      "id": "s6",
+      "name": "Structured Data Extraction",
+      "domains": [
+        "prompt-structured-output",
+        "context-reliability"
       ]
     }
   ],

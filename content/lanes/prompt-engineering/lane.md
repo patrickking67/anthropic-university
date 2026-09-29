@@ -12,7 +12,7 @@ Group: build · Level: intermediate · ~6 h · For: Developers, solution archite
 
 - [Prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices) — Anthropic
 - [Interactive prompt engineering tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial) — Anthropic
-- [Building with the Claude API](https://anthropic.skilljar.com/claude-with-the-anthropic-api) — Anthropic Academy
+- [Building with the Claude API](https://academy.claude.com/courses/building-with-the-claude-api) — Anthropic Academy
 
 ## Clear, direct instructions and success criteria
 

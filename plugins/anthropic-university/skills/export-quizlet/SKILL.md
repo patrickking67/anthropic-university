@@ -2,7 +2,7 @@
 name: export-quizlet
 description: Export Anthropic University flashcards (or questions as cards) to Quizlet's paste-import format, Anki CSV, or plain Markdown so the user can study on a phone or in another app. Use when the user mentions Quizlet, Anki, "export flashcards", "study on my phone", "make a deck", or wants cards outside Claude.
 argument-hint: "<exam-id | lane-id> [domain | module] [quizlet|anki|markdown] [cards|questions|missed]"
-allowed-tools: Read, Grep, Glob, Write
+allowed-tools: Read, Grep, Glob, Write, Bash
 ---
 
 # Export to Quizlet / Anki
@@ -18,6 +18,11 @@ Read `${CLAUDE_PLUGIN_ROOT}/references/study-core.md` (fallback `../../reference
 - **Format**: **`quizlet`**, `anki`, `markdown`.
 
 ## Build
+
+**With a shell**, one command does steps 1–4 exactly:
+`au.py export <track-or-lane> --format quizlet|anki|markdown --source cards|questions
+[--domain <id>] [--ids <id,id>] --out <file>`. For `missed`, pass the missed ids with `--ids`.
+Report the count it prints, then go to Deliver. Otherwise:
 
 1. Load items; filter by domain/source. Report the count before writing.
 2. Clean text: collapse newlines inside a field to ` / ` for Quizlet; strip tabs from content.

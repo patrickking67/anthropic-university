@@ -2,7 +2,7 @@
 name: study-plan
 description: Anthropic University home base — recommend a learning path by role (Use, Build, Administer, Partner lanes plus the four Claude certifications), check progress, and build a dated plan to a goal or exam date mixing lessons, quizzes, flashcards, and mock exams. Use when the user says "help me study", "where should I start", "make a study plan", "I have my exam on <date>", "what should I learn next", "learning path for <role>", or invokes Anthropic University without a specific activity.
 argument-hint: "[exam-id | lane-id | role] [date or days left]"
-allowed-tools: Read, Grep, Glob, Write
+allowed-tools: Read, Grep, Glob, Write, Bash, WebFetch
 ---
 
 # Study plan (Anthropic University hub)
@@ -23,10 +23,11 @@ Entry point for learners. Anthropic University was created by Patrick King (unof
 
 ## 2. Show the track at a glance
 
-Read `references/blueprints.md` for the track. One compact table: **official** domains with weights,
-the bank domains mapped to each, and bank question/card counts. Then the real format in one line
-(code, item count, multiple-choice + multiple-response, 120 min, 720/1,000, fee, Pearson VUE).
-Call out the blueprint's coverage gaps.
+Read `references/blueprints.md` for the track (with a shell, `au.py info <exam-id>` gives the
+domains, weights, and bank counts as JSON). One compact table: official domain, weight, bank
+questions, and cards. Then the real format in one line (code, item count, multiple-choice +
+multiple-response, 120 min, 720/1,000, fee, Pearson VUE). Name the two heaviest domains, since
+they decide most of the score.
 
 ## 3. Build the plan
 
@@ -45,6 +46,9 @@ Pull in lanes as prep: for each weak or heavy official domain, schedule the matc
 Integration maps to `claude-api-fundamentals`, and Tools and MCPs maps to `mcp-and-integrations`.
 Partners also get `/anthropic-university:client-roleplay` sessions.
 
+Add at most two official Anthropic Academy courses that strongly match the plan, from the live
+catalog (sources.md → Academy recommendations), as optional "alongside" rows.
+
 Render as a dated table: `Day | Date | Focus domain | Activity (exact command) | ~minutes`. Keep
 daily load realistic (30–60 min). For under 4 days left, compress to: one mock now, drill the two
 weakest domains, one final short mock.
@@ -52,8 +56,10 @@ weakest domains, one final short mock.
 ## 4. Hand off
 
 End with the single best next action as a runnable command, e.g.
-`/anthropic-university:quiz-me developer-foundations prod-eng`, and offer to start it now. Offer to
-save the plan (file tools → `~/.anthropic-university/plan-<exam-id>.md`; otherwise it stays in chat).
+`/anthropic-university:quiz-me developer-foundations tools-mcps`, and offer to start it now. Offer
+to save the plan: as a Claude Doc when the `claude-docs` connector is connected and the user
+wants it shareable, otherwise to `~/.anthropic-university/plan-<exam-id>.md` with file tools, or
+left in chat.
 
 ## Menu (when the user just wants options)
 
@@ -62,8 +68,9 @@ save the plan (file tools → `~/.anthropic-university/plan-<exam-id>.md`; other
 | Learn a lane module by module | `/anthropic-university:learn <lane-id>` |
 | Rehearse a client conversation (partners) | `/anthropic-university:client-roleplay [persona]` |
 | Practice questions with feedback | `/anthropic-university:quiz-me <exam-id> [domain]` |
-| Timed exam simulation | `/anthropic-university:mock-exam <exam-id> [20\|40\|100]` |
+| Timed exam simulation | `/anthropic-university:mock-exam <exam-id> [20\|40\|full]` |
 | Rapid recall | `/anthropic-university:flashcards <exam-id> [domain]` |
 | Understand a topic | `/anthropic-university:explain-concept <topic>` |
+| One-page review sheet | `/anthropic-university:cheat-sheet <exam-id \| lane-id> [domain]` |
 | Check my reasoning | `/anthropic-university:grade-my-answer` |
 | Study on phone / Quizlet / Anki | `/anthropic-university:export-quizlet <exam-id> [domain]` |

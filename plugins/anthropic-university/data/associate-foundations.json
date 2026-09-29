@@ -8,6 +8,19 @@
     "scaleMax": 1000,
     "timeMinutes": 120
   },
+  "official": {
+    "examCode": "CCAO-F",
+    "guideVersion": "1.0",
+    "effective": "2026-07",
+    "items": 60,
+    "fee": "$99 USD",
+    "formats": [
+      "multiple-choice",
+      "multiple-response"
+    ],
+    "delivery": "Pearson VUE (online proctored or test center)",
+    "validityMonths": 12
+  },
   "domains": [
     {
       "id": "prompting-task-execution",
@@ -96,6 +109,7 @@
       ]
     }
   ],
+  "scenarios": null,
   "questions": [
     {
       "id": "as-001",

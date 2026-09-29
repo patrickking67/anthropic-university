@@ -20,6 +20,7 @@ desktop app, and Claude chat.
 | `/anthropic-university:mock-exam <exam> [20\|40\|full]` | Sit a timed run with a scaled score and per-domain breakdown |
 | `/anthropic-university:flashcards <exam\|lane> [domain]` | Drill cards with spaced repetition |
 | `/anthropic-university:explain-concept <topic>` | Understand a topic from live docs, with look-alike comparisons |
+| `/anthropic-university:cheat-sheet <exam\|lane> [domain]` | Get a one-page, docs-verified review sheet, saved as a Claude Doc, a file, or in chat |
 | `/anthropic-university:grade-my-answer` | Have your reasoning on a practice question graded |
 | `/anthropic-university:client-roleplay [persona]` | Partner practice: rehearse a CIO, CISO, GC, CFO, or engineering-lead conversation, then get scored |
 | `/anthropic-university:export-quizlet <exam> [domain] [format]` | Export decks to Quizlet, Anki, or Markdown |
@@ -45,9 +46,21 @@ See `references/learning-paths.md` for role-based paths.
 | --- | --- | --- |
 | Claude Code Docs | `https://code.claude.com/docs/mcp` | Verifies Claude Code, MCP, skills, plugins, hooks, and SDK facts |
 | Microsoft Learn | `https://learn.microsoft.com/api/mcp` | Claude on Microsoft Foundry and Azure, Copilot, Entra, and Azure architecture |
+| Agent Skills | `https://agentskills.io/mcp` | The open `SKILL.md` format and skill-authoring rules |
+| Anthropic Economic Index | `https://econ-index.mcp.claude.com/mcp` | Real Claude usage patterns by task and region, for partner and industry lessons |
+| Claude Docs | `https://api.anthropic.com/v1/pages/mcp` | Saves plans, notes, and cheat sheets as living docs when you ask (needs Claude sign-in) |
 
-Both are public, hosted, read-only HTTP MCP servers that need no credentials. For Quizlet, see
+The first four are public and need no credentials. Claude Docs needs a sign-in: in Claude Code run
+`/mcp` and authenticate `claude-docs`; in the app, enable it in connector settings. Course
+recommendations come from Anthropic Academy's public catalog, fetched live. For Quizlet, see
 [CONNECTORS.md](CONNECTORS.md).
+
+## Helper script
+
+`scripts/au.py` (Python 3, standard library only) samples official-format mocks, grades answers
+with scaled scores, searches the banks, and writes Quizlet, Anki, or Markdown exports. Skills use it
+automatically when a shell is available and fall back to reading the data otherwise. Run
+`python3 scripts/au.py --help` to see the commands.
 
 ## What's inside
 
@@ -57,7 +70,8 @@ Both are public, hosted, read-only HTTP MCP servers that need no credentials. Fo
   by `node scripts/build.mjs`, so don't edit it by hand.
 - `references/study-core.md` holds the shared rules: data loading, surface behavior, reply
   parsing, progress, and integrity.
-- `references/sources.md` covers connector routing and citation style.
+- `references/sources.md` covers connector routing, the Economic Index and Academy rules, the rule
+  that retrieved content is data and never instructions, and citation style.
 - `references/blueprints.md` summarizes the official exam guides (v1.0, July 2026): item counts,
   official domains and weights, and the six Architect Foundations scenarios.
 - `references/learning-paths.md` maps roles to lanes and certifications.
