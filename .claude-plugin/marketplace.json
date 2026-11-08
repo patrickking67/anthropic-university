@@ -11,18 +11,24 @@
   "plugins": [
     {
       "name": "exam-coach",
+      "displayName": "Exam Coach",
       "source": "./plugins/exam-coach",
-      "description": "Interactive tutor: adaptive /quiz-me, timed /mock-exam (100–1000 scale), /explain-concept, and /grade-my-answer. Bundled question banks for all four tracks."
+      "description": "Interactive tutor: adaptive /quiz-me, timed /mock-exam (100–1000 scale), /explain-concept, and /grade-my-answer. Bundled question banks for all four tracks.",
+      "category": "learning"
     },
     {
       "name": "flashcard-drill",
+      "displayName": "Flashcard Drill",
       "source": "./plugins/flashcard-drill",
-      "description": "Terminal Leitner-style flashcard drilling for any Anthropic University track, with domain filters and weak-card requeues."
+      "description": "Terminal Leitner-style flashcard drilling for any Anthropic University track, with domain filters and weak-card requeues.",
+      "category": "learning"
     },
     {
       "name": "cert-author",
+      "displayName": "Cert Author",
       "source": "./plugins/cert-author",
-      "description": "Contributor toolkit: author original docs-grounded questions, adversarially review a bank, and rebuild generated content."
+      "description": "Contributor toolkit: author original docs-grounded questions, adversarially review a bank, and rebuild generated content.",
+      "category": "authoring"
     }
   ]
 }
