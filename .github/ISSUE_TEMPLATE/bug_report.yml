@@ -1,0 +1,42 @@
+name: Bug or wrong answer
+description: Report a broken page, a plugin problem, or a question with a wrong or unclear answer key.
+labels: [bug]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Question or answer key
+        - Study guide or flashcards
+        - Web app
+        - Claude Code plugin
+        - Build or CI
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where
+      description: "Track and question id (for example af-034), page, or plugin and skill name."
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What is wrong
+      description: What you saw and what you expected.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Official source
+      description: For answer key problems, a link to the Claude docs page that shows the correct answer.
+  - type: checkboxes
+    id: policy
+    attributes:
+      label: Exam content
+      options:
+        - label: This report does not quote real certification exam questions.
+          required: true
