@@ -87,17 +87,28 @@
   // ---- theme --------------------------------------------------------------
   var THEME_KEY = "au:theme";
   function applyTheme(t) { document.documentElement.setAttribute("data-theme", t); }
+  // Storage can throw (blocked site data, some file:// setups); theme then lives in memory only.
+  var themeMemo = "auto";
+  function readTheme() {
+    try { return localStorage.getItem(THEME_KEY) || themeMemo; }
+    catch (e) { return themeMemo; }
+  }
+  function writeTheme(t) {
+    themeMemo = t;
+    try { localStorage.setItem(THEME_KEY, t); }
+    catch (e) { /* storage blocked */ }
+  }
   (function initTheme() {
-    var saved = localStorage.getItem(THEME_KEY) || "auto";
+    var saved = readTheme();
     applyTheme(saved);
     var btn = document.getElementById("theme-toggle");
     if (!btn) return;
     btn.title = "Theme: " + saved;
     btn.addEventListener("click", function () {
       var order = ["auto", "light", "dark"];
-      var cur = localStorage.getItem(THEME_KEY) || "auto";
+      var cur = readTheme();
       var next = order[(order.indexOf(cur) + 1) % order.length];
-      localStorage.setItem(THEME_KEY, next);
+      writeTheme(next);
       applyTheme(next);
       btn.title = "Theme: " + next;
     });
