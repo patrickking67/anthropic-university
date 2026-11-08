@@ -5,6 +5,11 @@
   --clay: #c4654a;
   --clay-strong: #a8523a;
   --clay-soft: color-mix(in srgb, var(--clay) 14%, transparent);
+  --clay-ink: #a8523a;
+  --primary-bg: #a8523a;
+  --primary-bg-hover: #93452f;
+  --on-primary: #ffffff;
+  --on-status: #ffffff;
   --ink: #1a1c1f;
   --ink-soft: #2c3036;
   --muted: #5c6570;
@@ -34,6 +39,11 @@
   --clay: #e07a5f;
   --clay-strong: #f09078;
   --clay-soft: color-mix(in srgb, var(--clay) 18%, transparent);
+  --clay-ink: #e07a5f;
+  --primary-bg: #e07a5f;
+  --primary-bg-hover: #f09078;
+  --on-primary: #121418;
+  --on-status: #121418;
   --ink: #eceff2;
   --ink-soft: #c5ccd4;
   --muted: #9aa3ae;
@@ -57,6 +67,11 @@
     --clay: #e07a5f;
     --clay-strong: #f09078;
     --clay-soft: color-mix(in srgb, var(--clay) 18%, transparent);
+    --clay-ink: #e07a5f;
+    --primary-bg: #e07a5f;
+    --primary-bg-hover: #f09078;
+    --on-primary: #121418;
+    --on-status: #121418;
     --ink: #eceff2;
     --ink-soft: #c5ccd4;
     --muted: #9aa3ae;
@@ -147,7 +162,7 @@ code, pre { font-family: var(--mono); }
   font-weight: 600;
   letter-spacing: -0.03em;
 }
-.brand-text b { color: var(--clay); font-weight: 600; }
+.brand-text b { color: var(--clay-ink); font-weight: 600; }
 .topbar-right { display: flex; align-items: center; gap: 10px; }
 .pill {
   font-size: 11px;
@@ -250,7 +265,7 @@ code, pre { font-family: var(--mono); }
   margin: 0 0 10px;
   line-height: 1.05;
 }
-.hero-brand span { color: var(--clay); }
+.hero-brand span { color: var(--clay-ink); }
 .hero h1 {
   font-size: clamp(1.15rem, 2.6vw, 1.45rem);
   font-weight: 500;
@@ -310,7 +325,7 @@ code, pre { font-family: var(--mono); }
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--clay);
+  color: var(--clay-ink);
   font-weight: 700;
 }
 .track-card h3 { margin: 0; font-size: 1.2rem; }
@@ -363,13 +378,13 @@ code, pre { font-family: var(--mono); }
 .btn:hover { border-color: var(--clay); }
 .btn:active { transform: scale(.98); }
 .btn.primary {
-  background: var(--clay);
-  border-color: var(--clay);
-  color: #fff;
+  background: var(--primary-bg);
+  border-color: var(--primary-bg);
+  color: var(--on-primary);
 }
 .btn.primary:hover {
-  background: var(--clay-strong);
-  border-color: var(--clay-strong);
+  background: var(--primary-bg-hover);
+  border-color: var(--primary-bg-hover);
 }
 .btn.ghost { background: transparent; }
 .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
@@ -389,7 +404,7 @@ code, pre { font-family: var(--mono); }
   font-size: 14px;
   font-weight: 560;
 }
-.crumb .back:hover { color: var(--clay); }
+.crumb .back:hover { color: var(--clay-ink); }
 .crumb h2 { margin: 0; font-size: 1.35rem; }
 .chip {
   font-size: 12px;
@@ -479,7 +494,7 @@ select, .select {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--clay);
+  color: var(--clay-ink);
 }
 .tag {
   font-size: 12px;
@@ -501,7 +516,7 @@ select, .select {
   padding: 4px 8px;
 }
 .flag-btn:hover { border-color: var(--border); color: var(--ink); }
-.flag-btn.on { color: var(--clay); border-color: var(--clay); background: var(--clay-soft); }
+.flag-btn.on { color: var(--clay-ink); border-color: var(--clay); background: var(--clay-soft); }
 .stem {
   font-size: 1.125rem;
   font-weight: 500;
@@ -565,7 +580,7 @@ select, .select {
 }
 .opt.correct .key {
   background: var(--good);
-  color: #fff;
+  color: var(--on-status);
   border-color: var(--good);
 }
 .opt.wrong {
@@ -574,7 +589,7 @@ select, .select {
 }
 .opt.wrong .key {
   background: var(--bad);
-  color: #fff;
+  color: var(--on-status);
   border-color: var(--bad);
 }
 .opt:disabled { cursor: default; }
@@ -633,9 +648,9 @@ select, .select {
   transition: background .15s var(--ease), border-color .15s var(--ease);
 }
 .qgrid button.answered {
-  background: var(--clay);
-  border-color: var(--clay);
-  color: #fff;
+  background: var(--primary-bg);
+  border-color: var(--primary-bg);
+  color: var(--on-primary);
 }
 .qgrid button.flagged { outline: 2px solid var(--clay); outline-offset: 1px; }
 .qgrid button.current { box-shadow: 0 0 0 2px var(--ink) inset; }

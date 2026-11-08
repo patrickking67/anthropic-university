@@ -1,0 +1,16 @@
+name: Feature or content request
+description: Suggest a new topic, study feature, or plugin improvement.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help
+      description: The topic, feature, or change, and who it helps.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: The study problem it solves. Link official docs for new topics.

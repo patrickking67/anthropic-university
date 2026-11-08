@@ -7,8 +7,8 @@ and how to build and validate your changes.
 ## Ground rules
 
 1. **Original content only.** Do not submit real or remembered certification exam questions.
-   Anthropic's Certification Exam Policy prohibits sharing actual Exam Content. Write *new* questions
-   that teach publicly documented concepts.
+   Treat real exam content as confidential. Write *new* questions that teach publicly documented
+   concepts.
 2. **Unofficial.** This project is not affiliated with or endorsed by Anthropic. Don't imply that it
    is, and don't add official logos/branding.
 3. **Accuracy over volume.** Every answer key must be defensible against the official Claude docs
@@ -19,18 +19,20 @@ and how to build and validate your changes.
 
 `content/<examId>/questions.json` and `flashcards.json` are the **canonical** source. All markdown
 exams, flashcard files, and web-app data are **generated** by `scripts/build.mjs`. Never edit a
-generated file — edit the JSON and rebuild.
+generated file. Edit the JSON and rebuild.
 
 ## Setup & build
 
-Requires Node 18+. No dependencies to install.
+Requires Node 20 or later. No dependencies to install.
 
 ```bash
-node scripts/build.mjs --check   # validate all banks (fails on any error)
-node scripts/build.mjs           # validate + regenerate md + web-app data
+node scripts/check.mjs           # everything CI runs; must pass before you open a PR
+node scripts/build.mjs --check   # validate all banks only
+node scripts/build.mjs           # validate and regenerate md, web-app and plugin data
+node scripts/serve.mjs           # preview the app at http://localhost:4106/
 ```
 
-Open `docs/index.html` in a browser to preview the app locally (works from `file://`).
+Opening `docs/index.html` from disk also works.
 
 ## Adding or editing a question
 
@@ -56,7 +58,7 @@ Edit `content/<examId>/questions.json`. Each question:
 
 - [ ] Exactly one **unambiguously best** answer; the other three are **plausible** (a candidate with
       partial knowledge might pick them), not obviously wrong.
-- [ ] Options are **parallel** in grammar, length, and specificity — the correct answer isn't the
+- [ ] Options are **parallel** in grammar, length, and specificity: the correct answer isn't the
       longest or most detailed by tell.
 - [ ] No "all/none of the above", no "A and C", no trick wording.
 - [ ] The stem is self-contained and tests a **concept**, not memorization of trivia.
@@ -85,8 +87,17 @@ Use the `add-exam` skill, or by hand: create `content/<newId>/questions.json` (+
 `study-guide.md`), add `<newId>` to `EXAM_ORDER` in `scripts/build.mjs`, and rebuild. The web app and
 catalog pick it up automatically.
 
+## Branches and commits
+
+- Branch from `main` with a prefix: `feat/`, `fix/`, `docs/` or `chore/`.
+- Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/): `content: ...`, `feat: ...`,
+  `fix: ...`, `docs: ...`, `chore: ...`, `ci: ...`, `build: ...`.
+- One logical change per commit.
+
 ## Pull requests
 
-- Run `node scripts/build.mjs` and commit the regenerated files alongside your JSON edits.
-- CI (`.github/workflows/validate.yml`) runs `--check` and fails on schema errors or duplicates.
-- Keep PRs focused. Describe what tracks/domains you touched and how you verified the answer keys.
+- Run `node scripts/check.mjs`. If it regenerated files, commit them with your JSON edits.
+- CI (`.github/workflows/validate.yml`) runs the same command and fails on schema errors, duplicates,
+  out-of-sync generated files, broken links or invalid JSON.
+- Keep PRs focused. Fill in the PR template: what tracks or domains you touched, how you verified the
+  answer keys, and what you did not verify.

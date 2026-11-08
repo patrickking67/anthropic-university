@@ -1,8 +1,9 @@
 name: Deploy GitHub Pages
 
 # Builds the site data from the canonical JSON and publishes docs/ to GitHub Pages.
-# actions/configure-pages@v5 with enablement:true turns Pages on automatically the
-# first time this runs, so no manual Settings toggle is required.
+# Pages has to be turned on once by the repo owner (Settings > Pages > Source: GitHub Actions).
+# The default GITHUB_TOKEN cannot create a Pages site, so until then the probe job reports
+# that Pages is off and the build and deploy jobs are skipped instead of failing.
 
 on:
   push:
@@ -19,7 +20,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  probe:
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.pages.outputs.enabled }}
+    steps:
+      - name: Check whether Pages is enabled
+        id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/${{ github.repository }}/pages" --silent 2>/dev/null; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::GitHub Pages is not enabled for this repo. Skipping deploy."
+          fi
+
   build:
+    needs: probe
+    if: needs.probe.outputs.enabled == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,10 +48,7 @@ jobs:
           node-version: 20
       - name: Generate web-app data from canonical content
         run: node scripts/build.mjs
-      - name: Configure Pages (auto-enable)
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      - uses: actions/configure-pages@v5
       - name: Upload docs/ artifact
         uses: actions/upload-pages-artifact@v3
         with:
