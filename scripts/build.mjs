@@ -9,6 +9,7 @@
  *   - docs/data/<examId>.js               (window.AU.exams[...] payload for the web app)
  *   - docs/data/index.js                  (window.AU.index catalog for the web app)
  *   - plugins/<p>/data/*.json             (self-contained data for marketplace plugins, if present)
+ *   - docs/llms.txt                       (copy of the root llms.txt so the site serves it)
  *
  * Usage:
  *   node scripts/build.mjs          Validate + generate all outputs
@@ -399,9 +400,10 @@ for (const { examId, exam, flashcards } of loaded) {
 }
 
 writeIndexJs(catalog);
+writeFileSync(join(ROOT, "docs", "llms.txt"), readFileSync(join(ROOT, "llms.txt"), "utf8"));
 
 console.log(`\n✓ Built ${loaded.length} exam(s):`);
 for (const c of catalog) {
   console.log(`  - ${c.title}: ${c.questionCount} questions, ${c.flashcardCount} flashcards`);
 }
-console.log(`\nOutputs: content/*/practice-exam.md, content/*/flashcards.md, docs/data/*.js`);
+console.log(`\nOutputs: content/*/practice-exam.md, content/*/flashcards.md, docs/data/*.js, docs/llms.txt`);

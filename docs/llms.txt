@@ -1,0 +1,38 @@
+# Anthropic University
+
+> Unofficial, community-authored study hub for Anthropic's Claude certifications: Claude Certified Associate: Foundations, Developer: Foundations, Architect: Foundations, and Architect: Professional. Each track has 100 original practice questions with explanations, a study guide and a flashcard set, plus a static web app and a Claude Code plugin marketplace. Not affiliated with or endorsed by Anthropic, and it does not reproduce real exam questions.
+
+The canonical data is `content/<track>/questions.json` and `flashcards.json`. Every markdown exam, flashcard file, web app data file and plugin data file is generated from them by `node scripts/build.mjs`.
+
+## Start here
+
+- [README](https://github.com/patrickking67/anthropic-university/blob/main/README.md): what the project is, how to study, how to install the plugins
+- [AGENTS.md](https://github.com/patrickking67/anthropic-university/blob/main/AGENTS.md): layout, commands, schema and rules for working in the repo
+- [Contributing guide](https://github.com/patrickking67/anthropic-university/blob/main/CONTRIBUTING.md): authoring quality bar and PR checklist
+
+## Study guides
+
+- [Associate: Foundations study guide](https://github.com/patrickking67/anthropic-university/blob/main/content/associate-foundations/study-guide.md): everyday use of Claude, prompting, evaluating output, workflows, configuration, governance
+- [Developer: Foundations study guide](https://github.com/patrickking67/anthropic-university/blob/main/content/developer-foundations/study-guide.md): model choice, the Claude API, tool use, agents, Claude Code and MCP, evals and security
+- [Architect: Foundations study guide](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-foundations/study-guide.md): multi-agent orchestration, Claude Code in CI, support agents, code generation, API, SDK and MCP
+- [Architect: Professional study guide](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-professional/study-guide.md): solution design, enterprise integration, safety, evals as acceptance criteria, stakeholder lifecycle
+
+## Practice exams
+
+- [Associate: Foundations practice exam](https://github.com/patrickking67/anthropic-university/blob/main/content/associate-foundations/practice-exam.md): 100 original questions with answers and explanations
+- [Developer: Foundations practice exam](https://github.com/patrickking67/anthropic-university/blob/main/content/developer-foundations/practice-exam.md): 100 original questions with answers and explanations
+- [Architect: Foundations practice exam](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-foundations/practice-exam.md): 100 original questions with answers and explanations
+- [Architect: Professional practice exam](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-professional/practice-exam.md): 100 original questions with answers and explanations
+
+## Tools
+
+- [Web app source](https://github.com/patrickking67/anthropic-university/tree/main/docs): static Study, Practice, timed Exam and Flashcards modes in vanilla JS
+- [Plugin marketplace](https://github.com/patrickking67/anthropic-university/blob/main/.claude-plugin/marketplace.json): Claude Code plugins exam-coach, flashcard-drill and cert-author
+
+## Optional
+
+- [Associate question bank (JSON)](https://github.com/patrickking67/anthropic-university/blob/main/content/associate-foundations/questions.json)
+- [Developer question bank (JSON)](https://github.com/patrickking67/anthropic-university/blob/main/content/developer-foundations/questions.json)
+- [Architect: Foundations question bank (JSON)](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-foundations/questions.json)
+- [Architect: Professional question bank (JSON)](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-professional/questions.json)
+- [Official certification overview](https://claude.com/resources/articles/four-role-based-claude-certifications): Anthropic's description of the four certifications

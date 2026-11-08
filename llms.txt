@@ -1,39 +1,38 @@
 # Anthropic University
 
-> An open, **unofficial** study hub for the Claude Certification program. It provides original
-> practice exams (100 questions each), study guides, and flashcards for four tracks — Claude
-> Certified Associate (Foundations), Developer (Foundations), Architect (Foundations), and Architect
-> (Professional) — plus an interactive web app and a Claude Code plugin marketplace. All content is
-> community-authored to teach publicly documented concepts and is **not affiliated with or endorsed
-> by Anthropic**; it does not reproduce real exam questions.
+> Unofficial, community-authored study hub for Anthropic's Claude certifications: Claude Certified Associate: Foundations, Developer: Foundations, Architect: Foundations, and Architect: Professional. Each track has 100 original practice questions with explanations, a study guide and a flashcard set, plus a static web app and a Claude Code plugin marketplace. Not affiliated with or endorsed by Anthropic, and it does not reproduce real exam questions.
 
-This file follows the llmstxt.org convention to help language models navigate the repository.
+The canonical data is `content/<track>/questions.json` and `flashcards.json`. Every markdown exam, flashcard file, web app data file and plugin data file is generated from them by `node scripts/build.mjs`.
 
 ## Start here
 
-- [README](README.md): overview, how to study, and links to every track
-- [How content is structured and built](CLAUDE.md): canonical JSON → generated markdown + web app
-- [Contributing guide](CONTRIBUTING.md): question schema and authoring quality bar
+- [README](https://github.com/patrickking67/anthropic-university/blob/main/README.md): what the project is, how to study, how to install the plugins
+- [AGENTS.md](https://github.com/patrickking67/anthropic-university/blob/main/AGENTS.md): layout, commands, schema and rules for working in the repo
+- [Contributing guide](https://github.com/patrickking67/anthropic-university/blob/main/CONTRIBUTING.md): authoring quality bar and PR checklist
 
-## Certification tracks
+## Study guides
 
-- [Associate – Foundations study guide](content/associate-foundations/study-guide.md): knowledge-worker track — entry points, prompting, evaluation, workflow integration, configuration, governance, troubleshooting
-- [Associate – Foundations practice exam](content/associate-foundations/practice-exam.md): 100 original questions with explanations
-- [Developer – Foundations study guide](content/developer-foundations/study-guide.md): model fundamentals, production prompting/agents/tools, Claude Code + MCP, evals + security, packaging
-- [Developer – Foundations practice exam](content/developer-foundations/practice-exam.md): 100 original questions with explanations
-- [Architect – Foundations study guide](content/architect-foundations/study-guide.md): multi-agent orchestration, Claude Code for CI, support agents, code generation, core API/SDK/MCP
-- [Architect – Foundations practice exam](content/architect-foundations/practice-exam.md): 100 original questions with explanations
-- [Architect – Professional study guide](content/architect-professional/study-guide.md): solution design, enterprise integration, safety stack, evals as acceptance criteria, stakeholder lifecycle
-- [Architect – Professional practice exam](content/architect-professional/practice-exam.md): 100 original questions with explanations
+- [Associate: Foundations study guide](https://github.com/patrickking67/anthropic-university/blob/main/content/associate-foundations/study-guide.md): everyday use of Claude, prompting, evaluating output, workflows, configuration, governance
+- [Developer: Foundations study guide](https://github.com/patrickking67/anthropic-university/blob/main/content/developer-foundations/study-guide.md): model choice, the Claude API, tool use, agents, Claude Code and MCP, evals and security
+- [Architect: Foundations study guide](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-foundations/study-guide.md): multi-agent orchestration, Claude Code in CI, support agents, code generation, API, SDK and MCP
+- [Architect: Professional study guide](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-professional/study-guide.md): solution design, enterprise integration, safety, evals as acceptance criteria, stakeholder lifecycle
 
-## Interactive app & tools
+## Practice exams
 
-- [Learning app (GitHub Pages)](docs/index.html): Study, Practice, timed Exam, and Flashcard modes, self-contained vanilla JS
-- [Plugin marketplace catalog](.claude-plugin/marketplace.json): learner-facing Claude Code plugins (exam-coach, flashcard-drill, cert-author)
+- [Associate: Foundations practice exam](https://github.com/patrickking67/anthropic-university/blob/main/content/associate-foundations/practice-exam.md): 100 original questions with answers and explanations
+- [Developer: Foundations practice exam](https://github.com/patrickking67/anthropic-university/blob/main/content/developer-foundations/practice-exam.md): 100 original questions with answers and explanations
+- [Architect: Foundations practice exam](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-foundations/practice-exam.md): 100 original questions with answers and explanations
+- [Architect: Professional practice exam](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-professional/practice-exam.md): 100 original questions with answers and explanations
 
-## Canonical data
+## Tools
 
-- [Associate question bank](content/associate-foundations/questions.json)
-- [Developer question bank](content/developer-foundations/questions.json)
-- [Architect Foundations question bank](content/architect-foundations/questions.json)
-- [Architect Professional question bank](content/architect-professional/questions.json)
+- [Web app source](https://github.com/patrickking67/anthropic-university/tree/main/docs): static Study, Practice, timed Exam and Flashcards modes in vanilla JS
+- [Plugin marketplace](https://github.com/patrickking67/anthropic-university/blob/main/.claude-plugin/marketplace.json): Claude Code plugins exam-coach, flashcard-drill and cert-author
+
+## Optional
+
+- [Associate question bank (JSON)](https://github.com/patrickking67/anthropic-university/blob/main/content/associate-foundations/questions.json)
+- [Developer question bank (JSON)](https://github.com/patrickking67/anthropic-university/blob/main/content/developer-foundations/questions.json)
+- [Architect: Foundations question bank (JSON)](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-foundations/questions.json)
+- [Architect: Professional question bank (JSON)](https://github.com/patrickking67/anthropic-university/blob/main/content/architect-professional/questions.json)
+- [Official certification overview](https://claude.com/resources/articles/four-role-based-claude-certifications): Anthropic's description of the four certifications
