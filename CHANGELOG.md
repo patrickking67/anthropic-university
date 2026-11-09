@@ -17,6 +17,8 @@ All notable changes to this project are documented here. The format follows
 - `displayName` and `category` on marketplace entries.
 - `docs/llms.txt`, copied from the root `llms.txt` by the build.
 - Open Graph and Twitter card tags on the web app.
+- `tests/storage-blocked.test.mjs`, an offline test that boots the web app with `localStorage`
+  blocked. `check.mjs` runs it, so CI does too.
 
 ### Fixed
 
@@ -27,6 +29,8 @@ All notable changes to this project are documented here. The format follows
 
 - `llms.txt` follows the llmstxt.org format with absolute URLs.
 - CI runs `check.mjs` with read-only permissions.
+- CI and the Pages build run on Node 26, the active LTS. Node 20 reached end of life on 2026-04-30.
+  Docs now ask for Node 24 or later.
 - The Pages workflow skips deploy while Pages is off instead of failing on every push to `main`.
 - README states what Anthropic publishes about the certifications and marks the 720 pass mark as
   candidate-reported.

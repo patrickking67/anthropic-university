@@ -5,11 +5,12 @@
  * Runs everything CI runs, in the same order, and fails on the first broken step:
  *   1. Validate the question banks           node scripts/build.mjs --check
  *   2. Regenerate outputs and fail if any generated file changed (CI's "in sync" gate)
- *   3. Syntax-check every JS/MJS file in docs/ and scripts/
- *   4. Parse every tracked JSON file
- *   5. Check relative links in hand-written markdown resolve to real files
- *   6. Check llms.txt follows the llmstxt.org shape with absolute URLs
- *   7. claude plugin validate --strict on the marketplace and each plugin
+ *   3. Syntax-check every JS/MJS file in docs/, scripts/ and tests/
+ *   4. Run the offline tests in tests/*.test.mjs   node --test
+ *   5. Parse every tracked JSON file
+ *   6. Check relative links in hand-written markdown resolve to real files
+ *   7. Check llms.txt follows the llmstxt.org shape with absolute URLs
+ *   8. claude plugin validate --strict on the marketplace and each plugin
  *      (local only: skipped with a notice when the `claude` CLI is not on PATH, as in CI)
  *
  * Usage: node scripts/check.mjs
@@ -97,9 +98,16 @@ step("generated files in sync (build.mjs)", () => {
 });
 
 step("JS syntax (node --check)", () => {
-  const files = trackedFiles().filter((f) => /^(docs|scripts)\/.*\.m?js$/.test(f));
+  const files = trackedFiles().filter((f) => /^(docs|scripts|tests)\/.*\.m?js$/.test(f));
   for (const f of files) run(process.execPath, ["--check", f]);
   return `${files.length} files`;
+});
+
+step("offline tests (node --test tests/*.test.mjs)", () => {
+  const files = trackedFiles().filter((f) => /^tests\/.*\.test\.mjs$/.test(f));
+  if (!files.length) throw new Error("no tests found in tests/");
+  const out = run(process.execPath, ["--test", "--test-reporter=tap", ...files]);
+  return out.match(/^# pass \d+/m)?.[0].slice(2);
 });
 
 step("JSON parses", () => {

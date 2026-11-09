@@ -118,7 +118,7 @@ node scripts/build.mjs           # validate and regenerate
 node scripts/build.mjs --check   # validate only
 ```
 
-Node 20 or later. Nothing to install. See [AGENTS.md](AGENTS.md) for the layout, schema and rules.
+Node 24 or later (CI uses Node 26, the active LTS). Nothing to install. See [AGENTS.md](AGENTS.md) for the layout, schema and rules.
 
 ## Deploy
 

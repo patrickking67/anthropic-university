@@ -23,7 +23,7 @@ generated file. Edit the JSON and rebuild.
 
 ## Setup & build
 
-Requires Node 20 or later. No dependencies to install.
+Requires Node 24 or later. CI uses Node 26, the active LTS. No dependencies to install.
 
 ```bash
 node scripts/check.mjs           # everything CI runs; must pass before you open a PR
