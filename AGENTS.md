@@ -19,7 +19,7 @@ It is not affiliated with or endorsed by Anthropic. Keep it that way in every fi
 
 ## Stack
 
-- Node 20 or later (CI uses 20). ESM scripts, standard library only.
+- Node 24 or later. CI uses Node 26, the active LTS. ESM scripts, standard library only.
 - No `package.json`, no dependencies, no install step, no bundler, no framework.
 - Web app: vanilla JS, HTML and CSS that also works from `file://`.
 
