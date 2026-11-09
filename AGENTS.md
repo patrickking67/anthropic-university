@@ -30,14 +30,16 @@ All verified on 2026-11-07.
 | Task | Command | Result |
 | --- | --- | --- |
 | Check everything (what CI runs) | `node scripts/check.mjs` | Exit 0 and `All checks passed.` |
+| Run the offline tests only | `node --test tests/storage-blocked.test.mjs` | `pass 2`, `fail 0` |
 | Validate banks only | `node scripts/build.mjs --check` | `Validation passed for 4 exam(s), 400 questions.` |
 | Rebuild generated files | `node scripts/build.mjs` | Regenerates every file listed under Generated files |
 | Preview the web app | `node scripts/serve.mjs` | http://localhost:4106/ (`PORT=` to change). Also `.claude/launch.json` |
 | Validate plugin manifests | `claude plugin validate --strict .` and `claude plugin validate --strict plugins/<name>` | Part of `check.mjs` when the `claude` CLI is on PATH; skipped in CI |
 
-There is no linter, type checker or unit test suite. `check.mjs` is the test suite: bank schema and
-duplicates, generated-file sync, JS syntax, JSON parsing, relative markdown links, `llms.txt` shape and
-plugin manifests.
+There is no linter or type checker. `check.mjs` covers bank schema and duplicates, generated-file
+sync, JS syntax, the offline tests in `tests/` (`node --test`), JSON parsing, relative markdown links,
+`llms.txt` shape and plugin manifests. Tests use Node's built-in runner and a minimal fake DOM in
+`node:vm`; no browser, no network. Name new tests `tests/<topic>.test.mjs` and `check.mjs` picks them up.
 
 ## Layout
 
@@ -47,6 +49,7 @@ content/<examId>/     questions.json, flashcards.json (canonical), study-guide.m
 scripts/build.mjs     validation and generation
 scripts/check.mjs     the one check command
 scripts/serve.mjs     local preview server for docs/
+tests/                offline node:test tests for the web app (run by check.mjs)
 docs/                 the web app: index.html, app.js, styles.css, mark.svg, data/ (generated), llms.txt (generated)
 assets/               original logo and mark SVGs, README screenshots
 .claude-plugin/       marketplace.json

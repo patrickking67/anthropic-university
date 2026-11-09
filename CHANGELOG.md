@@ -17,6 +17,8 @@ All notable changes to this project are documented here. The format follows
 - `displayName` and `category` on marketplace entries.
 - `docs/llms.txt`, copied from the root `llms.txt` by the build.
 - Open Graph and Twitter card tags on the web app.
+- `tests/storage-blocked.test.mjs`, an offline test that boots the web app with `localStorage`
+  blocked. `check.mjs` runs it, so CI does too.
 
 ### Fixed
 
