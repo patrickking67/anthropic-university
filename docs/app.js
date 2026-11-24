@@ -5,6 +5,9 @@
   "use strict";
 
   var AU = window.AU || {};
+  var AULib = window.AULib;
+  var escapeHtml = AULib.escapeHtml, shuffle = AULib.shuffle, renderMarkdown = AULib.renderMarkdown,
+    sampleByDomain = AULib.sampleByDomain;
   var CATALOG = AU.index || [];
   var appEl = document.getElementById("app");
   var keyHandler = null;
@@ -30,19 +33,6 @@
     return n;
   }
   function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
-  function escapeHtml(s) {
-    return String(s == null ? "" : s)
-      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-  }
-  function shuffle(arr) {
-    var a = arr.slice();
-    for (var i = a.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var t = a[i]; a[i] = a[j]; a[j] = t;
-    }
-    return a;
-  }
   function hashStr(s) {
     var h = 0;
     for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
@@ -114,110 +104,6 @@
     });
   })();
 
-  // ---- markdown (compact, covers our study-guide subset) ------------------
-  var CODE_OPEN = "@@AUCODE", CODE_CLOSE = "AUCODE@@";
-  function mdInline(s) {
-    s = String(s == null ? "" : s);
-    var codes = [];
-    s = s.replace(/`([^`]+)`/g, function (_, c) {
-      codes.push(c);
-      return CODE_OPEN + (codes.length - 1) + CODE_CLOSE;
-    });
-    s = escapeHtml(s);
-    s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (_, t, u) {
-      return '<a href="' + u + '" target="_blank" rel="noopener">' + t + "</a>";
-    });
-    s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-    s = s.replace(/(^|[^*])\*([^*]+)\*/g, "$1<em>$2</em>");
-    s = s.replace(new RegExp(CODE_OPEN + "(\\d+)" + CODE_CLOSE, "g"), function (_, i) {
-      return "<code>" + escapeHtml(codes[+i]) + "</code>";
-    });
-    return s;
-  }
-  function renderMarkdown(md) {
-    var lines = String(md || "").replace(/\r\n/g, "\n").split("\n");
-    var out = [], i = 0;
-    function flushList(type, items) {
-      out.push("<" + type + ">" + items.map(function (t) {
-        return "<li>" + mdInline(t) + "</li>";
-      }).join("") + "</" + type + ">");
-    }
-    while (i < lines.length) {
-      var line = lines[i];
-      if (/^```/.test(line)) {
-        var buf = []; i++;
-        while (i < lines.length && !/^```/.test(lines[i])) { buf.push(lines[i]); i++; }
-        i++;
-        out.push("<pre><code>" + escapeHtml(buf.join("\n")) + "</code></pre>");
-        continue;
-      }
-      var h = line.match(/^(#{1,4})\s+(.*)$/);
-      if (h) {
-        var lvl = h[1].length;
-        out.push("<h" + lvl + ">" + mdInline(h[2]) + "</h" + lvl + ">");
-        i++;
-        continue;
-      }
-      if (/^\s*>/.test(line)) {
-        var q = [];
-        while (i < lines.length && /^\s*>/.test(lines[i])) {
-          q.push(lines[i].replace(/^\s*>\s?/, ""));
-          i++;
-        }
-        out.push("<blockquote>" + mdInline(q.join(" ")) + "</blockquote>");
-        continue;
-      }
-      if (/^\s*\|.*\|\s*$/.test(line) && i + 1 < lines.length && /^\s*\|?[\s:\-|]+\|?\s*$/.test(lines[i + 1])) {
-        var rows = [];
-        while (i < lines.length && /\|/.test(lines[i]) && lines[i].trim()) {
-          rows.push(lines[i]);
-          i++;
-        }
-        var cells = function (r) {
-          return r.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(function (c) { return c.trim(); });
-        };
-        var head = cells(rows[0]);
-        var body = rows.slice(2).map(cells);
-        var t = "<table><thead><tr>" + head.map(function (c) {
-          return "<th>" + mdInline(c) + "</th>";
-        }).join("") + "</tr></thead><tbody>";
-        t += body.map(function (r) {
-          return "<tr>" + r.map(function (c) {
-            return "<td>" + mdInline(c) + "</td>";
-          }).join("") + "</tr>";
-        }).join("");
-        out.push(t + "</tbody></table>");
-        continue;
-      }
-      if (/^\s*[-*]\s+/.test(line)) {
-        var ul = [];
-        while (i < lines.length && /^\s*[-*]\s+/.test(lines[i])) {
-          ul.push(lines[i].replace(/^\s*[-*]\s+/, ""));
-          i++;
-        }
-        flushList("ul", ul);
-        continue;
-      }
-      if (/^\s*\d+\.\s+/.test(line)) {
-        var ol = [];
-        while (i < lines.length && /^\s*\d+\.\s+/.test(lines[i])) {
-          ol.push(lines[i].replace(/^\s*\d+\.\s+/, ""));
-          i++;
-        }
-        flushList("ol", ol);
-        continue;
-      }
-      if (/^\s*(---|\*\*\*|___)\s*$/.test(line)) { out.push("<hr>"); i++; continue; }
-      if (!line.trim()) { i++; continue; }
-      var para = [line]; i++;
-      while (i < lines.length && lines[i].trim() && !/^(#{1,4}\s|```|\s*[-*]\s|\s*\d+\.\s|\s*>|\s*\|)/.test(lines[i])) {
-        para.push(lines[i]);
-        i++;
-      }
-      out.push("<p>" + mdInline(para.join(" ")) + "</p>");
-    }
-    return out.join("\n");
-  }
 
   // ---- progress ring ------------------------------------------------------
   function ring(pct) {
@@ -575,24 +461,6 @@
   }
 
   // ---- exam ---------------------------------------------------------------
-  function sampleByDomain(exam, n) {
-    var qs = exam.questions || [];
-    if (n >= qs.length) return shuffle(qs);
-    var byDomain = {};
-    qs.forEach(function (q) { (byDomain[q.domain] = byDomain[q.domain] || []).push(q); });
-    var picked = [];
-    (exam.domains || []).forEach(function (d) {
-      var pool = shuffle(byDomain[d.id] || []);
-      var want = Math.max(1, Math.round((d.weight || (1 / (exam.domains.length || 1))) * n));
-      picked = picked.concat(pool.slice(0, want));
-    });
-    if (picked.length < n) {
-      var remaining = shuffle(qs.filter(function (q) { return picked.indexOf(q) === -1; }));
-      picked = picked.concat(remaining.slice(0, n - picked.length));
-    }
-    return shuffle(picked.slice(0, n));
-  }
-
   function renderExam(exam) {
     var wrap = el("div", { class: "view-enter" });
     appEl.appendChild(wrap);
@@ -766,9 +634,9 @@
           d.t++;
           if (ok) d.c++;
         });
-        var frac = correct / questions.length;
-        var scaled = Math.round(exam.meta.scaleMin + frac * (exam.meta.scaleMax - exam.meta.scaleMin));
-        var pass = scaled >= exam.meta.passScaled;
+        var score = AULib.scaledScore(correct, questions.length, exam.meta);
+        var scaled = score.scaled;
+        var pass = score.pass;
         var best = store.examBest[exam.examId];
         if (!best || scaled > best.scaled) {
           store.examBest[exam.examId] = {
@@ -789,7 +657,7 @@
             el("span", { class: "verdict-badge " + (pass ? "pass" : "fail"), text: pass ? "PASS" : "BELOW PASS" }),
             el("p", {
               class: "track-meta",
-              text: correct + " of " + questions.length + " correct (" + Math.round(frac * 100) + "%) · " +
+              text: correct + " of " + questions.length + " correct (" + Math.round(correct / questions.length * 100) + "%) · " +
                 fmt(seconds) + (skipped ? " · " + skipped + " skipped" : "") + " · pass mark " + exam.meta.passScaled,
             }),
             el("div", { class: "mode-row", style: "justify-content:center;margin-top:14px" }, [
