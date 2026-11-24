@@ -27,6 +27,10 @@ All notable changes to this project are documented here. The format follows
 
 ### Changed
 
+- Replaced the spark mark, which resembled Claude's, with an original study-card mark, and refreshed
+  the README screenshots to match.
+- The site title, description and home link now say the project is unofficial, and the README states it
+  is a personal project that is not an Anthropic program or product.
 - `llms.txt` follows the llmstxt.org format with absolute URLs.
 - CI runs `check.mjs` with read-only permissions.
 - CI and the Pages build run on Node 26, the active LTS. Node 20 reached end of life on 2026-04-30.
