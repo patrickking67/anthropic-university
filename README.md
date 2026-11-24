@@ -14,8 +14,10 @@ with a web app and Claude Code plugins to study with.
 
 > [!IMPORTANT]
 > **Unofficial and community-written.** Anthropic University is not affiliated with, endorsed by, or
-> produced by Anthropic. Every question is original and written to teach publicly documented concepts.
-> None of it is real exam content. The logo and artwork are original.
+> produced by Anthropic. It is a personal project by one community member. The name only describes the
+> subject; it is not an Anthropic program, product or course. Every question is original and written to
+> teach publicly documented concepts. None of it is real exam content. The logo and artwork are original
+> and use no Anthropic or Claude marks.
 
 ## The certifications
 
