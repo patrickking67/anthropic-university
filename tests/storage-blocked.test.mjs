@@ -102,6 +102,7 @@ function bootApp(storage) {
   vm.runInContext('Object.defineProperty(globalThis, "localStorage", { get: __storage, configurable: true })', ctx);
   delete ctx.__storage;
   vm.runInContext(readFileSync(join(DOCS, "data", "index.js"), "utf8"), ctx, { filename: "data/index.js" });
+  vm.runInContext(readFileSync(join(DOCS, "lib.js"), "utf8"), ctx, { filename: "lib.js" });
   vm.runInContext(readFileSync(join(DOCS, "app.js"), "utf8"), ctx, { filename: "app.js" });
   return { ctx, app, toggle, errors };
 }
