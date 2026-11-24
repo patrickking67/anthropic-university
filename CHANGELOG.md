@@ -9,6 +9,7 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
+- `docs/lib.js`, the pure helpers (markdown, score scaling, exam sampling) split out of `docs/app.js`, and `tests/lib.test.mjs` with 12 offline tests for them.
 - `node scripts/check.mjs`, one command that runs everything CI runs.
 - `node scripts/serve.mjs` preview server and `.claude/launch.json` (port 4106).
 - `AGENTS.md` agent guide; `CLAUDE.md` now imports it.
@@ -22,6 +23,7 @@ All notable changes to this project are documented here. The format follows
 
 ### Fixed
 
+- Study-guide links with `javascript:`, `data:` or other unsafe schemes are no longer rendered as links.
 - The web app no longer fails to render when browser storage is blocked.
 - Accent text, primary buttons and answer badges meet WCAG AA contrast in light and dark mode.
 

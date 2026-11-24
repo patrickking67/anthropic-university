@@ -30,7 +30,7 @@ All verified on 2026-11-07.
 | Task | Command | Result |
 | --- | --- | --- |
 | Check everything (what CI runs) | `node scripts/check.mjs` | Exit 0 and `All checks passed.` |
-| Run the offline tests only | `node --test tests/storage-blocked.test.mjs` | `pass 2`, `fail 0` |
+| Run the offline tests only | `node --test tests/*.test.mjs` | `pass 14`, `fail 0` |
 | Validate banks only | `node scripts/build.mjs --check` | `Validation passed for 4 exam(s), 400 questions.` |
 | Rebuild generated files | `node scripts/build.mjs` | Regenerates every file listed under Generated files |
 | Preview the web app | `node scripts/serve.mjs` | http://localhost:4106/ (`PORT=` to change). Also `.claude/launch.json` |
@@ -49,8 +49,8 @@ content/<examId>/     questions.json, flashcards.json (canonical), study-guide.m
 scripts/build.mjs     validation and generation
 scripts/check.mjs     the one check command
 scripts/serve.mjs     local preview server for docs/
-tests/                offline node:test tests for the web app (run by check.mjs)
-docs/                 the web app: index.html, app.js, styles.css, mark.svg, data/ (generated), llms.txt (generated)
+tests/                offline node:test tests: lib.test.mjs (helpers), storage-blocked.test.mjs (boot) (run by check.mjs)
+docs/                 the web app: index.html, lib.js (pure helpers), app.js, styles.css, mark.svg, data/ (generated), llms.txt (generated)
 assets/               original logo and mark SVGs, README screenshots
 .claude-plugin/       marketplace.json
 plugins/              exam-coach, flashcard-drill, cert-author (data/ inside each is generated)
